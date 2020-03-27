@@ -1,7 +1,7 @@
 FROM python:3.6
 
 RUN git clone https://github.com/behrouzsh/deepPhosAPI.git
-RUN git clone https://github.com/michalkouril/pinet-server.git
+RUN git clone https://github.com/uc-bd2k/pinet-server.git
 
 RUN pip3 install virtualenv
 RUN apt-get update && apt-get install -y gradle
