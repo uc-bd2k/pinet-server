@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02b7d2ad-71b7-4b34-a380-94ffae6b872f" name="Default" comment="" />
+    <list default="true" id="02b7d2ad-71b7-4b34-a380-94ffae6b872f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/partials/help.html" afterPath="$PROJECT_DIR$/src/main/resources/static/partials/help.html" />
+    </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -95,8 +97,8 @@
       <file leaf-file-name="help.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/help.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2616">
-              <caret line="85" column="75" lean-forward="false" selection-start-line="85" selection-start-column="71" selection-end-line="85" selection-end-column="75" />
+            <state relative-caret-position="1008">
+              <caret line="221" column="35" lean-forward="false" selection-start-line="221" selection-start-column="35" selection-end-line="221" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -304,7 +306,7 @@
       <file leaf-file-name="ptmToModifier.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
+            <state relative-caret-position="224">
               <caret line="2026" column="43" lean-forward="false" selection-start-line="2026" selection-start-column="43" selection-end-line="2026" selection-end-column="80" />
               <folding>
                 <element signature="n#nav#0;n#!!top" expanded="false" />
@@ -467,7 +469,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="113">
-              <caret line="593" column="31" lean-forward="false" selection-start-line="593" selection-start-column="31" selection-end-line="609" selection-end-column="43" />
+              <caret line="593" column="56" lean-forward="false" selection-start-line="593" selection-start-column="41" selection-end-line="593" selection-end-column="56" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
@@ -503,8 +505,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Query Sig</find>
-      <find>Signature</find>
       <find>&quot;blue</find>
       <find>select_slider4ilincs3</find>
       <find>network_len</find>
@@ -529,9 +529,11 @@
       <find>me</find>
       <find>pY</find>
       <find>56</find>
-      <find>Kinase O</find>
-      <find>ques</find>
       <find>What</find>
+      <find>ques</find>
+      <find>Kinase O</find>
+      <find>What is</find>
+      <find>www.</find>
       <find>http://</find>
     </findStrings>
     <replaceStrings>
@@ -547,6 +549,7 @@
       <replace>Ilincs</replace>
       <replace>79.966</replace>
       <replace>pinet-server.org</replace>
+      <replace>www.</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -1477,12 +1480,12 @@
       <workItem from="1582572148035" duration="66869000" />
       <workItem from="1583099886925" duration="44774000" />
       <workItem from="1584643973309" duration="20127000" />
-      <workItem from="1585002019193" duration="28154000" />
+      <workItem from="1585002019193" duration="30156000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="322538000" />
+    <option name="totallyTimeSpent" value="324540000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="25" y="101" width="1369" height="728" extended-state="0" />
@@ -2189,9 +2192,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="41" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="593" column="56" lean-forward="false" selection-start-line="593" selection-start-column="41" selection-end-line="593" selection-end-column="56" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
+            <element signature="n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
+            <element signature="n#a#2;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
+            <element signature="n#a#3;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#p#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#h4#0;n#div#1;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#h4#0;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#h4#1;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1585280265000" expanded="false" signature="8345:8361" ph="..." />
+            <marker date="1585280265000" expanded="false" signature="8447:8464" ph="..." />
+            <marker date="1585280265000" expanded="false" signature="8749:8768" ph="..." />
+            <marker date="1585280265000" expanded="false" signature="9003:9022" ph="..." />
+            <marker date="1585280265000" expanded="false" signature="80561:80575" ph="..." />
+            <marker date="1585280265000" expanded="false" signature="81074:81088" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
+        <state relative-caret-position="224">
           <caret line="2026" column="43" lean-forward="false" selection-start-line="2026" selection-start-column="43" selection-end-line="2026" selection-end-column="80" />
           <folding>
             <element signature="n#nav#0;n#!!top" expanded="false" />
@@ -2329,45 +2367,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="593" column="31" lean-forward="false" selection-start-line="593" selection-start-column="31" selection-end-line="609" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
-            <element signature="n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
-            <element signature="n#a#2;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
-            <element signature="n#a#3;n#div#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#span#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#h4#0;n#div#1;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#h4#0;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#h4#1;n#div#2;n#div#0;n#section#2;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <marker date="1585280265000" expanded="false" signature="8345:8361" ph="..." />
-            <marker date="1585280265000" expanded="false" signature="8447:8464" ph="..." />
-            <marker date="1585280265000" expanded="false" signature="8749:8768" ph="..." />
-            <marker date="1585280265000" expanded="false" signature="9003:9022" ph="..." />
-            <marker date="1585280265000" expanded="false" signature="80561:80575" ph="..." />
-            <marker date="1585280265000" expanded="false" signature="81074:81088" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="41" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/help.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2616">
-          <caret line="85" column="75" lean-forward="false" selection-start-line="85" selection-start-column="71" selection-end-line="85" selection-end-column="75" />
+        <state relative-caret-position="1008">
+          <caret line="221" column="35" lean-forward="false" selection-start-line="221" selection-start-column="35" selection-end-line="221" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
