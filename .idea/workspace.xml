@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="02b7d2ad-71b7-4b34-a380-94ffae6b872f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/partials/help.html" afterPath="$PROJECT_DIR$/src/main/resources/static/partials/help.html" />
-    </list>
+    <list default="true" id="02b7d2ad-71b7-4b34-a380-94ffae6b872f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,10 +95,9 @@
       <file leaf-file-name="help.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/help.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31283">
-              <caret line="1934" column="59" lean-forward="false" selection-start-line="1934" selection-start-column="59" selection-end-line="1934" selection-end-column="59" />
+            <state relative-caret-position="-2616">
+              <caret line="85" column="75" lean-forward="false" selection-start-line="85" selection-start-column="71" selection-end-line="85" selection-end-column="75" />
               <folding>
-                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1480,12 +1477,12 @@
       <workItem from="1582572148035" duration="66869000" />
       <workItem from="1583099886925" duration="44774000" />
       <workItem from="1584643973309" duration="20127000" />
-      <workItem from="1585002019193" duration="27580000" />
+      <workItem from="1585002019193" duration="28154000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="321964000" />
+    <option name="totallyTimeSpent" value="322538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="25" y="101" width="1369" height="728" extended-state="0" />
@@ -2369,10 +2366,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/help.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31283">
-          <caret line="1934" column="59" lean-forward="false" selection-start-line="1934" selection-start-column="59" selection-end-line="1934" selection-end-column="59" />
+        <state relative-caret-position="-2616">
+          <caret line="85" column="75" lean-forward="false" selection-start-line="85" selection-start-column="71" selection-end-line="85" selection-end-column="75" />
           <folding>
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
