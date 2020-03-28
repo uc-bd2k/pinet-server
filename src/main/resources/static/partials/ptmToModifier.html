@@ -1078,7 +1078,7 @@
 
                             <blockquote><pre><code>
 import requests
-PINET_URL_BASE = 'http://pinet-server.org/pinet/api/'
+PINET_URL_BASE = 'http://www.pinet-server.org/pinet/api/'
 PINET_URL_LINEAGE = '9606'
 API_EXTENSION_1 = 'phosphoandptm/organism/'
 API_EXTENSION_2 = '/ptmprotein/'
@@ -1105,7 +1105,7 @@ def _request(url, params=None):
 
 if __name__ == '__main__':
     # Example
-    # http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}
+    # http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}
     results = map_ptms("Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}")
 
     for item in results:
@@ -1129,7 +1129,7 @@ if __name__ == '__main__':
                                 For PTMProtein Query:
                             </h4>
 
-                            http://pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for
+                            http://www.pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for
                             the
                             query in the URL, e.g.
                             , please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate
@@ -1137,15 +1137,15 @@ if __name__ == '__main__':
                             <br/>
                             <p>Example with shorthand notation</p>
 
-                            <a href="http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
+                            <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
                                target="_blank">
-                                http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
+                                http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
 
                             <br/>
                             <p>Example with mass difference notation</p>
-                            <a href="http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
+                            <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
                                target="_blank">
-                                http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
+                                http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
 
                         </div>
                     </div>
