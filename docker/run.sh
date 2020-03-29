@@ -5,4 +5,4 @@ cd /deepPhosAPI
 python3 predict.py &
 
 cd /pinet-server
-java -jar build/libs/*.jar
+java -classpath libs -jar build/libs/*.jar
