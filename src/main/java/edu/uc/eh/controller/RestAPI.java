@@ -1214,6 +1214,22 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
+        return prideService.findPTMByIDAPI(mod);
+    }
+
+
+    @RequestMapping(value = "api/proteinptmpride/{mod}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject getPTMByIDPride(@PathVariable String mod) throws Exception {
+        //log.info(String.format("Run convertToPLN with argument: %s", peptide));
+
+//        try {
+//            incrementList(4);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
         return prideService.findPTMByID(mod);
     }
 
@@ -1230,13 +1246,45 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
+        return prideService.findPTMByDescriptionAPI(description);
+    }
+
+    @RequestMapping(value = "api/proteinptmbydescriptionpride/{description}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONArray getPTMByDescriptionPride(@PathVariable String description) throws Exception {
+        //log.info(String.format("Run convertToPLN with argument: %s", peptide));
+
+//        try {
+//            incrementList(4);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
+        System.out.println(description);
         return prideService.findPTMByDescription(description);
     }
+
 
     @RequestMapping(value = "api/proteinptmbymass/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
     JSONArray getPTMByMassAndDelta(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
+        //log.info(String.format("Run convertToPLN with argument: %s", peptide));
+
+//        try {
+//            incrementList(4);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
+        return prideService.findPTMByMassAndDeltaAPI(mass, delta);
+    }
+
+    @RequestMapping(value = "api/proteinptmbymasspride/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONArray getPTMByMassAndDeltaPride(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {

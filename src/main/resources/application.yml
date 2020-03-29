@@ -35,6 +35,9 @@ urls:
   ilincsSignatureMetaUpload: http://www.ilincs.org/api/SignatureMeta/upload
   ilincsGetSignatureUrl: http://www.ilincs.org/api/ilincsR/findConcordances
   deepPhosUrl: http://localhost:5000/api/predict/organism/%s/%s
+  findPTMByIDAPIUrl: http://eh3.uc.edu/pinet/api/proteinptm/%s
+  findPTMByDescriptionAPIUrl: http://eh3.uc.edu/pinet/api/proteinptmbydescription/%s
+  findPTMByMassAndDeltaAPIUrl: http://eh3.uc.edu/pinet/api/proteinptmbymass/%s/delta/%s
 
 
 resources:

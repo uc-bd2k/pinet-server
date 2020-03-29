@@ -1,8 +1,10 @@
 package edu.uc.eh.service;
 
 import edu.uc.eh.uniprot.UniprotRepository;
+import edu.uc.eh.utils.UtilsNetwork;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,100 @@ public class PrideService {
     @Value("${resources.pridemodXml}")
     String pridemodDatabase;
 
+    @Value("${urls.findPTMByIDAPIUrl}")
+    String findPTMByIDAddress;
+    @Value("${urls.findPTMByDescriptionAPIUrl}")
+    String findPTMByDescriptionAddress;
+    @Value("${urls.findPTMByMassAndDeltaAPIUrl}")
+    String findPTMByMassAndDeltaAddress;
+
+    public JSONObject findPTMByIDAPI(String mod) throws Exception {
+        JSONObject ptmJson = new JSONObject();
+        //mod = mod.toUpperCase().replace("_",":").replace("-",":").replace("(","").replace(")","");
+        String findPTMByIDUrl = String.format(findPTMByIDAddress, mod);
+        String predictionString;
+        try{
+            predictionString = UtilsNetwork.getInstance().readUrlXml(findPTMByIDUrl);
+//            System.out.println("ResponseString:");
+//            System.out.println(predictionString);
+            //log.info(response);
+
+            JSONParser parser = new JSONParser();
+            ptmJson = (JSONObject) parser.parse(predictionString);
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            ptmJson.put("accession","");
+            ptmJson.put("name","");
+            ptmJson.put("monoDeltaMass","");
+            ptmJson.put("averageDeltaMass","");
+            ptmJson.put("description","");
+            ptmJson.put("formula","");
+            ptmJson.put("cvLabel","");
+            ptmJson.put("shortName","");
+            return ptmJson;
+
+        }
+        return ptmJson;
+
+    }
+    public JSONArray findPTMByDescriptionAPI(String description) throws Exception {
+        String findPTMByDescriptionUrl = String.format(findPTMByDescriptionAddress, description);
+        String predictionString;
+        JSONArray ptmArray = new JSONArray();
+        try {
+
+            predictionString = UtilsNetwork.getInstance().readUrlXml(findPTMByDescriptionUrl);
+//            System.out.println("ResponseString:");
+//            System.out.println(predictionString);
+            //log.info(response);
+
+            JSONParser parser = new JSONParser();
+            ptmArray = (JSONArray) parser.parse(predictionString);
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+
+            return new JSONArray();
+
+        }
+
+        //ModReader modReader = ModReader.getInstance();
+        //PTM ptm = modReader.getPTMbyAccession("MOD:00048");
+
+        return ptmArray;
+
+    }
+
+    public JSONArray findPTMByMassAndDeltaAPI(Double mass, Double delta) throws Exception {
+        
+        String findPTMByMassAndDeltaUrl = String.format(findPTMByMassAndDeltaAddress, mass, delta);
+        String predictionString;
+        JSONArray ptmArray = new JSONArray();
+        try {
+            predictionString = UtilsNetwork.getInstance().readUrlXml(findPTMByMassAndDeltaUrl);
+//            System.out.println("ResponseString:");
+//            System.out.println(predictionString);
+            //log.info(response);
+
+            JSONParser parser = new JSONParser();
+            ptmArray = (JSONArray) parser.parse(predictionString);
+        }
+        catch (Exception e){
+            System.out.println(e);
+
+            return new JSONArray();
+
+        }
+
+        //ModReader modReader = ModReader.getInstance();
+        //PTM ptm = modReader.getPTMbyAccession("MOD:00048");
+
+        return ptmArray;
+
+    }
 
     public JSONObject findPTMByID(String mod) throws Exception {
         JSONObject ptmJson = new JSONObject();
