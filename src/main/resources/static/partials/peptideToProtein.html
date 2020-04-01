@@ -105,10 +105,7 @@
 
         <!--</div>-->
 
-        <span>
-            <p style="font-weight: 800; font-style: italic">/Peptide2Protein workflow </p>
 
-        </span>
 
         <span>Peptide2Protein workflow can be used to map peptide moieties
             with post-translational modifications (PTMs) into proteins using
@@ -705,39 +702,7 @@ Please check help tab for complete list of APIs.">
                         sequences with PTM sites indicated using PSIMOD, UNIMOD,
                         mass difference or shorthand notations, and (in the subsequent columns) their
                         corresponding abundance values for samples divided into two categories by common
-                        prefixes (e.g. ctrl_ vs. treat_) of their sample IDs (included in the first row). Download
-
-
-                        <!--Alternatively,-->
-                        <!--you-->
-                        <!--can enter-->
-                        <!--peptides file with control and treatments in .xlsx format.-->
-                        <!--Download-->
-                        <!--<a href="#"-->
-                        <!--class="onerow"-->
-                        <!--ng-click="downloadCSVExample1()"-->
-                        <!--ng-style="{'font-weight': 'bold'}">-->
-                        <!--example 1 </a>-->
-                        <!--<p style="display:inline"><span class="boldText"> with probe and expression values <span-->
-                        <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                        <!--data-delay='{"show":"0", "hide":"100"}'-->
-                        <!--data-toggle="tooltip"-->
-                        <!--title="Data set contains two columns of 'peptide' and 'value'. Please see the example 1 for formatting. ">-->
-                        <!--</span></span></p> and-->
-
-                        <a href="javascript:void(0);"
-                           class="onerow"
-                           ng-click="downloadCSVExample2()"
-                           ng-style="{'font-weight': 'bold'}">
-                            example 1</a>
-                        <p style="display:inline">
-                            <span class="boldText">containing probe with control and treatment.
-                            <span
-                                style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                data-delay='{"show":"0", "hide":"100"}'
-                                data-toggle="tooltip"
-                                title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
-                            </span> </span></p> here.
+                        prefixes (e.g. ctrl_ vs. treat_) of their sample IDs (included in the first row).
                             <p style="display:inline">
                                 <span class="boldText">
                                     Please use APIs or stand-alone version of piNET (
@@ -750,6 +715,27 @@ https://github.com/uc-bd2k/pinet-server
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4">
                         <div class="onerow">
+                            <p>
+                            Download
+
+                            <a href="javascript:void(0);"
+                               class="onerow"
+                               ng-click="downloadCSVExample2()"
+                               ng-style="{'font-weight': 'bold'}">
+                                example 1</a>
+                            <p style="display:inline">
+                            <span class="boldText"> with acceptable template in csv format
+                            <span
+                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                    data-delay='{"show":"0", "hide":"100"}'
+                                    data-toggle="tooltip"
+                                    title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
+                            </span> </span></p> and try uploading the file for workflow illustration.
+
+                            </p>
+
+
+
                             <input type="file"  file-model="myFile" type="submit"
                                    class="onerow"/>
                             <button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload .csv File
@@ -898,8 +884,8 @@ if __name__ == '__main__':
                     <a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">
                         http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>
                     <br/>
-                    <a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">
-                        http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>
+                    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
+                        <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
 
                 </div>
             </div>
@@ -1570,14 +1556,14 @@ if __name__ == '__main__':
                                 <tr>
 
                                     <th style="background-color: #E9E9E9">Input PTM</th>
-                                    <th style="background-color: #E9E9E9">Input PTM-Mass</th>
-                                    <th style="background-color: lightgrey">Accession</th>
-                                    <th style="background-color: lightgrey">PSI-MOD Avg. Mass</th>
+                                    <!--<th style="background-color: #E9E9E9">Input PTM-Mass</th>-->
+                                    <th style="background-color: lightgrey">Suggested Accession</th>
+                                    <th style="background-color: lightgrey">Suggested Avg. Mass</th>
 
 
                                     <!--<th style="background-color: lightgrey">PSI-MOD Formula</th>-->
 
-                                    <th style="background-color: lightgrey">PSI-MOD Description</th>
+                                    <th style="background-color: lightgrey">Suggested Description</th>
                                     <th style="background-color: #E9E9E9">Select Between Suggested Modifications<br/>
                                         <p style="font-weight: bold">Selected Accession Will be Reflected in
                                             PLN.</p>
@@ -1592,7 +1578,7 @@ if __name__ == '__main__':
 
                                 <tr ng-repeat="mapping in ctrl.ontologyMappings">
                                     <td>{{mapping.input}}</td>
-                                    <td>{{mapping.mass}}</td>
+                                    <!--<td>{{mapping.mass}}</td>-->
                                     <!--<td>{{mapping.shorthand}}</td>-->
                                     <!--New version of http://www.ebi.ac.uk/ols/ontologies/mod/terms?obo_id={{mapping.identifier}}-->
                                     <!--Old version of http://www.ebi.ac.uk/ontology-lookup/?termId={{mapping.identifier}}-->

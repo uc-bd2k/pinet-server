@@ -113,7 +113,7 @@ public class PrideService {
     }
 
     public JSONArray findPTMByMassAndDeltaAPI(Double mass, Double delta) throws Exception {
-        
+
         String findPTMByMassAndDeltaUrl = String.format(findPTMByMassAndDeltaAddress, mass, delta);
         String predictionString;
         JSONArray ptmArray = new JSONArray();

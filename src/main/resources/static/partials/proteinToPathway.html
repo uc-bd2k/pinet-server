@@ -74,10 +74,7 @@
     <div class="container-fluid" style="box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 border-radius: 5px;">
         <div class="well col-sm-12" style="border-color: black; background-color: #cccccc">
-            <span>
-            <p style="font-weight: 800; font-style: italic">/Protein2Pathway  </p>
 
-        </span>
             Protein2Pathway workflow can be used to analyze and visualize protein
             (and thus gene) level data in terms of pathway enrichment analysis,
             pathway membership, upstream/downstream kinase network, and concordance
@@ -169,6 +166,12 @@ border-radius: 5px;">
                                     <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
                                     <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>
                                     <label style="padding-bottom: 24px;">Enter genes&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="Because of the workflows in this tab, gene names are agnostic to the organism. "
+                                        >
+                                            </span>
                                         <br/>
                                     </label>
 
@@ -203,6 +206,9 @@ border-radius: 5px;">
                                 <div style="float:left;">
                 <span>
                     <hr/>
+                    <p>
+                        Because of the workflows in this tab, gene names are agnostic to the organism. Genes are translated to the Homo Sapiens Counterparts.
+                    </p>
                     <p>
                     &nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are common with Homo Sapiens.
                     </p>

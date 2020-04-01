@@ -1961,11 +1961,11 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svgGE.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -3061,11 +3061,11 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svgGE.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -3882,11 +3882,11 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svgGE.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -5092,11 +5092,11 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svgGE.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -12700,7 +12700,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             //var data = res_data;
 
                                             var sorted_data = data.sort(function (a, b) {
-                                                return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
+                                                return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
                                             });
                                             ////console.log(sorted_data);
                                             var closest_sorted = sorted_data[0];
@@ -12799,7 +12799,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             console.log(data);
 
                                             var sorted_data = data.sort(function (a, b) {
-                                                return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
+                                                return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
                                             });
                                             ////console.log(sorted_data);
                                             var closest_sorted = sorted_data[0];
@@ -18006,11 +18006,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg6.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -18440,11 +18440,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg6.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -18883,11 +18883,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg6.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -19558,11 +19558,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg6.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg6.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -21058,11 +21058,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4deep.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -21452,11 +21452,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4deep.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -22132,11 +22132,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         //.attr("class", "mono")
                             .text(function (d, i) {
                                 if (i == 0) {
-                                    return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                    return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                                 }
                                 else if (i == svg4deep.selectAll(".legend").data().length - 1) {
 
-                                    return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                    return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                                 }
                                 else {
 
@@ -22741,11 +22741,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4deep.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -23444,11 +23444,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -23835,11 +23835,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -24189,11 +24189,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -24801,11 +24801,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg4.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg4.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -26456,11 +26456,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg3.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -26765,11 +26765,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg3.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -27072,11 +27072,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg3.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -27404,11 +27404,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg3.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -27453,11 +27453,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg3.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg3.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -29826,11 +29826,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svgIlincs1.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -30507,11 +30507,11 @@ if(1 == 0){
                         //.attr("class", "mono")
                             .text(function (d, i) {
                                 if (i == 0) {
-                                    return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                    return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                                 }
                                 else if (i == svgIlincs2.selectAll(".legend").data().length - 1) {
 
-                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                                 }
                                 else {
 
@@ -31189,11 +31189,11 @@ if(1 == 0){
                         //.attr("class", "mono")
                             .text(function (d, i) {
                                 if (i == 0) {
-                                    return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                    return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                                 }
                                 else if (i == svgIlincs2.selectAll(".legend").data().length - 1) {
 
-                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                                 }
                                 else {
 
@@ -32032,11 +32032,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg5.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -32373,11 +32373,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg5.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -32639,11 +32639,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg5.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -32963,11 +32963,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg5.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg5.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -34097,11 +34097,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -34395,11 +34395,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -34695,11 +34695,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -35015,11 +35015,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -36919,11 +36919,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg2.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -37318,11 +37318,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg2.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
@@ -37692,11 +37692,11 @@ if(1 == 0){
                    //.attr("class", "mono")
                        .text(function (d, i) {
                            if (i == 0) {
-                               return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                               return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                            }
                            else if (i == svg2.selectAll(".legend").data().length - 1) {
 
-                               return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                               return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                            }
                            else {
 
@@ -38135,11 +38135,11 @@ if(1 == 0){
                     //.attr("class", "mono")
                         .text(function (d, i) {
                             if (i == 0) {
-                                return "-∞ ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
                             }
                             else if (i == svg2.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ≤ ∞";
+                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
                             }
                             else {
 
