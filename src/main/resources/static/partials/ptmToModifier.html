@@ -105,7 +105,7 @@
             <div class="form-group col-sm-4" style="padding-left: 0px;">
                 <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;<span
                     style="font-weight: bold">Select Organism</span>
-                <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                       data-delay='{"show":"0", "hide":"100"}'
                       data-toggle="tooltip"
                       title="The organism is used for the database selection for protein query.">
@@ -186,373 +186,467 @@
                 <section id="ex1" class="tab-panel">
                     <!--<h4>Network Analysis of site Specific PTM Proteins</h4>-->
                     <div class="container-fluid">
-                    <div class="well col-sm-12">
 
-                        <!--<a style="text-decoration: none;">-->
-                        <!--<a class= "collapse in" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="text-decoration: none; ">-->
+                        <div class="well col-sm-12">
 
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog"></span> &nbsp;-->
-                        <!--Enter Gene/Phosphogenes or for example try the list of-->
-                        <!--<button class="btn btn-primary " ng-click="ctrl.changeToP100('table')">-->
-                        <!--LINCS P100 data set&nbsp;-->
-                        <!--</button>-->
-                        <!--. Gene names should be sparated by comma, semi-colon or new line.-->
-                        <!--<hr/>-->
+                            <div class=" form-group col-sm-12" style="padding-top:5px;padding-bottom: 10px;margin-top: 5px;margin-bottom: 5px;" >
+                                <p style="font-weight: bold">Select Between options &nbsp;<span style="color:black;" class="glyphicon glyphicon-question-sign"
+                                                                               data-delay='{"show":"0", "hide":"100"}'
+                                                                               data-toggle="tooltip"
+                                                                               title="Please select between the provided example or the results of PeptideToProtein Mappings.
+                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
+                                                                               The inputs can be modified manually. "
+                                >
+                                        </span ></p>
 
-                        <div class=" form-group col-sm-4" style="padding-left: 0px;">
-                            <div class="horizontal-scroll" style=padding-bottom:10px;">
-                                <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
-                                <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>-->
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Mass Diff. /
-                                    Shorthand PTM/Proteins Info
-                                </button>
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;">
+                            <!--<div class="well col-sm-12">-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="myModal" role="dialog">
-                                    <div class="modal-dialog  modal-lg">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">PTM/Protein Mass Difference / Shorthand Notation
-                                                    Information</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="bs-callout bs-callout-primary">
-                                                    <p>This table shows the different Post Translational Modifications (PTMs) that
-                                                        may occur in each amino acid.
-                                                        The shorthand and mass difference notations for the modifications are also
-                                                        provided with an
-                                                        example. <span style="font-weight:bold">The shorthand notation is case sensitive.</span>
-                                                    </p>
+                                    <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Workflow Example
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                              >
+                                        </span >
+                                        <span  ng-show= "showRegi1"style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                               <!--</div>-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                    <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Results
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+
+                                              data-img="images/avg1-3.png" >
+                                        </span>
+                                        <span  ng-show= "showRegi2" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                    </div>
+                                <!--</div>-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                    <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Results Averaged
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+
+
+
+                                              data-img="images/avg2-3.png"
+
+                                                  >
+                                        </span>
+                                        <span  ng-show= "showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                    </div>
+
+                            </div>
+                                <!--</div>-->
+
+
+                            <!--<div class="btn-group btn-group-justified" role="group">-->
+                                <!--<button type="button" class="btn btn-warning" style="border-radius: 5px;" id="regi1">Left</button>-->
+                                <!--<button type="button" class="btn btn-warning" style="border-radius: 5px;" id="regi2">Middle</button>-->
+                                <!--<button type="button" class="btn btn-warning" style="border-radius: 5px;" id="regi3">Right</button>-->
+                            <!--</div>-->
+                            <!--<div class="btn-group btn-group-justified">-->
+                                <!--<label ng-repeat="service in btnAvailability.btnServices" class="btn btn-primary" ng-model="service.selected" btn-checkbox>{{service.name}}</label>-->
+                            <!--</div>-->
+                            <!--<div ng-repeat="service in btnAvailability.btnServices">{{service.name}} <span ng-show="service.selected">- selected</span></div>-->
+
+
+
+                            <!--</div>-->
+                            <!--<div class="well col-sm-12">-->
+
+
+                            <!--<a style="text-decoration: none;">-->
+                            <!--<a class= "collapse in" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="text-decoration: none; ">-->
+
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog"></span> &nbsp;-->
+                            <!--Enter Gene/Phosphogenes or for example try the list of-->
+                            <!--<button class="btn btn-primary " ng-click="ctrl.changeToP100('table')">-->
+                            <!--LINCS P100 data set&nbsp;-->
+                            <!--</button>-->
+                            <!--. Gene names should be sparated by comma, semi-colon or new line.-->
+                            <!--<hr/>-->
+
+                                <div class=" form-group col-sm-4" style="padding-left: 0px;">
+                                    <div class="horizontal-scroll" style=padding-bottom:10px;">
+                                        <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>-->
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Mass Diff. /
+                                            Shorthand PTM/Proteins Info
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" role="dialog">
+                                            <div class="modal-dialog  modal-lg">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Shorthand Notation
+                                                            Information</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="bs-callout bs-callout-primary">
+                                                            <p>This table shows the different Post Translational Modifications (PTMs) that
+                                                                may occur in each amino acid.
+                                                                The shorthand and mass difference notations for the modifications are also
+                                                                provided with an
+                                                                example. <span style="font-weight:bold">The shorthand notation is case sensitive.</span>
+                                                            </p>
+                                                        </div>
+
+
+                                                        <div class="panel panel-default">
+                                                            <table class="table table-striped table-bordered">
+
+                                                                <caption>Shorthand Notation Table</caption>
+                                                                <tr>
+                                                                    <th>Modification</th>
+                                                                    <th>Identifier</th>
+                                                                    <th>Amino Acids</th>
+                                                                    <th>Diff. Avg.</th>
+                                                                    <th>Shorthand Example</th>
+                                                                    <th>Mass Difference Example</th>
+                                                                    <th>UNIMOD/PSI-MOD Ids</th>
+                                                                </tr>
+                                                                <!--<tr>-->
+                                                                <!--<td>Any PTM/Any Amino-Acid@110</td>-->
+                                                                <!--<td></td>-->
+                                                                <!--<td></td>-->
+                                                                <!--<td></td>-->
+                                                                <!--Uniprottein[..@110]</td>-->
+                                                                <!--<td></td>-->
+                                                                <!--</tr>-->
+                                                                <!--<tr>-->
+                                                                <!--<td>Specific PTM/Any Amino-Acid@110</td>-->
+                                                                <!--<td></td>-->
+                                                                <!--<td></td>-->
+                                                                <!--<td></td>-->
+                                                                <!--Uniprottein[ac.@110]</td>-->
+                                                                <!--<td></td>-->
+                                                                <!--</tr>-->
+                                                                <tr>
+                                                                    <td>Acetylation</td>
+                                                                    <td>a</td>
+                                                                    <td>"K", "A", "M", "S", "T", "G", "R", "V", "C", "D", "Y", "P", "E"</td>
+                                                                    <td>42.037</td>
+                                                                    <td>Protein{[aK]@110}</td>
+                                                                    <td>Protein{K[+42.037]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>Methylation</td>
+                                                                    <td>me</td>
+                                                                    <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
+                                                                        "G"
+                                                                    </td>
+                                                                    <td>14.027</td>
+                                                                    <td>Protein{[meK]@110}</td>
+                                                                    <td>Protein{K[+14.027]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>DiMethylation</td>
+                                                                    <td>me2</td>
+                                                                    <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
+                                                                        "G"
+                                                                    </td>
+                                                                    <td>28.05</td>
+                                                                    <td>Protein{[me2K]@110}</td>
+                                                                    <td>Protein{K[+28.05]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>TriMethylation</td>
+                                                                    <td>me3</td>
+                                                                    <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
+                                                                        "G"
+                                                                    </td>
+                                                                    <td>42.08</td>
+                                                                    <td>Protein{[me3K]@110}</td>
+                                                                    <td>Protein{K[+42.046]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Phosphorylation</td>
+                                                                    <td>p</td>
+                                                                    <td>"T", "S", "Y", "H", "D", "P", "R", "C", "M", "N", "G", "A", "K"</td>
+                                                                    <td>79.98</td>
+                                                                    <td>Protein{[pT]@110}</td>
+                                                                    <td>Protein{T[+79.966]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>C-Glycosylation</td>
+                                                                    <td>cg</td>
+                                                                    <td>"W"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[cgW]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>S-Glycosylation</td>
+                                                                    <td>sg</td>
+                                                                    <td>"C"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[sgC]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>O-Glycosylation</td>
+                                                                    <td>og</td>
+                                                                    <td>"T", "S"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[ogT]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>N-Glycosylation</td>
+                                                                    <td>ng</td>
+                                                                    <td>"N"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[ngN]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>S-Nitrosylation</td>
+                                                                    <td>sn</td>
+                                                                    <td>"C"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[snC]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Myristoylation</td>
+                                                                    <td>my</td>
+                                                                    <td>"K", "G", "C"</td>
+                                                                    <td>210.36</td>
+                                                                    <td>Protein{[myC]@110}</td>
+                                                                    <td>Protein{C[+210.198]@110}</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sumoylation</td>
+                                                                    <td>su</td>
+                                                                    <td>"K"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[suK]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Ubiquitination</td>
+                                                                    <td>ub</td>
+                                                                    <td>"K", "S", "C"</td>
+                                                                    <td>varies</td>
+                                                                    <td>Protein{[ubK]@110}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
 
-
-                                                <div class="panel panel-default">
-                                                    <table class="table table-striped table-bordered">
-
-                                                        <caption>Shorthand Notation Table</caption>
-                                                        <tr>
-                                                            <th>Modification</th>
-                                                            <th>Identifier</th>
-                                                            <th>Amino Acids</th>
-                                                            <th>Diff. Avg.</th>
-                                                            <th>Shorthand Example</th>
-                                                            <th>Mass Difference Example</th>
-                                                            <th>UNIMOD/PSI-MOD Ids</th>
-                                                        </tr>
-                                                        <!--<tr>-->
-                                                        <!--<td>Any PTM/Any Amino-Acid@110</td>-->
-                                                        <!--<td></td>-->
-                                                        <!--<td></td>-->
-                                                        <!--<td></td>-->
-                                                        <!--Uniprottein[..@110]</td>-->
-                                                        <!--<td></td>-->
-                                                        <!--</tr>-->
-                                                        <!--<tr>-->
-                                                        <!--<td>Specific PTM/Any Amino-Acid@110</td>-->
-                                                        <!--<td></td>-->
-                                                        <!--<td></td>-->
-                                                        <!--<td></td>-->
-                                                        <!--Uniprottein[ac.@110]</td>-->
-                                                        <!--<td></td>-->
-                                                        <!--</tr>-->
-                                                        <tr>
-                                                            <td>Acetylation</td>
-                                                            <td>a</td>
-                                                            <td>"K", "A", "M", "S", "T", "G", "R", "V", "C", "D", "Y", "P", "E"</td>
-                                                            <td>42.037</td>
-                                                            <td>Protein{[aK]@110}</td>
-                                                            <td>Protein{K[+42.037]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>Methylation</td>
-                                                            <td>me</td>
-                                                            <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
-                                                                "G"
-                                                            </td>
-                                                            <td>14.027</td>
-                                                            <td>Protein{[meK]@110}</td>
-                                                            <td>Protein{K[+14.027]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>DiMethylation</td>
-                                                            <td>me2</td>
-                                                            <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
-                                                                "G"
-                                                            </td>
-                                                            <td>28.05</td>
-                                                            <td>Protein{[me2K]@110}</td>
-                                                            <td>Protein{K[+28.05]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>TriMethylation</td>
-                                                            <td>me3</td>
-                                                            <td>"R", "K", "Q", "S", "H", "M", "N", "A", "F", "P", "C", "L", "T",
-                                                                "G"
-                                                            </td>
-                                                            <td>42.08</td>
-                                                            <td>Protein{[me3K]@110}</td>
-                                                            <td>Protein{K[+42.046]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Phosphorylation</td>
-                                                            <td>p</td>
-                                                            <td>"T", "S", "Y", "H", "D", "P", "R", "C", "M", "N", "G", "A", "K"</td>
-                                                            <td>79.98</td>
-                                                            <td>Protein{[pT]@110}</td>
-                                                            <td>Protein{T[+79.966]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>C-Glycosylation</td>
-                                                            <td>cg</td>
-                                                            <td>"W"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[cgW]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td>S-Glycosylation</td>
-                                                            <td>sg</td>
-                                                            <td>"C"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[sgC]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>O-Glycosylation</td>
-                                                            <td>og</td>
-                                                            <td>"T", "S"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[ogT]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>N-Glycosylation</td>
-                                                            <td>ng</td>
-                                                            <td>"N"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[ngN]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>S-Nitrosylation</td>
-                                                            <td>sn</td>
-                                                            <td>"C"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[snC]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Myristoylation</td>
-                                                            <td>my</td>
-                                                            <td>"K", "G", "C"</td>
-                                                            <td>210.36</td>
-                                                            <td>Protein{[myC]@110}</td>
-                                                            <td>Protein{C[+210.198]@110}</td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Sumoylation</td>
-                                                            <td>su</td>
-                                                            <td>"K"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[suK]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Ubiquitination</td>
-                                                            <td>ub</td>
-                                                            <td>"K", "S", "C"</td>
-                                                            <td>varies</td>
-                                                            <td>Protein{[ubK]@110}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
 
+
+                                        <!--<label style="padding-bottom: 24px;">Enter PTM/Proteins&nbsp;-->
+                                        <!--<br/>-->
+                                        <!--</label>-->
+
+
+                                        <!--<span style="float:left">-->
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
+                                        <!--</span>-->
+                                        <div style="padding-top:8px;">
+
+                                    <textarea class="form-control" rows="5"
+                                              ng-model="ctrl.inputMassPtmProteins"></textarea>
+                                            <!--console.log()-->
+                                        </div>
+
+                                    </div>
+
+
+                                    Delimiter: &nbsp;
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox4" value="option2" checked="true"
+                                               disabled="true"> comma
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox5" value="option1" checked="true"
+                                               disabled="true">
+                                        semi-colon
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="inlineCheckbox6" value="option3" checked="true"
+                                               disabled="true"> new line
+                                    </label>
+                                    <!--<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>-->
+                                    <!--<div style="float:left;">-->
+                                    <!--<span>-->
+                                    <!--<hr/>-->
+                                    <!--<p>-->
+                                    <!--&nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are common with Homo Sapiens.-->
+                                    <!--</p>-->
+
+                                    <!--<span ng-show="ctrl.flagFoundNPCG" >-->
+                                    <!--<a href="#" title="{{ctrl.nonValidGenes}}">Mouse over to see the non conforming genes with Homo Sapiens genes</a>-->
+
+                                    <!--</span>-->
+
+
+                                    <!--<span ng-if="ctrl.flagFoundNPCG">-->
+                                    <!--&nbsp;Not valid genes are:-->
+                                    <!--<span style='color:blue'>-->
+                                    <!--<div ng-repeat="nonValid in ctrl.nonValidGenes">{{nonValid}}&nbsp</div>-->
+                                    <!--</span>-->
+                                    <!--Gene name identification is case sensitive, Try other names of these genes or copy and paste the gene names again!-->
+                                    <!--</span>-->
+
+                                    <!--</span>-->
+                                    <!--</div>-->
+                                </div>
+
+
+                                <div class=" form-group col-sm-2 col-sm-offset-0">
+                                    <label style="padding-bottom: 15px;margin-left: -10px;">Proteins&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
+
+                                        <!--</span>-->
+
+
+                                        <!--<br/>-->
+                                    </label>
+                                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="left">
+                                        <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
+                                        <span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins track by $index">
+                                {{parsedPTMProtein}}<br/></span>
                                     </div>
                                 </div>
 
+                                <div class=" form-group col-sm-4 col-sm-offset-0">
+                                    <label style="padding-bottom: 15px;margin-left: -10px;">Post Translational Modification&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
 
-                                <!--<label style="padding-bottom: 24px;">Enter PTM/Proteins&nbsp;-->
-                                <!--<br/>-->
-                                <!--</label>-->
-
-
-                                <!--<span style="float:left">-->
-                                <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
-                                <!--</span>-->
-                                <div style="padding-top:8px;">
-
-                            <textarea class="form-control" rows="5"
-                                      ng-model="ctrl.inputMassPtmProteins"></textarea>
-                                    <!--console.log()-->
-                                </div>
-
-                            </div>
-
-
-                            Delimiter: &nbsp;
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox4" value="option2" checked="true"
-                                       disabled="true"> comma
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox5" value="option1" checked="true"
-                                       disabled="true">
-                                semi-colon
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" id="inlineCheckbox6" value="option3" checked="true"
-                                       disabled="true"> new line
-                            </label>
-                            <!--<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>-->
-                            <!--<div style="float:left;">-->
-                            <!--<span>-->
-                            <!--<hr/>-->
-                            <!--<p>-->
-                            <!--&nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are common with Homo Sapiens.-->
-                            <!--</p>-->
-
-                            <!--<span ng-show="ctrl.flagFoundNPCG" >-->
-                            <!--<a href="#" title="{{ctrl.nonValidGenes}}">Mouse over to see the non conforming genes with Homo Sapiens genes</a>-->
-
-                            <!--</span>-->
-
-
-                            <!--<span ng-if="ctrl.flagFoundNPCG">-->
-                            <!--&nbsp;Not valid genes are:-->
-                            <!--<span style='color:blue'>-->
-                            <!--<div ng-repeat="nonValid in ctrl.nonValidGenes">{{nonValid}}&nbsp</div>-->
-                            <!--</span>-->
-                            <!--Gene name identification is case sensitive, Try other names of these genes or copy and paste the gene names again!-->
-                            <!--</span>-->
-
-                            <!--</span>-->
-                            <!--</div>-->
-                        </div>
-
-
-                        <div class=" form-group col-sm-2 col-sm-offset-0">
-                            <label style="padding-bottom: 15px;margin-left: -10px;">Proteins&nbsp;
-                                <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                                <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                <!--data-toggle="tooltip"-->
-                                <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
-
-                                <!--</span>-->
-
-
-                                <!--<br/>-->
-                            </label>
-                            <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div11">
-                                <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
-                                <span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins track by $index">
-                        {{parsedPTMProtein}}<br/></span>
-                            </div>
-                        </div>
-
-                        <div class=" form-group col-sm-4 col-sm-offset-0">
-                            <label style="padding-bottom: 15px;margin-left: -10px;">Post Translational Modification&nbsp;
-                                <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                                <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                <!--data-toggle="tooltip"-->
-                                <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
-
-                                <!--</span>-->
-                                <br/>
-                            </label>
-                            <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div12">
-                                <div ng-repeat="parsedPTM in ctrl.parsedPTMs ">
-                        <span ng-repeat="PTM in parsedPTM ">
-                        {{PTM}}&nbsp;&nbsp;
-                        </span>
-
+                                        <!--</span>-->
+                                        <br/>
+                                    </label>
                                     <!--{{ctrl.parsedPTMs}}-->
-                                    <!--<div ng-repeat="parsedPTMItem in parsedPTM ">-->
-                                    <!--{{parsedPTMItem}}</div> &nbsp;-->
+                                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="right">
+
+
+
+                                        <span ng-repeat="parsedPTM in ctrl.parsedPTMs track by $index">
+                                <span ng-repeat="PTM in parsedPTM ">
+                                {{PTM}}&nbsp;
+                                </span><br/>
+
+                                            <!--{{ctrl.parsedPTMs}}-->
+                                            <!--<div ng-repeat="parsedPTMItem in parsedPTM ">-->
+                                            <!--{{parsedPTMItem}}</div> &nbsp;-->
+                                        </span>
+                                    </div>
+
                                 </div>
-                            </div>
 
-                        </div>
-
-                        <div class=" form-group col-sm-2 col-sm-offset-0">
-                            <label style="padding-bottom: 15px; margin-left: -10px;">Log-Diff-Expression&nbsp;
-                                <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                      data-delay='{"show":"0", "hide":"100"}'
-                                      data-toggle="tooltip"
-                                      title="This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
-                                >
-                </span>
-                                <br/>
-                            </label>
-                            <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div12-1">
-                                <div ng-repeat="abundance in ctrl.proteinAbundance track by $index">
-                                    {{abundance | limitTo:6}}
+                                <div class=" form-group col-sm-2 col-sm-offset-0">
+                                    <label style="padding-bottom: 15px; margin-left: -10px;">Expression&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="Real numbers representing normalized intensities or other quantitative measures of (relative) abundance or (differential) expression. This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
+                                        >
+                        </span>
+                                        <br/>
+                                    </label>
+                                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="righter">
+                                        <div ng-repeat="abundance in ctrl.proteinAbundance track by $index">
+                                            {{abundance | limitTo:6}}
+                                            <br/>
+                                        </div>
+                                    </div>
                                     <br/>
+                                    <br/>
+                                    <button style="float:right" class="btn btn-primary col-sm-offset-3" ng-show=" ctrl.showPtmSubmit"
+                                            ng-click="ctrl.onSubmitPtm('table')">
+                                        Submit &nbsp;
+                                        <span ng-show="ctrl.phosphoWaiting && !ctrl.phosphoError && !ctrl.ptmError">
+                                 <span class="glyphicon glyphicon-refresh glyphicon-spin">
+
+                                        </span>
+                                            <!--<span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>-->
+                            </span>
+                                    </button>
+                                    <!--<br/>-->
+                                    <!--<br/>-->
+                                    <!--<p>ptmWaiting:{{ctrl.ptmWaiting}}</p>-->
+                                    <!--<p>phosphoWaiting:{{ctrl.phosphoWaiting}}</p>-->
+                                    <!--<p>phosphoError:{{!ctrl.phosphoError}}</p>-->
+                                    <!--<p>ptmError:{{!ctrl.ptmError}}</p>-->
+
+
+                                    <!--<div ng-show="ctrl.phosphoWaiting && !ctrl.phosphoError && !ctrl.ptmError">-->
+
+
+                                    <!--<div class="progress-bar-striped" id="progress2">-->
+                                    <!--<div class="progress-bar progress-bar-striped active" role="progressbar"-->
+                                    <!--aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"-->
+                                    <!--ng-style="{width : getPtmPercentage() + '%'  }">-->
+                                    <!--<b>{{getPtmPercentage()}}%</b>-->
+                                    <!--&lt;!&ndash;ng-style="{width : getPercentage() + '%'  }">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<b>{{getPercentage()}}%</b>&ndash;&gt;-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+
                                 </div>
-                            </div>
-                            <br/>
-                            <br/>
-                            <button style="float:right" class="btn btn-primary col-sm-offset-3" ng-show=" ctrl.showPtmSubmit"
-                                    ng-click="ctrl.onSubmitPtm('table')">
-                                Submit &nbsp;
-                                <span ng-show="ctrl.phosphoWaiting && !ctrl.phosphoError && !ctrl.ptmError">
-                         <span class="glyphicon glyphicon-refresh glyphicon-spin">
-
-                                </span>
-                                    <!--<span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>-->
-                    </span>
-                            </button>
-                            <!--<br/>-->
-                            <!--<br/>-->
-                            <!--<p>ptmWaiting:{{ctrl.ptmWaiting}}</p>-->
-                            <!--<p>phosphoWaiting:{{ctrl.phosphoWaiting}}</p>-->
-                            <!--<p>phosphoError:{{!ctrl.phosphoError}}</p>-->
-                            <!--<p>ptmError:{{!ctrl.ptmError}}</p>-->
 
 
-                            <!--<div ng-show="ctrl.phosphoWaiting && !ctrl.phosphoError && !ctrl.ptmError">-->
-
-
-                            <!--<div class="progress-bar-striped" id="progress2">-->
-                            <!--<div class="progress-bar progress-bar-striped active" role="progressbar"-->
-                            <!--aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"-->
-                            <!--ng-style="{width : getPtmPercentage() + '%'  }">-->
-                            <!--<b>{{getPtmPercentage()}}%</b>-->
-                            <!--&lt;!&ndash;ng-style="{width : getPercentage() + '%'  }">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<b>{{getPercentage()}}%</b>&ndash;&gt;-->
                             <!--</div>-->
-                            <!--</div>-->
-                            <!--</div>-->
-
                         </div>
-
-
-                    </div>
-
                     </div>
 
                     <!--<div class="container"-->
@@ -1175,8 +1269,13 @@ if __name__ == '__main__':
 
             <div class="well col-sm-12"
                  style="background-color: transparent; border-color: #999999" ng-show="ctrl.showPhosphoGeneNetwork">
-                <h4>Network Representation of Targeted PTM/Proteins</h4>
-                <hr/>
+
+                <p style="margin-bottom: 20px;">Analysis of <span style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{ctrl.ptmTitleText}}</span > &nbsp;<span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
+                                                                                data-delay='{"show":"0", "hide":"100"}'
+                                                                                data-toggle="tooltip"
+                                                                                title="Please see the workflow selection options on the top. "
+                >
+                                        </span ></p>
                 <div class="tabPanel-widget">
                     <label for="tab-1" tabindex="0"></label>
                     <input id="tab-1" type="radio" name="tabs" aria-hidden="true">
@@ -2327,7 +2426,7 @@ if __name__ == '__main__':
                                 <button class="btn btn-primary "
                                         ng-click="makeDeepPhosGraph(ctrl.deepPhosNetwork, ctrl.ptmProteinToAbundanceMap, graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep)">
                                     Show DeepPhos network for
-                                    phosphorylation site prediction.
+                                    phosphorylation site prediction
                                 </button>
                                 <!--<button class="btn btn-primary "-->
                                 <!--ng-click="hidePhosphoGraph()">Hide-->
@@ -2342,18 +2441,15 @@ if __name__ == '__main__':
 
                             <div ng-show="ctrl.showPhosphoGeneNetwork">
                                 <div class="well">
-                                    <h4>Mapping Kinases to Targeted Phosphosite
+                                    <h4>Predicting Kinases to Substrate Phospho-Protein
 
                                         <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
                             </span>
                                     </h4>
                                     <div class="bs-callout bs-callout-primary">
-                                        <p>This table shows the known and predicted kinases targeting the input PTM
-                                            proteins. The kinases shown here
-                                            are based on the known kinases in the phosphositePlus and predicted kinases
-                                            based on the blosum50 similarity score
-                                            of the phosphosite sequence and known kinase target sequences.
+                                        <p>This table shows predicted kinase family targeting the input
+                                            phospho-proteins via deep learning. The scores are between 0 to 1, where 1 is the highest possibility.
                                         </p>
                                     </div>
 

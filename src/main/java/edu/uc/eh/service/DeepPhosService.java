@@ -54,7 +54,6 @@ public class DeepPhosService {
 //            System.out.println("---------------------");
             JSONArray kinaseInfo = (JSONArray) parser.parse((String)geneInfo.get(kinase));
 
-//            System.out.println(kinaseInfo);
             prediction.put(kinase,kinaseInfo);
             //object=jsonParser.parse(data);
 //            JSONArray kinaseList = (JSONArray) geneInfo.get(kinase);

@@ -433,7 +433,7 @@ public class RestAPI implements ErrorController {
                         while ((currentLine = br.readLine()) != null) {
                             String str[] = currentLine.split(",");
                             RowNum++;
-                            if (RowNum > 3000) {
+                            if (RowNum > 4000) {
                                 outputError.put("message", "Error: please contact pinet support for pinet-stand-alone package to analyze larger files..");
                                 return outputError;
 

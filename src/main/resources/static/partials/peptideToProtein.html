@@ -297,13 +297,10 @@ Please check help tab for complete list of APIs.">
                     Enter peptide sequences with PTM sites indicated using PSIMOD, UNIMOD,
                     mass difference or shorthand notations, and their (optional) abundance
                     values.
-                    Enter
-                    peptides or
-                    for
-                    example use the list of
+                    Try the list of
                     <a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Peptides('table')"
                        ng-style="{'font-weight': 'bold'}">
-                        LINCS P100 peptides&nbsp;
+                        LINCS P100 phospho-peptides&nbsp;
                     </a><span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                               data-delay='{"show":"0", "hide":"100"}'
                               data-toggle="tooltip"
@@ -315,7 +312,7 @@ Please check help tab for complete list of APIs.">
                     <!--ng-style="{'font-weight': 'bold'}">-->
                     <!--LINCS GCP peptides&nbsp;-->
                     <!--</a>-->
-                    . Peptides can be sparated by comma, semi-colon or a new line.
+                    as an example. Peptides can be sparated by comma, semi-colon or a new line.
                 </div>
             </div>
 
@@ -345,7 +342,7 @@ Please check help tab for complete list of APIs.">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Please Use Chrome or Firefox for your best Experience.</h4>
+                                        <h4 class="modal-title">Please Use Firefox for your best Experience.</h4>
                                     </div>
                                     <div class="modal-body">
                                         <p> Some functionalities like download figures or upload files may encounter unexpected errors.</p>
@@ -363,8 +360,8 @@ Please check help tab for complete list of APIs.">
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Mass Diff.
-                            / Shorthand Notation Info
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            Shorthand Notation Info
                         </button>
 
                         <!-- Modal -->
@@ -375,7 +372,7 @@ Please check help tab for complete list of APIs.">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Mass Difference / Shorthand Notation For Input
+                                        <h4 class="modal-title"> Shorthand Notation For Input
                                             Peptides</h4>
                                     </div>
                                     <div class="modal-body">
@@ -583,17 +580,18 @@ Please check help tab for complete list of APIs.">
 
                     </div>
 
+
                     <div class="form-group col-md-3 col-sm-3 col-sm-offset-0">
                         <label style="padding-bottom: 15px;margin-left: -10px;">Peptides&nbsp;
                             <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                   data-delay='{"show":"0", "hide":"100"}'
                                   data-toggle="tooltip"
-                                  title="Input peptides with/out modifications are parsed and each amino acid sequence is captured.">
+                                  title="Input peptides with/out modifications are parsed and each amino acid sequence is captured. Peptides (after parsing out PTMs) are mapped to the selected reference proteome.">
 
                                 </span>
                             <br/>
                         </label>
-                        <div class=" list-responsive-vertical3" style=" word-wrap:break-word;" id="div11">
+                        <div class=" list-responsive-vertical3" style=" word-wrap:break-word;" id="left">
                             <div ng-repeat="motif in ctrl.parsedMotifs track by $index">{{motif}}<br/></div>
                         </div>
                     </div>
@@ -603,11 +601,11 @@ Please check help tab for complete list of APIs.">
                             <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                   data-delay='{"show":"0", "hide":"100"}'
                                   data-toggle="tooltip"
-                                  title="Input peptides with/out modifications are parsed and each modificatio is recognized. Please follow the input example for the formatting. Parsed modifications can be in three formats of mass difference with at least 3 digits accuracy, shorthand notation or unimod or psi-mod notation. ">
+                                  title="Input peptides with/out modifications are parsed and each modification is recognized. Please follow the input example for the formatting. Parsed modifications can be in three formats of mass difference with at least 3 digits accuracy, shorthand notation or unimod or psi-mod notation. User defined modifications are harmonized with PSI-MOD or UNI-MOD.">
                                     </span>
                             <br/>
                         </label>
-                        <div class=" list-responsive-vertical3" style="word-wrap:break-word;" id="div12">
+                        <div class=" list-responsive-vertical3" style="word-wrap:break-word;" id="right">
                             <div ng-repeat="modification in ctrl.parsedModificationsFormatter track by $index">
                                 {{modification}}
                                 <br/>
@@ -616,16 +614,16 @@ Please check help tab for complete list of APIs.">
                     </div>
 
                     <div class="form-group col-md-2 col-sm-2 col-sm-offset-0" style="position: relative">
-                        <label style="padding-bottom: 15px;margin-left: -10px;">Log-Diff-Expression&nbsp;
+                        <label style="padding-bottom: 15px;margin-left: -10px;">Expression&nbsp;
                             <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                   data-delay='{"show":"0", "hide":"100"}'
                                   data-toggle="tooltip"
-                                  title="This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
+                                  title="Real numbers representing normalized peptide intensities or other quantitative measures of (relative) abundance or (differential) expression. This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
                             >
                                     </span>
                             <br/>
                         </label>
-                        <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div13">
+                        <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="righter">
                             <div ng-repeat="abundance in ctrl.peptideAbundance track by $index">
                                 {{abundance | limitTo:9}}
                                 <!--{{abundance.toFixed(2)}}-->
@@ -638,7 +636,7 @@ Please check help tab for complete list of APIs.">
                         <button class="btn btn-primary col-sm-offset-3" ng-click="ctrl.onSubmit('table')"
                                 style="position: relative; bottom: 0px; right: 0px;">
                             Submit &nbsp;
-                            <span ng-show="ctrl.waiting">
+                            <span ng-show="waiting">
                                         <span class="glyphicon glyphicon-refresh glyphicon-spin">
 
                                         </span>
@@ -647,10 +645,10 @@ Please check help tab for complete list of APIs.">
                         <br/>
                         <br/>
                         <!--{{getPercentage()}}-->
-                        <!--{{ctrl.waiting}}-->
+                        <!--{{waiting}}-->
                         <!--{{ctrl.showOutput}}-->
 
-                        <div ng-show="ctrl.waiting && ctrl.showOutput">
+                        <div ng-show="waiting && ctrl.showOutput">
 
                             <!--here- {{getPercentage()}}-->
                             <!--<div class="progress-bar progress-bar-warning " id="progress"-->
@@ -696,13 +694,24 @@ Please check help tab for complete list of APIs.">
                 <div class="well col-sm-12" style="border-color: black ">
 
                     <!--<div class="row">-->
-                    <div class="col-sm-8 col-md-8 col-lg-8">
+                    <div class="col-sm-8 col-md-8 col-lg-8" style="font-size: smaller">
                         <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                        <p style="display:inline">
+                            <span class="boldText"> Please Use Mozilla Firefox for this analysis
+                            <span
+                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                    data-delay='{"show":"0", "hide":"100"}'
+                                    data-toggle="tooltip"
+                                    title="Some browsers,
+                                         like Google Chrome, put a constraint on how many requests can be done. ">
+                            </span> </span>
+                        </p>
                         Submit a file in .csv format containing (in the first column) a list of peptide
                         sequences with PTM sites indicated using PSIMOD, UNIMOD,
-                        mass difference or shorthand notations, and (in the subsequent columns) their
-                        corresponding abundance values for samples divided into two categories by common
-                        prefixes (e.g. ctrl_ vs. treat_) of their sample IDs (included in the first row).
+                        mass difference or shorthand notation, and (in the subsequent columns)
+                        their corresponding (normalized) peptide intensities or other (relative)
+                        abundance measures for samples divided into two classes by using common
+                        prefixes (e.g. ctrl_ vs. treat_) of their sample IDs.
                             <p style="display:inline">
                                 <span class="boldText">
                                     Please use APIs or stand-alone version of piNET (
@@ -710,8 +719,26 @@ Please check help tab for complete list of APIs.">
 
 https://github.com/uc-bd2k/pinet-server
                                     </a>
-                                    ) to analyze large data sets. Currently, up to 3 thousand peptides/proteins can be processed using this interactive workflow.
-                            </span></p> Due to different types of data normalization methods, the data are assumed to be normalized.
+                                    ) to analyze large data sets. Currently, up to 4 thousand
+                                    <span
+                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                        data-delay='{"show":"0", "hide":"100"}'
+                                        data-toggle="tooltip"
+                                        title="Most browsers get very slow when dealing with a large amount of data and some browsers,
+                                         like Google Chrome, put a constraint on how many requests can be outstanding.
+                                         Once the constraint is reached,
+                                        subsequent requests will fail with net::ERR_INSUFFICIENT_RESOURCES.
+                                        This limitation is not a limit for what pinet can achieve, but imposed for better performance and compatibility with different browsers. ">
+                                    </span>
+                                    peptides/proteins can be processed using this interactive workflow.
+                                    <a href="https://support.google.com/chrome/forum/AAAAP1KN0B0iJkRToypav0/?hl=fr" target="_blank">
+
+(More Info Here)
+                                    </a>
+
+                            </span>
+                            </p>
+                        Please note that no data normalization is performed as part of this workflow: data are assumed to be normalized by the user, using an appropriate normalization scheme for the type of MS-based approach used to generate these data.
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4">
                         <div class="onerow">
@@ -730,7 +757,7 @@ https://github.com/uc-bd2k/pinet-server
                                     data-delay='{"show":"0", "hide":"100"}'
                                     data-toggle="tooltip"
                                     title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
-                            </span> </span></p> and try uploading the file for workflow illustration.
+                            </span> </span></p> and try uploading the file.
 
                             </p>
 
@@ -741,7 +768,7 @@ https://github.com/uc-bd2k/pinet-server
                             <button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload .csv File
                                 and Start
                                 Analysis
-                                <span ng-show="ctrl.waiting || ctrl.uploadWaiting">
+                                <span ng-show="waiting || ctrl.uploadWaiting">
                                                     <span class="glyphicon glyphicon-refresh glyphicon-spin">
 
                                                     </span>
@@ -754,14 +781,27 @@ https://github.com/uc-bd2k/pinet-server
                                 </p>
 
                             </span>
-                            <span ng-if="ctrl.uploadErrorTag == 400" style="color: #464bb4; font-weight: bold">
+                            <div  ng-if="ctrl.uploadErrorTag == 400" >
 
-                                   {{ctrl.uploadErrorText}}
-                            </span>
+
+                                <p style="display:inline">
+                                    <span class="boldText" style="color: maroon">
+                                        {{ctrl.uploadErrorText}}
+                                        <span
+                                                style="color:maroon;" class="glyphicon glyphicon-question-sign"
+                                                data-delay='{"show":"0", "hide":"100"}'
+                                                data-toggle="tooltip"
+                                                title="Please try fixing the input error before resubmitting, contact pinet support for more help or raise an issue in the github. ">
+                                        </span>
+                                    </span>
+                                </p>
+
+
+                            </div>
                             <!--<p ng-show="ctrl.uploadWaiting" style="color: steelblue; font-weight: bold">-->
                                     <!--Server queries 50 peptides/sec, please wait.-->
                                 <!--</p>-->
-                            <div ng-show="ctrl.waiting">
+                            <div ng-show="waiting">
 
 
                                 <div class="progress-bar-striped" id="progress4">
@@ -772,11 +812,13 @@ https://github.com/uc-bd2k/pinet-server
                                         <!--ng-style="{width : getPercentage() + '%'  }">-->
                                         <!--<b>{{getPercentage()}}%</b>-->
                                     </div>
-                                    <br/>
-                                    <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
-                                    <p style="color: steelblue">{{ctrl.progressText}}</p>
-                                    </div>
+
                                 </div>
+                                <br/>
+                                <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
+                                    <p style="color: steelblue">{{ctrl.progressText}}</p>
+                                </div>
+
                                 <br/>
 
                             </div>
@@ -884,6 +926,11 @@ if __name__ == '__main__':
                     <a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">
                         http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>
                     <br/>
+                    For regular expression to capture the peptide and acceptable modification formats: http://pinet-server.org/pinet/api/regex/{ptmPeptide}
+                    <br/>
+                    <a href="http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]" target="_blank">
+                        http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
+                    <br/>
                     <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
                         <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
 
@@ -923,10 +970,10 @@ if __name__ == '__main__':
 
 
 
-<div class="container-fluid" ng-show="ctrl.showOutput && !ctrl.waiting && ctrl.ex1orex2 == ctrl.showOutputex1orex2">
+<div class="container-fluid" ng-show="ctrl.showOutput && !waiting && ctrl.uploadErrorTag != 400 && ctrl.ex1orex2 == ctrl.showOutputex1orex2">
 
 
-    <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+    <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
          style="background-color: transparent; border-color: #999999">
 
         <div class="tabPanel-widget">
@@ -1198,7 +1245,7 @@ if __name__ == '__main__':
                 <div class="well col-md-12 col-sm-12" style="background-color: white">
 
 
-                    <!--<div class="container" ng-show="ctrl.showOutput && !ctrl.waiting">-->
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
                     <!--<div class="row">-->
                     <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
                         <!--<div id="myPie"></div>-->
@@ -1236,7 +1283,7 @@ if __name__ == '__main__':
                                         </span>
                                     </div>
                                 </td>
-                                <td style="font-weight: 400" title="'Percent'" filter="{ percent: 'number'}"
+                                <td style="font-weight: 400" title="'Percent'"
                                     sortable="'percent'" ng-if="mapping.percent != 'na' ">
                                     {{mapping.percent.toFixed(2)}}
                                 </td>
@@ -1278,7 +1325,7 @@ if __name__ == '__main__':
                                 </span>
                 </div>
                 <div class="well col-md-12 col-sm-12" style="background-color: white">
-                    <!--<div class="container" ng-show="ctrl.showOutput && !ctrl.waiting">-->
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
                     <!--<div class="row">-->
 
                     <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
@@ -1325,7 +1372,7 @@ if __name__ == '__main__':
                                         </span>
                                     </div>
                                 </td>
-                                <td style="font-weight: 400" title="'Percent'" filter="{ percent: 'number'}"
+                                <td style="font-weight: 400" title="'Percent'"
                                     sortable="'percent'" ng-if="mapping.percent != 'na' ">
                                     {{mapping.percent.toFixed(2)}}
                                 </td>
@@ -1362,7 +1409,7 @@ if __name__ == '__main__':
                                 </span>
                 </div>
                 <div class="well col-md-12 col-sm-12" style="background-color: white">
-                    <!--<div class="container" ng-show="ctrl.showOutput && !ctrl.waiting">-->
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
                     <!--<div class="row">-->
                     <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
                         <!--<div id="myPie"></div>-->
@@ -1409,7 +1456,7 @@ if __name__ == '__main__':
                                     </div>
                                 </td>
 
-                                <td style="font-weight: 400" title="'Percent'" filter="{ percent: 'number'}"
+                                <td style="font-weight: 400" title="'Percent'"
                                     sortable="'percent'" ng-if="mapping.percent != 'na' ">
                                     {{mapping.percent.toFixed(2)}}
                                 </td>
@@ -1443,7 +1490,7 @@ if __name__ == '__main__':
             <div class="container-fluid"
                  style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
 
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting && !ctrl.secondPageQuery"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting && !ctrl.secondPageQuery"
                      style="background-color: transparent; border-color: #999999">
 
                     <button class="btn btn-primary " ng-click="makeParallelGrid(ctrl.peptideToModificationList);">
@@ -1507,7 +1554,7 @@ if __name__ == '__main__':
             <h2>Results in Tabular Format</h2>
             <div class="container-fluid"
                  style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
                      style="background-color: transparent; border-color: #999999">
 
                     <div class="well well-sm">
@@ -1525,7 +1572,7 @@ if __name__ == '__main__':
                 </div>
 
 
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
                      style="background-color: transparent; border-color: #999999">
 
 
@@ -1544,7 +1591,7 @@ if __name__ == '__main__':
                         </div>
                         <!--{{ctrl.ontologyMappings}}-->
                         <!--<div class="panel panel-default">-->
-                        <button class="btn btn-primary " ng-click="exportDataontologyMappings(ctrl.ontologyMappings)">
+                        <button class="btn btn-primary " ng-click="exportDataontologyMappings(ctrl.ontologyMappingsTable)">
                             Download Table
                         </button>
                         <!--</div>-->
@@ -1557,7 +1604,7 @@ if __name__ == '__main__':
 
                                     <th style="background-color: #E9E9E9">Input PTM</th>
                                     <!--<th style="background-color: #E9E9E9">Input PTM-Mass</th>-->
-                                    <th style="background-color: lightgrey">Suggested Accession</th>
+                                    <th style="background-color: lightgrey">Suggested Modification</th>
                                     <th style="background-color: lightgrey">Suggested Avg. Mass</th>
 
 
@@ -1576,7 +1623,7 @@ if __name__ == '__main__':
                                 </thead>
                                 <tbody>
 
-                                <tr ng-repeat="mapping in ctrl.ontologyMappings">
+                                <tr ng-repeat="mapping in ctrl.ontologyMappingsTable">
                                     <td>{{mapping.input}}</td>
                                     <!--<td>{{mapping.mass}}</td>-->
                                     <!--<td>{{mapping.shorthand}}</td>-->
@@ -1704,7 +1751,7 @@ if __name__ == '__main__':
 
 
 
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
                      style="background-color: transparent; border-color: #999999">
 
 
@@ -1795,7 +1842,7 @@ if __name__ == '__main__':
                     </div>
 
                 </div>
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
                      style="background-color: transparent; border-color: #999999">
 
 
@@ -1898,7 +1945,7 @@ if __name__ == '__main__':
                         </div>
                     </div>
                 </div>
-                <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+                <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
                      style="background-color: transparent; border-color: #999999">
 
 
@@ -2186,7 +2233,7 @@ if __name__ == '__main__':
     </div>
     <!--<div class="well container container-fluid" ng-show="true" style="margin-top: 20px;">-->
 
-    <div class="well col-sm-12" ng-show="ctrl.showOutput && !ctrl.waiting"
+    <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting"
          style="background-color: transparent; border-color: #999999">
         <div class="well well-sm" style="background-color: #c9c9c9">
             <h4>More Analysis</h4>

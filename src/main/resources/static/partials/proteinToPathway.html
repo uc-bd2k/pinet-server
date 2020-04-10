@@ -86,6 +86,7 @@ border-radius: 5px;">
             </a><span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                       data-delay='{"show":"0", "hide":"100"}'
                       data-toggle="tooltip"
+                      data-placement="bottom"
                       title="This example shows the effect of Staurosporine on the genes, which is a potent, non-selective
                 inhibitor of protein kinases, including protein kinase C.">
                                     </span>
@@ -150,6 +151,78 @@ border-radius: 5px;">
 
                         <div class="well col-sm-12">
 
+
+                            <div class=" form-group col-sm-12" style="padding-top:5px;padding-bottom: 10px;margin-top: 5px;margin-bottom: 5px;" >
+                                <p style="font-weight: bold">Select Between options &nbsp;<span style="color:black;" class="glyphicon glyphicon-question-sign"
+                                                                                                data-delay='{"show":"0", "hide":"100"}'
+                                                                                                data-toggle="tooltip"
+                                                                                                title="Please select between the provided example or the results of PeptideToProtein Mappings.
+                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
+                                                                               The inputs can be modified manually. "
+                                >
+                                        </span ></p>
+
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;">
+                                <!--<div class="well col-sm-12">-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+
+
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Workflow Example
+                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="tooltip"
+                                          title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                    >
+                                        </span >
+                                    <span  ng-show= "showRegi1"style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                    <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                </div>
+                                <!--</div>-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Results
+                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="popover-hover"
+
+                                          data-img="images/avg1-3.png" >
+                                        </span>
+                                    <span  ng-show= "showRegi2" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                    <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                </div>
+                                <!--</div>-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Results Averaged
+                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="popover-hover"
+
+
+
+                                          data-img="images/avg2-3.png"
+
+                                    >
+                                        </span>
+                                    <span  ng-show= "showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                    <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                </div>
+
+                            </div>
+
                             <!--<a style="text-decoration: none;">-->
                             <!--<a class= "collapse in" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="text-decoration: none; ">-->
 
@@ -205,20 +278,26 @@ border-radius: 5px;">
                                 <!--<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>-->
                                 <div style="float:left;">
                 <span>
-                    <hr/>
-                    <p>
+
+                    <p style="font-size: smaller">
                         Because of the workflows in this tab, gene names are agnostic to the organism. Genes are translated to the Homo Sapiens Counterparts.
                     </p>
-                    <p>
+                    <p style="font-size: smaller">
                     &nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are common with Homo Sapiens.
                     </p>
-                    <span ng-show="ctrl.geneNameError" style="padding-left: 0px;" class="onerow">
+                    <span ng-show="ctrl.geneNameError" style="padding-left: 0px;font-size: smaller" class="onerow">
                         <strong>Error in gene names, please modify the gene names and try again!</strong>
                     </span>
 
-                    <span ng-show="ctrl.flagFoundNPCG" style="padding-left: 0px;" class="onerow">
-                        non conforming genes with Homo Sapiens genes: <span style='color:red'>
-                        <span ng-repeat="nonValid in ctrl.nonValidGenes" class="onerow">{{nonValid}},&nbsp;</span>
+                    <span ng-show="ctrl.flagFoundNPCG" style="padding-left: 0px; font-size: smaller" class="onerow">
+                        Server could not find human counter gene names for
+                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                              data-delay='{"show":"0", "hide":"100"}'
+                              data-toggle="tooltip"
+                              title="User may want to try different gene names for these selection."
+                        />:
+                        <span style='color:Maroon'>
+                        <span ng-repeat="nonValid in ctrl.nonValidGenes" class="onerow">{{nonValid}}&nbsp;&nbsp;</span>
                         <!--{{ctrl.numberOfAllValidGenes}}-->
                     </span>
                         <!--<a href="#" title="{{ctrl.nonValidGenes}}">Mouse over to see the non conforming genes with Homo Sapiens genes</a>-->
@@ -244,7 +323,7 @@ border-radius: 5px;">
 
                                     <!--<br/>-->
                                 </label>
-                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div9">
+                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="left">
                                     <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
                                     <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.symbol}}<br/></span>
                                 </div>
@@ -261,23 +340,23 @@ border-radius: 5px;">
                                     <!--</span>-->
                                     <!--<br/>-->
                                 </label>
-                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div10">
+                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="right">
                                     <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.name | limitTo:30}}<br/></span>
                                 </div>
 
                             </div>
 
                             <div class=" form-group col-sm-2 col-sm-offset-0">
-                                <label style="padding-bottom: 15px;margin-left: -10px;">Log-Diff-Expression&nbsp;
+                                <label style="padding-bottom: 15px;margin-left: -10px;">Expression&nbsp;
                                     <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="tooltip"
-                                          title="This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
+                                          title="Real numbers representing normalized intensities or other quantitative measures of (relative) abundance or (differential) expression. This column can be used to reflect the logarithm of differential expression (or other similar measurement) between two conditions. If this value is not inserted, it is assumed to be 'NA'."
                                     >
                 </span>
                                     <br/>
                                 </label>
-                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div10-1">
+                                <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="righter">
                                     <div ng-repeat="abundance in ctrl.geneAbundance track by $index">
                                         {{abundance| limitTo:6}}
                                         <br/>
@@ -897,7 +976,12 @@ border-radius: 5px;">
             <!--<hr/>-->
             <div class="well col-sm-12"
                  style="background-color: transparent; border-color: #999999" ng-show="ctrl.showGeneNetwork">
-
+                <p style="margin-bottom: 20px;">Analysis of <span style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{ctrl.geneTitleText}}</span > &nbsp;<span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
+                                                                                                                                                                                data-delay='{"show":"0", "hide":"100"}'
+                                                                                                                                                                                data-toggle="tooltip"
+                                                                                                                                                                                title="Please see the workflow selection options on the top. "
+                >
+                                        </span ></p>
                 <div class=" tabPanel-widget5">
                     <label for="tab5-1" tabindex="0"></label>
                     <input id="tab5-1" type="radio" name="tabs" aria-hidden="true">

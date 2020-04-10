@@ -37,6 +37,7 @@ public class PeptideRegexServive {
 
         String aminoAndInsideBrackets = "[A-Z]\\[([-+]?([0-9]*\\.[0-9]+|[0-9]+))\\]";
         String insideBracketsShorthand = "\\[([a-z]*[A-Z])\\]";
+        String aminoAndparanthesesAndInside = "[A-Z]\\([^)]*?\\)";
         String paranthesesAndInside = "\\([^)]*?\\)";
         String upperCasePattern = "[A-Z]+";
         //re6 = ".\\[([^}]+)\\]";
@@ -92,7 +93,7 @@ public class PeptideRegexServive {
 //        }
 //        System.out.println(s);
 //        System.out.println("After m2.group(1) --------");
-        Pattern p = Pattern.compile(paranthesesAndInside);
+        Pattern p = Pattern.compile(aminoAndparanthesesAndInside);
         Matcher m = p.matcher(input);
         while (m.find()) {
             //System.out.println(m.group(0));

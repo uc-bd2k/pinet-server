@@ -856,11 +856,13 @@ public class PhosphoService {
                         ptmUbArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
                     } else if (((String) proteinToPhosphoAminoItem.get("ptm")).toUpperCase().contains("MOD")) {
-                        String mod = ((String) proteinToPhosphoAminoItem.get("ptm")).toUpperCase();
+                        String mod = ((String) proteinToPhosphoAminoItem.get("ptm")).toUpperCase().replace("_",":");
+                        System.out.println("There is a MOD modification before checking");
+                        System.out.println(mod);
                         if (modToPTMJson.containsKey(mod)) {
                             String modPTM = (String) modToPTMJson.get(mod);
                             JSONObject ptmItemJson = new JSONObject();
-                            System.out.println("////////////////////// ");
+                            System.out.println("There is a MOD modification ");
                             System.out.println("////////////////////// ");
                             System.out.println(mod);
                             System.out.println(modPTM);
@@ -1222,7 +1224,7 @@ public class PhosphoService {
                             geneBlosumJson.put("amino", phosphoAmino);
                             geneBlosumJson.put("geneSequence", phosphoSequence);
                             geneBlosumJson.put("kinase", keyStr);
-                            geneBlosumJson.put("kinaseOrganism", blosumOrganism);
+//                            geneBlosumJson.put("kinaseOrganism", blosumOrganism);
                             geneBlosumJson.put("kinasePeptide", blosumString);
                             geneBlosumJson.put("blosum50ScorePercent", blosumScoreHigh);
                             //geneBlosumJson.put("blosum50ScorePercent", Math.round(((double)blosumScoreHigh*100.0/(double)blosumScoreMax)));
@@ -1249,7 +1251,7 @@ public class PhosphoService {
                             geneBlosumJson.put("amino", phosphoAmino);
                             geneBlosumJson.put("geneSequence", phosphoSequence);
                             geneBlosumJson.put("kinase", keyStr);
-                            geneBlosumJson.put("kinaseOrganism", blosumOrganism);
+//                            geneBlosumJson.put("kinaseOrganism", blosumOrganism);
                             geneBlosumJson.put("kinasePeptide", blosumString);
                             geneBlosumJson.put("blosum50ScorePercent", blosumScoreHigh);
                             geneBlosumJson.put("blosum50MaxScore", blosumScoreMax);
@@ -3335,50 +3337,107 @@ public class PhosphoService {
             if(urlString.length() > 0){
                 urlString = urlString.substring(0, urlString.length() - 1);
             }
+
+
+//Adding nodes to deepPhos
+            for (int i = 0; i < protList.length; i++) {
+
+                inputGene = protList[i];
+                inputGeneUpper = inputGene.toUpperCase();
+                System.out.println("inputGene");
+                System.out.println(inputGene);
+                System.out.println("inputGeneUpper");
+                System.out.println(inputGeneUpper);
+//
+//                String deepItemName = (String) deepItem.get("name");
+//                String deepItemNameTrans = (String) deepItem.get("full_name");
+//
+//                String deepItemFullName = "";
+//                if (phosphoSiteToPhosphoProtein.containsKey(deepItemName)) {
+//                    deepItemFullName = (String) ((JSONObject) phosphoSiteToPhosphoProtein.get(deepItemName)).get("phosphoProtein");
+//                }
+//
+//                if (!deepPhos_nodeUnique.containsKey(deepItemFullName)) {
+//                    newNode = generateNode(deepItemNameTrans, deepItemFullName, "", ppidx, 0, 0.0);//tag 2 is for protein-protein-interaction
+//                    ppidx = ppidx + 1;
+//
+//
+//                    deepPhos_nodeUnique.put(deepItemFullName, newNode);
+//                    deepPhosNetwork_Nodes.add(newNode);
+//                }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+                String deepprotListAndGeneName = (String) protListAndGeneName.get(protList[i]);
+                if (!deepPhos_nodeUnique.containsKey(deepprotListAndGeneName)) {
+
+                    newNode = generateNode(inputGene, deepprotListAndGeneName, "", ppidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
+                    //uniprot is connected to an enzyme or not
+                    ppidx = ppidx + 1;
+                    deepPhosNetwork_Nodes.add(newNode);
+                    deepPhos_nodeUnique.put(inputGene, newNode);
+                }
+            }
+
+
                 System.out.println("deepPhosurlString=");
                 System.out.println(urlString);
                 System.out.println("deepPhosResults=");
             deepPhosResults = deepPhosService.getPhosphoPrediction(organism, urlString);
-            System.out.println(deepPhosResults);
+            //System.out.println(deepPhosResults);
+
 
             for (Object deepKeyStr : deepPhosResults.keySet()) {
                 System.out.println("interating in key values in deepPhos");
                 System.out.println(deepKeyStr.toString());
-                //JSONArray deepKeyvalue = (JSONArray) parser.parse(deepPhosResults.get(deepKeyStr.toString()));
-                JSONArray deepKeyvalue = (JSONArray) deepPhosResults.get(deepKeyStr);
 
-                if (!deepPhos_nodeUnique.containsKey(deepKeyStr)) {
-                    newNode = generateNode((String) deepKeyStr, (String) deepKeyStr, "", ppidx, 1, 0.0);//tag 2 is for protein-protein-interaction
-                    ppidx = ppidx + 1;
+                try{
+
+                    //JSONArray deepKeyvalue = (JSONArray) parser.parse(deepPhosResults.get(deepKeyStr.toString()));
+                    JSONArray deepKeyvalue = (JSONArray) deepPhosResults.get(deepKeyStr);
+
+                    if (!deepPhos_nodeUnique.containsKey(deepKeyStr)) {
+                        newNode = generateNode((String) deepKeyStr, (String) deepKeyStr, "", ppidx, 1, 0.0);//tag 2 is for protein-protein-interaction
+                        ppidx = ppidx + 1;
 
 
-                    deepPhos_nodeUnique.put(deepKeyStr, newNode);
-                    deepPhosNetwork_Nodes.add(newNode);
+                        deepPhos_nodeUnique.put(deepKeyStr, newNode);
+                        deepPhosNetwork_Nodes.add(newNode);
 
-                }
-
-                //Print key and value
-                System.out.println("key: "+ deepKeyStr + " value: " + deepKeyvalue);
-
-                for (int deepi = 0; deepi < deepKeyvalue.size(); deepi++) {
-
-                    JSONObject deepItem = (JSONObject) deepKeyvalue.get(deepi);
-                    System.out.println(deepItem.toJSONString());
-//                        if (deepItem.containsKey("full_name")) {
-
-                    String deepItemName = (String) deepItem.get("name");
-                    String deepItemNameTrans = (String) deepItem.get("full_name");
-                    //String deepItemFullNameTrunc = deepItemName.split("\\(")[0];
-                    String deepItemFullName = "";
-                    if(phosphoSiteToPhosphoProtein.containsKey(deepItemName)){
-                        deepItemFullName = (String) ((JSONObject)phosphoSiteToPhosphoProtein.get(deepItemName)).get("phosphoProtein");
                     }
 
+                    //Print key and value
 
-                    Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
-                    //Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
-                    //double deepItemScore = Double.valueOf((Double) deepItem.get("score"));
-                    int deepPosition = Integer.parseInt((String) deepItem.get("position"));
+                    //System.out.println("key: "+ deepKeyStr + " value: " + deepKeyvalue);
+
+                    for (int deepi = 0; deepi < deepKeyvalue.size(); deepi++) {
+
+                        JSONObject deepItem = (JSONObject) deepKeyvalue.get(deepi);
+                        //System.out.println(deepItem.toJSONString());
+//                        if (deepItem.containsKey("full_name")) {
+                        //System.out.println("----------------------");
+                        String deepItemName = (String) deepItem.get("name");
+                        String deepItemNameTrans = (String) deepItem.get("full_name");
+                        //String deepItemFullNameTrunc = deepItemName.split("\\(")[0];
+                        String deepItemFullName = "";
+                        if (phosphoSiteToPhosphoProtein.containsKey(deepItemName)) {
+                            deepItemFullName = (String) ((JSONObject) phosphoSiteToPhosphoProtein.get(deepItemName)).get("phosphoProtein");
+                        }
+                        System.out.println(deepItemFullName);
+
+                        Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
+                        //Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
+                        //double deepItemScore = Double.valueOf((Double) deepItem.get("score"));
+                        int deepPosition = Integer.parseInt((String) deepItem.get("position"));
 //                    System.out.println("---------");
 //                    System.out.println(deepItemName);
 //
@@ -3386,37 +3445,46 @@ public class PhosphoService {
 //
 //                    System.out.println(deepItemScore);
 //                    System.out.println(deepPosition);
-                    if (!deepPhos_nodeUnique.containsKey(deepItemFullName)) {
-                        newNode = generateNode(deepItemNameTrans, deepItemFullName, "", ppidx, 0, 0.0);//tag 2 is for protein-protein-interaction
-                        ppidx = ppidx + 1;
+//                        if (!deepPhos_nodeUnique.containsKey(deepItemFullName)) {
+//                            newNode = generateNode(deepItemNameTrans, deepItemFullName, "", ppidx, 0, 0.0);//tag 2 is for protein-protein-interaction
+//                            ppidx = ppidx + 1;
+//
+//
+//                            deepPhos_nodeUnique.put(deepItemFullName, newNode);
+//                            deepPhosNetwork_Nodes.add(newNode);
+//                        }
+
+                        newEdgeNode = generateEdgeNode((int) ((JSONObject) deepPhos_nodeUnique.get(deepKeyStr)).get("idx"), (int) ((JSONObject) deepPhos_nodeUnique.get(deepItemFullName)).get("idx"), deepItemScore, 0);
+                        deepPhosNetwork_Edges.add(newEdgeNode);
+                        JSONObject deepPhosTableJson = new JSONObject();
+
+                        deepPhosTableJson.put("PTMProtein", deepItemFullName);
+                        deepPhosTableJson.put("PTM", deepItemNameTrans);
+
+                        deepPhosTableJson.put("score", deepItemScore);
+                        deepPhosTableJson.put("position", deepPosition);
+                        deepPhosTableJson.put("kinaseGroup", (String) deepKeyStr);
+                        //deepPhosTableJson.put("target", inputGeneProtein);
 
 
-                        deepPhos_nodeUnique.put(deepItemFullName, newNode);
-                        deepPhosNetwork_Nodes.add(newNode);
+                        deepPhosTableArray.add(deepPhosTableJson);
                     }
 
-                    newEdgeNode = generateEdgeNode((int) ((JSONObject) deepPhos_nodeUnique.get(deepKeyStr)).get("idx"), (int) ((JSONObject) deepPhos_nodeUnique.get(deepItemFullName)).get("idx"), deepItemScore, 0);
-                    deepPhosNetwork_Edges.add(newEdgeNode);
-                    JSONObject deepPhosTableJson = new JSONObject();
 
-                    deepPhosTableJson.put("PTMProtein", deepItemFullName);
-                    deepPhosTableJson.put("PTM", deepItemNameTrans);
-
-                    deepPhosTableJson.put("score", deepItemScore);
-                    deepPhosTableJson.put("position", deepPosition);
-                    deepPhosTableJson.put("kinaseGroup", (String) deepKeyStr);
-                    //deepPhosTableJson.put("target", inputGeneProtein);
-
-
-                    deepPhosTableArray.add(deepPhosTableJson);
-
-
-                    //}
+                        //}
 
 
 
+
+
+
+                    }
+                catch (Exception e){
+                    String msg = String.format("Error in one kinase family in deepphos");
 
                 }
+
+
 
                 //for nested objects iteration if required
                 //if (keyvalue instanceof JSONObject)

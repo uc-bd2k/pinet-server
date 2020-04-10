@@ -1784,6 +1784,12 @@ ul {
     left: 5px;
     top: 5px;
 }
+
+
+.popover-warning {
+    background-color: #f0ad4e !important;
+
+}
 /*.input-color {*/
     /*position: relative;*/
 /*}*/
@@ -2107,7 +2113,10 @@ input[type=range]:focus::-ms-fill-upper {
     background: rgba(154, 191, 108, 0.11);
 }
 
-
+.btn-warning:active, .btn-warning:visited, .btn-warning:focus, .btn-warning.active {
+    background-color: #9e6f08 !important;
+    border-color: #9e6f08 !important;
+}
 /*input[type=range] {*/
     /*-webkit-appearance: none;*/
     /*width: 100%;*/

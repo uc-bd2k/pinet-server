@@ -199,131 +199,150 @@ appModule.factory('SharedService', function( $http, $q, $location, NgTableParams
     //Defining Start point variables
     var self = this;
     var vars = {};
-    vars.textArea = "IYQ[pY]IQSR[+42.010] 1.3\n[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.14\nKAY[+79.966]SF[myC]GTVEY[+79.966]MAPEVVNR[+42.010] -0.5, SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYY(UNIMOD:21)AKKKRRHQ -0.33";
+    vars.ptmTitleText = "";
+    vars.geneTitleText = "";
+    vars.ontologyMappingsTable = [];
+    vars.textArea = "[meK]STGG[aK]APR	-0.0649\n\
+[aK]STGG[aK]APR	-0.0215\n\
+[meK][pS]TGGKAPR	-0.2427\n\
+[meK]SAPATGGV[meK]KPHR	0.2786\n\
+EIAQDF[meK]TDLR	0.1569\n\
+IYQ[pY]IQSR[+42.010] 1.3012\n\
+[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.1456\n\
+KA[pY]SF[myC]GTVE[pY]MAPEVVNR -0.5987\n\
+SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQ -0.3312";
         //"\nC[me2K]ISPEERR[pS]PPAPGL -2.11";
     //vars.textAreaFormatMD = "IYQY[+80]IQSR[+42.010] 1.3\nK[+112.1]SAPATGGVK[+42.010]K[+56]PHR -0.5";
     //vars.textAreaFormatSN = "IYQ[pY]IQS[aR] 1.3\n[aK]SAPATGGVK[meK]PHR -0.5";
     vars.showSplash = true;
     vars.firstVisit = true;
-    vars.genes ="WAPAL	0.582765\n\
-LNPEP	0.608463333\n\
-ZBTB4	0.449427083\n\
-CDK5	-0.651827917\n\
-EIF3I	0.311225\n\
-HVCN1	2.6447025\n\
-ATP2B1	1.39054125\n\
-PALM	-0.163905833\n\
-INPP5B	0.590265833\n\
-TTC38	-0.679287083\n\
-ATXN10	0.652995833\n\
-CMTR1	0.492184583\n\
-MYBPC2	-1.412605417\n\
-CD53	1.715054167\n\
-GNPTAB	0.520569167\n\
-LINC00852	0.42628875\n\
+    vars.peptideResultsGenes = false;
+    vars.peptideResultsPTMs = false;
+    vars.peptideResultsPTMsChanged = false;
+    vars.peptideResultsGenesChanged = false;
+
+    vars.genesAveraged = "";
+    vars.genesUnique = "";
+    vars.genes = "";
+    vars.genesExample ="WAPAL	0.58272\n\
+LNPEP	0.60846\n\
+ZBTB4	0.44942\n\
+CDK5	-0.65182\n\
+EIF3I	0.31122\n\
+HVCN1	2.64471\n\
+ATP2B1	1.39054\n\
+PALM	-0.16390\n\
+INPP5B	0.59026\n\
+TTC38	-0.67928\n\
+ATXN10	0.65299\n\
+CMTR1	0.49218\n\
+MYBPC2	-1.41260\n\
+CD53	1.71505\n\
+GNPTAB	0.52057\n\
+LINC00852	0.42628\n\
 GYPB	-0.27026875\n\
-TAF4	-0.659011667\n\
-CCDC136	-0.44600125\n\
-ANAPC5	0.222421667\n\
-VPS53	0.48754375\n\
-SIRT5	0.811704583\n\
-GPR52	0.897875417\n\
-SYNE2	1.529765833\n\
-EGLN1	-0.876005\n\
-DCP1B	-1.481000833\n\
-EVI2B	2.559157083\n\
-CCDC71	0.763645833\n\
-FAM78A	-0.739273333\n\
-SLC7A5	-0.684393333\n\
+TAF4	-0.65901\n\
+CCDC136	-0.44600\n\
+ANAPC5	0.22242\n\
+VPS53	0.48754\n\
+SIRT5	0.81170\n\
+GPR52	0.89787\n\
+SYNE2	1.52976\n\
+EGLN1	-0.87601\n\
+DCP1B	-1.481001\n\
+EVI2B	2.55915\n\
+CCDC71	0.763645\n\
+FAM78A	-0.73927\n\
+SLC7A5	-0.68439\n\
 RFESD	0.90562875\n\
 NOB1	-0.39840625\n\
-CDRT1	-0.653400833\n\
+CDRT1	-0.653400\n\
 TCTN1	1.0469225\n\
 ZNF441	0.65255\n\
-HTRA2	0.427227917\n\
+HTRA2	0.427227\n\
 NLRP1	0.672475\n\
-UBR4	0.369267917\n\
-RAPGEF3	-0.23748375\n\
+UBR4	0.36926\n\
+RAPGEF3	-0.23748\n\
 PLXDC2	-0.13522\n\
-MLX	-0.301622917\n\
-FABP6	-0.655844167\n\
-COASY	-0.43384875\n\
-FCRL5	1.741222083\n\
-MBD3L2	-0.125533333\n\
-ASIC2	-0.2065225\n\
-RPA2	0.506745833\n\
-SIX1	-0.374199167\n\
-MEIS1	-0.813935833\n\
-PCTP	-1.572920417\n\
-BIK	0.961908333\n\
-AHCYL2	-0.623029167\n\
-RAB8B	1.237324583\n\
-TLR4	2.018860417\n\
-DYNLL2	-0.3616775\n\
-USP7	0.5759675\n\
-MSS51	0.273085\n\
-PTPN22	2.632131667\n\
-SLAMF1	2.271535\n\
-ARHGEF40	-0.150840833\n\
-DISC1	-0.241928333\n\
-ARRDC3	1.463494167\n\
+MLX	-0.30162\n\
+FABP6	-0.65584\n\
+COASY	-0.4338\n\
+FCRL5	1.74122\n\
+MBD3L2	-0.125533\n\
+ASIC2	-0.2065\n\
+RPA2	0.50674\n\
+SIX1	-0.37419\n\
+MEIS1	-0.813935\n\
+PCTP	-1.5729\n\
+BIK	0.96191\n\
+AHCYL2	-0.62303\n\
+RAB8B	1.23732\n\
+TLR4	2.01886\n\
+DYNLL2	-0.36167\n\
+USP7	0.57596\n\
+MSS51	0.2730\n\
+PTPN22	2.63213\n\
+SLAMF1	2.2715\n\
+ARHGEF40	-0.15084\n\
+DISC1	-0.24192\n\
+ARRDC3	1.46349\n\
 NMNAT3	-0.31732\n\
-GDF3	0.164861667\n\
-IQCE	-0.3644825\n\
-CCDC148-AS1	-0.32879125\n\
-SRR	0.781120833\n\
-FGB	-0.1569775\n\
-PARP6	-0.413099583\n\
-TOMM40L	0.27411125\n\
-DTNB	0.295823333\n\
-S100A13	-0.291324583\n\
+GDF3	0.164861\n\
+IQCE	-0.36448\n\
+CCDC148-AS1	-0.32879\n\
+SRR	0.78112\n\
+FGB	-0.1569\n\
+PARP6	-0.41309\n\
+TOMM40L	0.27411\n\
+DTNB	0.29582\n\
+S100A13	-0.29132\n\
 ZRSR1	-0.34518\n\
-TPI1	-0.440325\n\
-CHCHD3	-0.985430833\n\
-DCAF7	-0.30202125\n\
-RASEF	-0.161737917\n\
-VTCN1	-0.203435417\n\
-MYH7	-0.201917083\n\
-CRYGB	0.234997083\n\
-ASB2	1.914900833\n\
-GSTO1	-1.972381667\n\
-TRIM47	-0.375892917\n\
-CD33	-0.47027125\n\
+TPI1	-0.44035\n\
+CHCHD3	-0.98543\n\
+DCAF7	-0.30202\n\
+RASEF	-0.16173\n\
+VTCN1	-0.20343\n\
+MYH7	-0.20191\n\
+CRYGB	0.23499\n\
+ASB2	1.91490\n\
+GSTO1	-1.97238\n\
+TRIM47	-0.37589\n\
+CD33	-0.47027\n\
 SLFN5	2.18537\n\
-KIAA0430	0.339397917\n\
-PRR4	-0.52012875\n\
-TLR10	2.561315833\n\
-REPIN1	-1.027269583\n\
-CECR1	-0.83928875\n\
-RUNX2	0.66571125\n\
-IQSEC1	-1.12799875\n\
-PIGL	0.6745275\n\
-CCNL2	0.628422917\n\
-PDE7A	0.915685417\n\
-ETNK1	-0.46183375\n\
-CAMKMT	-0.714247083\n\
-CDYL2	0.925801667\n\
-GOLGA7B	-0.195238333\n\
-ASCC2	0.291145833\n\
-PRR14L	0.386724167\n\
-RALGDS	-0.39905375\n\
-ASB14	0.116145833\n\
-ABHD12	-0.35705875\n\
-USP42	-0.4293225\n\
-DMXL2	-1.610239167\n\
-KLF10	1.041207083\n\
-C2orf76	1.100731667\n\
-LPGAT1	-1.30080625\n\
-MIR155HG	2.48753625\n\
-SCO2	0.296974167\n\
-NIPSNAP3B	1.556337917\n\
-MKRN9P	-0.301214167\n\
-PIGF	-0.571012917\n\
-PIGF	-0.571012917\n\
-SNRPN	0.633652083\n\
-CEP126	-0.676147083\n\
+KIAA0430	0.33939\n\
+PRR4	-0.5201\n\
+TLR10	2.56131\n\
+REPIN1	-1.02727\n\
+CECR1	-0.83928\n\
+RUNX2	0.66572\n\
+IQSEC1	-1.1279\n\
+PIGL	0.67452\n\
+CCNL2	0.62842\n\
+PDE7A	0.91568\n\
+ETNK1	-0.4618\n\
+CAMKMT	-0.71424\n\
+CDYL2	0.92580\n\
+GOLGA7B	-0.19523\n\
+ASCC2	0.29114\n\
+PRR14L	0.38672\n\
+RALGDS	-0.3990\n\
+ASB14	0.116145\n\
+ABHD12	-0.3570\n\
+USP42	-0.4293\n\
+DMXL2	-1.61023\n\
+KLF10	1.04120\n\
+C2orf76	1.10073\n\
+LPGAT1	-1.3008\n\
+MIR155HG	2.48753\n\
+SCO2	0.29697\n\
+NIPSNAP3B	1.55634\n\
+MKRN9P	-0.3012\n\
+PIGF	-0.57101\n\
+PIGF	-0.5710\n\
+SNRPN	0.63365\n\
+CEP126	-0.67614\n\
 EVI2A	1.56335\n\
-CCNL2	0.611158333";
+CCNL2	0.61115";
 
 
 
@@ -335,8 +354,10 @@ CCNL2	0.611158333";
     vars.waiting = false;
     vars.showOutput = false;
     //Q13627[acK@105][phY@145]Q810A7[phS@897]
-
-    vars.inputMassPtmProteins = "Q05826{[pT]@220} -1.33,Q6P788{K[+42.010]@29}{[snC]@101} -1.08,Q9Y463{K(MOD:00663)@256}{Y[+79.966]@273} -0.2,Q13627{[aK]@105}{Y[+79.966]@145} 2.7, Q5TA31{[meR]@109} 2.11, Q13627{K(MOD:00723)@105}{Y(MOD:00259)@104}{Y(UNIMOD:21)@112} -0.33";
+    vars.inputMassPtmProteins = "";
+    vars.inputPtmProteinsAveraged = "";
+    vars.inputPtmProteinsUnique = "";
+    vars.inputPtmProteinsExample = "Q05826{[pT]@220} -1.33,Q6P788{K[+42.010]@29}{[snC]@101} -1.08,Q9Y463{K(MOD:00663)@256}{Y[+79.966]@273} -0.2,Q13627{[aK]@105}{Y[+79.966]@145} 2.7, Q5TA31{[meR]@109} 2.11, Q13627{K(MOD:00723)@105}{Y(MOD:00259)@104}{Y(UNIMOD:21)@112} -0.33";
     vars.inputShorthandPtmProteins = "Q9Y463{[pY]@273} -0.2,Q13627{[pY]@321} 2.7,P51812{[pS]@369} -1.33";
     vars.inputShorthandPtmProteins = "";
     vars.uniprotJsonObjectAllForProtein2Pathways = {};
@@ -5889,6 +5910,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.showExamples = false;
     self.ex1orex2 = SharedService.getVar("ex1orex2");
     self.showOutputex1orex2 = SharedService.getVar("showOutputex1orex2");
+    self.peptideResultsPTMsChanged = false;
+    SharedService.setVar("peptideResultsPTMsChanged",self.peptideResultsPTMsChanged);
+    self.peptideResultsGenesChanged = false;
+    SharedService.setVar("peptideResultsGenesChanged",self.peptideResultsGenesChanged);
 
     //
     // $(document).ready(function(){
@@ -5898,20 +5923,69 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //
     // });
 
-    $('span.AB3text2').click(function() {
-        $(this).closest('span').css({'border': '3px solid black'});
-    });
+    // $('span.AB3text2').click(function() {
+    //     $(this).closest('span').css({'border': '3px solid black'});
+    // });
 
     $('input[name=tabset3][id=' + self.ex1orex2 + ']').prop('checked', true);
     $("input[name='tabset3']").click(function () {
         self.ex1orex2 = this.id;
         console.log(self.ex1orex2);
+        if(self.ex1orex2 == "ex1Id"){
+            console.log("updating textArea");
+            self.textArea = SharedService.getVar('textArea');
+            self.textArea += " ";
+        }
 
         SharedService.setVar("ex1orex2", self.ex1orex2);
         $scope.$apply();
 
     });
 
+
+        var isSyncingLeftScroll = false;
+        var isSyncingRightScroll = false;
+        var isSyncingRighterScroll = false;
+        var leftDiv = document.getElementById('left');
+        var rightDiv = document.getElementById('right');
+        var righterDiv = document.getElementById('righter');
+
+    $(document).ready(function() {
+        if ($('#left').length) {
+            leftDiv.onscroll = function () {
+                if (!isSyncingLeftScroll) {
+                    isSyncingRightScroll = true;
+                    isSyncingRighterScroll = true;
+                    rightDiv.scrollTop = this.scrollTop;
+                    righterDiv.scrollTop = this.scrollTop;
+                }
+                isSyncingLeftScroll = false;
+            }
+        }
+        if ($('#right').length) {
+            rightDiv.onscroll = function () {
+                if (!isSyncingRightScroll) {
+                    isSyncingLeftScroll = true;
+                    isSyncingRighterScroll = true;
+                    leftDiv.scrollTop = this.scrollTop;
+                    righterDiv.scrollTop = this.scrollTop;
+                }
+                isSyncingRightScroll = false;
+            }
+        }
+
+        if ($('#righter').length) {
+            righterDiv.onscroll = function () {
+                if (!isSyncingRighterScroll) {
+                    isSyncingLeftScroll = true;
+                    isSyncingRightScroll = true;
+                    leftDiv.scrollTop = this.scrollTop;
+                    rightDiv.scrollTop = this.scrollTop;
+                }
+                isSyncingRighterScroll = false;
+            }
+        }
+    });
 
 
     self.resultTab = SharedService.getVar("resultTab");
@@ -6156,7 +6230,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.showUploadFlag = false;
     self.plnFormatted = "";
 
-
+    self.ontologyMappingsTable = SharedService.getVar('ontologyMappingsTable');
+    self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
+    self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
     //console.log(self.organismForm);
     self.progressPercent = 0;
     self.tableGO = SharedService.getVar('tableGO');
@@ -6190,12 +6266,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //self.textAreaFormatMD = SharedService.getVar('textAreaFormatMD');
     //self.textAreaFormatSN = SharedService.getVar('textAreaFormatSN');
     self.textArea = SharedService.getVar('textArea');
-    self.waiting = SharedService.getVar('waiting');
+    $scope.waiting = SharedService.getVar('waiting');
     self.showOutput = SharedService.getVar('showOutput');
     self.genes = SharedService.getVar('genes');
     //self.organism = SharedService.getVar('organism');
 
-    self.inputMassPtmProteins = SharedService.getVar('inputMassPtmProteins');
+    self.inputMassPtmProteins = SharedService.getVar('inputPtmProteinsExample');
     self.inputShorthandPtmProteins = SharedService.getVar('inputShorthandPtmProteins');
     self.uniprotJsonObjectAllForProtein2Pathways = SharedService.getVar('uniprotJsonObjectAllForProtein2Pathways');
     self.genesForProtein2Pathways = SharedService.getVar('genesForProtein2Pathways');
@@ -6311,7 +6387,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //Check if browser is IE
 
         //Check if browser is Chrome
-        if(isSafari || isOpera || isIE || isEdge || isEdgeChromium){
+        if(isSafari || isOpera || isIE || isEdge || isEdgeChromium || isChrome){
             console.log("showing modal");
             console.log(isSafari);
             console.log(isOpera);
@@ -6977,6 +7053,68 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //self.proteinToAbundance = {};
         self.geneToAbundance = {};
         self.ptmProteinToAbundance = {};
+
+
+        self.ptmCount = {};
+        self.geneCount = {};
+
+
+
+        // console.log("self.peptideToModificationList");
+        console.log(self.peptideToModificationList);
+        console.log("calculating unique gene and ptm to abundance");
+
+
+        self.peptideToModificationListOrig.map(function (e) {
+            // //console.log(e);
+            var parallelPep = e.motif;
+
+            if (self.selectedPeptides.indexOf(parallelPep) > -1) {
+                if (e.length == 1){
+                    var parallelPep = e.motif;
+                    e.response.map(function (e2) {
+                        if (e2.ptmProteinsMixAll.length > 0 ) {
+                            var parallelPtm = e2.ptmProteinsMixAll[0];
+                            ////console.log(parallelPtm);
+                            if (self.ptmCount.hasOwnProperty(parallelPtm)) {
+                                self.ptmCount[parallelPtm]["value"] += self.peptideToAbundance[parallelPep];
+                                self.ptmCount[parallelPtm]["count"] += 1;
+                            }
+                            else {
+                                self.ptmCount[parallelPtm] = {
+                                    "value": self.peptideToAbundance[parallelPep],
+                                    "count": 1
+                                };
+                            }
+                        }
+
+                        ////console.log(e2);
+                        //for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+
+                        if (e2.geneArray.length > 0 ) {
+                            var parallelGene = e2.geneArray[0];
+
+
+                            if (self.geneCount.hasOwnProperty(parallelGene) ) {
+                                self.geneCount[parallelGene]["value"] += self.peptideToAbundance[parallelPep];
+                                self.geneCount[parallelGene]["count"] += 1;
+                            }
+                            else{
+                                self.geneCount[parallelGene] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+                            }
+                        }
+                    });
+                }
+            }
+
+
+
+
+
+        });
+
+
+
         self.peptideToModificationListOrig.map(function (e) {
             // //console.log(e);
             var parallelPep = e.motif;
@@ -6988,24 +7126,31 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     ////console.log(e2);
 
                     var parallelProt = e2.sequence_ac;
-                    var parallelPtm = e2.ptmProteinsMixAll[0];
-                    var parallelGene = e2.geneArray[0];
+
+                    if (e2.ptmProteinsMixAll.length > 0 ) {
+                        var parallelPtm = e2.ptmProteinsMixAll[0];
+                        if (!(parallelPtm in self.ptmProteinToAbundance)){
+                            self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        }
+                        else{
+                            self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+
+                        }
+                    }
+                    if (e2.geneArray.length > 0 ) {
+                        var parallelGene = e2.geneArray[0];
+                        if (!(parallelGene in self.geneToAbundance)){
+                            self.geneToAbundance[parallelGene] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        }
+                        else{
+                            self.geneToAbundance[parallelGene] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+
+                        }
+                    }
                     ////console.log(e2);
-                    if (!(parallelPtm in self.ptmProteinToAbundance)){
-                        self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
-                    }
-                    else{
-                    self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
 
-                    }
 
-                    if (!(parallelGene in self.geneToAbundance)){
-                        self.geneToAbundance[parallelGene] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
-                    }
-                    else{
-                        self.geneToAbundance[parallelGene] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
 
-                    }
 
                 })
                 // e.response.map(function (e2) {
@@ -7027,6 +7172,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         // SharedService.setVar("list_of_positive_peps", self.list_of_positive_peps);
         self.proteinIdListMassCombinedWithAbundance = [];
         self.genesWithAbundance = [];
+        self.proteinIdListMassCombinedWithAbundanceUnique = [];
+        self.genesWithAbundanceUnique = [];
         for (var keyIter in self.ptmProteinToAbundance) {
             if (self.ptmProteinToAbundance.hasOwnProperty(keyIter)) {
                 var valueIter = self.ptmProteinToAbundance[keyIter];
@@ -7053,11 +7200,67 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             }
         }
 
+        console.log("before gene 2 abundance unique");
+        console.log(self.geneCount);
 
-        //SharedService.setVar('peptideToModificationList', self.peptideToModificationList);
-        SharedService.setVar("inputMassPtmProteins", self.proteinIdListMassCombinedWithAbundance);
+        for (var keyIter in self.geneCount) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCount.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCount[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(5))
+                    }
+                    else {
+                        self.genesWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        console.log("before ptm 2 abundance unique");
+        console.log(self.ptmCount);
+
+        for (var keyIter in self.ptmCount) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCount.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCount[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(5))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        self.peptideResultsGenes = true;
+        self.peptideResultsPTMs = true;
+        SharedService.setVar("peptideResultsGenes", self.peptideResultsGenes);
+        SharedService.setVar("peptideResultsPTMs", self.peptideResultsPTMs);
+
+        SharedService.setVar('peptideToModificationList', self.peptideToModificationList);
+        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundance);
+        SharedService.setVar("inputPtmProteinsUnique", self.proteinIdListMassCombinedWithAbundanceUnique);
         //SharedService.setVar("inputShorthandPtmProteins", self.geneIdListShorthandCombined);
-        SharedService.setVar('genes',self.genesWithAbundance);
+        SharedService.setVar('genesAveraged',self.genesWithAbundance);
+        SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
 
 
 
@@ -7701,25 +7904,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
 
-        // if (self.inputMassPtmProteins.length > 0) {
-        //     self.parsedInputMassPtmProteins = self.inputMassPtmProteins
-        //         .split(self.rowSplitPatternGenes)
-        //         .map(function (e) {
-        //             if (e.indexOf('[') == -1) {
-        //                 return e
-        //             }
-        //         });
-        //     self.parsedGenes.clean(undefined);
-        // }
-
-        // .filter(function (el) {
-        //         return (el !== null);
-        //     });
-        // .filter(function (el) {
-        //     ////console.log(peptide.indexOf(el.modification));
-        //     return (peptide.indexOf(el.modification) > -1);
-        // })
-
 
         console.log(self.inputMassPtmProteins);
         // //console.log(self.genes);
@@ -7839,7 +8023,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //console.log(self.showPhosphoGeneNetwork);
         //console.log(self.showGeneNetwork);
         self.showPtmSubmit = true;
-        SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+        //SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
 
     });
 
@@ -8052,8 +8236,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         if (self.genes.length > 0) {
             //console.log(self.genes);
             self.geneToAbundanceMap = {};
-            self.parsedGenes = self.genes
-                .split(self.rowSplitPattern)
+            self.parsedGenes = self.genes.split(self.rowSplitPattern)
                 .map(function (e) {
                     if (e) {
 
@@ -8279,12 +8462,25 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     $scope.uploadFileAndOnSubmit = function(){
         self.progressText = "Getting the Peptide to Protein Mapping";
         self.showOutputex1orex2 = "ex2Id";
+
+        self.peptideResultsGenes = false;;
+        self.peptideResultsPTMs = false;
+
+
+        self.peptideResultsGenesChanged = false;
+        self.peptideResultsPTMsChanged = false;
+        SharedService.setVar("peptideResultsGenesChanged",self.peptideResultsGenesChanged);
+        SharedService.setVar("peptideResultsGenes",self.peptideResultsGenes);
+        SharedService.setVar("peptideResultsPTMs",self.peptideResultsPTMs);
+        SharedService.setVar("peptideResultsPTMsChanged",self.peptideResultsPTMsChanged);
+
         SharedService.setVar("showOutputex1orex2",self.showOutputex1orex2);
         //console.log("uploadFile");
         var file = $scope.myFile;
         var fd = new FormData();
         self.uploadWaiting = true;
         self.showOutput = false;
+        self.uploadErrorTag = 200;
         fd.append('file', file);
         //We can send anything in name parameter,
 //it is hard coded to abc as it is irrelavant in this case.
@@ -8675,38 +8871,50 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     console.log("data:");
                                                     console.log(data);
 
-                                                    var sorted_data = data.sort(function (a, b) {
-                                                        return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
-                                                    });
-                                                    ////console.log(sorted_data);
-                                                    var closest_sorted = sorted_data[0];
-                                                    console.log(closest_sorted);
-                                                    var result = {};
-                                                    result.mass = originalMAss;
-                                                    result.input = el;
-                                                    result.identifier = closest_sorted.accession;
-                                                    result.diffavg = closest_sorted.averageDeltaMass;
+                                                    if(data.length > 0){
+                                                        var sorted_data = data.sort(function (a, b) {
+                                                            return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
+                                                        });
 
-                                                    result.description = closest_sorted.description;
-                                                    result.formula = closest_sorted.formula;
-                                                    var similarToPTM = [];
-                                                    sorted_data.forEach(function (element) {
-                                                        var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
-                                                        ////console.log(element);
-                                                        var similarToPTMItem = {};
-                                                        // similarToPTMItem["identifier"] = element.accession;
-                                                        similarToPTMItem["descriptionAll"] = similarToPTMAll;
+                                                        ////console.log(sorted_data);
+                                                        var closest_sorted = sorted_data[0];
+                                                        console.log(closest_sorted);
+                                                        var result = {};
+                                                        result.mass = originalMAss;
+                                                        result.input = el;
+                                                        result.identifier = closest_sorted.accession;
+                                                        result.diffavg = closest_sorted.averageDeltaMass;
 
-                                                        similarToPTM.push(similarToPTMItem);
-                                                    });
-                                                    // for (var i = 0; i < sorted_data.length; i++) {
-                                                    //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
-                                                    //
-                                                    //     similarToPTM.push(similarToPTMItem);
-                                                    //     //Do something
-                                                    // }
+                                                        result.description = closest_sorted.description;
+                                                        result.formula = closest_sorted.formula;
+                                                        var similarToPTM = [];
+                                                        sorted_data.forEach(function (element) {
+                                                            var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
+                                                            ////console.log(element);
+                                                            var similarToPTMItem = {};
+                                                            // similarToPTMItem["identifier"] = element.accession;
+                                                            similarToPTMItem["descriptionAll"] = similarToPTMAll;
 
-                                                    result.similar = similarToPTM;
+                                                            similarToPTM.push(similarToPTMItem);
+                                                        });
+                                                        // for (var i = 0; i < sorted_data.length; i++) {
+                                                        //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
+                                                        //
+                                                        //     similarToPTM.push(similarToPTMItem);
+                                                        //     //Do something
+                                                        // }
+
+                                                        result.similar = similarToPTM;
+                                                    }
+                                                    else{
+                                                        var result = {};
+                                                        result.identifier = "";
+                                                        result.input = el;
+                                                        result.formula = "";
+                                                        result.diffavg = "";
+                                                        result.description = "Not found in database.";
+                                                        result.similar = [];
+                                                    }
                                                     ////console.log(result);
 
                                                     if (self.ontologyMappingsUnique.indexOf(el) === -1) {
@@ -8786,7 +8994,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 self.showOutputPathway = false;
                 SharedService.setVar('showOutputPathway', self.showOutputPathway);
                 self.showInstruction = false;
-                self.waiting = true;
+                $scope.waiting = true;
                 self.showOutput = false;
                 self.showUpload = false;
                 self.sequence_acList = [];
@@ -9038,7 +9246,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                     if (self.numResponsesFromProsite >= self.parsedMotifs.length && self.uniprotResponseIterator >= self.uniprotResponseIteratorTotal) {
 
                                         self.showOutput = true;
-                                        self.waiting = false;
+                                        $scope.waiting = false;
                                         //console.log("Before updating pln! ");
 
                                         //console.log("--------------");
@@ -9416,7 +9624,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                         if (self.numResponsesFromProsite >= self.parsedMotifs.length && self.uniprotResponseIterator >= self.uniprotResponseIteratorTotal) {
 
                                                             self.showOutput = true;
-                                                            self.waiting = false;
+                                                            $scope.waiting = false;
                                                             //console.log("Before updating pln! ");
 
                                                             //console.log("--------------");
@@ -9438,15 +9646,37 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
                                                     //prositeResponseIterator++;
                                                 })
-                                                .error(function (data, status) {
+                                                .error(function (errordb, statusdb) {
                                                     //self.noResponse = true;
                                                     // //console.log(data);
                                                     // //console.log(status);
                                                     //console.log("uniprot error");
                                                     //Each uniprot query adds one portion from 20 percent to 99 percent
                                                     self.uniprotResponseIterator += 1;
+
+
+                                                        self.uploadErrorTag = 400;
+                                                        self.uploadedFalg = false;
+
+                                                        self.uploadWaiting = false;
+                                                    self.uploadedFalg = false;
+                                                    self.uploadWaiting = false;
+                                                    $scope.waiting = false;
+                                                    self.showOutput = false;
+                                                    self.uploadErrorText = "net::ERR_INSUFFICIENT_RESOURCES.\n" +
+                                                        "Reaching the limits of the browser,\n" +
+                                                        "please refresh the page and start over.\n"+
+                                                            " Error in getting information about "+
+                                                    uniprotIdForInsideQuery;
+
                                                     //console.log(self.uniprotResponseIterator);
                                                     //console.log(self.uniprotResponseIteratorTotalForPercentage);
+                                                    console.log("error in uniprot API");
+                                                    // console.log(data);
+                                                    console.log(statusdb);
+                                                    console.log(errordb);
+                                                    // $scope.data.error = { message: error, status: status};
+                                                    // console.log($scope.data.error.status);
                                                     self.progressPercent += 79 / self.uniprotResponseIteratorTotalForPercentage;
 
 
@@ -9461,7 +9691,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     //protPlaceVar = protPlaceVar + 1;
                                                     if (self.numResponsesFromProsite >= self.parsedMotifs.length && self.uniprotResponseIterator >= self.uniprotResponseIteratorTotal) {
 
-                                                        self.showOutput = true;
+                                                        //self.showOutput = true;
                                                         //console.log("Before updating pln! ");
 
                                                         //console.log("--------------");
@@ -9474,8 +9704,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                         //console.log(self.numResponsesFromProsite);
                                                         //console.log("parsedMotifs.length");
                                                         //console.log(self.parsedMotifs.length);
-                                                        self.showOutput = true;
-                                                        self.waiting = false;
+                                                        //self.showOutput = true;
+                                                        $scope.waiting = false;
                                                         //console.log("Before updating pln! number of numResponsesFromProsite");
                                                         //console.log(self.numResponsesFromProsite);
 
@@ -9593,6 +9823,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         //
                         //
                         //     })
+
 
                     })(self.parsedMotifs, self.parsedPeptides);
 
@@ -12667,23 +12898,23 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 var modificationAmino = "";
                                 modificationType = self.modificationNameMap[el.match(self.patt2)];
                                 modificationAmino = self.modificationAminoMap[el.match(self.patt1)];
-                                console.log("---------");
-                                console.log("unimod or psimod");
-                                console.log(el.match(self.patt2));
-                                console.log(modificationType);
-                                console.log(el.match(self.patt1));
-                                console.log(modificationAmino);
-
-                                console.log(shorthandInput);
-                                console.log(originalModFromInput);
-                                console.log(originalMAss);
-                                console.log(elMass);
+                                // console.log("---------");
+                                // console.log("unimod or psimod");
+                                // console.log(el.match(self.patt2));
+                                // console.log(modificationType);
+                                // console.log(el.match(self.patt1));
+                                // console.log(modificationAmino);
+                                //
+                                // console.log(shorthandInput);
+                                // console.log(originalModFromInput);
+                                // console.log(originalMAss);
+                                // console.log(elMass);
                                 (function (modificationType, modificationAmino, originalModFromInput) {
                                     $http.get("api/proteinptmbydescription/" + modificationType)
                                         .success(function (res_data) {
-                                            console.log("api/proteinptmbydescription/" + modificationType);
-                                            console.log("res_data");
-                                            console.log(res_data);
+                                            // console.log("api/proteinptmbydescription/" + modificationType);
+                                            // console.log("res_data");
+                                            // console.log(res_data);
                                             var data = [];
                                             for(var i = 0; i < res_data.length; i++) {
                                                 var obj = res_data[i];
@@ -12695,8 +12926,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                 }
 
                                             }
-                                            console.log("data:");
-                                            console.log(data);
+                                            // console.log("data:");
+                                            // console.log(data);
                                             //var data = res_data;
 
                                             var sorted_data = data.sort(function (a, b) {
@@ -12797,39 +13028,52 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             console.log("api/proteinptmbymass/"+ originalMAss + "/delta/0.001");
                                             console.log("data:");
                                             console.log(data);
+                                            if(data.length > 0){
+                                                var sorted_data = data.sort(function (a, b) {
+                                                    return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
+                                                });
 
-                                            var sorted_data = data.sort(function (a, b) {
-                                                return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
-                                            });
-                                            ////console.log(sorted_data);
-                                            var closest_sorted = sorted_data[0];
-                                            console.log(closest_sorted);
-                                            var result = {};
-                                            result.mass = originalMAss;
-                                            result.input = el;
-                                            result.identifier = closest_sorted.accession;
-                                            result.diffavg = closest_sorted.averageDeltaMass;
+                                                ////console.log(sorted_data);
+                                                var closest_sorted = sorted_data[0];
+                                                console.log(closest_sorted);
+                                                var result = {};
+                                                result.mass = originalMAss;
+                                                result.input = el;
+                                                result.identifier = closest_sorted.accession;
+                                                result.diffavg = closest_sorted.averageDeltaMass;
 
-                                            result.description = closest_sorted.description;
-                                            result.formula = closest_sorted.formula;
-                                            var similarToPTM = [];
-                                            sorted_data.forEach(function (element) {
-                                                var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
-                                                ////console.log(element);
-                                                var similarToPTMItem = {};
-                                                // similarToPTMItem["identifier"] = element.accession;
-                                                similarToPTMItem["descriptionAll"] = similarToPTMAll;
+                                                result.description = closest_sorted.description;
+                                                result.formula = closest_sorted.formula;
+                                                var similarToPTM = [];
+                                                sorted_data.forEach(function (element) {
+                                                    var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
+                                                    ////console.log(element);
+                                                    var similarToPTMItem = {};
+                                                    // similarToPTMItem["identifier"] = element.accession;
+                                                    similarToPTMItem["descriptionAll"] = similarToPTMAll;
 
-                                                similarToPTM.push(similarToPTMItem);
-                                            });
-                                            // for (var i = 0; i < sorted_data.length; i++) {
-                                            //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
-                                            //
-                                            //     similarToPTM.push(similarToPTMItem);
-                                            //     //Do something
-                                            // }
+                                                    similarToPTM.push(similarToPTMItem);
+                                                });
+                                                // for (var i = 0; i < sorted_data.length; i++) {
+                                                //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
+                                                //
+                                                //     similarToPTM.push(similarToPTMItem);
+                                                //     //Do something
+                                                // }
 
-                                            result.similar = similarToPTM;
+                                                result.similar = similarToPTM;
+                                            }
+                                            else{
+                                                var result = {};
+                                                result.identifier = "";
+                                                result.input = el;
+                                                result.formula = "";
+                                                result.diffavg = "";
+                                                result.description = "Not found in database.";
+                                                result.similar = [];
+                                            }
+
+
                                             ////console.log(result);
 
                                             if (self.ontologyMappingsUnique.indexOf(el) === -1) {
@@ -12850,7 +13094,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             result.input = el;
                                             result.formula = "";
                                             result.diffavg = "";
-                                            result.description = "Error!";
+                                            result.description = "Not found in database.";
                                             result.similar = [];
 
 
@@ -12901,6 +13145,14 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
     self.onSubmit = function () {
+        self.peptideResultsGenes = false;
+        self.peptideResultsPTMs = false;
+        self.peptideResultsPTMsChanged = false;
+        self.peptideResultsGenesChanged = false;
+        SharedService.setVar("peptideResultsGenes",self.peptideResultsGenes);
+        SharedService.setVar("peptideResultsGenesChanged",self.peptideResultsGenesChanged);
+        SharedService.setVar("peptideResultsPTMs",self.peptideResultsPTMs);
+        SharedService.setVar("peptideResultsPTMsChanged",self.peptideResultsPTMsChanged);
         self.showOutputex1orex2 = "ex1Id";
         SharedService.setVar("showOutputex1orex2",self.showOutputex1orex2);
         self.progressPercent = 0;
@@ -12910,14 +13162,17 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         // //console.log("test logging");
         // //console.log("psi-mod");
         // //console.log(self.ontologyMappings);
+        console.log(self.parsedMotifs);
+        console.log(self.parsedPeptides);
         self.showPhosphoGeneNetwork = false;
         SharedService.setVar('showPhosphoGeneNetwork', self.showPhosphoGeneNetwork);
         self.showOutputPathway = false;
         SharedService.setVar('showOutputPathway', self.showOutputPathway);
         self.showInstruction = false;
-        self.waiting = true;
+        $scope.waiting = true;
         self.showOutput = false;
         self.showUpload = false;
+        self.uploadErrorTag = 200;
         self.sequence_acList = [];
         self.geneIdList = [];
         self.geneIdListPhosphorylation = [];
@@ -12944,6 +13199,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.prositeFoundNum = 0;
         self.uniprotLength = 0;
         self.showOverAllParallelSVG = false;
+
 
         self.subCellularTableData = [];
         self.subCellularValues = [];
@@ -13159,7 +13415,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 if (self.numResponsesFromProsite >= self.parsedMotifs.length && self.uniprotResponseIterator >= self.uniprotResponseIteratorTotal) {
 
                                     self.showOutput = true;
-                                    self.waiting = false;
+                                    $scope.waiting = false;
                                     // //console.log("Before updating pln! ");
                                     //
                                     // //console.log("--------------");
@@ -13527,7 +13783,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     if (self.numResponsesFromProsite >= self.parsedMotifs.length && self.uniprotResponseIterator >= self.uniprotResponseIteratorTotal) {
 
                                                         self.showOutput = true;
-                                                        self.waiting = false;
+                                                        $scope.waiting = false;
                                                         //console.log("Before updating pln! ");
 
                                                         // //console.log("--------------");
@@ -13586,7 +13842,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     // //console.log("parsedMotifs.length");
                                                     // //console.log(self.parsedMotifs.length);
                                                     self.showOutput = true;
-                                                    self.waiting = false;
+                                                    $scope.waiting = false;
                                                     // //console.log("Before updating pln! number of numResponsesFromProsite");
                                                     // //console.log(self.numResponsesFromProsite);
 
@@ -13692,7 +13948,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             // //console.log("parsedMotifs.length");
                             // //console.log(self.parsedMotifs.length);
                             self.showOutput = true;
-                            self.waiting = false;
+                            $scope.waiting = false;
                             // //console.log("Before updating pln in the error section! ");
                             // //console.log("Before updating pln! number of numResponsesFromProsite");
                             // //console.log(self.numResponsesFromProsite);
@@ -14144,6 +14400,11 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             var parallelUniqueGene = [];
             var parallelNrows = 0;
             ////console.log(peptideToModificationList);
+
+
+
+
+
             peptideToModificationList.map(function (e) {
                 // //console.log(e);
                 var parallelPep = e.motif;
@@ -14161,12 +14422,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         parallelUniquePtm.push(parallelPtm);
                     }
                     ////console.log(e2);
-                    for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+                    if (e2.geneArray.length > 0 ) {
                         // //console.log(parallelPep);
                         // //console.log(parallelProt);
                         // //console.log(e2.geneArray[parallelIter]);
                         // //console.log(e2.ptmProteinsMassAll[parallelIter]);
-                        var parallelGene = e2.geneArray[parallelIter];
+                        var parallelGene = e2.geneArray[0];
                         if (parallelUniqueGene.indexOf(parallelGene) === -1) {
                             parallelUniqueGene.push(parallelGene);
                         }
@@ -14684,12 +14945,22 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.peptideFlag = [];
         self.peptideToAbundance = {};
         self.ptmProteinToAbundance = {};
+        self.ptmProteinToAbundanceUnique = {};
         self.ptmProteinToPeptideToAbundance = {};
         self.proteinToAbundance = {};
+
         self.geneToAbundance = {};
+        self.geneToAbundanceUnique = {};
         self.peptideToNumberOfProteins = {};
         self.peptideFlag.push(["peptide", "flag"]);
 
+        self.uniquePtmProteinToAbundance = {};
+        self.uniqueGeneToAbundance = {};
+        self.peptideCalled = true;
+
+
+        self.ontologyMappingsTable = self.ontologyMappings;
+        SharedService.setVar('ontologyMappingsTable', self.ontologyMappingsTable);
 
         var motifs = parsedMotifsInput;
         var proteinMap = proteinMapInput;
@@ -14898,23 +15169,30 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             })
         }
         //console.log("self.peptideToNumberOfProteins");
-        //console.log(self.peptideToNumberOfProteins);
+        console.log("sequence_acListComplete");
+        console.log(self.sequence_acListComplete);
         for (var i = 0; i < sequence_acListComplete.length; i++) {
             e = sequence_acListComplete[i];
-
+            //console.log(e);
             var sequence_acListCompleteProt = e.name;
             var sequence_acListCompleteMember = e.members;
             self.proteinToAbundance[sequence_acListCompleteProt] = 0.0;
             var peptideNAFlag = false;
             sequence_acListCompleteMember.map(function (e2) {
+                //console.log(e2);
                 var sequence_acListCompletePeptide = e2.peptide;
                 if (!isNaN(self.peptideToAbundance[sequence_acListCompletePeptide])) {
+                    //console.log(e2);
                     self.proteinToAbundance[sequence_acListCompleteProt] = self.proteinToAbundance[sequence_acListCompleteProt] + self.peptideToAbundance[sequence_acListCompletePeptide] / self.peptideToNumberOfProteins[sequence_acListCompletePeptide];
                 }
                 // else{
                 //     peptideNAFlag = true;
                 // }
             })
+
+            // console.log(self.peptideToNumberOfProteins);
+            // console.log(self.peptideToAbundance);
+            // console.log(self.proteinToAbundance);
             // if(peptideNAFlag){
             //     self.proteinToAbundance[sequence_acListCompleteProt] = 'NA';
             // }
@@ -14923,14 +15201,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             // }
 
             var proteinMapSequence_ac = proteinMap[sequence_acListCompleteProt];
-            // //console.log(proteinMap);
-            // //console.log(proteinMapSequence_ac);
+            //console.log(proteinMap);
+            //console.log(proteinMapSequence_ac);
             proteinMapSequence_ac.map(function (e3) {
                 self.geneToAbundance[e3] = self.proteinToAbundance[sequence_acListCompleteProt];
             })
 
-        }
-        ;
+        };
         //console.log("proteinToAbundance");
         //console.log(self.proteinToAbundance);
         //console.log("geneToAbundance");
@@ -15318,11 +15595,56 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         var parallelUniquePtm = [];
         var parallelUniqueProtein = [];
         var parallelUniqueGene = [];
+
+        self.ptmCount = {};
+        self.geneCount = {};
+
         var parallelNrows = 0;
+
+        // console.log("self.peptideToModificationList");
+        console.log(self.peptideToModificationList);
+        console.log("calculating unique gene and ptm to abundance");
+
+
+        self.peptideToModificationList.map(function (e) {
+            ////console.log(e);
+            if (e.length == 1){
+                var parallelPep = e.motif;
+                e.response.map(function (e2) {
+
+                    var parallelPtm = e2.ptmProteinsMixAll[0];
+                    ////console.log(parallelPtm);
+                    if (self.ptmCount.hasOwnProperty(parallelPtm) ) {
+                        self.ptmCount[parallelPtm]["value"] += self.peptideToAbundance[parallelPep];
+                        self.ptmCount[parallelPtm]["count"] += 1;
+                    }
+                    else{
+                        self.ptmCount[parallelPtm] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+                    }
+
+                    ////console.log(e2);
+                    if (e2.geneArray.length > 0 ) {
+
+
+                        var parallelGene = e2.geneArray[0];
+
+
+                        if (self.geneCount.hasOwnProperty(parallelGene) ) {
+                            self.geneCount[parallelGene]["value"] += self.peptideToAbundance[parallelPep];
+                            self.geneCount[parallelGene]["count"] += 1;
+                        }
+                        else{
+                            self.geneCount[parallelGene] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+                        }
+                    }
+                });
+            }
+
+        });
+
         //Generate json file for parallel view
         ////console.log("Generate json file for parallel view");
-        // console.log("self.peptideToModificationList");
-        // console.log(self.peptideToModificationList);
+
         self.peptideToModificationList.map(function (e) {
             ////console.log(e);
             var parallelPep = e.motif;
@@ -15413,19 +15735,26 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         var reactome_dic_total = 0;
         var subcellular_location_dic_total = 0;
         var go_dic_total = 0;
+        var indexTableIter;
+        var percentCount = 0.0;
 
 
+
+
+
+        //console.log(self.subcellular_location_dic);
         for (var key in self.subcellular_location_dic) {
             if (self.subcellular_location_dic.hasOwnProperty(key)) {
                 subcellular_location_dic_total += self.subcellular_location_dic[key]["num"];
             }
         }
-
+//console.log(self.go_dic);
         for (var key in self.go_dic) {
             if (self.go_dic.hasOwnProperty(key)) {
                 go_dic_total += self.go_dic[key]["num"];
             }
         }
+        console.log(self.reactome_dic);
         for (var key in self.reactome_dic) {
             if (self.reactome_dic.hasOwnProperty(key)) {
                 reactome_dic_total += self.reactome_dic[key]["num"];
@@ -15440,10 +15769,30 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     "percent": self.subcellular_location_dic[key]["num"],
                     "proteins": self.subcellular_location_dic[key]["proteins"]
                 });
-                self.subCellularLabels.push(key);
-                self.subCellularValues.push(self.subcellular_location_dic[key]["num"]);
+                // self.subCellularLabels.push(key);
+                // self.subCellularValues.push(self.subcellular_location_dic[key]["num"]);
             }
         }
+        self.subCellularTableData = self.subCellularTableData.sort(function (a, b) {
+            return b.percent - a.percent;
+        });
+
+        percentCount = 0.0;
+        for (indexTableIter = 0; indexTableIter < self.subCellularTableData.length; indexTableIter++) {
+            if (indexTableIter < 20){
+                self.subCellularLabels.push(self.subCellularTableData[indexTableIter]["name"]);
+                self.subCellularValues.push(self.subCellularTableData[indexTableIter]["percent"]);
+                percentCount += self.subCellularTableData[indexTableIter]["percent"];
+            }
+            else{
+                self.subCellularLabels.push("Other");
+                self.subCellularValues.push(100 - percentCount);
+                break;
+            }
+
+        }
+
+
 
         for (var key in self.go_dic) {
             if (self.go_dic.hasOwnProperty(key)) {
@@ -15454,9 +15803,27 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     "percent": self.go_dic[key]["num"],
                     "proteins": self.go_dic[key]["proteins"]
                 });
-                self.goLabels.push(self.go_dic[key]["value"]);
-                self.goValues.push(self.go_dic[key]["num"]);
+                // self.goLabels.push(self.go_dic[key]["value"]);
+                // self.goValues.push(self.go_dic[key]["num"]);
             }
+        }
+        self.goTableData = self.goTableData.sort(function (a, b) {
+            return b.percent - a.percent;
+        });
+
+        percentCount = 0.0;
+        for (indexTableIter = 0; indexTableIter < self.goTableData.length; indexTableIter++) {
+            if (indexTableIter < 20){
+                self.goLabels.push(self.goTableData[indexTableIter]["value"]);
+                self.goValues.push(self.goTableData[indexTableIter]["percent"]);
+                percentCount += self.goTableData[indexTableIter]["percent"];
+            }
+            else{
+                self.goLabels.push("Other");
+                self.goValues.push(100 - percentCount);
+                break;
+            }
+
         }
         for (var key in self.reactome_dic) {
             if (self.reactome_dic.hasOwnProperty(key)) {
@@ -15467,11 +15834,29 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     "percent": self.reactome_dic[key]["num"],
                     "proteins": self.reactome_dic[key]["proteins"]
                 });
-                self.reactomeLabels.push(self.reactome_dic[key]["value"]);
-                self.reactomeValues.push(self.reactome_dic[key]["num"]);
+                // self.reactomeLabels.push(self.reactome_dic[key]["value"]);
+                // self.reactomeValues.push(self.reactome_dic[key]["num"]);
             }
         }
-        //console.log("reactomeValues");
+        self.reactomeTableData = self.reactomeTableData.sort(function (a, b) {
+            return b.percent - a.percent;
+        });
+
+        percentCount = 0.0;
+        for (indexTableIter = 0; indexTableIter < self.reactomeTableData.length; indexTableIter++) {
+            if (indexTableIter < 20){
+                self.reactomeLabels.push(self.reactomeTableData[indexTableIter]["value"]);
+                self.reactomeValues.push(self.reactomeTableData[indexTableIter]["percent"]);
+                percentCount += self.reactomeTableData[indexTableIter]["percent"];
+            }
+            else{
+                self.reactomeLabels.push("Other");
+                self.reactomeValues.push(100 - percentCount);
+                break;
+            }
+
+        }
+        console.log(self.reactomeTableData);
         //console.log(self.reactomeLabels);
         //console.log(self.reactomeValues);
         //console.log(self.reactomeTableData);
@@ -15679,7 +16064,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.secondPageQuery = false;
         // //console.log("!self.secondPageQuery");
         // //console.log(!self.secondPageQuery);
-        self.waiting = false;
+        $scope.waiting = false;
 
         SharedService.setVar("genesForProtein2Pathways", self.genes);
         //$window.sessionStorage.setItem("genesForProtein2Pathways", self.genes);
@@ -15717,7 +16102,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         SharedService.setVar("shorthandPtmProteinsForProtein2Pathways", self.geneIdListShorthandCombined);
         //$window.sessionStorage.setItem("shorthandPtmProteinsForProtein2Pathways", self.geneIdListShorthandCombined);
 
-        SharedService.setVar("waiting", self.waiting);
+        SharedService.setVar("waiting", $scope.waiting);
         //$window.sessionStorage.setItem("waitingForPeptideToProtein", self.waiting);
         self.showOutputPathway = false;
         self.showOutputPtm = false;
@@ -15742,13 +16127,22 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
 
         self.proteinIdListMassCombinedWithAbundance = [];
+        self.proteinIdListMassCombinedWithAbundanceUnique = [];
         self.genesWithAbundance = [];
+        self.genesWithAbundanceUnique = [];
+        console.log("before ptm 2 abundance");
+        console.log(self.ptmProteinToAbundance);
+        console.log("ptmCount");
+        console.log(self.ptmCount);
+        console.log("geneCount");
+        console.log(self.geneCount);
+
         for (var keyIter in self.ptmProteinToAbundance) {
             if (keyIter != "NA" && keyIter != "undefined") {
                 if (self.ptmProteinToAbundance.hasOwnProperty(keyIter)) {
                     var valueIter = self.ptmProteinToAbundance[keyIter];
                     if (!isNaN(valueIter)) {
-                        self.proteinIdListMassCombinedWithAbundance.push(keyIter + " " + valueIter)
+                        self.proteinIdListMassCombinedWithAbundance.push(keyIter + " " + valueIter.toFixed(5))
                     }
                     else {
                         self.proteinIdListMassCombinedWithAbundance.push(keyIter)
@@ -15757,6 +16151,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             }
         }
 
+        console.log("before gene 2 abundance");
+        console.log(self.geneToAbundance);
         for (var keyIter in self.geneToAbundance) {
             //console.log(keyIter);
             if (keyIter != "NA" && keyIter != "undefined") {
@@ -15768,7 +16164,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         if (self.geneToAbundance.hasOwnProperty(keyIter)) {
                             var valueIter = self.geneToAbundance[keyIter];
                             if (!isNaN(valueIter)) {
-                                self.genesWithAbundance.push(keyIter + " " + valueIter)
+                                self.genesWithAbundance.push(keyIter + " " + valueIter.toFixed(5))
                             }
                             else {
                                 self.genesWithAbundance.push(keyIter)
@@ -15779,13 +16175,76 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             }
         }
 
+        console.log("before gene 2 abundance unique");
+        console.log(self.geneCount);
+
+        for (var keyIter in self.geneCount) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCount.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCount[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(5))
+                    }
+                    else {
+                        self.genesWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        console.log("before ptm 2 abundance unique");
+        console.log(self.ptmCount);
+
+        for (var keyIter in self.ptmCount) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCount.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCount[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(5))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+
+        self.peptideResultsPTMs = true;
+        self.peptideResultsPTMsChanged = true;
+
+        self.peptideResultsGenes = true;
+        self.peptideResultsGenesChanged = true;
+        SharedService.setVar("peptideResultsGenes", self.peptideResultsGenes);
+        SharedService.setVar("peptideResultsGenesChanged", self.peptideResultsGenesChanged);
+        SharedService.setVar("peptideResultsPTMs", self.peptideResultsPTMs);
+        SharedService.setVar("peptideResultsPTMsChanged", self.peptideResultsPTMsChanged);
 
         SharedService.setVar("peptideToAbundance", self.peptideToAbundance);
         SharedService.setVar("peptideToNumberOfProteins", self.peptideToNumberOfProteins);
-        SharedService.setVar("inputMassPtmProteins", self.proteinIdListMassCombinedWithAbundance);
+        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundance);
+        SharedService.setVar("inputPtmProteinsUnique", self.proteinIdListMassCombinedWithAbundanceUnique);
+
 
         SharedService.setVar("inputShorthandPtmProteins", self.geneIdListShorthandCombined);
-        SharedService.setVar('genes',self.genesWithAbundance);
+        SharedService.setVar('genesAveraged',self.genesWithAbundance);
+        SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
 
         //SharedService.setVar("organismFormProteinToPathway", self.organismForm);
         //organismFormProteinToPathway
@@ -16113,107 +16572,107 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
         // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
 
-        SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+        SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
     }
     self.changeToP100Peptides = function () {
 
 
-        self.textArea = "IYQY[+79.966]IQSR 0.461099\n\
-TPKDS[+79.966]PGIPPSANAHQLFR 1.24165\n\
-RNS[+79.966]SEASSGDFLDLK 0.39179\n\
-LPLVPES[+79.966]PRR -0.8135318\n\
-ANAS[+79.966]PQKPLDLK -0.06173748\n\
-LENS[+79.966]PLGEALR -0.0964323\n\
-ANS[+79.966]FVGTAQYVSPELLTEK 0.097759\n\
-TNPPTQKPPS[+79.966]PPMSGR 0.5880172\n\
-SNS[+79.966]LPHSAVSNAGSK -0.15000027\n\
-VGS[+79.966]LDNVGHLPAGGAVK -2.9564762\n\
-AAPEAS[+79.966]SPPASPLQHLLPGK 0.019645\n\
-S[+122]DKPDM[+16]AEIEKFDK 0.88214\n\
-S[+122]DKPDMAEIEKFDK 0.98000\n\
-SLS[+79.966]LGDKEISR -1.149179\n\
-DLVQPDKPAS[+79.966]PK 0.9362365\n\
-SPS[+79.966]PAHLPDDPKVAEK 0.51082483\n\
-S[+79.966]IQDLTVTGTEPGQVSSR 0.105289\n\
-IHS[+79.966]PIIR 0.7733867\n\
-TFS[+79.966]LTEVR -3.384948\n\
-SLVGS[+79.966]WLK -2.968755\n\
-S[+79.966]PPAPGLQPMR 0.40888\n\
-LAS[+79.966]PELER 0.2169463\n\
-IGPLGLS[+79.966]PK -0.98894\n\
-TPS[+79.966]IQPSLLPHAAPFAK -0.598636\n\
-HAS[+79.966]PILPITEFSDIPR -2.223487\n\
-LIPGPLS[+79.966]PVAR -0.0114377\n\
-LGM[+16]LS[+79.966]PEGTC[+57]K 0.768389\n\
-LGMLS[+79.966]PEGTC[+57]K 0.518356\n\
-ISNLS[+79.966]PEEEQGLWK -0.208545\n\
-VSMPDVELNLKS[+79.966]PK -0.1557127\n\
-S[+122]DNGELEDKPPAPPVR 1.08313\n\
-KAYS[+79.966]FC[+57]GTVEYM[+16]APEVVNR -1.064139\n\
-KAYS[+79.966]FC[+57]GTVEYMAPEVVNR -3.20086\n\
-NDS[+79.966]WGSFDLR 0.428257\n\
-LEVTEIVKPS[+79.966]PK 0.079337\n\
-YGS[+79.966]PPQRDPNWNGER 0.534751\n\
-QDDS[+79.966]PPRPIIGPALPPGFIK 0.75655\n\
-SFS[+79.966]ADNFIGIQR 0.193549\n\
-VLS[+79.966]PLIIK -0.0414197\n\
-AGS[+79.966]PDVLR 0.813482\n\
-LGPGRPLPTFPTSEC[+57]TS[+79.966]DVEPDTR 0.9137382\n\
-LAAPSVSHVS[+79.966]PR -0.050331\n\
-VDDDS[+79.966]LGEFPVTNSR 0.82016\n\
-NEEPVRS[+79.966]PERR -0.07167\n\
-LFIIRGS[+79.966]PQQIDHAK 0.593808\n\
-S[+79.966]IEVENDFLPVEK -1.831307\n\
-TAPTLS[+79.966]PEHWK -0.235422\n\
-VLS[+79.966]PTAAKPSPFEGK 0.523876\n\
-SSDQPLTVPVS[+79.966]PK -1.2870867\n\
-FYETKEESYS[+79.966]PSKDR 0.558409\n\
-SDS[+79.966]PENKYSDSTGHSK 0.498148\n\
-S[+79.966]IPLSIK -1.19459\n\
-RLS[+79.966]QSDEDVIR 0.294727\n\
-ATS[+79.966]PVKSTTSITDAK 0.2966439\n\
-ALGS[+79.966]PTKQLLPC[+57]EMAC[+57]NEK 0.511634\n\
-YLLGDAPVS[+79.966]PSSQK 0.18404919\n\
-ANS[+79.966]PEKPPEAGAAHKPR 0.63052\n\
-SEVQQPVHPKPLS[+79.966]PDSR 0.31677\n\
-ETPHS[+79.966]PGVEDAPIAK 0.649939\n\
-SQS[+79.966]PHYFR 0.7690316\n\
-DRS[+79.966]SPPPGYIPDELHQVAR 0.240905\n\
-SPALKS[+79.966]PLQSVVVR -0.33558\n\
-AFGSGIDIKPGT[+79.966]PPIAGR 1.08159\n\
-SFS[+79.966]SQRPVDR 0.54329\n\
-VYT[+79.966]HEVVTLWYR 0.579294\n\
-SST[+79.966]PLPTISSSAENTR 1.024626\n\
-QIT[+79.966]MEELVR -1.30946\n\
-TQLWASEPGT[+79.966]PPLPTSLPSQNPILK 0.4175439\n\
-ALPQT[+79.966]PRPR 0.17558\n\
-S[+79.966]PTGPSNSFLANMGGTVAHK 0.51067\n\
-S[+79.966]FAGNLNTYKR 0.6323\n\
-HRPS[+79.966]PPATPPPK 1.479257\n\
-LHS[+79.966]APNLSDLHVVRPK -1.06841\n\
-TLGRRDS[+79.966]SDDWEIPDGQITVGQR 0.28616\n\
-S[+79.966]PPAPGLQPM[+16]R 0.4706487\n\
-A[+42.010]TTATM[+16]ATSGS[+79.966]AR -0.8267\n\
-RPHS[+79.966]PEKAFSSNPVVR 0.67740\n\
-KPNIFYSGPAS[+79.966]PARPR -0.324736\n\
-QGSGRES[+79.966]PSLASR 0.69807\n\
-HLPS[+79.966]PPTLDSIITEYLR 0.13999\n\
-ST[+79.966]FHAGQLR -0.5785\n\
-A[+42.010]TTATMATSGS[+79.966]AR -1.60154\n\
-SMS[+79.966]VDLSHIPLKDPLLFK -0.60759\n\
-S[+79.966]LTAHSLLPLAEK -1.1335\n\
-IHVSRS[+79.966]PTRPR 0.410076\n\
-TEFLDLDNSPLSPPS[+79.966]PR 0.401256\n\
-LQS[+79.966]EPESIR -0.159615\n\
-RLIS[+79.966]PYKK 0.271686\n\
-LLEDS[+79.966]EESSEETVSR 0.44265\n\
-RRLS[+79.966]SLR -0.497748\n\
-RLS[+79.966]ESQLSFRR -0.79106\n\
-RLS[+79.966]LPGLLSQVSPR 0.329239\n\
-SPDKPGGS[+79.966]PSASRR 0.131213\n\
-S[+79.966]LTNSHLEKK 0.22196\n\
-LQTPNT[+79.966]FPKR -0.344000\n\
-QIT[+79.966]M[+16]EELVR -0.30907";
+        self.textArea = "IYQ[pY]IQSR 0.461099\n\
+TPKD[pS]PGIPPSANAHQLFR 1.24165\n\
+RN[pS]SEASSGDFLDLK 0.39179\n\
+LPLVPE[pS]PRR -0.8135318\n\
+ANA[pS]PQKPLDLK -0.06173748\n\
+LEN[pS]PLGEALR -0.0964323\n\
+AN[pS]FVGTAQYVSPELLTEK 0.097759\n\
+TNPPTQKPP[pS]PPMSGR 0.5880172\n\
+SN[pS]LPHSAVSNAGSK -0.15000027\n\
+VG[pS]LDNVGHLPAGGAVK -2.9564762\n\
+AAPEA[pS]SPPASPLQHLLPGK 0.019645\n\
+S[+122.084]DKPDM[+15.994]AEIEKFDK 0.88214\n\
+S[+122.084]DKPDMAEIEKFDK 0.98000\n\
+SL[pS]LGDKEISR -1.149179\n\
+DLVQPDKPA[pS]PK 0.9362365\n\
+SP[pS]PAHLPDDPKVAEK 0.51082483\n\
+[pS]IQDLTVTGTEPGQVSSR 0.105289\n\
+IH[pS]PIIR 0.7733867\n\
+TF[pS]LTEVR -3.384948\n\
+SLVG[pS]WLK -2.968755\n\
+[pS]PPAPGLQPMR 0.40888\n\
+LA[pS]PELER 0.2169463\n\
+IGPLGL[pS]PK -0.98894\n\
+TP[pS]IQPSLLPHAAPFAK -0.598636\n\
+HA[pS]PILPITEFSDIPR -2.223487\n\
+LIPGPL[pS]PVAR -0.0114377\n\
+LGM[+15.994]L[pS]PEGTC[+57.021]K 0.768389\n\
+LGML[pS]PEGTC[+57.021]K 0.518356\n\
+ISNL[pS]PEEEQGLWK -0.208545\n\
+VSMPDVELNLK[pS]PK -0.1557127\n\
+S[+122.084]DNGELEDKPPAPPVR 1.08313\n\
+KAY[pS]FC[+57.021]GTVEYM[+15.994]APEVVNR -1.064139\n\
+KAY[pS]FC[+57.021]GTVEYMAPEVVNR -3.20086\n\
+ND[pS]WGSFDLR 0.428257\n\
+LEVTEIVKP[pS]PK 0.079337\n\
+YG[pS]PPQRDPNWNGER 0.534751\n\
+QDD[pS]PPRPIIGPALPPGFIK 0.75655\n\
+SF[pS]ADNFIGIQR 0.193549\n\
+VL[pS]PLIIK -0.0414197\n\
+AG[pS]PDVLR 0.813482\n\
+LGPGRPLPTFPTSEC[+57.021]T[pS]DVEPDTR 0.9137382\n\
+LAAPSVSHV[pS]PR -0.050331\n\
+VDDD[pS]LGEFPVTNSR 0.82016\n\
+NEEPVR[pS]PERR -0.07167\n\
+LFIIRG[pS]PQQIDHAK 0.593808\n\
+[pS]IEVENDFLPVEK -1.831307\n\
+TAPTL[pS]PEHWK -0.235422\n\
+VL[pS]PTAAKPSPFEGK 0.523876\n\
+SSDQPLTVPV[pS]PK -1.2870867\n\
+FYETKEESY[pS]PSKDR 0.558409\n\
+SD[pS]PENKYSDSTGHSK 0.498148\n\
+[pS]IPLSIK -1.19459\n\
+RL[pS]QSDEDVIR 0.294727\n\
+AT[pS]PVKSTTSITDAK 0.2966439\n\
+ALG[pS]PTKQLLPC[+57.021]EMAC[+57.021]NEK 0.511634\n\
+YLLGDAPV[pS]PSSQK 0.18404919\n\
+AN[pS]PEKPPEAGAAHKPR 0.63052\n\
+SEVQQPVHPKPL[pS]PDSR 0.31677\n\
+ETPH[pS]PGVEDAPIAK 0.649939\n\
+SQ[pS]PHYFR 0.7690316\n\
+DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
+SPALK[pS]PLQSVVVR -0.33558\n\
+AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
+SF[pT]SQRPVDR 0.54329\n\
+VY[pT]HEVVTLWYR 0.579294\n\
+SS[pT]PLPTISSSAENTR 1.024626\n\
+QI[pT]MEELVR -1.30946\n\
+TQLWASEPG[pT]PPLPTSLPSQNPILK 0.4175439\n\
+ALPQ[pT]PRPR 0.17558\n\
+[pS]PTGPSNSFLANMGGTVAHK 0.51067\n\
+[pS]FAGNLNTYKR 0.6323\n\
+HRP[pS]PPATPPPK 1.479257\n\
+LH[pS]APNLSDLHVVRPK -1.06841\n\
+TLGRRD[pS]SDDWEIPDGQITVGQR 0.28616\n\
+[pS]PPAPGLQPM[+15.994]R 0.4706487\n\
+A[+42.010]TTATM[+15.994]ATSG[pS]AR -0.8267\n\
+RPH[pS]PEKAFSSNPVVR 0.67740\n\
+KPNIFYSGPA[pS]PARPR -0.324736\n\
+QGSGRE[pS]PSLASR 0.69807\n\
+HLP[pS]PPTLDSIITEYLR 0.13999\n\
+S[pT]FHAGQLR -0.5785\n\
+A[+42.010]TTATMATSG[pS]AR -1.60154\n\
+SM[pS]VDLSHIPLKDPLLFK -0.60759\n\
+[pS]LTAHSLLPLAEK -1.1335\n\
+IHVSR[pS]PTRPR 0.410076\n\
+TEFLDLDNSPLSPP[pS]PR 0.401256\n\
+LQ[pS]EPESIR -0.159615\n\
+RLI[pS]PYKK 0.271686\n\
+LLED[pS]EESSEETVSR 0.44265\n\
+RRL[pS]SLR -0.497748\n\
+RL[pS]ESQLSFRR -0.79106\n\
+RL[pS]LPGLLSQVSPR 0.329239\n\
+SPDKPGG[pS]PSASRR 0.131213\n\
+[pS]LTNSHLEKK 0.22196\n\
+LQTPN[pT]FPKR -0.344000\n\
+QI[pT]M[+15.994]EELVR -0.30907";
 
 
 
@@ -16310,6 +16769,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
    // self.modificationPatternForAllPTMs = /{([()]+)}/g;
     self.modificationPatternForAllPTMs = /{(.+)}/g;
+    //self.modificationPatternForAllPTMs = /[^{\}]+(?=})/g
     self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
     self.rowSplitPattern = /[,;\n]/;
     self.rowSplitPatternGenes = /[,;\n]/;
@@ -16328,6 +16788,14 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     self.modificationMapReverse = {41: 'a', 42: 'a', 43: 'a', 13: 'm', 14: 'm', 15: 'm', 79: 'p', 80: 'p', 81: 'p'};
     self.proteinMap = {};
     self.hugoProteinMap = {};
+    self.ptmTitleText = SharedService.getVar('ptmTitleText');
+    self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
+    self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
+    self.peptideResultsPTMsChanged = SharedService.getVar('peptideResultsPTMsChanged');
+
+    self.inputPtmProteinsAveraged = SharedService.getVar('inputPtmProteinsAveraged');
+    self.inputPtmProteinsUnique = SharedService.getVar('inputPtmProteinsUnique');
+
     self.computeWeightForUpdateSignor = SharedService.getVar('computeWeightForUpdateSignor');
     self.computeWeightForUpdatePtm = SharedService.getVar('computeWeightForUpdatePtm');
     self.computeWeightForUpdateDeepPhos = SharedService.getVar('computeWeightForUpdateDeepPhos');
@@ -16356,8 +16824,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     //console.log(self.genes);
     self.organismForm = SharedService.getVar('organismForm');
 
-    self.inputMassPtmProteins = SharedService.getVar('inputMassPtmProteins').toString();
-    console.log(self.inputMassPtmProteins);
+    self.inputPtmProteinsAveraged = SharedService.getVar('inputPtmProteinsAveraged').toString();
+    self.inputPtmProteinsUnique = SharedService.getVar('inputPtmProteinsUnique').toString();
+    self.inputPtmProteinsExample = SharedService.getVar('inputPtmProteinsExample').toString();
+
+    //console.log(self.inputMassPtmProteins);
     self.inputShorthandPtmProteins = SharedService.getVar('inputShorthandPtmProteins').toString();
     //console.log('in protein2pathway, inputMassPtmProteins are:');
     //console.log(self.inputMassPtmProteins);
@@ -16446,6 +16917,173 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
     self.ex1orex2Protein = SharedService.getVar("ex1orex2Protein");
     //self.showOutputex1orex2 = SharedService.getVar("showOutputex1orex2");
+
+
+
+    // $('button').on('click', function(){
+    //     var newVal = $(this).data('val');
+    //     $('select').val(newVal).change();
+    //
+    //     var scope = angular.element($("select")).scope();
+    //     scope.$apply(function(){
+    //         scope.selectValue = newVal;
+    //     });
+    // });
+    //
+    //
+    // $('button').on('click', function(){
+    //     $scope.selectValue=$(this).data('val');
+    //     $scope.$apply();
+    // });
+
+    $(document).ready(function () {
+        var isSyncingLeftScroll = false;
+        var isSyncingRightScroll = false;
+        var isSyncingRighterScroll = false;
+        var leftDiv = document.getElementById('left');
+        var rightDiv = document.getElementById('right');
+        var righterDiv = document.getElementById('righter');
+
+        leftDiv.onscroll = function () {
+            if (!isSyncingLeftScroll) {
+                isSyncingRightScroll = true;
+                isSyncingRighterScroll = true;
+                rightDiv.scrollTop = this.scrollTop;
+                righterDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingLeftScroll = false;
+        }
+
+        rightDiv.onscroll = function () {
+            if (!isSyncingRightScroll) {
+                isSyncingLeftScroll = true;
+                isSyncingRighterScroll = true;
+                leftDiv.scrollTop = this.scrollTop;
+                righterDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingRightScroll = false;
+        }
+
+        righterDiv.onscroll = function () {
+            if (!isSyncingRighterScroll) {
+                isSyncingLeftScroll = true;
+                isSyncingRightScroll = true;
+                leftDiv.scrollTop = this.scrollTop;
+                rightDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingRighterScroll = false;
+        }
+    });
+
+
+    var startRegiFunc = function(num){
+        if(num == 2){
+            //$("#regi3").trigger("click");
+            $("#regi3").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = true;
+            self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+
+
+        }
+        if(num == 1) {
+            $("#regi1").addClass("active");
+            $("#regi2").attr('disabled', true);
+            $("#regi3").attr('disabled', true);
+            $scope.showRegi1 = true;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = false;
+            self.inputMassPtmProteins = self.inputPtmProteinsExample;
+        }
+    };
+
+    if(self.peptideResultsPTMs){
+        startRegiFunc(2);
+    }
+    else{
+        startRegiFunc(1);
+    }
+
+
+
+
+
+
+    $(".btn-group > .btn").click(function(){
+        $(".btn-group > .btn").removeClass("active");
+
+        $(this).addClass("active");
+        console.log(this);
+        console.log(this.id);
+
+        var changeRegiFunc = function(id){
+            if(id.includes("regi1") ){
+                console.log("true");
+                console.log("regi1");
+                $scope.showRegi1 = true;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+                self.inputMassPtmProteins = self.inputPtmProteinsExample;
+                self.inputMassPtmProteins += " ";
+
+            }
+
+            if(id.includes("regi2") ){
+                console.log("true");
+                console.log("regi2");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = true;
+                $scope.showRegi3 = false;
+                self.inputMassPtmProteins = self.inputPtmProteinsUnique;
+                self.inputMassPtmProteins += " ";
+
+
+            }
+            if(id.includes("regi3") ){
+                console.log("true");
+                console.log("regi3");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = true;
+                self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+                self.inputMassPtmProteins += " ";
+
+            }
+        };
+        changeRegiFunc(this.id);
+        $scope.$apply();
+
+
+
+    });
+
+
+
+
+    //
+    //
+    // $('.btn-group').on('click', '.btn', function() {
+    //     $(this).addClass('active').siblings().removeClass('active');
+    // });
+    //
+    // $('.btn-w2').addClass('active');
+    //
+    // var btnServices = [
+    //     { name:'Service A' },
+    //     { name:'Service B', selected:true },
+    //     { name:'Service C' },
+    //     { name:'Service D', selected:true }
+    // ];
+    //
+    // $scope.btnAvailability = { btnServices:btnServices };
+
+    $('[data-toggle="popover-hover"]').popover({
+        html: true,
+        trigger: 'hover',
+        placement: 'top',
+        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+    });
 
     $('input[name=tabset2p][id=' + self.ex1orex2Protein + ']').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
@@ -16732,6 +17370,49 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
     }
 
+    $scope.exportPhosphoTable = function () {
+        console.log(self.blosum50Table);
+        self.geneInfosForDownload = [];
+
+
+        self.inputGeneInfo.map(function (e) {
+
+            var symbol = e.symbol;
+            var hgnc_id = e.hgnc_id;
+            var prev_symbol = e.prev_symbol;
+            var name = e.name;
+            var uniprot_ids = e.uniprot_ids;
+            var gene_family_name = e.gene_family_name;
+
+
+            var geneInfoElem = {};
+            console.log(uniprot_ids);
+
+            //symbol	hgnc_id	prev_symbol	name	uniprot_ids	gene_family_name	gene_family_id
+            geneInfoElem["symbol"] = symbol;
+            geneInfoElem["hgnc_id"] = hgnc_id;
+            geneInfoElem["prev_symbol"] = prev_symbol.join(" | ");
+            geneInfoElem["name"] = name;
+            geneInfoElem["uniprot_ids"] = uniprot_ids.join(" | ");
+            geneInfoElem["gene_family_name"] = gene_family_name;
+
+            console.log(prev_symbol);
+            console.log(uniprot_ids);
+            // ontologyMappingsElem["mostSimilar"] = mostSimilarElem;
+            // ontologyMappingsElem["family"] = familyElem;
+
+            self.geneInfosForDownload.push(geneInfoElem);
+
+        });
+
+
+        //console.log(self.ontologyMappingsForDownload);
+        $scope.exportCsvGeneral(self.geneInfosForDownload,'pinet-phosphositePlus-PTMProteinMapping');
+
+        //alasql('SELECT * INTO XLSX("PSI-MOD-ontologyMappings.xlsx",{headers:true}) FROM ?', [self.ontologyMappingsForDownload]);
+
+    };
+
     $scope.exportPhosphositePlusMappings = function(){
 
 
@@ -16913,10 +17594,36 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             self.parsedPTMs = self.inputMassPtmProteins
                 .split(self.rowSplitPatternGenes)
                 .map(function (e) {
-                ////console.log(e.match(self.modificationPatternForAllPTMs));
-                    return e.match(self.modificationPatternForAllPTMs);
+                    if (e) {
+                        var modList = [];
 
+                        while (eMod = self.modificationPatternForAllPTMs.exec(e)) {
+                            modList.push(eMod[0]);
+                        };
+
+
+                        return modList;
+
+                    }
                 });
+
+
+
+
+
+
+
+
+
+
+
+                //     console.log(e);
+                // console.log(e.match(self.modificationPatternForAllPTMs));
+                //     return e.match(self.modificationPatternForAllPTMs);
+                //
+                // });
+            console.log("After parsing parsedPTMs");
+            console.log(self.parsedPTMs);
 
 
             self.parsedPTMProteins = self.inputMassPtmProteins
@@ -17016,6 +17723,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         // SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
         // SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
         // SharedService.setVar('showKinaseNetworkProcessed', $scope.showKinaseNetworkProcessed);
+        self.parsedGenes = [];
         if (self.genes.length > 0) {
             self.geneToAbundanceMap = {};
             self.parsedGenes = self.genes
@@ -17248,23 +17956,39 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         //computeWeightForupdatePtm
         self.incrementWithTime = 0;
         self.progressPtmPercent = 0;
+
         self.computeWeightForUpdatePtm = true;
         self.computeWeightForUpdateDeepPhos = true;
         self.computeWeightForUpdateSignor = true;
         self.computeWeightForUpdatePhospho = true;
+
         self.showPhosphoGeneNetworkProcessed = false;
         self.showPhosphoDeepGeneNetworkProcessed = false;
         self.showPtmGeneNetworkProcessed = false;
         self.showSignorGeneNetworkProcessed = false;
 
-        self.showPhosphoDeepGraphTmp = false;
+        self.showDeepPhosGraphTmp = false;
         self.showPhosphoGraphTmp = false;
         self.showPtmGraphTmp = false;
         self.showSignorGraphTmp = false;
         self.showKinaseGraphTmp = false;
         self.showPathwayGraphTmp = false;
+        self.showDeepPhosGraph = false;
 
         self.showEnrichmentGraphTmp = false;
+        if($scope.showRegi1){
+            self.ptmTitleText = "Workflow Example";
+            SharedService.setVar('ptmTitleText', self.ptmTitleText);
+        }
+        if($scope.showRegi2){
+            self.ptmTitleText = "Peptides2Proteins Results";
+            SharedService.setVar('ptmTitleText', self.ptmTitleText);
+        }
+        if($scope.showRegi3){
+            self.ptmTitleText = "Peptides2Proteins Results Averaged";
+            SharedService.setVar('ptmTitleText', self.ptmTitleText);
+        }
+
 
         self.showPhosphoGeneNetwork = true;
         SharedService.setVar('showPhosphoGeneNetwork', self.showPhosphoGeneNetwork);
@@ -22769,8 +23493,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 //defaultSVGPtm();
                 //SharedService.setVar('svg', svg);
 
-
+                console.log(graphType);
                 if(graphType == 0){
+
                     defaultSVGDeepPhos();
                 }
                 else if(graphType == 1){
@@ -22804,7 +23529,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
                 d3.select("#download-svg4deep").on("click", function ()  {
                     var name = 'PiNET-iPTMnet-Graph.svg';
-                    var svgEl = svg4.node();
+                    var svgEl = svg4deep.node();
                     svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
                     var svgData = svgEl.outerHTML;
                     var preface = '<?xml version="1.0" standalone="no"?>\r\n';
@@ -22980,8 +23705,8 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             // //console.log(network.parallel);
             // //console.log(network.circular);
             // update(network.nodes, network.edges, network.parallel, network.circular);
-            //console.log(network.nodes);
-            //console.log(ptmToAbundance);
+            console.log(network.nodes);
+            console.log(ptmToAbundance);
             for (var iterNetNode = 0; iterNetNode < network.nodes.length; iterNetNode++)
             {
                 var iterNetNodeKey = network.nodes[iterNetNode]["name"];
@@ -27886,6 +28611,7 @@ NOLC1 -0.3440\n\
 PLEC1 -0.309069";
 
         SharedService.setVar('genes',self.genes);
+
     }
 
 
@@ -27989,7 +28715,13 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
         // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
 
-        SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+        SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
+        $("#regi1").addClass("active");
+        $("#regi2").removeClass("active");
+        $("#regi3").removeClass("active");
+        $scope.showRegi1 = true;
+        $scope.showRegi2 = false;
+        $scope.showRegi3 = false;
     }
 
 }]);
@@ -28020,6 +28752,15 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.proteinMap = {};
     self.hugoProteinMap = {};
     self.geneAndAbundance = [];
+
+    self.geneTitleText = SharedService.getVar('geneTitleText');
+    self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
+    self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
+
+    self.genesAveraged = SharedService.getVar('genesAveraged').toString();
+    self.genesUnique = SharedService.getVar('genesUnique').toString();
+    self.genesExample = SharedService.getVar('genesExample').toString();
+
     self.computeWeightForUpdateEnrichment = SharedService.getVar('computeWeightForUpdateEnrichment');
     self.computeWeightForUpdate = SharedService.getVar('computeWeightForUpdate');
     self.computeWeightForUpdateKinase = SharedService.getVar('computeWeightForUpdateKinase');
@@ -28037,12 +28778,12 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     //self.textArea = SharedService.getVar('textArea');
     // self.waiting = SharedService.getVar('waiting');
     // self.showOutput = SharedService.getVar('showOutput');
-    self.genes = SharedService.getVar('genes').toString();
+    //self.genes = SharedService.getVar('genes').toString();
     //console.log('in protein2pathway, genes are:');
     //console.log(self.genes);
     self.organismForm = SharedService.getVar('organismForm');
 
-    self.inputMassPtmProteins = SharedService.getVar('inputMassPtmProteins').toString();
+    self.inputMassPtmProteins = SharedService.getVar('inputPtmProteinsExample').toString();
     self.inputShorthandPtmProteins = SharedService.getVar('inputShorthandPtmProteins').toString();
     //console.log('in protein2pathway, inputMassPtmProteins are:');
     //console.log(self.inputMassPtmProteins);
@@ -28130,6 +28871,48 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.ex1orex2Pathway = SharedService.getVar("ex1orex2Pathway");
     //self.showOutputex1orex2 = SharedService.getVar("showOutputex1orex2");
 
+
+    $(document).ready(function () {
+        var isSyncingLeftScroll = false;
+        var isSyncingRightScroll = false;
+        var isSyncingRighterScroll = false;
+        var leftDiv = document.getElementById('left');
+        var rightDiv = document.getElementById('right');
+        var righterDiv = document.getElementById('righter');
+
+        leftDiv.onscroll = function () {
+            if (!isSyncingLeftScroll) {
+                isSyncingRightScroll = true;
+                isSyncingRighterScroll = true;
+                rightDiv.scrollTop = this.scrollTop;
+                righterDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingLeftScroll = false;
+        }
+
+        rightDiv.onscroll = function () {
+            if (!isSyncingRightScroll) {
+                isSyncingLeftScroll = true;
+                isSyncingRighterScroll = true;
+                leftDiv.scrollTop = this.scrollTop;
+                righterDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingRightScroll = false;
+        }
+
+        righterDiv.onscroll = function () {
+            if (!isSyncingRighterScroll) {
+                isSyncingLeftScroll = true;
+                isSyncingRightScroll = true;
+                leftDiv.scrollTop = this.scrollTop;
+                rightDiv.scrollTop = this.scrollTop;
+            }
+            isSyncingRighterScroll = false;
+        }
+    });
+
+
+
     $('input[name=tabset2p][id=' + self.ex1orex2Pathway + ']').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
         self.ex1orex2Pathway = this.id;
@@ -28159,108 +28942,124 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
-    $(document).ready(function () {
-        $("#div1").scroll(function () {
-            $("#div2").scrollTop($("#div1").scrollTop());
-            $("#div2").scrollLeft($("#div1").scrollLeft());
-            $("#div1-2").scrollTop($("#div1").scrollTop());
-            $("#div1-2").scrollLeft($("#div1").scrollLeft());
-        });
-        $("#div1-2").scroll(function () {
-            $("#div2").scrollTop($("#div1-2").scrollTop());
-            $("#div2").scrollLeft($("#div1-2").scrollLeft());
-            $("#div1").scrollTop($("#div1-2").scrollTop());
-            $("#div1").scrollLeft($("#div1-2").scrollLeft());
-        });
-        $("#div2").scroll(function () {
-            $("#div1").scrollTop($("#div2").scrollTop());
-            $("#div1").scrollLeft($("#div2").scrollLeft());
-            $("#div1-2").scrollTop($("#div2").scrollTop());
-            $("#div1-2").scrollLeft($("#div2").scrollLeft());
-        });
+
+    var startRegiFunc = function(num){
+        if(num == 2){
+            //$("#regi3").trigger("click");
+            $("#regi3").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = true;
+            self.genes = self.genesAveraged;
+            console.log(self.genes);
+
+
+        }
+        if(num == 1) {
+            $("#regi1").addClass("active");
+            $("#regi2").attr('disabled', true);
+            $("#regi3").attr('disabled', true);
+            $scope.showRegi1 = true;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = false;
+            self.genes = self.genesExample;
+            console.log(self.genes);
+        }
+    };
+
+    if(self.peptideResultsGenes){
+        startRegiFunc(2);
+
+    }
+    else{
+        startRegiFunc(1);
+
+    }
+
+
+
+    $(".btn-group > .btn").click(function(){
+        $(".btn-group > .btn").removeClass("active");
+
+        $(this).addClass("active");
+        console.log(this);
+        console.log(this.id);
+
+        var changeRegiFunc = function(id){
+            if(id.includes("regi1") ){
+                console.log("true");
+                console.log("regi1");
+                $scope.showRegi1 = true;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+                self.genes = self.genesExample;
+                self.genes += " ";
+                console.log(self.genes);
+
+            }
+
+            if(id.includes("regi2") ){
+                console.log("true");
+                console.log("regi2");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = true;
+                $scope.showRegi3 = false;
+                self.genes = self.genesUnique;
+                self.genes += " ";
+                console.log(self.genes);
+
+
+            }
+            if(id.includes("regi3") ){
+                console.log("true");
+                console.log("regi3");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = true;
+                self.genes = self.genesAveraged;
+                self.genes += " ";
+                console.log(self.genes);
+
+            }
+        };
+        changeRegiFunc(this.id);
+        $scope.$apply();
+
+
 
     });
 
-    $(document).ready(function () {
-        $("#div3").scroll(function () {
-            $("#div4").scrollTop($("#div3").scrollTop());
-            $("#div4").scrollLeft($("#div3").scrollLeft());
-        });
-        $("#div4").scroll(function () {
-            $("#div3").scrollTop($("#div4").scrollTop());
-            $("#div3").scrollLeft($("#div4").scrollLeft());
-        });
-
+    $('[data-toggle="popover-hover"]').popover({
+        html: true,
+        trigger: 'hover',
+        placement: 'top',
+        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
     });
 
 
-    $(document).ready(function () {
-        $("#div5").scroll(function () {
-            $("#div6").scrollTop($("#div5").scrollTop());
-            $("#div6").scrollLeft($("#div5").scrollLeft());
-        });
-        $("#div6").scroll(function () {
-            $("#div5").scrollTop($("#div6").scrollTop());
-            $("#div5").scrollLeft($("#div6").scrollLeft());
-        });
-
-    });
-
-
-    $(document).ready(function () {
-        $("#div7").scroll(function () {
-            $("#div8").scrollTop($("#div7").scrollTop());
-            $("#div8").scrollLeft($("#div7").scrollLeft());
-        });
-        $("#div8").scroll(function () {
-            $("#div7").scrollTop($("#div8").scrollTop());
-            $("#div7").scrollLeft($("#div8").scrollLeft());
-        });
-
-    });
 
     $(document).ready(function () {
         $("#div9").scroll(function () {
             $("#div10").scrollTop($("#div9").scrollTop());
-            $("#div10").scrollLeft($("#div9").scrollLeft());
-            $("#div10-1").scrollTop($("#div9").scrollTop());
-            $("#div10-1").scrollLeft($("#div9").scrollLeft());
+
+            $("#div11").scrollTop($("#div9").scrollTop());
+
         });
         $("#div10").scroll(function () {
             $("#div9").scrollTop($("#div10").scrollTop());
-            $("#div9").scrollLeft($("#div10").scrollLeft());
-            $("#div10-1").scrollTop($("#div10").scrollTop());
-            $("#div10-1").scrollLeft($("#div10").scrollLeft());
-        });
-        $("#div10-1").scroll(function () {
-            $("#div9").scrollTop($("#div10-1").scrollTop());
-            $("#div9").scrollLeft($("#div10-1").scrollLeft());
-            $("#div10").scrollTop($("#div10-1").scrollTop());
-            $("#div10").scrollLeft($("#div10-1").scrollLeft());
-        });
-    });
 
-    $(document).ready(function () {
+            $("#div11").scrollTop($("#div10").scrollTop());
+
+        });
         $("#div11").scroll(function () {
-            $("#div12").scrollTop($("#div11").scrollTop());
-            $("#div12").scrollLeft($("#div11").scrollLeft());
-            $("#div12-1").scrollTop($("#div11").scrollTop());
-            $("#div12-1").scrollLeft($("#div11").scrollLeft());
-        });
-        $("#div12").scroll(function () {
-            $("#div11").scrollTop($("#div12").scrollTop());
-            $("#div11").scrollLeft($("#div12").scrollLeft());
-            $("#div12-1").scrollTop($("#div12").scrollTop());
-            $("#div12-1").scrollLeft($("#div12").scrollLeft());
-        });
-        $("#div12-1").scroll(function () {
-            $("#div11").scrollTop($("#div12-1").scrollTop());
-            $("#div11").scrollLeft($("#div12-1").scrollLeft());
-            $("#div12").scrollTop($("#div12-1").scrollTop());
-            $("#div12").scrollLeft($("#div12-1").scrollLeft());
-        });
+            $("#div9").scrollTop($("#div11").scrollTop());
 
+            $("#div10").scrollTop($("#div11").scrollTop());
+
+        });
     });
+
+
 
 
     $scope.openIframeModal = function (linkID, type) {
@@ -28462,7 +29261,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     }
     if (typeof self.listOfGenesOrptmProteins !== 'undefined' && self.listOfGenesOrptmProteins.length > 0 )
     {
-        self.genes = self.listOfGenesOrptmProteins;
+       // self.genes = self.listOfGenesOrptmProteins;
     }
 
 
@@ -28684,7 +29483,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     var timeout;
-
+console.log(self.genes);
     $scope.$watch(function () {
         return self.genes
     }, function (newValue, oldValue) {
@@ -28957,7 +29756,18 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         //console.log(" ----------------  ");
         //console.log(" onSubmitPathway  ");
 
-
+        if($scope.showRegi1){
+            self.geneTitleText = "Workflow Example";
+            SharedService.setVar('geneTitleText', self.geneTitleText);
+        }
+        if($scope.showRegi2){
+            self.geneTitleText = "Peptides2Proteins Results";
+            SharedService.setVar('geneTitleText', self.geneTitleText);
+        }
+        if($scope.showRegi3){
+            self.geneTitleText = "Peptides2Proteins Results Averaged";
+            SharedService.setVar('geneTitleText', self.geneTitleText);
+        }
         $http.get("api/increment/" + 3)
             .success(function (siteVisit) {
 
@@ -38525,7 +39335,15 @@ SLC38A1 0.2219\n\
 NOLC1 -0.3440\n\
 PLEC1 -0.309069";
 
-        SharedService.setVar('genes',self.genes);
+        SharedService.setVar('genesExample',self.genes);
+        $("#regi1").addClass("active");
+        $("#regi2").removeClass("active");
+        $("#regi3").removeClass("active");
+        $scope.showRegi1 = true;
+        $scope.showRegi2 = false;
+        $scope.showRegi3 = false;
+
+
     }
 
 
@@ -38629,7 +39447,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
         // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
 
-        SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+        SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
     }
 
 }]);
