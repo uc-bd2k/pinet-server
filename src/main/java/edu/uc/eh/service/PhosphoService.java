@@ -421,14 +421,14 @@ public class PhosphoService {
         try {
             //The last item is the organism
             String organismForQueryUniprot = organism;
-//        System.out.println("======== organism");
-//        System.out.println(organismForQueryUniprot);
+//        //System.out.println("======== organism");
+//        //System.out.println(organismForQueryUniprot);
             for (int i = 0; i < protList.length; i++) {
 
                 inutArray.add(protList[i]);
 
-//                System.out.println("input Uniprot");
-//                System.out.println(protList[i]);
+//                //System.out.println("input Uniprot");
+//                //System.out.println(protList[i]);
 
                 inside = "";
                 //geneString = "";
@@ -440,8 +440,8 @@ public class PhosphoService {
                 Pattern regex = Pattern.compile("\\{(.*?)\\}");
                 geneString = protList[i].replaceAll("\\{.*?\\} ?", "");
                 protListToProtein.put(protList[i], geneString);
-//            System.out.println("geneString");
-//            System.out.println(geneString);
+//            //System.out.println("geneString");
+//            //System.out.println(geneString);
                 //Pattern siteRegex = Pattern.compile("\\d+");
                 //Pattern aminoRegex = Pattern.compile("[A-Z]{1}");
 
@@ -451,16 +451,16 @@ public class PhosphoService {
                 //log.info("here1");
                 aminoSiteArray = new JSONArray();
                 while (insideMatcher.find()) {
-                    //System.out.println("here1");
-                    //System.out.println(insideMatcher.group(1));
+                    ////System.out.println("here1");
+                    ////System.out.println(insideMatcher.group(1));
                     String insideMatcherString = (String) insideMatcher.group(1).replace("[", "").replace("]", "");
                     String[] splitted = insideMatcherString.split("@");
                     siteString = splitted[1];
-                    //System.out.println(insideMatcherString);
+                    ////System.out.println(insideMatcherString);
 
                     Matcher matcherLower = ifHasLowerCase.matcher(splitted[1]);
 //                lowerResult = matcherLower.matches();
-//                System.out.println(lowerResult);
+//                //System.out.println(lowerResult);
                     if (splitted[0].indexOf("(") != -1) {
                         Matcher match = Pattern.compile("\\((.*?)\\)").matcher(splitted[0]);
                         while (match.find()) {
@@ -489,9 +489,9 @@ public class PhosphoService {
 
                         }
                     }
-//                    System.out.println(aminoString);
-//                    System.out.println(siteString);
-//                    System.out.println(ptmString);
+//                    //System.out.println(aminoString);
+//                    //System.out.println(siteString);
+//                    //System.out.println(ptmString);
 
 
                     aminoSiteJson = new JSONObject();
@@ -512,9 +512,9 @@ public class PhosphoService {
 
             //Get info about the genes
             //String[] stringProteinArray = (String[]) inputGeneArray.toArray(new String[0]);
-            //System.out.println("stringProteinArray");
+            ////System.out.println("stringProteinArray");
 //        for (int i = 0; i < stringProteinArray.length;  i++) {
-//            System.out.println(stringProteinArray[i]);
+//            //System.out.println(stringProteinArray[i]);
 //        }
 
 //        ArrayList<Integer> geneProtenCheck = pcgService.checkGenes(stringGeneArray);
@@ -550,17 +550,17 @@ public class PhosphoService {
 
                 JSONArray proteinToPhosphoAminoArray = (JSONArray) proteinToPhosphoAminoJson.get(protList[i]);
 //            JSONArray uniprotId = (JSONArray)((JSONObject) geneProteinInfo.get(i)).get("uniprot_ids");
-//                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-//                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-//                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-//                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-//                System.out.println(i);
-//                System.out.println("uniprot_ids------");
+//                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+//                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+//                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+//                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+//                //System.out.println(i);
+//                //System.out.println("uniprot_ids------");
 
                 String uniprot_id = (String) protListToProtein.get(protList[i]);
-                System.out.println(uniprot_id);
-//                System.out.println("protList------");
-//                System.out.println(protList[i]);
+                //System.out.println(uniprot_id);
+//                //System.out.println("protList------");
+//                //System.out.println(protList[i]);
                 if (!proteinToUniprot.containsKey(uniprot_id)) {
 
                     //geneSequenceInfo = uniprotService.getTable(organismForQueryUniprot, uniprot_id);
@@ -569,10 +569,10 @@ public class PhosphoService {
 
                     proteinToUniprot.put(uniprot_id, geneSequenceInfo);
                 }
-//                System.out.println(geneSequenceInfo);
-//                System.out.println(geneSequenceInfo.toString());
+//                //System.out.println(geneSequenceInfo);
+//                //System.out.println(geneSequenceInfo.toString());
                 ArrayList<String> geneName = (ArrayList<String>) ((JSONObject) proteinToUniprot.get(uniprot_id)).get("primary_gene_name");
-                //System.out.println(geneName.toString());
+                ////System.out.println(geneName.toString());
                 if (geneName.size() > 0) {
                     protListAndGeneName.put(protList[i], protList[i] + "(" + geneName.get(0).toString() + ")");
                 }
@@ -580,30 +580,30 @@ public class PhosphoService {
                     protListAndGeneName.put(protList[i], protList[i] );
                 }
 
-                //System.out.println("protListAndGeneName////////////////////");
-//                System.out.println(protList[i]);
-//                System.out.println(geneName.toString());
-//                System.out.println(protList[i] + "(" + geneName.get(0).toString() + ")");
-//                System.out.println(protListAndGeneName.get(protList[i]));
-                //System.out.println("////////////////////////////");
+                ////System.out.println("protListAndGeneName////////////////////");
+//                //System.out.println(protList[i]);
+//                //System.out.println(geneName.toString());
+//                //System.out.println(protList[i] + "(" + geneName.get(0).toString() + ")");
+//                //System.out.println(protListAndGeneName.get(protList[i]));
+                ////System.out.println("////////////////////////////");
 
 
-//                System.out.println(protList[i]);
-//                System.out.println(proteinToPhosphoAminoArray.toString());
-                System.out.println("before loop");
-                System.out.println("----------------------------------------");
-//                System.out.println("j----------------------------------------");
-//                System.out.println("j----------------------------------------");
-//                System.out.println("j----------------------------------------");
-                System.out.println("proteinToPhosphoAminoJson");
-                System.out.println(proteinToPhosphoAminoJson);
+//                //System.out.println(protList[i]);
+//                //System.out.println(proteinToPhosphoAminoArray.toString());
+                //System.out.println("before loop");
+                //System.out.println("----------------------------------------");
+//                //System.out.println("j----------------------------------------");
+//                //System.out.println("j----------------------------------------");
+//                //System.out.println("j----------------------------------------");
+                //System.out.println("proteinToPhosphoAminoJson");
+                //System.out.println(proteinToPhosphoAminoJson);
                 for (int j = 0; j < proteinToPhosphoAminoArray.size(); j++) {
-                    System.out.println("j----------------------------------------");
-                    System.out.println(j);
-                    System.out.println(((JSONObject) proteinToPhosphoAminoArray.get(j)).toJSONString());
+                    //System.out.println("j----------------------------------------");
+                    //System.out.println(j);
+                    //System.out.println(((JSONObject) proteinToPhosphoAminoArray.get(j)).toJSONString());
                     JSONObject proteinToPhosphoAminoItem = (JSONObject) proteinToPhosphoAminoArray.get(j);
-                    System.out.println(proteinToPhosphoAminoItem.toJSONString());
-                    System.out.println(proteinToPhosphoAminoItem.get("ptm").toString());
+                    //System.out.println(proteinToPhosphoAminoItem.toJSONString());
+                    //System.out.println(proteinToPhosphoAminoItem.get("ptm").toString());
 
 
                     //For phosphosite
@@ -615,39 +615,39 @@ public class PhosphoService {
 //        ptmSn: /PTM/ptm_sn.json
 //        ptmSu: /PTM/ptm_su.json
 //        ptmUb: /PTM/ptm_ub.json
-                    if (proteinToPhosphoAminoItem.get("ptm").equals("p")) {
+                    if (proteinToPhosphoAminoItem.get("ptm").equals("p") || proteinToPhosphoAminoItem.get("ptm").equals("ph")) {
 
 
                         //if (Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 81 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79) {
                         JSONObject phosphoGeneSequenceJson = new JSONObject();
                         //String[] proteinAndOrganism = { uniprot_id, organismForQueryUniprot };
-                        //System.out.println(uniprot_id);
+                        ////System.out.println(uniprot_id);
 
 
                         geneSequenceInfo = (JSONObject) proteinToUniprot.get(uniprot_id);
 
-                        System.out.println(proteinToPhosphoAminoItem.get("ptm"));
+                        //System.out.println(proteinToPhosphoAminoItem.get("ptm"));
 
                         String cutSequence = cutSequenceMethod(geneSequenceInfo.get("sequence").toString(), Integer.parseInt((String) proteinToPhosphoAminoItem.get("site")));
-                        //System.out.println(protList[i]);
+                        ////System.out.println(protList[i]);
 
 //                    log.info(phosphoAminoArray.get(i).toString());
 //                    log.info(phosphoSiteArray.get(i).toString());
-//                    System.out.println("cutSequence ++++++++++++++++++++++");
-//                    System.out.println(cutSequence);
-//                    System.out.println("protListAndGeneName ++++++++++++++++++++++");
-//                    System.out.println(protListAndGeneName.get(protList[i]));
+//                    //System.out.println("cutSequence ++++++++++++++++++++++");
+//                    //System.out.println(cutSequence);
+//                    //System.out.println("protListAndGeneName ++++++++++++++++++++++");
+//                    //System.out.println(protListAndGeneName.get(protList[i]));
 
-                        phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "[" + proteinToPhosphoAminoItem.get("amino") + "+79.966" + "@" + proteinToPhosphoAminoItem.get("site") + "]");
+                        phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "{[p" + proteinToPhosphoAminoItem.get("amino") + "]@" + proteinToPhosphoAminoItem.get("site") + "}");
                         phosphoGeneSequenceJson.put("phosphoProtein", protList[i]);
                         phosphoGeneSequenceJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         phosphoGeneSequenceJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         phosphoGeneSequenceJson.put("sequence", cutSequence);
                         //phosphoGeneSequenceJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(phosphoGeneSequenceJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
-//                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(phosphoGeneSequenceJson.toString());
+                        //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         phosphoGeneSequenceArray.add(phosphoGeneSequenceJson);
                         //}
@@ -663,10 +663,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmPhArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -684,10 +684,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmAcArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -712,10 +712,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmMeArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -729,10 +729,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmCgArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -746,10 +746,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmMyArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -763,10 +763,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmNgArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -780,10 +780,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmOgArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -797,10 +797,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmSgArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -814,10 +814,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmSnArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -831,10 +831,10 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmSuArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
@@ -848,17 +848,17 @@ public class PhosphoService {
                         ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                         ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                         //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                        System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                        System.out.println(ptmItemJson.toString());
-                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                        //System.out.println(ptmItemJson.toString());
                         //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                        ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                         ptmUbArray.add(ptmItemJson);
                         ptmArray.add(ptmItemJson);
                     } else if (((String) proteinToPhosphoAminoItem.get("ptm")).toUpperCase().contains("MOD")) {
                         String mod = ((String) proteinToPhosphoAminoItem.get("ptm")).toUpperCase().replace("_",":");
-                        System.out.println("There is a MOD modification before checking");
-                        System.out.println(mod);
+                        //System.out.println("There is a MOD modification before checking");
+                        //System.out.println(mod);
                         if (modToPTMJson.containsKey(mod)) {
                             String modPTM = (String) modToPTMJson.get(mod);
                             JSONObject ptmItemJson = new JSONObject();
@@ -873,16 +873,51 @@ public class PhosphoService {
                             ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                             ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                             //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                            System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                            System.out.println(ptmItemJson.toString());
-                            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
-                            ptmArray.add(ptmItemJson);
+                            //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                            //System.out.println(ptmItemJson.toString());
                             //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                            ptmArray.add(ptmItemJson);
+                            ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                             if (modPTM.equals("ub")) {
                                 ptmUbArray.add(ptmItemJson);
                             }
                             if (modPTM.equals("ph")) {
+                                JSONObject phosphoGeneSequenceJson = new JSONObject();
+                              
+
+
+                                geneSequenceInfo = (JSONObject) proteinToUniprot.get(uniprot_id);
+
+                                //System.out.println(geneSequenceInfo.toString());
+
+                                String cutSequence = cutSequenceMethod(geneSequenceInfo.get("sequence").toString(), Integer.parseInt((String) proteinToPhosphoAminoItem.get("site")));
+                                //System.out.println(cutSequence);
+
+
+                                phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "{" + proteinToPhosphoAminoItem.get("amino") + "(" + proteinToPhosphoAminoItem.get("ptm") + ")@" + proteinToPhosphoAminoItem.get("site") + "}" );
+                                phosphoGeneSequenceJson.put("phosphoProtein", protList[i]);
+                                phosphoGeneSequenceJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
+                                phosphoGeneSequenceJson.put("site", proteinToPhosphoAminoItem.get("site"));
+                                phosphoGeneSequenceJson.put("sequence", cutSequence);
+
+                                //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                                //System.out.println(phosphoGeneSequenceJson.toString());
+                                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//
+
+                                phosphoGeneSequenceArray.add(phosphoGeneSequenceJson);
+
+
+
+
+
+
+
+
+
+
+
                                 ptmPhArray.add(ptmItemJson);
                             }
                             if (modPTM.equals("me")) {
@@ -912,10 +947,10 @@ public class PhosphoService {
 //                    ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
 //                    ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
 //                    //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-//                    System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-//                    System.out.println(ptmItemJson.toString());
-//                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+//                    //System.out.println(ptmItemJson.toString());
 //                    //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 //
 //                    ptmMe2Array.add(ptmItemJson);
 //                    ptmArray.add(ptmItemJson);
@@ -930,10 +965,10 @@ public class PhosphoService {
 //                    ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
 //                    ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
 //                    //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-//                    System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-//                    System.out.println(ptmItemJson.toString());
-//                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+//                    //System.out.println(ptmItemJson.toString());
 //                    //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 //
 //                    ptmMe3Array.add(ptmItemJson);
 //                    ptmArray.add(ptmItemJson);
@@ -946,33 +981,33 @@ public class PhosphoService {
                             if (Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 79.981 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79.96) {
                                 JSONObject phosphoGeneSequenceJson = new JSONObject();
                                 //String[] proteinAndOrganism = { uniprot_id, organismForQueryUniprot };
-                                //System.out.println(uniprot_id);
+                                ////System.out.println(uniprot_id);
 
 
                                 geneSequenceInfo = (JSONObject) proteinToUniprot.get(uniprot_id);
 
-                                System.out.println(geneSequenceInfo.toString());
+                                //System.out.println(geneSequenceInfo.toString());
 
                                 String cutSequence = cutSequenceMethod(geneSequenceInfo.get("sequence").toString(), Integer.parseInt((String) proteinToPhosphoAminoItem.get("site")));
-                                System.out.println(cutSequence);
+                                //System.out.println(cutSequence);
 
 //                    log.info(phosphoAminoArray.get(i).toString());
 //                    log.info(phosphoSiteArray.get(i).toString());
-//                    System.out.println("cutSequence ++++++++++++++++++++++");
-//                    System.out.println(cutSequence);
-//                    System.out.println("protListAndGeneName ++++++++++++++++++++++");
-//                    System.out.println(protListAndGeneName.get(protList[i]));
+//                    //System.out.println("cutSequence ++++++++++++++++++++++");
+//                    //System.out.println(cutSequence);
+//                    //System.out.println("protListAndGeneName ++++++++++++++++++++++");
+//                    //System.out.println(protListAndGeneName.get(protList[i]));
 
-                                phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "[" + proteinToPhosphoAminoItem.get("amino") + "+" + proteinToPhosphoAminoItem.get("ptm") + "@" + proteinToPhosphoAminoItem.get("site") + "]");
+                                phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "{[" + proteinToPhosphoAminoItem.get("amino") + "+" + proteinToPhosphoAminoItem.get("ptm") + "]@" + proteinToPhosphoAminoItem.get("site") + "}");
                                 phosphoGeneSequenceJson.put("phosphoProtein", protList[i]);
                                 phosphoGeneSequenceJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                                 phosphoGeneSequenceJson.put("site", proteinToPhosphoAminoItem.get("site"));
                                 phosphoGeneSequenceJson.put("sequence", cutSequence);
                                 //phosphoGeneSequenceJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                                System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                                System.out.println(phosphoGeneSequenceJson.toString());
-                                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
-//                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                                //System.out.println(phosphoGeneSequenceJson.toString());
+                                //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+//                    //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                                 phosphoGeneSequenceArray.add(phosphoGeneSequenceJson);
                             }
@@ -987,10 +1022,10 @@ public class PhosphoService {
                                 ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                                 ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                                 //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                                System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                                System.out.println(ptmItemJson.toString());
-                                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                                //System.out.println(ptmItemJson.toString());
                                 //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                                 ptmPhArray.add(ptmItemJson);
                                 ptmArray.add(ptmItemJson);
@@ -1006,10 +1041,10 @@ public class PhosphoService {
                                 ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                                 ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                                 //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                                System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                                System.out.println(ptmItemJson.toString());
-                                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                                //System.out.println(ptmItemJson.toString());
                                 //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                                 ptmAcArray.add(ptmItemJson);
                                 ptmArray.add(ptmItemJson);
@@ -1025,10 +1060,10 @@ public class PhosphoService {
                                 ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                                 ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
                                 //ptmItemJson.put("proteinToGene",protListAndGeneName.get(protList[i]));
-                                System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
-                                System.out.println(ptmItemJson.toString());
-                                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                //System.out.println("phosphoGeneSequenceJson.toString() ----------------- ");
+                                //System.out.println(ptmItemJson.toString());
                                 //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                                ////System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
 
                                 ptmMeArray.add(ptmItemJson);
                                 ptmArray.add(ptmItemJson);
@@ -1042,47 +1077,47 @@ public class PhosphoService {
 
             }
 
-            System.out.println("ptmPhArray");
-            System.out.println(ptmPhArray.toString());
-            System.out.println("ptmMeArray");
-            System.out.println(ptmMeArray.toString());
-            System.out.println("ptmAcArray");
-            System.out.println(ptmAcArray.toString());
+            //System.out.println("ptmPhArray");
+            //System.out.println(ptmPhArray.toString());
+            //System.out.println("ptmMeArray");
+            //System.out.println(ptmMeArray.toString());
+            //System.out.println("ptmAcArray");
+            //System.out.println(ptmAcArray.toString());
 
-            System.out.println("ptmCgArray");
-            System.out.println(ptmCgArray.toString());
-            System.out.println("ptmMyArray");
-            System.out.println(ptmMyArray.toString());
-            System.out.println("ptmNgArray");
-            System.out.println(ptmNgArray.toString());
+            //System.out.println("ptmCgArray");
+            //System.out.println(ptmCgArray.toString());
+            //System.out.println("ptmMyArray");
+            //System.out.println(ptmMyArray.toString());
+            //System.out.println("ptmNgArray");
+            //System.out.println(ptmNgArray.toString());
 //        ptmCg: /PTM/ptm_cg.json
 //        ptmMy: /PTM/ptm_my.json
 //        ptmNg: /PTM/ptm_ng.json
-            System.out.println("ptmOgArray");
-            System.out.println(ptmOgArray.toString());
-            System.out.println("ptmSgArray");
-            System.out.println(ptmSgArray.toString());
-            System.out.println("ptmSnArray");
-            System.out.println(ptmSnArray.toString());
+            //System.out.println("ptmOgArray");
+            //System.out.println(ptmOgArray.toString());
+            //System.out.println("ptmSgArray");
+            //System.out.println(ptmSgArray.toString());
+            //System.out.println("ptmSnArray");
+            //System.out.println(ptmSnArray.toString());
 //        ptmOg: /PTM/ptm_og.json
 //        ptmSg: /PTM/ptm_sg.json
 //        ptmSn: /PTM/ptm_sn.json
-            System.out.println("ptmSuArray");
-            System.out.println(ptmSuArray.toString());
-            System.out.println("ptmUbArray");
-            System.out.println(ptmUbArray.toString());
-            System.out.println("ptmMe2Array");
-            System.out.println(ptmMe2Array.toString());
-            System.out.println("ptmMe3Array");
-            System.out.println(ptmMe3Array.toString());
+            //System.out.println("ptmSuArray");
+            //System.out.println(ptmSuArray.toString());
+            //System.out.println("ptmUbArray");
+            //System.out.println(ptmUbArray.toString());
+            //System.out.println("ptmMe2Array");
+            //System.out.println(ptmMe2Array.toString());
+            //System.out.println("ptmMe3Array");
+            //System.out.println(ptmMe3Array.toString());
 //        ptmSu: /PTM/ptm_su.json
 //        ptmUb: /PTM/ptm_ub.json
 
-            System.out.println("phosphoGeneSequenceArray ========================");
-            log.info("phosphoGeneSequenceArray ========================");
-            System.out.println(phosphoGeneSequenceArray.toString());
+            //System.out.println("phosphoGeneSequenceArray ========================");
+            //log.info("phosphoGeneSequenceArray ========================");
+            //System.out.println(phosphoGeneSequenceArray.toString());
             //First only add the input genes
-            System.out.println("//Adding to nodelists");
+            //System.out.println("//Adding to nodelists for all the networks");
             for (int i = 0; i < protList.length; i++) {
 
 
@@ -1092,9 +1127,9 @@ public class PhosphoService {
 
                 inputGene = protList[i];
                 inputGeneUpper = inputGene.toUpperCase();
-                System.out.println(inputGeneUpper);
-                System.out.println((String) protListAndGeneName.get(protList[i]));
-                System.out.println("----------------------");
+                //System.out.println(inputGeneUpper);
+                //System.out.println((String) protListAndGeneName.get(protList[i]));
+                //System.out.println("----------------------");
                 if (!ptm_nodeUnique.containsKey(inputGeneUpper)) {
 
                     newNode = generateNode(inputGene, (String) protListAndGeneName.get(protList[i]), "No", pidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
@@ -1151,12 +1186,16 @@ public class PhosphoService {
 
 
             // Compute Network for the indefinite genes based on blosum50
+            System.out.println("Compute Network for the indefinite genes based on blosum50");
+            System.out.println(phosphoGeneSequenceArray);
             for (int i = 0; i < phosphoGeneSequenceArray.size(); i++) {
-                System.out.println("==========================================");
-                System.out.println("Compute Network for the indefinite genes based on blosum50");
+                //System.out.println("==========================================");
+                //System.out.println("Compute Network for the indefinite genes based on blosum50");
                 //log.info("inputgene");
                 //log.info(input[i]);
                 JSONObject phosphoGeneSequenceJson2 = (JSONObject) phosphoGeneSequenceArray.get(i);
+                System.out.println("------------------------");
+                System.out.println(phosphoGeneSequenceJson2);
                 String phosphoAmino = phosphoGeneSequenceJson2.get("amino").toString();
                 String phosphoSequence = phosphoGeneSequenceJson2.get("sequence").toString();
                 inputGene = phosphoGeneSequenceJson2.get("phosphoProtein").toString();
@@ -1174,14 +1213,14 @@ public class PhosphoService {
                 int blosumScoreHigh = -1000;
                 int blosumScoreMax = -1000;
                 JSONArray geneBlosumJsonArrayFinal = new JSONArray();
-                //System.out.println (phosphoAmino + "  ++++++++++++++++++++++++++++++");
+                ////System.out.println (phosphoAmino + "  ++++++++++++++++++++++++++++++");
 
 
                 for (Object key : phosphoKinaseSequence.keySet()) {
                     //iteration ++;
                     blosumScoreMax = computeBlosum50Score(blosum50Json, phosphoSequence, phosphoSequence);
                     blosumScoreHigh = (int) ((double) blosumScoreMax / 2.0);
-                    //System.out.println ("Blosum high schore " + blosumScoreHigh);
+                    ////System.out.println ("Blosum high schore " + blosumScoreHigh);
                     String keyStr = (String) key;
                     //log.info("keyStr");
                     //log.info(keyStr);
@@ -1189,12 +1228,12 @@ public class PhosphoService {
                     JSONArray keyvalueJsonArray = (JSONArray) keyvalue;
                     geneBlosumJsonArrayFinal = new JSONArray();
                     //Class cls = keyvalue.getClass();
-                    //System.out.println("The type of the object is: " + cls.getName());
+                    ////System.out.println("The type of the object is: " + cls.getName());
                     //Print key and value
-                    //System.out.println("key: " + keyStr);
-                    //System.out.println ("value: " + keyvalueJsonArray.get(0));
-                    //System.out.println ("value: " + keyvalueJsonArray);
-                    //System.out.println (keyStr + "  =========================================");
+                    ////System.out.println("key: " + keyStr);
+                    ////System.out.println ("value: " + keyvalueJsonArray.get(0));
+                    ////System.out.println ("value: " + keyvalueJsonArray);
+                    ////System.out.println (keyStr + "  =========================================");
 
                     int blosumScore;
                     String blosumString = "";
@@ -1210,8 +1249,8 @@ public class PhosphoService {
                         //System.out.println("blosumScore " + blosumScore + " phosphoSequence " + phosphoSequence + " kinaseSequence " + kinaseSequence);
                         //}
                         if (blosumScore > blosumScoreHigh) {
-//                        System.out.println("here-1");
-                            System.out.println("blosumScore " + blosumScore + " kinase " + keyStr + " kinaseSequence " + kinaseSequence);
+//                        //System.out.println("here-1");
+                            //System.out.println("blosumScore " + blosumScore + " kinase " + keyStr + " kinaseSequence " + kinaseSequence);
 
 
                             blosumScoreHigh = blosumScore;
@@ -1237,11 +1276,11 @@ public class PhosphoService {
                             geneBlosumJsonArray.add(geneBlosumJson);
 
                             log.info(geneBlosumJsonArray.toString());
-                            System.out.println("==========================================");
+                            //System.out.println("==========================================");
                             geneBlosumJsonArrayFinal = geneBlosumJsonArray;
                         } else if (blosumScore == blosumScoreHigh) {
-                            System.out.println("here-2");
-                            System.out.println("blosumScore " + blosumScore + " kinase " + keyStr + " kinaseSequence " + kinaseSequence);
+                            //System.out.println("here-2");
+                            //System.out.println("blosumScore " + blosumScore + " kinase " + keyStr + " kinaseSequence " + kinaseSequence);
 
                             blosumString = kinaseSequence;
                             blosumOrganism = organism;
@@ -1264,10 +1303,10 @@ public class PhosphoService {
                             geneBlosumJsonArrayFinal = geneBlosumJsonArray;
 
                             log.info(geneBlosumJsonArray.toString());
-                            System.out.println("==========================================");
+                            //System.out.println("==========================================");
                         }
 
-                        //System.out.println ("organism: " + organism + " kinase: " + kinaseSequence);
+                        ////System.out.println ("organism: " + organism + " kinase: " + kinaseSequence);
                     }
 
 //                log.info("geneBlosumJsonArray");
@@ -1324,13 +1363,13 @@ public class PhosphoService {
 
             // Compute Network for the indefinite genes based on probability
             for (int i = 0; i < phosphoGeneSequenceArray.size(); i++) {
-                log.info("==========================================");
-                log.info("Compute Network for the indefinite genes based on probability");
+                System.out.println("==========================================");
+                System.out.println("Compute Network for the indefinite genes based on probability");
                 //log.info("inputgene");
                 //log.info(input[i]);
                 JSONObject phosphoGeneSequenceJson2 = (JSONObject) phosphoGeneSequenceArray.get(i);
-                log.info("phosphoGeneSequenceJson2");
-                log.info(phosphoGeneSequenceJson2.toJSONString());
+                System.out.println("phosphoGeneSequenceJson2");
+                System.out.println(phosphoGeneSequenceJson2.toJSONString());
                 String phosphoAmino = phosphoGeneSequenceJson2.get("amino").toString();
                 String phosphoSequence = phosphoGeneSequenceJson2.get("sequence").toString();
                 inputphosphoProtein = phosphoGeneSequenceJson2.get("phosphoProtein").toString();
@@ -1355,19 +1394,20 @@ public class PhosphoService {
                     Object keyvalue = phosphoProbability.get(keyStr);
                     JSONArray keyvalueJsonArray = (JSONArray) keyvalue;
                     Class cls = keyvalue.getClass();
-                    //System.out.println("The type of the object is: " + cls.getName());
+                    ////System.out.println("The type of the object is: " + cls.getName());
                     //Print key and value
-                    //System.out.println("key: " + keyStr);
-                    //System.out.println ("value: " + keyvalueJsonArray.get(0));
+                    ////System.out.println("key: " + keyStr);
+                    ////System.out.println ("value: " + keyvalueJsonArray.get(0));
 
                     //Compute probability
                     double pr = computeProbability(keyvalueJsonArray, phosphoSequence);
+//System.out.println("pr " + pr );
 
                     if (pr > 0.0) {
 
                         if (!indefinite_nodeUnique.containsKey(keyStr)) {
                             //log.info(gene);
-
+                            System.out.println(keyStr);
 
                             newNode = generateNode(keyStr, keyStr, "", iidx, 2, 0.0);//tag 2 is for red nodes that phosphorylate the query genes
                             iidx = iidx + 1;
@@ -1404,7 +1444,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 gene2KinaseList = new JSONArray();
 
 
@@ -1545,11 +1585,11 @@ public class PhosphoService {
                 //For ptmTableArray
 
 
-//                System.out.println("deepPhosResults=");
-//                System.out.println(deepPhosResults);
+//                //System.out.println("deepPhosResults=");
+//                //System.out.println(deepPhosResults);
 //            }catch (Exception e){
-//                System.out.println("-------- Error in deepPhosResults");
-//                System.out.println(deepPhosResults);
+//                //System.out.println("-------- Error in deepPhosResults");
+//                //System.out.println(deepPhosResults);
 //
 //            }
 
@@ -1561,8 +1601,8 @@ public class PhosphoService {
 
             // Compute Network for the iptmnet genes
             for (int i = 0; i < ptmPhArray.size(); i++) {
-                System.out.println("==========================================");
-                System.out.println("Compute Network for the ptm genes");
+                //System.out.println("==========================================");
+                //System.out.println("Compute Network for the ptm genes");
                 JSONObject phosphoGeneSequenceJson2 = (JSONObject) ptmPhArray.get(i);
 //            String phosphoAmino = phosphoGeneSequenceJson2.get("amino").toString();
 //            String phosphoSequence = phosphoGeneSequenceJson2.get("sequence").toString();
@@ -1575,7 +1615,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -1663,13 +1703,13 @@ public class PhosphoService {
 
 
 
-                System.out.println(inputGene);
+                //System.out.println(inputGene);
                 if (ptmPhJson.containsKey(inputGene)) {
-                    System.out.println("gene2KinaseList");
+                    //System.out.println("gene2KinaseList");
                     gene2PtmList = (JSONArray) (ptmPhJson.get(inputGene));
-                    System.out.println(gene2KinaseList.toString());
+                    //System.out.println(gene2KinaseList.toString());
                 }
-                System.out.println("------");
+                //System.out.println("------");
                 for (int j = 0; j < gene2PtmList.size(); j++) {
                     JSONObject ptmAndScore = (JSONObject) gene2PtmList.get(j);
                     //log.info("kinase");
@@ -1818,7 +1858,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -1975,7 +2015,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2133,7 +2173,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2289,7 +2329,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2445,7 +2485,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2608,7 +2648,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2768,7 +2808,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -2929,7 +2969,7 @@ public class PhosphoService {
 
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -3086,7 +3126,7 @@ public class PhosphoService {
                 //End of signor
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -3243,7 +3283,7 @@ public class PhosphoService {
                 //End of signor
 
 //            log.info("inputgene");
-//            System.out.println(protList[i]);
+//            //System.out.println(protList[i]);
                 JSONArray gene2PtmList = new JSONArray();
 
 
@@ -3318,16 +3358,16 @@ public class PhosphoService {
             String urlString = "";
             // Compute Network for the iptmnet genes
 //            try {
-            System.out.println("==========================================");
-            System.out.println("Computing deepPhosResults");
-            System.out.println(ptmPhArray.toJSONString());
-            System.out.println("------");
+            //System.out.println("==========================================");
+            //System.out.println("Computing deepPhosResults");
+            //System.out.println(ptmPhArray.toJSONString());
+            //System.out.println("------");
             JSONObject phosphoSiteToPhosphoProtein = new JSONObject();
             for (int i = 0; i < ptmPhArray.size(); i++) {
 
 
                 JSONObject ptmPhosphoJson = (JSONObject) ptmPhArray.get(i);
-                System.out.println(ptmPhosphoJson);
+                //System.out.println(ptmPhosphoJson);
                 //
                 String shorthand = ptmPhosphoJson.get("phosphoSite").toString();
                 phosphoSiteToPhosphoProtein.put(shorthand, ptmPhosphoJson);
@@ -3344,10 +3384,10 @@ public class PhosphoService {
 
                 inputGene = protList[i];
                 inputGeneUpper = inputGene.toUpperCase();
-                System.out.println("inputGene");
-                System.out.println(inputGene);
-                System.out.println("inputGeneUpper");
-                System.out.println(inputGeneUpper);
+                //System.out.println("inputGene");
+                //System.out.println(inputGene);
+                //System.out.println("inputGeneUpper");
+                //System.out.println(inputGeneUpper);
 //
 //                String deepItemName = (String) deepItem.get("name");
 //                String deepItemNameTrans = (String) deepItem.get("full_name");
@@ -3389,16 +3429,16 @@ public class PhosphoService {
             }
 
 
-                System.out.println("deepPhosurlString=");
-                System.out.println(urlString);
-                System.out.println("deepPhosResults=");
+                //System.out.println("deepPhosurlString=");
+                //System.out.println(urlString);
+                //System.out.println("deepPhosResults=");
             deepPhosResults = deepPhosService.getPhosphoPrediction(organism, urlString);
-            //System.out.println(deepPhosResults);
+            ////System.out.println(deepPhosResults);
 
 
             for (Object deepKeyStr : deepPhosResults.keySet()) {
-                System.out.println("interating in key values in deepPhos");
-                System.out.println(deepKeyStr.toString());
+                //System.out.println("interating in key values in deepPhos");
+                //System.out.println(deepKeyStr.toString());
 
                 try{
 
@@ -3417,14 +3457,14 @@ public class PhosphoService {
 
                     //Print key and value
 
-                    //System.out.println("key: "+ deepKeyStr + " value: " + deepKeyvalue);
+                    ////System.out.println("key: "+ deepKeyStr + " value: " + deepKeyvalue);
 
                     for (int deepi = 0; deepi < deepKeyvalue.size(); deepi++) {
 
                         JSONObject deepItem = (JSONObject) deepKeyvalue.get(deepi);
-                        //System.out.println(deepItem.toJSONString());
+                        ////System.out.println(deepItem.toJSONString());
 //                        if (deepItem.containsKey("full_name")) {
-                        //System.out.println("----------------------");
+                        ////System.out.println("----------------------");
                         String deepItemName = (String) deepItem.get("name");
                         String deepItemNameTrans = (String) deepItem.get("full_name");
                         //String deepItemFullNameTrunc = deepItemName.split("\\(")[0];
@@ -3432,19 +3472,19 @@ public class PhosphoService {
                         if (phosphoSiteToPhosphoProtein.containsKey(deepItemName)) {
                             deepItemFullName = (String) ((JSONObject) phosphoSiteToPhosphoProtein.get(deepItemName)).get("phosphoProtein");
                         }
-                        System.out.println(deepItemFullName);
+                        //System.out.println(deepItemFullName);
 
                         Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
                         //Double deepItemScore = Double.parseDouble((String) deepItem.get("score"));
                         //double deepItemScore = Double.valueOf((Double) deepItem.get("score"));
                         int deepPosition = Integer.parseInt((String) deepItem.get("position"));
-//                    System.out.println("---------");
-//                    System.out.println(deepItemName);
+//                    //System.out.println("---------");
+//                    //System.out.println(deepItemName);
 //
-//                    System.out.println(deepItemFullName);
+//                    //System.out.println(deepItemFullName);
 //
-//                    System.out.println(deepItemScore);
-//                    System.out.println(deepPosition);
+//                    //System.out.println(deepItemScore);
+//                    //System.out.println(deepPosition);
 //                        if (!deepPhos_nodeUnique.containsKey(deepItemFullName)) {
 //                            newNode = generateNode(deepItemNameTrans, deepItemFullName, "", ppidx, 0, 0.0);//tag 2 is for protein-protein-interaction
 //                            ppidx = ppidx + 1;
@@ -3490,9 +3530,9 @@ public class PhosphoService {
                 //if (keyvalue instanceof JSONObject)
                 //    printJsonObject((JSONObject)keyvalue);
             }
-            System.out.println(deepPhosNetwork_Nodes.toJSONString());
-            System.out.println(deepPhosNetwork_Edges.toJSONString());
-            System.out.println(deepPhosTableArray.toJSONString());
+            //System.out.println(deepPhosNetwork_Nodes.toJSONString());
+            //System.out.println(deepPhosNetwork_Edges.toJSONString());
+            //System.out.println(deepPhosTableArray.toJSONString());
 
 
             indefinite_Kinase_Gene_Network.put("nodes", indefinite_Kinase_Gene_NetworkNodes);
@@ -3522,18 +3562,18 @@ public class PhosphoService {
             network.put("Predicted_Probability_Kinase_TargetGene", indefinite_Kinase_Gene_Network);
             network.put("Predicted_Blosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
 
-            System.out.println("PTM_table");
-            System.out.println(ptmTableArray.toString());
+            //System.out.println("PTM_table");
+            //System.out.println(ptmTableArray.toString());
 
-            System.out.println("ptm network");
-            System.out.println(ptm_Network.toString());
+            //System.out.println("ptm network");
+            //System.out.println(ptm_Network.toString());
 
-            System.out.println("network without error");
-            System.out.println(network.toString());
+            //System.out.println("network without error");
+            //System.out.println(network.toString());
             return network;
         }catch (Exception e){
             String msg = String.format("Error in obtaining network");
-            System.out.println(msg);
+            //System.out.println(msg);
 
             indefinite_Kinase_Gene_Network.put("nodes", indefinite_Kinase_Gene_NetworkNodes);
             indefinite_Kinase_Gene_Network.put("edges", indefinite_Kinase_Gene_NetworkEdges);
@@ -3561,8 +3601,8 @@ public class PhosphoService {
             network.put("Blosum50_Exact_Match_Kinase_TargetGene", definite_blosum_Kinase_Gene_Network);
             network.put("Predicted_Probability_Kinase_TargetGene", indefinite_Kinase_Gene_Network);
             network.put("Predicted_Blosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
-            System.out.println("network with error");
-            System.out.println(network.toString());
+            //System.out.println("network with error");
+            //System.out.println(network.toString());
             return network;
         }
     }
@@ -3577,7 +3617,7 @@ public class PhosphoService {
             //log.info(((JSONObject)blosum50.get(kinaseStr)).get(geneStr).toString());
             score += ((Long) ((JSONObject) blosum50.get(kinaseStr)).get(geneStr)).intValue();
 //            Class cls2 = scoreObject.getClass();
-//            System.out.println("The type of the object is: " + cls2.getName());
+//            //System.out.println("The type of the object is: " + cls2.getName());
         }
         return score;
     }
@@ -3619,7 +3659,7 @@ public class PhosphoService {
 
 
 //                Class cls2 = charDic.getClass();
-//                System.out.println("The type of the object is: " + cls2.getName());
+//                //System.out.println("The type of the object is: " + cls2.getName());
 
                 int charDickInt = (int) charDic;
 
@@ -3672,9 +3712,9 @@ public class PhosphoService {
             log.info(cutSeq);
             return cutSeq;
         }catch (Exception e){
-            System.out.println("Error in cutSequenceMethod");
-            System.out.println(sequence);
-            System.out.println(site);
+            //System.out.println("Error in cutSequenceMethod");
+            //System.out.println(sequence);
+            //System.out.println(site);
             return cutSeq;
         }
     }
@@ -3723,10 +3763,10 @@ public class PhosphoService {
 //
 //        RestTemplate restTemplate = new RestTemplate();
 //        //String result = restTemplate.getForObject(uri, HarmonizomeGeneDomain.class);
-//        System.out.println("******************");
-//        System.out.println("******************");
+//        //System.out.println("******************");
+//        //System.out.println("******************");
 //
-//        System.out.println("++++++++++");
+//        //System.out.println("++++++++++");
 //
 //        JSONObject geneInfoJson;
 //        //HashMap geneMap;
@@ -3741,18 +3781,18 @@ public class PhosphoService {
 //
 //
 //
-//                //System.out.println("uniprotMap:" + uniprotMap.toString());
+//                ////System.out.println("uniprotMap:" + uniprotMap.toString());
 //
 ////            response = UtilsNetwork.getInstance().readUrlXml(uri);
 ////            log.info(response);
 ////            JSONParser parser = new JSONParser();
 ////
 ////            geneInfoJson = (JSONObject) parser.parse(response);
-////            System.out.println("--------------------");
+////            //System.out.println("--------------------");
 ////            JSONObject geneSymbol = (JSONObject) geneInfoJson.get("symbol");
-////            System.out.println("===================");
-////            System.out.println(geneInfoJson.toString());
-////            System.out.println(geneSymbol.toString());
+////            //System.out.println("===================");
+////            //System.out.println(geneInfoJson.toString());
+////            //System.out.println(geneSymbol.toString());
 ////
 //        } catch (Exception e) {
 //

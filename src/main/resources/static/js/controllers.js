@@ -210,7 +210,8 @@ EIAQDF[meK]TDLR	0.1569\n\
 IYQ[pY]IQSR[+42.010] 1.3012\n\
 [aK]AYSFCGTVEY(UNIMOD:21)MAP -2.1456\n\
 KA[pY]SF[myC]GTVE[pY]MAPEVVNR -0.5987\n\
-SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQ -0.3312";
+SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQ -0.3312\n\
+PHSHQY[pS]DRR 1.3267";
         //"\nC[me2K]ISPEERR[pS]PPAPGL -2.11";
     //vars.textAreaFormatMD = "IYQY[+80]IQSR[+42.010] 1.3\nK[+112.1]SAPATGGVK[+42.010]K[+56]PHR -0.5";
     //vars.textAreaFormatSN = "IYQ[pY]IQS[aR] 1.3\n[aK]SAPATGGVK[meK]PHR -0.5";
@@ -222,6 +223,7 @@ SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQ -0.3312";
     vars.peptideResultsGenesChanged = false;
 
     vars.genesAveraged = "";
+    vars.genesFirstFound = "";
     vars.genesUnique = "";
     vars.genes = "";
     vars.genesExample ="WAPAL	0.58272\n\
@@ -357,6 +359,7 @@ CCNL2	0.61115";
     vars.inputMassPtmProteins = "";
     vars.inputPtmProteinsAveraged = "";
     vars.inputPtmProteinsUnique = "";
+    vars.inputPtmProteinsFirstFound = "";
     vars.inputPtmProteinsExample = "Q05826{[pT]@220} -1.33,Q6P788{K[+42.010]@29}{[snC]@101} -1.08,Q9Y463{K(MOD:00663)@256}{Y[+79.966]@273} -0.2,Q13627{[aK]@105}{Y[+79.966]@145} 2.7, Q5TA31{[meR]@109} 2.11, Q13627{K(MOD:00723)@105}{Y(MOD:00259)@104}{Y(UNIMOD:21)@112} -0.33";
     vars.inputShorthandPtmProteins = "Q9Y463{[pY]@273} -0.2,Q13627{[pY]@321} 2.7,P51812{[pS]@369} -1.33";
     vars.inputShorthandPtmProteins = "";
@@ -369,6 +372,8 @@ CCNL2	0.61115";
     vars.showOutputForPeptideToProtein = false;
     vars.proteinForm = "";
     vars.organismForm = "9606";
+    vars.selectedOrganism = {value: "homo sapiens (human) | taxonomy ID:9606"};
+    vars.selectedOrganismName = "homo sapiens (human) | taxonomy ID:9606";
     vars.prositeFoundNum = 0;
     vars.motifLength = 0;
     vars.uniprotFoundNum = 0;
@@ -614,6 +619,9 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
                     case "modOntology":
                         $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ebi.ac.uk/ols/ontologies/mod/terms?obo_id="+linkID);
                         break;
+                    case "pinetSignor":
+                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://signor.uniroma2.it/relation_result.php?id="+linkID);
+                        break;
 
                     case "pinetUniprot":
                         $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.rcsb.org/pdb/protein/"+linkID);
@@ -757,6 +765,22 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
     $("input[name='tabs']").click(function () {
         self.helpTab = this.id;
         SharedService.setVar("helpTab", self.helpTab);
+
+    });
+
+    $(document).ready(function () {
+
+        $('.AB3rotate1').addClass('active');
+        $('.AB3text1').addClass('active');
+
+        $('.AB3rotate2').attr('disabled', true);
+        $('.AB3text2').attr('disabled', true);
+
+        $('.AB3rotate3').attr('disabled', true);
+        $('.AB3text3').attr('disabled', true);
+
+        $('.AB3rotate4').attr('disabled', true);
+        $('.AB3text4').attr('disabled', true);
 
     });
     //
@@ -5927,6 +5951,30 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //     $(this).closest('span').css({'border': '3px solid black'});
     // });
 
+    $('[data-toggle="popover-hover"]').popover({
+        html: true,
+        trigger: 'hover',
+        placement: 'bottom',
+        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+    });
+
+    $(document).ready(function () {
+
+        $('.AB3rotate1').attr('disabled', true);
+        $('.AB3text1').attr('disabled', true);
+
+        $('.AB3rotate2').addClass('active');
+        $('.AB3text2').addClass('active');
+
+        $('.AB3rotate3').attr('disabled', true);
+        $('.AB3text3').attr('disabled', true);
+
+        $('.AB3rotate4').attr('disabled', true);
+        $('.AB3text4').attr('disabled', true);
+
+    });
+
+
     $('input[name=tabset3][id=' + self.ex1orex2 + ']').prop('checked', true);
     $("input[name='tabset3']").click(function () {
         self.ex1orex2 = this.id;
@@ -5990,6 +6038,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
     self.resultTab = SharedService.getVar("resultTab");
 
+
     $('input[name=tabs][id=' + self.resultTab + ']').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.resultTab = this.id;
@@ -5999,6 +6048,56 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
     });
 
+
+    $(".btn-group > .btn").click(function(){
+        $(".btn-group > .btn").removeClass("active");
+
+        $(this).addClass("active");
+        console.log(this);
+        console.log(this.id);
+        self.showOverAllParallelSVG = false;
+
+        var changeRegiFunc = function(id){
+            if(id.includes("regi1") ){
+                console.log("true");
+                console.log("regi1");
+                $scope.showRegi1 = true;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+                $scope.makeParallelGrid(self.peptideToModificationList, 1);
+
+
+            }
+
+            if(id.includes("regi2") ){
+                console.log("true");
+                console.log("regi2");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = true;
+                $scope.showRegi3 = false;
+                $scope.makeParallelGrid(self.peptideToModificationList, 2);
+
+
+            }
+            if(id.includes("regi3") ){
+                console.log("true");
+                console.log("regi3");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = true;
+
+                $scope.makeParallelGrid(self.peptideToModificationList, 3);
+
+
+            }
+
+        };
+        changeRegiFunc(this.id);
+        $scope.$apply();
+
+
+
+    });
 
     $scope.newSite = function (url) {
 
@@ -6281,6 +6380,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     // self.waitingForPeptideToProtein = SharedService.getVar('waitingForPeptideToProtein');
     // self.showOutputForPeptideToProtein = SharedService.getVar('showOutputForPeptideToProtein');
     self.organismForm = SharedService.getVar('organismForm');
+    $scope.selectedOrganism = SharedService.getVar('selectedOrganism');
+    $scope.selectedOrganismName = SharedService.getVar('selectedOrganismName');
     self.proteinForm = SharedService.getVar('proteinForm');
     self.proteinDb = SharedService.getVar('proteinDb');
     self.peptideNormalizeFlag = SharedService.getVar('peptideNormalizeFlag');
@@ -7058,6 +7159,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.ptmCount = {};
         self.geneCount = {};
 
+        self.ptmCountAvg = {};
+        self.geneCountAvg = {};
+
 
 
         // console.log("self.peptideToModificationList");
@@ -7105,6 +7209,84 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         }
                     });
                 }
+
+
+
+                var parallelPep = e.motif;
+                e.response.map(function (e2) {
+                    if (e2.ptmProteinsMixAll.length > 0 ) {
+                        var parallelPtm = e2.ptmProteinsMixAll[0];
+                        ////console.log(parallelPtm);
+                        if (self.ptmCountAvg.hasOwnProperty(parallelPtm)) {
+
+                            self.ptmCountAvg[parallelPtm]["value"] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.ptmCountAvg[parallelPtm]["count"] += 1;
+                        }
+                        else {
+                            self.ptmCountAvg[parallelPtm] = {"value":self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep],"count":1};
+                        }
+                    }
+
+                    ////console.log(e2);
+                    //for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+
+                    if (e2.geneArray.length > 0 ) {
+                        var parallelGene = e2.geneArray[0];
+
+
+                        if (self.geneCountAvg.hasOwnProperty(parallelGene) ) {
+
+                            self.geneCountAvg[parallelGene]["value"] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.geneCountAvg[parallelGene]["count"] += 1;
+                        }
+                        else{
+                            self.geneCountAvg[parallelGene] = {"value":self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep],"count":1};
+
+                        }
+                    }
+                });
+
+
+                if (e.response.length > 0 ){
+                    e2 = e.response[0];
+                    if (e2.ptmProteinsMixAll.length > 0 ) {
+                        var parallelPtm = e2.ptmProteinsMixAll[0];
+                        ////console.log(parallelPtm);
+                        if (self.ptmCountFirstFound.hasOwnProperty(parallelPtm)) {
+
+                            self.ptmCountFirstFound[parallelPtm]["value"] += self.peptideToAbundance[parallelPep];
+                            self.ptmCountFirstFound[parallelPtm]["count"] += 1;
+                        }
+                        else {
+                            self.ptmCountFirstFound[parallelPtm] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+                        }
+                    }
+
+                    ////console.log(e2);
+                    //for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+
+                    if (e2.geneArray.length > 0 ) {
+                        var parallelGene = e2.geneArray[0];
+
+
+                        if (self.geneCountFirstFound.hasOwnProperty(parallelGene) ) {
+
+                            self.geneCountFirstFound[parallelGene]["value"] += self.peptideToAbundance[parallelPep];
+                            self.geneCountFirstFound[parallelGene]["count"] += 1;
+                        }
+                        else{
+                            self.geneCountFirstFound[parallelGene] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+
+                        }
+                    }
+                }
+
+
+
+
+
+
+
             }
 
 
@@ -7130,20 +7312,20 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     if (e2.ptmProteinsMixAll.length > 0 ) {
                         var parallelPtm = e2.ptmProteinsMixAll[0];
                         if (!(parallelPtm in self.ptmProteinToAbundance)){
-                            self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
                         }
                         else{
-                            self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
 
                         }
                     }
                     if (e2.geneArray.length > 0 ) {
                         var parallelGene = e2.geneArray[0];
                         if (!(parallelGene in self.geneToAbundance)){
-                            self.geneToAbundance[parallelGene] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.geneToAbundance[parallelGene] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
                         }
                         else{
-                            self.geneToAbundance[parallelGene] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                            self.geneToAbundance[parallelGene] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
 
                         }
                     }
@@ -7172,8 +7354,16 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         // SharedService.setVar("list_of_positive_peps", self.list_of_positive_peps);
         self.proteinIdListMassCombinedWithAbundance = [];
         self.genesWithAbundance = [];
+        self.proteinIdListMassCombinedWithAbundanceAveraged = [];
         self.proteinIdListMassCombinedWithAbundanceUnique = [];
+        self.proteinIdListMassCombinedWithAbundanceFirstFound = [];
+        self.genesWithAbundanceAveraged = [];
         self.genesWithAbundanceUnique = [];
+        self.genesWithAbundanceFirstFound = [];
+        console.log("before ptm 2 abundance aveage");
+
+        console.log(self.geneCountAvg);
+
         for (var keyIter in self.ptmProteinToAbundance) {
             if (self.ptmProteinToAbundance.hasOwnProperty(keyIter)) {
                 var valueIter = self.ptmProteinToAbundance[keyIter];
@@ -7186,7 +7376,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
             }
         }
-
+        console.log("before gene 2 abundance average");
+        console.log(self.ptmCountAvg);
         for (var keyIter in self.geneToAbundance) {
             if (self.geneToAbundance.hasOwnProperty(keyIter)) {
                 var valueIter = self.geneToAbundance[keyIter];
@@ -7202,6 +7393,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         console.log("before gene 2 abundance unique");
         console.log(self.geneCount);
+        console.log(self.geneCountAvg);
 
         for (var keyIter in self.geneCount) {
             //console.log(keyIter);
@@ -7214,7 +7406,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 if (self.geneCount.hasOwnProperty(keyIter)) {
                     var valueIter = self.geneCount[keyIter]["value"];
                     if (!isNaN(valueIter)) {
-                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(5))
+                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(7))
                     }
                     else {
                         self.genesWithAbundanceUnique.push(keyIter)
@@ -7225,8 +7417,53 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             }
         }
 
+        for (var keyIter in self.geneCountAvg) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCountAvg.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCountAvg[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceAveraged.push(keyIter + " " + (self.geneCountAvg[keyIter]["value"]/self.geneCountAvg[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.genesWithAbundanceAveraged.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        for (var keyIter in self.geneCountFirstFound) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCountFirstFound.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCountFirstFound[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceFirstFound.push(keyIter + " " + (self.geneCountFirstFound[keyIter]["value"]/self.geneCountFirstFound[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.genesWithAbundanceFirstFound.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
         console.log("before ptm 2 abundance unique");
         console.log(self.ptmCount);
+
 
         for (var keyIter in self.ptmCount) {
             //console.log(keyIter);
@@ -7239,10 +7476,54 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 if (self.ptmCount.hasOwnProperty(keyIter)) {
                     var valueIter = self.ptmCount[keyIter]["value"];
                     if (!isNaN(valueIter)) {
-                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(5))
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(7))
                     }
                     else {
                         self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        for (var keyIter in self.ptmCountAvg) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCountAvg.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCountAvg[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceAveraged.push(keyIter + " " + (self.ptmCountAvg[keyIter]["value"]/self.ptmCountAvg[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceAveraged.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        for (var keyIter in self.ptmCountFirstFound) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCountFirstFound.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCountFirstFound[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceFirstFound.push(keyIter + " " + (self.ptmCountFirstFound[keyIter]["value"]/self.ptmCountFirstFound[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceFirstFound.push(keyIter)
                     }
                 }
                 //     }
@@ -7256,10 +7537,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         SharedService.setVar("peptideResultsPTMs", self.peptideResultsPTMs);
 
         SharedService.setVar('peptideToModificationList', self.peptideToModificationList);
-        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundance);
+        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundanceAveraged);
         SharedService.setVar("inputPtmProteinsUnique", self.proteinIdListMassCombinedWithAbundanceUnique);
+        SharedService.setVar("inputPtmProteinsFirstFound", self.proteinIdListMassCombinedWithAbundanceFirstFound);
         //SharedService.setVar("inputShorthandPtmProteins", self.geneIdListShorthandCombined);
-        SharedService.setVar('genesAveraged',self.genesWithAbundance);
+        SharedService.setVar('genesAveraged',self.genesWithAbundanceAveraged);
+        SharedService.setVar('genesFirstFound',self.genesWithAbundanceFirstFound);
         SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
 
 
@@ -8460,6 +8743,24 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     // }
 
     $scope.uploadFileAndOnSubmit = function(){
+
+        //$('input[name=tabset3][id=' + 'ex1Id' + ']').attr('disabled', true);
+
+        // $('input[name=tabset3][id=' + 'ex1Id' + ']').attr('disabled', true);
+        // $('input[name=tabset3][id=' + 'ex2Id' + ']').attr('disabled', true);
+        // $('input[name=tabset3][id=' + 'ex3Id' + ']').attr('disabled', true);
+        //$scope.
+        //$scope.$apply();
+        //$('input[name=tabs][id=' + self.resultTab + ']').prop('checked', true);
+        //$scope.$apply();
+        // $("input[name='tabs']").click(function () {
+        //     self.resultTab = this.id;
+        //
+        //     SharedService.setVar("resultTab", self.resultTab);
+        //     $scope.$apply();
+        //
+        // });
+
         self.progressText = "Getting the Peptide to Protein Mapping";
         self.showOutputex1orex2 = "ex2Id";
 
@@ -8502,7 +8803,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             headers: {'Content-Type': undefined}
         })
             .success(function(response){
-                self.progressText = "Peptides are Mapped to Proteins, Searching for Connected Proteins.";
+                self.progressText = "Please don't change tabs while waiting for results.\n" +
+                    "Peptides are Mapped to Proteins, \n" +
+                    "Searching for Connected Proteins.";
                 //console.log(uploadUrl);
                 //console.log("successs");
                 //console.log(response);
@@ -9835,6 +10138,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 self.uploadedFalg = false;
                 self.uploadWaiting = false;
             });
+
     }
 
     // function uploadFilePost() {
@@ -12069,6 +12373,82 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     // //console.log("---------");
     //console.log(self.proteinDb);
     //console.log("---------");
+
+    $scope.organismTaxMapping = {"arabidopsis thaliana (thale cress) | taxonomy ID:3702":"3702",
+        "bos taurus (cattle) | taxonomy ID:9913":"9913",
+        "caenorhabditis elegans (nematodes) | taxonomy ID:6239":"6239",
+        "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055":"3055",
+        "danio rerio (zebrafish) | taxonomy ID:7955":"7955",
+        "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689":"44689",
+        "drosophila melanogaster (fruit fly) | taxonomy ID:7227":"7227",
+
+        "escherichia coli (enterobacteria) | taxonomy ID:562":"562",
+        "hepacivirus C (viruses) | taxonomy ID:11103":"11103",
+        "homo sapiens (human) | taxonomy ID:9606":"9606",
+        "mus musculus (house mouse) | taxonomy ID:10090":"10090",
+        "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104":"2104",
+        "oryza sativa (rice) | taxonomy ID:4530":"4530",
+        "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833":"5833",
+
+        "pneumocystis carinii (ascomycetes) | taxonomy ID:4754":"4754",
+        "rattus norvegicus (Norway rat) | taxonomy ID:10116":"10116",
+        "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932":"4932",
+        "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896":"4896",
+        "takifugu rubripes (torafugu) | taxonomy ID:31033":"31033",
+        "xenopus laevis (African clawed frog) | taxonomy ID:8355":"8355",
+        "zea mays (monocots) | taxonomy ID:4577":"4577"};
+
+    $scope.organismOptions = [
+        {value: "arabidopsis thaliana (thale cress) | taxonomy ID:3702"},
+        {value: "bos taurus (cattle) | taxonomy ID:9913"},
+        {value: "caenorhabditis elegans (nematodes) | taxonomy ID:6239"},
+        {value: "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055"},
+        {value: "danio rerio (zebrafish) | taxonomy ID:7955"},
+        {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
+        {value: "drosophila melanogaster (fruit fly) | taxonomy ID:7227"},
+
+        {value: "escherichia coli (enterobacteria) | taxonomy ID:562"},
+        {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
+        {value: "homo sapiens (human) | taxonomy ID:9606"},
+        {value: "mus musculus (house mouse) | taxonomy ID:10090"},
+        {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
+        {value: "oryza sativa (rice) | taxonomy ID:4530"},
+        {value: "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833"},
+
+        {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
+        {value: "rattus norvegicus (Norway rat) | taxonomy ID:10116"},
+        {value: "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932"},
+        {value: "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896"},
+        {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
+        {value: "xenopus laevis (African clawed frog) | taxonomy ID:8355"},
+        {value: "zea mays (monocots) | taxonomy ID:4577"}
+
+    ];
+    //SharedService.setVar('phosphoOptions', $scope.organismOptions);
+    //$scope.selectedOrganism = self.organismForm;
+    //SharedService.setVar('selectedphosphoPathways', $scope.selectedphosphoPathways);
+    console.log($scope.selectedOrganismName);
+    for (var orgIter = 0; orgIter < $scope.organismOptions.length; orgIter++){
+        if ($scope.selectedOrganismName == $scope.organismOptions[orgIter]["value"])
+        {
+            $scope.selectedOrganism = $scope.organismOptions[orgIter];
+        }
+    }
+    //$scope.selectedOrganism = $scope.organismOptions[2];
+
+    $scope.changeOrganism = function (item) {
+
+        self.organismForm = $scope.organismTaxMapping[item.value];
+        $scope.selectedOrganism = item;
+        $scope.selectedOrganismName = item.value;
+
+        SharedService.setVar('organismForm',self.organismForm);
+        SharedService.setVar('selectedOrganism',$scope.selectedOrganism);
+        SharedService.setVar('selectedOrganismName',$scope.selectedOrganismName);
+
+
+    };
+
 
 
 
@@ -14374,7 +14754,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
 
-    $scope.makeParallelGrid = function (peptideToModificationList) {
+    $scope.makeParallelGrid = function (peptideToModificationList, input_flag) {
         // d3.selectAll("svg > *").remove();
         // svg5.selectAll("*").remove();
         //
@@ -14404,48 +14784,170 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
 
+            if(input_flag == 1){
 
-            peptideToModificationList.map(function (e) {
-                // //console.log(e);
-                var parallelPep = e.motif;
-                if (parallelUniquePep.indexOf(parallelPep) === -1) {
-                    parallelUniquePep.push(parallelPep);
-                }
+                $("#regi1").addClass("active");
+                $("#regi2").removeClass("active");
+                $("#regi3").removeClass("active");
 
-                e.response.map(function (e2) {
-                    var parallelProt = e2.sequence_ac;
-                    var parallelPtm = e2.ptmProteinsMixAll[0];
-                    if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
-                        parallelUniqueProtein.push(parallelProt);
+                $scope.showRegi1 = true;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+
+
+                peptideToModificationList.map(function (e) {
+                    // //console.log(e);
+                    var parallelPep = e.motif;
+                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                        parallelUniquePep.push(parallelPep);
                     }
-                    if (parallelUniquePtm.indexOf(parallelPtm) === -1) {
-                        parallelUniquePtm.push(parallelPtm);
-                    }
-                    ////console.log(e2);
-                    if (e2.geneArray.length > 0 ) {
-                        // //console.log(parallelPep);
-                        // //console.log(parallelProt);
-                        // //console.log(e2.geneArray[parallelIter]);
-                        // //console.log(e2.ptmProteinsMassAll[parallelIter]);
-                        var parallelGene = e2.geneArray[0];
-                        if (parallelUniqueGene.indexOf(parallelGene) === -1) {
-                            parallelUniqueGene.push(parallelGene);
+
+                    e.response.map(function (e2) {
+                        var parallelProt = e2.sequence_ac;
+                        var parallelPtm = e2.ptmProteinsMixAll[0];
+                        if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
+                            parallelUniqueProtein.push(parallelProt);
                         }
-                        parallelJsonItem = {};
-                        parallelJsonItem.Peptide = parallelPep;
-                        parallelJsonItem.Protein = parallelProt;
-                        parallelJsonItem.Gene = parallelGene;
-                        parallelJsonItem.ptmProtein = parallelPtm;
+                        if (parallelUniquePtm.indexOf(parallelPtm) === -1) {
+                            parallelUniquePtm.push(parallelPtm);
+                        }
+                        ////console.log(e2);
+                        if (e2.geneArray.length > 0 ) {
+                            // //console.log(parallelPep);
+                            // //console.log(parallelProt);
+                            // //console.log(e2.geneArray[parallelIter]);
+                            // //console.log(e2.ptmProteinsMassAll[parallelIter]);
+                            var parallelGene = e2.geneArray[0];
+                            if (parallelUniqueGene.indexOf(parallelGene) === -1) {
+                                parallelUniqueGene.push(parallelGene);
+                            }
+                            parallelJsonItem = {};
+                            parallelJsonItem.Peptide = parallelPep;
+                            parallelJsonItem.Protein = parallelProt;
+                            parallelJsonItem.Gene = parallelGene;
+                            parallelJsonItem.ptmProtein = parallelPtm;
 
-                        parallelJson.push(parallelJsonItem);
-                        //parallelNrows += 1;
+                            parallelJson.push(parallelJsonItem);
+                            //parallelNrows += 1;
+                        }
+
+
+                    })
+
+
+                })
+            }
+
+            if(input_flag == 2){
+
+
+                $("#regi1").removeClass("active");
+                $("#regi2").addClass("active");
+                $("#regi3").removeClass("active");
+
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = true;
+                $scope.showRegi3 = false;
+
+                peptideToModificationList.map(function (e) {
+                    // //console.log(e);
+                    var parallelPep = e.motif;
+                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                        parallelUniquePep.push(parallelPep);
+                    }
+
+                    if(e.response.length > 0) {
+                        e2 = e.response[0];
+                        var parallelProt = e2.sequence_ac;
+                        var parallelPtm = e2.ptmProteinsMixAll[0];
+                        if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
+                            parallelUniqueProtein.push(parallelProt);
+                        }
+                        if (parallelUniquePtm.indexOf(parallelPtm) === -1) {
+                            parallelUniquePtm.push(parallelPtm);
+                        }
+                        ////console.log(e2);
+                        if (e2.geneArray.length > 0 ) {
+                            // //console.log(parallelPep);
+                            // //console.log(parallelProt);
+                            // //console.log(e2.geneArray[parallelIter]);
+                            // //console.log(e2.ptmProteinsMassAll[parallelIter]);
+                            var parallelGene = e2.geneArray[0];
+                            if (parallelUniqueGene.indexOf(parallelGene) === -1) {
+                                parallelUniqueGene.push(parallelGene);
+                            }
+                            parallelJsonItem = {};
+                            parallelJsonItem.Peptide = parallelPep;
+                            parallelJsonItem.Protein = parallelProt;
+                            parallelJsonItem.Gene = parallelGene;
+                            parallelJsonItem.ptmProtein = parallelPtm;
+
+                            parallelJson.push(parallelJsonItem);
+                            //parallelNrows += 1;
+                        }
+
+
                     }
 
 
                 })
+            }
+
+            if(input_flag == 3){
+
+                $("#regi1").removeClass("active");
+                $("#regi2").removeClass("active");
+                $("#regi3").addClass("active");
+
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = true;
+
+                peptideToModificationList.map(function (e) {
+                    // //console.log(e);
+                    var parallelPep = e.motif;
+                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                        parallelUniquePep.push(parallelPep);
+                    }
+
+                    if (e.length == 1) {
+                        e.response.map(function (e2) {
+                            var parallelProt = e2.sequence_ac;
+                            var parallelPtm = e2.ptmProteinsMixAll[0];
+                            if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
+                                parallelUniqueProtein.push(parallelProt);
+                            }
+                            if (parallelUniquePtm.indexOf(parallelPtm) === -1) {
+                                parallelUniquePtm.push(parallelPtm);
+                            }
+                            ////console.log(e2);
+                            if (e2.geneArray.length > 0) {
+                                // //console.log(parallelPep);
+                                // //console.log(parallelProt);
+                                // //console.log(e2.geneArray[parallelIter]);
+                                // //console.log(e2.ptmProteinsMassAll[parallelIter]);
+                                var parallelGene = e2.geneArray[0];
+                                if (parallelUniqueGene.indexOf(parallelGene) === -1) {
+                                    parallelUniqueGene.push(parallelGene);
+                                }
+                                parallelJsonItem = {};
+                                parallelJsonItem.Peptide = parallelPep;
+                                parallelJsonItem.Protein = parallelProt;
+                                parallelJsonItem.Gene = parallelGene;
+                                parallelJsonItem.ptmProtein = parallelPtm;
+
+                                parallelJson.push(parallelJsonItem);
+                                //parallelNrows += 1;
+                            }
 
 
-            })
+                        })
+                    }
+
+
+                })
+            }
+
 
 
             parallelNrows = Math.max(parallelUniqueGene.length, parallelUniqueProtein.length, parallelUniquePep.length, parallelUniquePtm.length)
@@ -14614,169 +15116,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             });
 
 
-            //**********************
-            //**********************
-            //**********************
-            //**********************
-            //**********************
-            // var x = d3.scale.ordinal().rangePoints([0, width], 1),
-            //     y = {},
-            //     dragging = {};
-            //
-            // var line = d3.svg.line(),
-            //     axis = d3.svg.axis().orient("left"),
-            //     background,
-            //     foreground;
-            //
-            // d3.select("svg").remove();
-            //
-            // var svg5 = d3.select("#parallel").append("svg")
-            //     .attr("width", width + margin.left + margin.right)
-            //     .attr("height", height + margin.top + margin.bottom)
-            //     .append("g")
-            //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            //
-            // data = self.parallelJson;
-            // x.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-            //
-            //     y[d] = d3.scale.ordinal()
-            //         .domain(data.map(function(p) { return p[d]; }))
-            //         .rangePoints([height, 0]);
-            //
-            //     return true;
-            // }));
-            //
-            // //console.log(dimensions);
-            //
-            // // Add grey background lines for context.
-            // background = svg5.append("g")
-            //     .attr("class", "background")
-            //     .selectAll("path")
-            //     .data(data)
-            //     .enter().append("path")
-            //     .attr("d", path);
-            //
-            // // Add blue foreground lines for focus.
-            // foreground = svg5.append("g")
-            //     .attr("class", "foreground")
-            //     .selectAll("path")
-            //     .data(data)
-            //     .enter().append("path")
-            //     .attr("d", path);
-            //
-            // // Add a group element for each dimension.
-            // var g = svg5.selectAll(".dimension")
-            //     .data(dimensions)
-            //     .enter().append("g")
-            //     .attr("class", "dimension")
-            //     .attr("transform", function(d) {
-            //         //console.log(x(d));
-            //         return "translate(" + x(d) + ")"; })
-            //     .call(d3.behavior.drag()
-            //         .origin(function(d) { return {x: x(d)}; })
-            //         .on("dragstart", function(d) {
-            //             dragging[d] = x(d);
-            //             background.attr("visibility", "hidden");
-            //         })
-            //         .on("drag", function(d) {
-            //             dragging[d] = Math.min(width, Math.max(0, d3.event.x));
-            //             foreground.attr("d", path);
-            //             dimensions.sort(function(a, b) { return position(a) - position(b); });
-            //             x.domain(dimensions);
-            //             g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
-            //         })
-            //         .on("dragend", function(d) {
-            //             delete dragging[d];
-            //             transition(d3.select(this)).attr("transform", "translate(" + x(d) + ")");
-            //             transition(foreground).attr("d", path);
-            //             background
-            //                 .attr("d", path)
-            //                 .transition()
-            //                 .delay(500)
-            //                 .duration(0)
-            //                 .attr("visibility", null);
-            //         }));
-            //
-            // // Add an axis and title.
-            // g.append("g")
-            //     .attr("class", "axis")
-            //     //.orient("left")
-            //     .each(function(d) {
-            //
-            //         d3.select(this).call(axis.scale(y[d])); })
-            //     .append("text")
-            //     .style("text-anchor", "middle")
-            //     .attr("y", -9)
-            //     .text(function(d) {
-            //         //console.log(d);
-            //         return d; });
-            //
-            // // Add and store a brush for each axis.
-            // g.append("g")
-            //     .attr("class", "brush")
-            //     .each(function(d) {
-            //         d3.select(this).call(y[d].brush = d3.svg.brush().y(y[d]).on("brushstart", brushstart).on("brush", brush));
-            //     })
-            //     .selectAll("rect")
-            //     .attr("x", -8)
-            //     .attr("width", 16);
-            //
-            // var projection = svg5.selectAll(".foreground path")
-            //     .on("mouseover", mouseover)
-            //     .on("mouseout", mouseout);
-            //
-            // function mouseover(d) {
-            //     //svg.classed("active", false);
-            //     projection.classed("inactive", function(p) { return p !== d; });
-            //     projection.classed("active", function(p) { return p === d; });
-            //     //projection.filter(function(p) { return p === d; }).each(moveToFront);
-            // }
-            //
-            // function mouseout(d) {
-            //
-            //     //projection.classed("inactive", function(p) { return p !== d; });
-            //     projection.classed("active");
-            // }
-            //
-            // function position(d) {
-            //     var v = dragging[d];
-            //     return v == null ? x(d) : v;
-            // }
-            //
-            // function transition(g) {
-            //     return g.transition().duration(500);
-            // }
-            //
-            // // Returns the path for a given data point.
-            // function path(d) {
-            //     return line(dimensions.map(function(p) {
-            //     //console.log([position(p), y[p](d[p])]);
-            //         return [position(p), y[p](d[p])]; }));
-            // }
-            //
-            // function brushstart() {
-            //     d3.event.sourceEvent.stopPropagation();
-            // }
-            //
-            // // Handles a brush event, toggling the display of foreground lines.
-            // function brush() {
-            //     var actives = dimensions.filter(function(p) { return !y[p].brush.empty(); }),
-            //         extents = actives.map(function(p) { return y[p].brush.extent(); });
-            //     foreground.style("display", function(d) {
-            //         return actives.every(function(p, i) {
-            //
-            //             return extents[i][0] <= y[p](d[p]) && y[p](d[p]) <= extents[i][1];
-            //             //This one is for numeric
-            //             //return extents[i][0] <= d[p] && d[p] <= extents[i][1];
-            //         }) ? null : "none";
-            //     });
-            // }
 
-            //**********************
-            //**********************
-            //**********************
-            //**********************
-            //**********************
         }
 
     };
@@ -15294,16 +15634,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 var ptmLocal = [];
 
                 // for a given peptide iterate through modifications, calculate its offset and return to ptmLocal
-                ////console.log(self.ontologyMappings);
+                //console.log(self.ontologyMappings);
                 self.ontologyMappings
                     .filter(function (el) {
-                        // //console.log(peptide);
-                        // //console.log(el);
-                        // //console.log(el.input);
-                        // ////console.log(el.originalModFromInput);
-                        //
-                        // //console.log(peptide.indexOf(el.input));
-                        // //console.log(peptide.indexOf(el.input) > -1);
+
                         return (peptide.indexOf(el.input) > -1);
                     })
                     .map(function (e) {
@@ -15316,70 +15650,27 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             //count++;
                             offset = peptide.indexOf(e.input, offset + 1);
                         }
-                        // //console.log(peptide);
-                        // //console.log(e.input);
-                        // ////console.log(offset);
-                        // //console.log(offsets);
+
 
                         for (var offsetIter = 0; offsetIter < offsets.length; offsetIter++) {
                             var ptmIndex = 0;
-                            // Iterate over numeric indexes from 0 to 5, as everyone expects.
+
                             offset = offsets[offsetIter];
-                            // //console.log("offset");
-                            // //console.log(offset);
+
                             var beforeOffset = peptide.substring(0, offset);
-                            // //console.log("beforeOffset");
-                            // //console.log(beforeOffset);
-                            // //console.log(beforeOffset.length);
-                            // //console.log("beforeOffset.replace(/ *\([^)]*\) */g, )");
-                            // //console.log(beforeOffset.replace(/ *\([^)]*\) */g, ""));
-                            // //console.log(beforeOffset.replace(/ *\([^)]*\) */g, "").length);
-                            // //console.log("beforeOffset.replace(self.modificationPattern, )");
-                            // //console.log(beforeOffset.replace(self.modificationPattern, ''));
-                            // //console.log(beforeOffset.replace(self.modificationPattern, '').length);
 
-
-                            // var decreaseOffset2 = beforeOffset.length - beforeOffset.replace(/ *\([^)]*\) */g, "").length;
-                            // //console.log(decreaseOffset2);
                             var decreaseOffset = beforeOffset.length - beforeOffset.replace(/ *\([^)]*\) */g, "").replace(self.modificationPattern, '').length;
 
 
-                            ////console.log(e.shorthand.match(self.patt2));
-                            ////console.log(e);
-                            // if (self.patt2.test(e.shorthand)) {
-                            //     //console.log("passed the shorthand!!!!!");
-                            //     ptmIndex = 1;
-                            //     var ptmShorthandModification = e.shorthand.match(self.patt2);
-                            //     var ptmShorthandSite = e.shorthand.match(self.patt1);
-                            // }
-                            // else {
-                            //     var ptmShorthandModification = '';
-                            //     var ptmShorthandSite = '';
-                            // }
-                            // ;
-                            //var ptmMassModification = e.modification.match(self.patt4);
-                            // var ptmMassSite = e.modification.match(self.patt1);
-
-                            // //console.log("start");
-                            // //console.log(start);
-                            // //console.log("offset");
-                            // //console.log(offset);
-                            // //console.log("decreaseOffset");
-                            // //console.log(decreaseOffset);
                             ptmLocal.push({
                                 "identifier": e.identifier,
-                                //"ptmMassSite": ptmMassSite,
+
                                 "originalType": ptmIndex, //0 for mass, 1 for mass difference
-                                // "ptmMassModification": ptmMassModification,
-                                // "ptmShorthandSite": ptmShorthandSite,
-                                // "ptmShorthandModification": ptmShorthandModification,
-                                // "shorthand": e.shorthand,
+
                                 "ptmModification": e.input,
                                 "location": offset - decreaseOffset + start
                             });
-                            // //console.log("++++++++  ptmLocal  +++++++");
-                            // //console.log(ptmLocal);
-                            // //console.log("--------  ptmLocal  -------");
+
                         }
 
 
@@ -15599,6 +15890,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.ptmCount = {};
         self.geneCount = {};
 
+        self.ptmCountAvg = {};
+        self.geneCountAvg = {};
+
+        self.ptmCountFirstFound = {};
+        self.geneCountFirstFound = {};
+
         var parallelNrows = 0;
 
         // console.log("self.peptideToModificationList");
@@ -15639,6 +15936,77 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     }
                 });
             }
+
+
+            var parallelPep = e.motif;
+            e.response.map(function (e2) {
+                if (e2.ptmProteinsMixAll.length > 0 ) {
+                    var parallelPtm = e2.ptmProteinsMixAll[0];
+                    ////console.log(parallelPtm);
+                    if (self.ptmCountAvg.hasOwnProperty(parallelPtm)) {
+
+                        self.ptmCountAvg[parallelPtm]["value"] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        self.ptmCountAvg[parallelPtm]["count"] += 1;
+                    }
+                    else {
+                        self.ptmCountAvg[parallelPtm] = {"value":self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep],"count":1};
+                    }
+                }
+
+                ////console.log(e2);
+                //for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+
+                if (e2.geneArray.length > 0 ) {
+                    var parallelGene = e2.geneArray[0];
+
+
+                    if (self.geneCountAvg.hasOwnProperty(parallelGene) ) {
+
+                        self.geneCountAvg[parallelGene]["value"] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        self.geneCountAvg[parallelGene]["count"] += 1;
+                    }
+                    else{
+                        self.geneCountAvg[parallelGene] = {"value":self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep],"count":1};
+
+                    }
+                }
+            });
+
+
+            if (e.response.length > 0 ){
+                e2 = e.response[0];
+                if (e2.ptmProteinsMixAll.length > 0 ) {
+                    var parallelPtm = e2.ptmProteinsMixAll[0];
+                    ////console.log(parallelPtm);
+                    if (self.ptmCountFirstFound.hasOwnProperty(parallelPtm)) {
+
+                        self.ptmCountFirstFound[parallelPtm]["value"] += self.peptideToAbundance[parallelPep];
+                        self.ptmCountFirstFound[parallelPtm]["count"] += 1;
+                    }
+                    else {
+                        self.ptmCountFirstFound[parallelPtm] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+                    }
+                }
+
+                ////console.log(e2);
+                //for (parallelIter = 0; parallelIter < e2.geneArray.length; parallelIter++) {
+
+                if (e2.geneArray.length > 0 ) {
+                    var parallelGene = e2.geneArray[0];
+
+
+                    if (self.geneCountFirstFound.hasOwnProperty(parallelGene) ) {
+
+                        self.geneCountFirstFound[parallelGene]["value"] += self.peptideToAbundance[parallelPep];
+                        self.geneCountFirstFound[parallelGene]["count"] += 1;
+                    }
+                    else{
+                        self.geneCountFirstFound[parallelGene] = {"value":self.peptideToAbundance[parallelPep],"count":1};
+
+                    }
+                }
+            }
+
 
         });
 
@@ -15690,10 +16058,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                     //Generate ptmProteinToAbundance
                     ////console.log("ptmProteinToAbundance");
                     if (!(parallelPtm in self.ptmProteinToAbundance)){
-                        self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
                     }
                     else{
-                        self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
+                        self.ptmProteinToAbundance[parallelPtm] += self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep] ;
 
                     }
                     //self.ptmProteinToAbundance[parallelPtm] = self.peptideToAbundance[parallelPep] / self.peptideToNumberOfProteins[parallelPep];
@@ -16127,9 +16495,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
 
         self.proteinIdListMassCombinedWithAbundance = [];
+        self.proteinIdListMassCombinedWithAbundanceAveraged = [];
         self.proteinIdListMassCombinedWithAbundanceUnique = [];
+        self.proteinIdListMassCombinedWithAbundanceFirstFound = [];
         self.genesWithAbundance = [];
+        self.genesWithAbundanceAveraged = [];
         self.genesWithAbundanceUnique = [];
+        self.genesWithAbundanceFirstFound = [];
         console.log("before ptm 2 abundance");
         console.log(self.ptmProteinToAbundance);
         console.log("ptmCount");
@@ -16142,7 +16514,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 if (self.ptmProteinToAbundance.hasOwnProperty(keyIter)) {
                     var valueIter = self.ptmProteinToAbundance[keyIter];
                     if (!isNaN(valueIter)) {
-                        self.proteinIdListMassCombinedWithAbundance.push(keyIter + " " + valueIter.toFixed(5))
+                        self.proteinIdListMassCombinedWithAbundance.push(keyIter + " " + valueIter.toFixed(7))
                     }
                     else {
                         self.proteinIdListMassCombinedWithAbundance.push(keyIter)
@@ -16164,7 +16536,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         if (self.geneToAbundance.hasOwnProperty(keyIter)) {
                             var valueIter = self.geneToAbundance[keyIter];
                             if (!isNaN(valueIter)) {
-                                self.genesWithAbundance.push(keyIter + " " + valueIter.toFixed(5))
+                                self.genesWithAbundance.push(keyIter + " " + valueIter.toFixed(6))
                             }
                             else {
                                 self.genesWithAbundance.push(keyIter)
@@ -16175,8 +16547,53 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             }
         }
 
-        console.log("before gene 2 abundance unique");
-        console.log(self.geneCount);
+        // console.log("before gene 2 abundance unique");
+        // console.log(self.geneCount);
+
+        for (var keyIter in self.geneCountAvg) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCountAvg.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCountAvg[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceAveraged.push(keyIter + " " + (self.geneCountAvg[keyIter]["value"]/self.geneCountAvg[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.genesWithAbundanceAveraged.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+
+        for (var keyIter in self.geneCountFirstFound) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.geneCountFirstFound.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneCountFirstFound[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundanceFirstFound.push(keyIter + " " + (self.geneCountFirstFound[keyIter]["value"]/self.geneCountFirstFound[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.genesWithAbundanceFirstFound.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
 
         for (var keyIter in self.geneCount) {
             //console.log(keyIter);
@@ -16189,7 +16606,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 if (self.geneCount.hasOwnProperty(keyIter)) {
                     var valueIter = self.geneCount[keyIter]["value"];
                     if (!isNaN(valueIter)) {
-                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(5))
+                        self.genesWithAbundanceUnique.push(keyIter + " " + (self.geneCount[keyIter]["value"]/self.geneCount[keyIter]["count"]).toFixed(7))
                     }
                     else {
                         self.genesWithAbundanceUnique.push(keyIter)
@@ -16199,9 +16616,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 // }
             }
         }
-
-        console.log("before ptm 2 abundance unique");
-        console.log(self.ptmCount);
+        // console.log("before ptm 2 abundance unique");
+        // console.log(self.ptmCount);
 
         for (var keyIter in self.ptmCount) {
             //console.log(keyIter);
@@ -16214,10 +16630,54 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 if (self.ptmCount.hasOwnProperty(keyIter)) {
                     var valueIter = self.ptmCount[keyIter]["value"];
                     if (!isNaN(valueIter)) {
-                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(5))
+                        self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter + " " + (self.ptmCount[keyIter]["value"]/self.ptmCount[keyIter]["count"]).toFixed(7))
                     }
                     else {
                         self.proteinIdListMassCombinedWithAbundanceUnique.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        for (var keyIter in self.ptmCountFirstFound) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCountFirstFound.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCountFirstFound[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceFirstFound.push(keyIter + " " + (self.ptmCountFirstFound[keyIter]["value"]/self.ptmCountFirstFound[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceFirstFound.push(keyIter)
+                    }
+                }
+                //     }
+                // }
+            }
+        }
+
+        for (var keyIter in self.ptmCountAvg) {
+            //console.log(keyIter);
+            if (keyIter != "NA" && keyIter != "undefined") {
+                // console.log(keyIter);
+                // if ( keyIter != "undefined") {
+                //     console.log(keyIter);
+                //     if (!isNaN(keyIter) ) {
+                //console.log(keyIter);
+                if (self.ptmCountAvg.hasOwnProperty(keyIter)) {
+                    var valueIter = self.ptmCountAvg[keyIter]["value"];
+                    if (!isNaN(valueIter)) {
+                        self.proteinIdListMassCombinedWithAbundanceAveraged.push(keyIter + " " + (self.ptmCountAvg[keyIter]["value"]/self.ptmCountAvg[keyIter]["count"]).toFixed(7))
+                    }
+                    else {
+                        self.proteinIdListMassCombinedWithAbundanceAveraged.push(keyIter)
                     }
                 }
                 //     }
@@ -16238,18 +16698,24 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         SharedService.setVar("peptideToAbundance", self.peptideToAbundance);
         SharedService.setVar("peptideToNumberOfProteins", self.peptideToNumberOfProteins);
-        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundance);
+        SharedService.setVar("inputPtmProteinsAveraged", self.proteinIdListMassCombinedWithAbundanceAveraged);
         SharedService.setVar("inputPtmProteinsUnique", self.proteinIdListMassCombinedWithAbundanceUnique);
-
+        SharedService.setVar("inputPtmProteinsFirstFound", self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
         SharedService.setVar("inputShorthandPtmProteins", self.geneIdListShorthandCombined);
-        SharedService.setVar('genesAveraged',self.genesWithAbundance);
+        SharedService.setVar('genesAveraged',self.genesWithAbundanceAveraged);
+        SharedService.setVar('genesFirstFound',self.genesWithAbundanceFirstFound);
         SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
 
         //SharedService.setVar("organismFormProteinToPathway", self.organismForm);
         //organismFormProteinToPathway
         //$window.sessionStorage.setItem("showOutputForPeptideToProtein", self.showOutput);
 
+        // $('input[name=tabset3][id=' + 'ex1Id' + ']').attr('disabled', false);
+        // $('input[name=tabset3][id=' + 'ex2Id' + ']').attr('disabled', false);
+        // $('input[name=tabset3][id=' + 'ex3Id' + ']').attr('disabled', false);
+        //$scope.
+        //$scope.$apply();
 
     }
     // getElementById('parallel').style.width = self.parallelWidth;
@@ -16793,8 +17259,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
     self.peptideResultsPTMsChanged = SharedService.getVar('peptideResultsPTMsChanged');
 
-    self.inputPtmProteinsAveraged = SharedService.getVar('inputPtmProteinsAveraged');
-    self.inputPtmProteinsUnique = SharedService.getVar('inputPtmProteinsUnique');
+
 
     self.computeWeightForUpdateSignor = SharedService.getVar('computeWeightForUpdateSignor');
     self.computeWeightForUpdatePtm = SharedService.getVar('computeWeightForUpdatePtm');
@@ -16823,10 +17288,21 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     //console.log('in protein2pathway, genes are:');
     //console.log(self.genes);
     self.organismForm = SharedService.getVar('organismForm');
+    $scope.selectedOrganism = SharedService.getVar('selectedOrganism');
+    $scope.selectedOrganismName = SharedService.getVar('selectedOrganismName');
 
     self.inputPtmProteinsAveraged = SharedService.getVar('inputPtmProteinsAveraged').toString();
+    self.inputPtmProteinsFirstFound = SharedService.getVar('inputPtmProteinsFirstFound').toString();
     self.inputPtmProteinsUnique = SharedService.getVar('inputPtmProteinsUnique').toString();
     self.inputPtmProteinsExample = SharedService.getVar('inputPtmProteinsExample').toString();
+
+
+
+
+    // self.inputPtmProteinsAveraged = SharedService.getVar('inputPtmProteinsAveraged');
+    // self.inputPtmProteinsFirstFound = SharedService.getVar('inputPtmProteinsFirstFound');
+    //
+    // self.inputPtmProteinsUnique = SharedService.getVar('inputPtmProteinsUnique');
 
     //console.log(self.inputMassPtmProteins);
     self.inputShorthandPtmProteins = SharedService.getVar('inputShorthandPtmProteins').toString();
@@ -16936,6 +17412,120 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     //     $scope.$apply();
     // });
 
+
+    $scope.organismTaxMapping = {"arabidopsis thaliana (thale cress) | taxonomy ID:3702":"3702",
+        "bos taurus (cattle) | taxonomy ID:9913":"9913",
+        "caenorhabditis elegans (nematodes) | taxonomy ID:6239":"6239",
+        "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055":"3055",
+        "danio rerio (zebrafish) | taxonomy ID:7955":"7955",
+        "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689":"44689",
+        "drosophila melanogaster (fruit fly) | taxonomy ID:7227":"7227",
+
+        "escherichia coli (enterobacteria) | taxonomy ID:562":"562",
+        "hepacivirus C (viruses) | taxonomy ID:11103":"11103",
+        "homo sapiens (human) | taxonomy ID:9606":"9606",
+        "mus musculus (house mouse) | taxonomy ID:10090":"10090",
+        "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104":"2104",
+        "oryza sativa (rice) | taxonomy ID:4530":"4530",
+        "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833":"5833",
+
+        "pneumocystis carinii (ascomycetes) | taxonomy ID:4754":"4754",
+        "rattus norvegicus (Norway rat) | taxonomy ID:10116":"10116",
+        "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932":"4932",
+        "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896":"4896",
+        "takifugu rubripes (torafugu) | taxonomy ID:31033":"31033",
+        "xenopus laevis (African clawed frog) | taxonomy ID:8355":"8355",
+        "zea mays (monocots) | taxonomy ID:4577":"4577"};
+
+    $scope.organismOptions = [
+        {value: "arabidopsis thaliana (thale cress) | taxonomy ID:3702"},
+        {value: "bos taurus (cattle) | taxonomy ID:9913"},
+        {value: "caenorhabditis elegans (nematodes) | taxonomy ID:6239"},
+        {value: "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055"},
+        {value: "danio rerio (zebrafish) | taxonomy ID:7955"},
+        {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
+        {value: "drosophila melanogaster (fruit fly) | taxonomy ID:7227"},
+
+        {value: "escherichia coli (enterobacteria) | taxonomy ID:562"},
+        {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
+        {value: "homo sapiens (human) | taxonomy ID:9606"},
+        {value: "mus musculus (house mouse) | taxonomy ID:10090"},
+        {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
+        {value: "oryza sativa (rice) | taxonomy ID:4530"},
+        {value: "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833"},
+
+        {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
+        {value: "rattus norvegicus (Norway rat) | taxonomy ID:10116"},
+        {value: "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932"},
+        {value: "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896"},
+        {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
+        {value: "xenopus laevis (African clawed frog) | taxonomy ID:8355"},
+        {value: "zea mays (monocots) | taxonomy ID:4577"}
+
+    ];
+    //SharedService.setVar('phosphoOptions', $scope.organismOptions);
+    //$scope.selectedOrganism = self.organismForm;
+    //SharedService.setVar('selectedphosphoPathways', $scope.selectedphosphoPathways);
+    console.log($scope.selectedOrganismName);
+    for (var orgIter = 0; orgIter < $scope.organismOptions.length; orgIter++){
+        if ($scope.selectedOrganismName == $scope.organismOptions[orgIter]["value"])
+        {
+            $scope.selectedOrganism = $scope.organismOptions[orgIter];
+        }
+    }
+    //$scope.selectedOrganism = $scope.organismOptions[2];
+
+    $scope.changeOrganism = function (item) {
+
+        self.organismForm = $scope.organismTaxMapping[item.value];
+        $scope.selectedOrganism = item;
+        $scope.selectedOrganismName = item.value;
+
+        SharedService.setVar('organismForm',self.organismForm);
+        SharedService.setVar('selectedOrganism',$scope.selectedOrganism);
+        SharedService.setVar('selectedOrganismName',$scope.selectedOrganismName);
+
+
+    };
+
+
+    $scope.openIframeModal = function (linkID, type) {
+
+
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            // templateUrl: 'myModalContent.html',
+            templateUrl: 'myModalContent.html',
+            controller: 'iFrameModalInstanceCtrl',
+            size: 'xxl',
+            windowClass: 'app-modal-window',
+            resolve: {
+                linkID: function () {
+                    return linkID;
+                },
+                type: function () {
+                    return type;
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+        $('.AB3rotate1').attr('disabled', true);
+        $('.AB3text1').attr('disabled', true);
+
+        $('.AB3rotate2').attr('disabled', true);
+        $('.AB3text2').attr('disabled', true);
+
+        $('.AB3rotate3').addClass('active');
+        $('.AB3text3').addClass('active');
+
+        $('.AB3rotate4').attr('disabled', true);
+        $('.AB3text4').attr('disabled', true);
+
+    });
+
     $(document).ready(function () {
         var isSyncingLeftScroll = false;
         var isSyncingRightScroll = false;
@@ -16979,11 +17569,12 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     var startRegiFunc = function(num){
         if(num == 2){
             //$("#regi3").trigger("click");
-            $("#regi3").addClass("active");
+            $("#regi4").addClass("active");
             $scope.showRegi1 = false;
             $scope.showRegi2 = false;
-            $scope.showRegi3 = true;
-            self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+            $scope.showRegi3 = false;
+            $scope.showRegi4 = true;
+            self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
 
 
         }
@@ -16991,9 +17582,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             $("#regi1").addClass("active");
             $("#regi2").attr('disabled', true);
             $("#regi3").attr('disabled', true);
+            $("#regi4").attr('disabled', true);
             $scope.showRegi1 = true;
             $scope.showRegi2 = false;
             $scope.showRegi3 = false;
+            $scope.showRegi4 = false;
             self.inputMassPtmProteins = self.inputPtmProteinsExample;
         }
     };
@@ -17024,6 +17617,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = true;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
+                $scope.showRegi4 = false;
                 self.inputMassPtmProteins = self.inputPtmProteinsExample;
                 self.inputMassPtmProteins += " ";
 
@@ -17035,6 +17629,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = false;
                 $scope.showRegi2 = true;
                 $scope.showRegi3 = false;
+                $scope.showRegi4 = false;
                 self.inputMassPtmProteins = self.inputPtmProteinsUnique;
                 self.inputMassPtmProteins += " ";
 
@@ -17046,7 +17641,19 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = false;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = true;
+                $scope.showRegi4 = false;
                 self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+                self.inputMassPtmProteins += " ";
+
+            }
+            if(id.includes("regi4") ){
+                console.log("true");
+                console.log("regi4");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+                $scope.showRegi4 = true;
+                self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
                 self.inputMassPtmProteins += " ";
 
             }
@@ -17977,15 +18584,19 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         self.showEnrichmentGraphTmp = false;
         if($scope.showRegi1){
-            self.ptmTitleText = "Workflow Example";
+            self.ptmTitleText = "Illustrative Example";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi2){
-            self.ptmTitleText = "Peptides2Proteins Results";
+            self.ptmTitleText = "Peptides2Proteins Distinct Mapping";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi3){
-            self.ptmTitleText = "Peptides2Proteins Results Averaged";
+            self.ptmTitleText = "Peptides2Proteins Averaged Mapping";
+            SharedService.setVar('ptmTitleText', self.ptmTitleText);
+        }
+        if($scope.showRegi4){
+            self.ptmTitleText = "Peptides2Proteins Representative Mapping";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
 
@@ -21298,6 +21909,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             // update(network.nodes, network.edges, network.parallel, network.circular);
             //console.log(network.nodes);
             //console.log(ptmToAbundance);
+            console.log(network);
             for (var iterNetNode = 0; iterNetNode < network.nodes.length; iterNetNode++) {
                 var iterNetNodeKey = network.nodes[iterNetNode]["name"];
                 if (iterNetNodeKey in ptmToAbundance) {
@@ -28719,9 +29331,11 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
         $("#regi1").addClass("active");
         $("#regi2").removeClass("active");
         $("#regi3").removeClass("active");
+        $("#regi4").removeClass("active");
         $scope.showRegi1 = true;
         $scope.showRegi2 = false;
         $scope.showRegi3 = false;
+        $scope.showRegi4 = false;
     }
 
 }]);
@@ -28757,6 +29371,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
     self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
 
+    self.genesFirstFound = SharedService.getVar('genesFirstFound').toString();
     self.genesAveraged = SharedService.getVar('genesAveraged').toString();
     self.genesUnique = SharedService.getVar('genesUnique').toString();
     self.genesExample = SharedService.getVar('genesExample').toString();
@@ -28873,6 +29488,22 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $(document).ready(function () {
+
+        $('.AB3rotate1').attr('disabled', true);
+        $('.AB3text1').attr('disabled', true);
+
+        $('.AB3rotate2').attr('disabled', true);
+        $('.AB3text2').attr('disabled', true);
+
+        $('.AB3rotate3').attr('disabled', true);
+        $('.AB3text3').attr('disabled', true);
+
+        $('.AB3rotate4').addClass('active');
+        $('.AB3text4').addClass('active');
+
+    });
+
+    $(document).ready(function () {
         var isSyncingLeftScroll = false;
         var isSyncingRightScroll = false;
         var isSyncingRighterScroll = false;
@@ -28946,11 +29577,12 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     var startRegiFunc = function(num){
         if(num == 2){
             //$("#regi3").trigger("click");
-            $("#regi3").addClass("active");
+            $("#regi4").addClass("active");
             $scope.showRegi1 = false;
             $scope.showRegi2 = false;
-            $scope.showRegi3 = true;
-            self.genes = self.genesAveraged;
+            $scope.showRegi3 = false;
+            $scope.showRegi4 = true;
+            self.genes = self.genesFirstFound;
             console.log(self.genes);
 
 
@@ -28959,9 +29591,11 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             $("#regi1").addClass("active");
             $("#regi2").attr('disabled', true);
             $("#regi3").attr('disabled', true);
+            $("#regi4").attr('disabled', true);
             $scope.showRegi1 = true;
             $scope.showRegi2 = false;
             $scope.showRegi3 = false;
+            $scope.showRegi4 = false;
             self.genes = self.genesExample;
             console.log(self.genes);
         }
@@ -28992,6 +29626,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = true;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
+                $scope.showRegi4 = false;
                 self.genes = self.genesExample;
                 self.genes += " ";
                 console.log(self.genes);
@@ -29004,6 +29639,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = false;
                 $scope.showRegi2 = true;
                 $scope.showRegi3 = false;
+                $scope.showRegi4 = false;
                 self.genes = self.genesUnique;
                 self.genes += " ";
                 console.log(self.genes);
@@ -29016,7 +29652,20 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi1 = false;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = true;
+                $scope.showRegi4 = false;
                 self.genes = self.genesAveraged;
+                self.genes += " ";
+                console.log(self.genes);
+
+            }
+            if(id.includes("regi4") ){
+                console.log("true");
+                console.log("regi4");
+                $scope.showRegi1 = false;
+                $scope.showRegi2 = false;
+                $scope.showRegi3 = false;
+                $scope.showRegi4 = true;
+                self.genes = self.genesFirstFound;
                 self.genes += " ";
                 console.log(self.genes);
 
@@ -29155,7 +29804,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
             //symbol	hgnc_id	prev_symbol	name	uniprot_ids	gene_family_name	gene_family_id
-            geneInfoElem["gene"] = gene.replace(",", ";");
+            geneInfoElem["gene"] = gene.replace(/,/g, ";");
             geneInfoElem["upstream"] = upstream.join(" | ");
             geneInfoElem["downstream"] = downstream.join(" | ");
 
@@ -29181,13 +29830,15 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             var pathway = e.pathway;
             var genes = e.genes;
             var pValue = e.pValue;
+            var adjPValue = e.adjPValue;
             var geneInfoElem = {};
 
 
             //symbol	hgnc_id	prev_symbol	name	uniprot_ids	gene_family_name	gene_family_id
-            geneInfoElem["pathway"] = pathway.replace(",", ";");
+            geneInfoElem["pathway"] = pathway.replace(/,/g, ";");
             geneInfoElem["genes"] = genes.join(" | ");
             geneInfoElem["pValue"] = pValue;
+            geneInfoElem["adjPValue"] = adjPValue;
 
 
             // console.log(prev_symbol);
@@ -29756,18 +30407,27 @@ console.log(self.genes);
         //console.log(" ----------------  ");
         //console.log(" onSubmitPathway  ");
 
+
+
+
+
         if($scope.showRegi1){
-            self.geneTitleText = "Workflow Example";
+            self.geneTitleText = "Illustrative Example";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi2){
-            self.geneTitleText = "Peptides2Proteins Results";
+            self.geneTitleText = "Peptides2Proteins Distinct Mapping";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi3){
-            self.geneTitleText = "Peptides2Proteins Results Averaged";
+            self.geneTitleText = "Peptides2Proteins Averaged Mapping";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
+        if($scope.showRegi4){
+            self.geneTitleText = "Peptides2Proteins Representative Mapping";
+            SharedService.setVar('geneTitleText', self.geneTitleText);
+        }
+
         $http.get("api/increment/" + 3)
             .success(function (siteVisit) {
 
@@ -29964,7 +30624,7 @@ console.log(self.genes);
                     self.enrichmentNetwork['KEGG_2019_Human'] = apiNetwork;
                     SharedService.setVar('enrichmentNetwork', self.enrichmentNetwork);
 
-                    //console.log(self.enrichmentNetwork);
+                    console.log(self.enrichmentNetwork);
 
                     self.pathwayWaiting = false;
 
@@ -34075,7 +34735,7 @@ if(1 == 0){
                 {value: "SILAC_Phosphoproteomics"},
                 {value: "Phosphatase_Substrates_from_DEPOD"}
             ];
-            $scope.selectedEnrichmentPathways = $scope.enrichmentPathways[3];
+            $scope.selectedEnrichmentPathways = $scope.enrichmentPathways[0];
 
 
             $scope.enrichmentDiseaseDrugs = [
@@ -34201,6 +34861,7 @@ if(1 == 0){
                     //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
                     var idx1 = network.edges[iterNetNode]["source"];
                     var idx2 = network.edges[iterNetNode]["target"];
+                    console.log(network);
                     network.nodes[idx1]["weight"] += 1;
                     network.nodes[idx2]["weight"] += 1;
 
@@ -34210,7 +34871,7 @@ if(1 == 0){
             }
             ////console.log(network.nodes);
             updateEnrichment(network.nodes, network.edges, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue);
-            $scope.changedValue = function (item) {
+            $scope.changeEnrichmentValue = function (item) {
 
                 var net = item.value.toString();
                 //console.log(net);
@@ -34225,7 +34886,12 @@ if(1 == 0){
                     //console.log(item.value);
                     $scope.enrichmentItem = net;
 
+
                     var network = self.enrichmentNetwork[net];
+                    //console.log('network');
+                    //console.log(network);
+                    $scope.enrichmentTable = self.enrichmentNetwork[net].table;
+
                     //console.log('network');
                     //console.log(network);
                     // //console.log(network.parallel);
@@ -34278,6 +34944,7 @@ if(1 == 0){
                             }
 
                             self.enrichmentNetwork[net] = apiNetwork;
+                            console.log(self.enrichmentNetwork);
                             SharedService.setVar('enrichmentNetwork', self.enrichmentNetwork);
 
                             //console.log(self.enrichmentNetwork);
@@ -39339,9 +40006,11 @@ PLEC1 -0.309069";
         $("#regi1").addClass("active");
         $("#regi2").removeClass("active");
         $("#regi3").removeClass("active");
+        $("#regi4").removeClass("active");
         $scope.showRegi1 = true;
         $scope.showRegi2 = false;
         $scope.showRegi3 = false;
+        $scope.showRegi4 = false;
 
 
     }

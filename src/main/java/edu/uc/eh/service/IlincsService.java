@@ -123,10 +123,10 @@ public class IlincsService {
             //PrintWriter writer = new PrintWriter(stringWriter);
             PrintWriter writer4 = new PrintWriter(payload5, "UTF-8");
             writer4.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
-            System.out.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
+            //System.out.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
             for (int i = 0; i < geneList.length - 2; i++) {
                 writer4.print(geneList[i] + "," + geneList[i + 1] + System.getProperty("line.separator"));
-                System.out.print(geneList[i] + "," + geneList[i + 1] + System.getProperty("line.separator"));
+                //System.out.print(geneList[i] + "," + geneList[i + 1] + System.getProperty("line.separator"));
                 i = i + 1;
             }
             writer4.print(geneList[geneList.length - 2] + "," + geneList[geneList.length - 1] );
@@ -136,7 +136,7 @@ public class IlincsService {
             writer4.flush();
 
             writer4.close();
-            System.out.println("-------------");
+            //System.out.println("-------------");
 
 
 //            try{
@@ -212,10 +212,10 @@ public class IlincsService {
 
                 HttpResponse response = client.execute(httpPostSignatureUrl);
 
-                System.out.println("\nSending 'POST' request to URL : " + url);
-                System.out.println("Post parameters : " + postSignature.getEntity());
-                System.out.println("Response Code : " +
-                        response.getStatusLine().getStatusCode());
+//                System.out.println("\nSending 'POST' request to URL : " + url);
+//                System.out.println("Post parameters : " + postSignature.getEntity());
+//                System.out.println("Response Code : " +
+//                        response.getStatusLine().getStatusCode());
 
                 BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
@@ -225,14 +225,14 @@ public class IlincsService {
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
                 }
-                System.out.println("results: ");
-                System.out.println(result.toString());
+//                System.out.println("results: ");
+//                System.out.println(result.toString());
 
                 JSONParser parser = new JSONParser();
                 geneResultJSON = (JSONObject) parser.parse(result.toString());
 
                 signatureUrl = ((String) geneResultJSON.get("url"));
-                System.out.println(signatureUrl);
+                //System.out.println(signatureUrl);
                 //EnrichrJSON = new JSONObject(result.toString());
                 //EnrichrJSON = result;
                 uploadResultJSON.put("url", signatureUrl);
@@ -251,11 +251,11 @@ public class IlincsService {
             httpPost.setEntity(entity);
 
             HttpResponse response = client.execute(httpPost);
-
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + httpPost.getEntity());
-            System.out.println("Response Code : " +
-                    response.getStatusLine().getStatusCode());
+//
+//            System.out.println("\nSending 'POST' request to URL : " + url);
+//            System.out.println("Post parameters : " + httpPost.getEntity());
+//            System.out.println("Response Code : " +
+//                    response.getStatusLine().getStatusCode());
 
             BufferedReader rd = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
@@ -265,15 +265,15 @@ public class IlincsService {
             while ((line = rd.readLine()) != null) {
                 resultIlincs.append(line);
             }
-            System.out.println("results: ");
-            System.out.println(resultIlincs.toString());
+            //System.out.println("results: ");
+            //System.out.println(resultIlincs.toString());
 
             JSONParser parser = new JSONParser();
             uploadFileResultJSON = (JSONObject) parser.parse(resultIlincs.toString());
 
             fileNameList = (List<String>) ((JSONObject)uploadFileResultJSON.get("status")).get("fileName");
             fileName = fileNameList.get(0);
-            System.out.println(fileName);
+            //System.out.println(fileName);
 
             String ilincsurl = urlGetJson;
 
@@ -287,7 +287,7 @@ public class IlincsService {
                 con2.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
                 //--------------------------------------------------------------
                 String urlParameters2 = String.format("lib=LIB_2&file=%s&path=/mnt/raid/tmp/", fileName);
-                System.out.println(urlParameters2);
+                //System.out.println(urlParameters2);
                 // Send post request
                 con2.setDoOutput(true);
                 DataOutputStream wr2 = new DataOutputStream(con2.getOutputStream());
@@ -297,8 +297,8 @@ public class IlincsService {
 
                 int responseCode = con2.getResponseCode();
                 //System.out.println("\nSending 'POST' request to URL : " + url);
-                System.out.println("Post parameters : " + urlParameters2);
-                System.out.println("Response Code : " + responseCode);
+//                System.out.println("Post parameters : " + urlParameters2);
+//                System.out.println("Response Code : " + responseCode);
 
                 BufferedReader in2 = new BufferedReader(
                         new InputStreamReader(con2.getInputStream()));
@@ -347,8 +347,8 @@ public class IlincsService {
 
                 int responseCode5 = con5.getResponseCode();
                 //System.out.println("\nSending 'POST' request to URL : " + url);
-                System.out.println("Post parameters : " + urlParameters5);
-                System.out.println("Response Code : " + responseCode5);
+//                System.out.println("Post parameters : " + urlParameters5);
+//                System.out.println("Response Code : " + responseCode5);
 
                 BufferedReader in5 = new BufferedReader(
                         new InputStreamReader(con5.getInputStream()));
@@ -398,8 +398,8 @@ public class IlincsService {
 
                 int responseCode = con6.getResponseCode();
                 //System.out.println("\nSending 'POST' request to URL : " + url);
-                System.out.println("Post parameters : " + urlParameters6);
-                System.out.println("Response Code : " + responseCode);
+//                System.out.println("Post parameters : " + urlParameters6);
+//                System.out.println("Response Code : " + responseCode);
 
                 BufferedReader in6 = new BufferedReader(
                         new InputStreamReader(con6.getInputStream()));
@@ -443,7 +443,7 @@ public class IlincsService {
             return uploadErrorJSON;
         }
 
-        System.out.println(uploadResultJSON);
+    //    System.out.println(uploadResultJSON);
         return uploadResultJSON;
     }
 
@@ -475,15 +475,15 @@ public class IlincsService {
             //PrintWriter writer = new PrintWriter(stringWriter);
             PrintWriter writer4 = new PrintWriter(payload2, "UTF-8");
             writer4.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
-            System.out.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
+            //System.out.print("Name_GeneSymbol"+","+"Value_LogDiffExp"+ System.getProperty("line.separator"));
             for (int i = 0; i < geneList.length - 2; i++) {
                 writer4.print(geneList[i] + "," + geneList[i + 1] + System.getProperty("line.separator"));
                 System.out.print(geneList[i] + "," + geneList[i + 1] + System.getProperty("line.separator"));
                 i = i + 1;
             }
             writer4.print(geneList[geneList.length - 2] + "," + geneList[geneList.length - 1] );
-            System.out.print(geneList[geneList.length - 2] + "," + geneList[geneList.length - 1] );
-            System.out.println("=====Printing out writer=======");
+            //System.out.print(geneList[geneList.length - 2] + "," + geneList[geneList.length - 1] );
+            //System.out.println("=====Printing out writer=======");
 
             writer4.flush();
 
@@ -497,7 +497,7 @@ public class IlincsService {
             //System.out.println(stringWriter.toString());
 
             writer4.close();
-            System.out.println("-------------");
+            //System.out.println("-------------");
 
 
 
@@ -516,10 +516,10 @@ public class IlincsService {
 
             HttpResponse response = client.execute(httpPost);
 
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + post.getEntity());
-            System.out.println("Response Code : " +
-                    response.getStatusLine().getStatusCode());
+//            System.out.println("\nSending 'POST' request to URL : " + url);
+//            System.out.println("Post parameters : " + post.getEntity());
+//            System.out.println("Response Code : " +
+//                    response.getStatusLine().getStatusCode());
 
             BufferedReader rd = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
@@ -529,14 +529,14 @@ public class IlincsService {
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
-            System.out.println("results: ");
-            System.out.println(result.toString());
+//            System.out.println("results: ");
+//            System.out.println(result.toString());
 
             JSONParser parser = new JSONParser();
             geneResultJSON = (JSONObject) parser.parse(result.toString());
 
             signatureUrl = ((String) geneResultJSON.get("url"));
-            System.out.println(signatureUrl);
+//            System.out.println(signatureUrl);
             //EnrichrJSON = new JSONObject(result.toString());
             //EnrichrJSON = result;
 

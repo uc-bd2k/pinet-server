@@ -152,23 +152,12 @@ border-radius: 5px;">
                         <div class="well col-sm-12">
 
 
-                            <div class=" form-group col-sm-12" style="padding-top:5px;padding-bottom: 10px;margin-top: 5px;margin-bottom: 5px;" >
-                                <p style="font-weight: bold">Select Between options &nbsp;<span style="color:black;" class="glyphicon glyphicon-question-sign"
-                                                                                                data-delay='{"show":"0", "hide":"100"}'
-                                                                                                data-toggle="tooltip"
-                                                                                                title="Please select between the provided example or the results of PeptideToProtein Mappings.
-                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
-                                                                               The inputs can be modified manually. "
-                                >
-                                        </span ></p>
-
-                            </div>
-                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;">
-                                <!--<div class="well col-sm-12">-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-
-
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Workflow Example
+                            <div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px" >
+                                <p style="font-weight: bold;
+bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle;" class="onerow">Select Between &nbsp;<div class="btn-group btn-group-justified onerow" role="group" style="padding-bottom: 10px;width: 25%;">
+                                <div type="button" class="btn btn-primary " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Illustrative Example
                                     <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="tooltip"
@@ -184,9 +173,65 @@ border-radius: 5px;">
 
 
                                 </div>
+                            </div>
+                                    &nbsp;<p style="font-weight: bold;
+bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle;" class="onerow">or</p>
+
+                                <span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
+                                                                                                data-delay='{"show":"0", "hide":"100"}'
+                                                                                                data-toggle="tooltip"
+                                                                                                title="Please select between the provided example or the results of PeptideToProtein Mappings.
+                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
+                                                                               The inputs can be modified manually. "
+                                >
+                                        </span >
+
+                                </p>
+
+                            </div>
+                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;padding-top: 5px;">
+                                <!--<div class="well col-sm-12">-->
+                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Peptides2Proteins Representative Mapping
+                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="popover-hover"
+                                          data-img="images/avg3-3.png"
+
+                                    >
+                                        </span>
+                                    <span  ng-show= "showRegi4" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                    <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                </div>
+
+
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Averaged Mapping
+                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="popover-hover"
+                                          data-img="images/avg2-3.png"
+
+                                    >
+                                        </span>
+                                    <span  ng-show= "showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                    <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                                </div>
                                 <!--</div>-->
                                 <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Results
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Distinct Mapping
                                     <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="popover-hover"
@@ -200,39 +245,15 @@ border-radius: 5px;">
  vertical-align:middle;line-height: 20px;
   color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
                                 </div>
+
+
                                 <!--</div>-->
                                 <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Results Averaged
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
 
-
-
-                                          data-img="images/avg2-3.png"
-
-                                    >
-                                        </span>
-                                    <span  ng-show= "showRegi3" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
 
                             </div>
 
-                            <!--<a style="text-decoration: none;">-->
-                            <!--<a class= "collapse in" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" style="text-decoration: none; ">-->
 
-                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog"></span> &nbsp;-->
-                            <!--Enter Gene/Phosphogenes or for example try the list of-->
-                            <!--<button class="btn btn-primary " ng-click="ctrl.changeToP100('table')">-->
-                            <!--LINCS P100 data set&nbsp;-->
-                            <!--</button>-->
-                            <!--. Gene names should be sparated by comma, semi-colon or new line.-->
-                            <!--<hr/>-->
 
                             <div class=" form-group col-sm-4" style="padding-left: 0px;">
                                 <div class="horizontal-scroll" style=padding-bottom:10px;">
@@ -358,7 +379,7 @@ border-radius: 5px;">
                                 </label>
                                 <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="righter">
                                     <div ng-repeat="abundance in ctrl.geneAbundance track by $index">
-                                        {{abundance| limitTo:6}}
+                                        {{abundance| limitTo:9}}
                                         <br/>
                                     </div>
                                 </div>
@@ -923,7 +944,29 @@ border-radius: 5px;">
 
                         <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                             <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                                For Gene-Pathway Associasion:
+                                For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:white;" class="glyphicon glyphicon-question-sign "
+                                                                              data-delay='{"show":"0", "hide":"100"}'
+                                                                              data-toggle="tooltip"
+                                                                              title="For complete list of pathways please visit Enrichr.">
+                                    </span>
+                            </h4>
+
+                            http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the
+                            URL, e.g.
+                            <br/>
+                            <a href="http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
+                               target="_blank">
+                                http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
+
+                        </div>
+
+                        <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
+                            <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                For Gene-Pathway Association via Enrichr &nbsp;<span style="color:white;" class="glyphicon glyphicon-question-sign "
+                                                                               data-delay='{"show":"0", "hide":"100"}'
+                                                                               data-toggle="tooltip"
+                                                                               title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
+                                    </span>
                             </h4>
 
                             http://www.pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the
@@ -1253,7 +1296,7 @@ border-radius: 5px;">
 
                         <div ng-show="ctrl.showEnrichmentGraph">
 
-                            <div class="content">
+                            <!--<div class="content">-->
 
 
                                 <div class="tabs">
@@ -1284,9 +1327,9 @@ border-radius: 5px;">
                                     <div class="content">
                                         <section>
                                             <h2>Pathways</h2>
-                                            <select
+                                            <select class="select-css"
                                                     ng-model="selectedEnrichmentPathways"
-                                                    ng-change="changedValue(selectedEnrichmentPathways)"
+                                                    ng-change="changeEnrichmentValue(selectedEnrichmentPathways)"
                                                     ng-options="x.value for x in enrichmentPathways">
                                             </select>
                                             <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
@@ -1295,9 +1338,9 @@ border-radius: 5px;">
                                         </section>
                                         <section>
                                             <h2>Disease/Drugs</h2>
-                                            <select
+                                            <select class="select-css"
                                                     ng-model="selectedEnrichmentDiseaseDrugs"
-                                                    ng-change="changedValue(selectedEnrichmentDiseaseDrugs)"
+                                                    ng-change="changeEnrichmentValue(selectedEnrichmentDiseaseDrugs)"
                                                     ng-options="x.value for x in enrichmentDiseaseDrugs">
                                             </select>
                                             <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
@@ -1306,9 +1349,9 @@ border-radius: 5px;">
                                         </section>
                                         <section>
                                             <h2>Ontology</h2>
-                                            <select
+                                            <select class="select-css"
                                                     ng-model="selectedEnrichmentOntology"
-                                                    ng-change="changedValue(selectedEnrichmentOntology)"
+                                                    ng-change="changeEnrichmentValue(selectedEnrichmentOntology)"
                                                     ng-options="x.value for x in enrichmentOntology">
                                             </select>
                                             <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
@@ -1317,9 +1360,9 @@ border-radius: 5px;">
                                         </section>
                                         <section>
                                             <h2>Transcription</h2>
-                                            <select
+                                            <select class="select-css"
                                                     ng-model="selectedEnrichmentTranscription"
-                                                    ng-change="changedValue(selectedEnrichmentTranscription)"
+                                                    ng-change="changeEnrichmentValue(selectedEnrichmentTranscription)"
                                                     ng-options="x.value for x in enrichmentTranscription">
                                             </select>
                                             <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
@@ -1328,9 +1371,9 @@ border-radius: 5px;">
                                         </section>
                                         <section>
                                             <h2>Cell Type</h2>
-                                            <select
+                                            <select class="select-css"
                                                     ng-model="selectedEnrichmentCellType"
-                                                    ng-change="changedValue(selectedEnrichmentCellType)"
+                                                    ng-change="changeEnrichmentValue(selectedEnrichmentCellType)"
                                                     ng-options="x.value for x in enrichmentCellType">
                                             </select>
                                             <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
@@ -1347,21 +1390,28 @@ border-radius: 5px;">
                                 <!--ng-change="changedValue(selectedPathways)"-->
                                 <!--ng-options="x.value for x in pathways">-->
                                 <!--</select>-->
-                            </div>
-                            <div ng-show="ctrl.showGeneEnrichmentChangeProcessed">
+                            <!--</div>-->
+                            <div ng-show="ctrl.showGeneEnrichmentChangeProcessed ">
                                 <hr/>
-                                <h4>{{enrichmentItem}}</h4>
-                                <hr/>
+                                <p style="margin-bottom: 20px;">Results of <span style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{enrichmentItem}}</span > &nbsp;
+                                    <span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
+                                     data-delay='{"show":"0", "hide":"100"}'
+                                     data-toggle="tooltip"
+                                     title="Please change the selection to see the reflection "
+                                />
+                                </p>
+
                                 <button class="btn btn-primary " ng-click="exportEnrichmentTable()">Download Table
                                 </button>
                                 <div class="well">
-
+<!--{{enrichmentTable}}-->
                                     <table class="table table-striped table-bordered">
                                         <thead>
                                         <tr>
                                             <th>Pathway</th>
                                             <!--<th>validity</th>-->
                                             <th>P Value</th>
+                                            <!--<th>Adjusted P Value</th>-->
                                             <th>Gene List</th>
 
                                             <!--<th>max blosum50</th>-->
@@ -1374,8 +1424,10 @@ border-radius: 5px;">
                                         <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
                                         <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
                                         <td>{{item.pathway}}</td>
+
                                         <!--<td>{{gene.valid}}</td>-->
                                         <td>{{item.pValue}}</td>
+                                        <!--<td>{{item.adjPValue}}</td>-->
                                         <td>
                                     <span ng-repeat="gene_id in item.genes track by $index">
                                         <!--<a-->

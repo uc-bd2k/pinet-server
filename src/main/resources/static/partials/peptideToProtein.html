@@ -113,28 +113,106 @@
             Use the options below to select the reference proteome and other parameters.
         </span>
         <hr/>
-        <div class="form-group col-sm-4" style="padding-left: 0px;">
+        <div class="form-group col-sm-6" style="padding-left: 0px;">
             <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;<span
                 style="font-weight: bold">Select Organism</span>
             <br/>
-            <form>
-                <div id='type'>
-                    <input type="radio" id="homosapiens" name="r1" value="9606"/>
-                    <label for="homosapiens" style="font-weight: normal"><span></span>Homo
-                        Sapiens</label>
-                    <p>
-                        <input type="radio" id="mouse" name="r1" value="10090"/>
-                        <label for="mouse" style="font-weight: normal"><span></span>Mus Musculus</label>
-                    </p>
-                    <p>
-                        <input type="radio" id="rat" name="r1" value="10116"/>
-                        <label for="rat" style="font-weight: normal"><span></span>Rattus
-                            Norvegicus</label>
-                    </p>
-                </div>
-            </form>
+            <select class="select-css"
+                    ng-model="selectedOrganism"
+                    ng-change="changeOrganism(selectedOrganism)"
+                    ng-options="x.value for x in organismOptions">
+            </select>
+
+
+
+            <!--<form>-->
+                <!--<div id='type'>-->
+                    <!--<input type="radio" id="homosapiens" name="r1" value="9606"/>-->
+                    <!--<label for="homosapiens" style="font-weight: normal"><span></span>Homo-->
+                        <!--sapiens-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                        <!--</span>-->
+                    <!--</label>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="mouse" name="r1" value="10090"/>-->
+                        <!--<label for="mouse" style="font-weight: normal"><span></span>Mus musculus-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                        <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="rat" name="r1" value="10116"/>-->
+                        <!--<label for="rat" style="font-weight: normal"><span></span>Rattus-->
+                            <!--norvegicus-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                        <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="arabidopsis" name="r1" value="3702"/>-->
+                        <!--<label for="arabidopsis" style="font-weight: normal"><span></span>Arabidopsis thaliana-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                        <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="bos" name="r1" value="9913"/>-->
+                        <!--<label for="bos" style="font-weight: normal"><span></span>Bos taurus-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                        <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="caenorhabditis" name="r1" value="6239"/>-->
+                        <!--<label for="caenorhabditis" style="font-weight: normal"><span></span>Caenorhabditis elegans-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Caenorhabditis elegans / taxonomy ID:6239">-->
+                        <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="chlamydomonas" name="r1" value="3055"/>-->
+                        <!--<label for="chlamydomonas" style="font-weight: normal"><span></span>-->
+                            <!--Chlamydomonas reinhardtii-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                            <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<input type="radio" id="chlamydomonas" name="r1" value="3055"/>-->
+                        <!--<label for="chlamydomonas" style="font-weight: normal"><span></span>-->
+                            <!--Chlamydomonas reinhardtii-->
+                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                  <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                  <!--data-toggle="tooltip"-->
+                                  <!--title="Chlamydomonas reinhardtii / taxonomy ID:3055">-->
+                            <!--</span>-->
+                        <!--</label>-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</form>-->
         </div>
-        <div class="form-group col-sm-4" style="padding-left: 0px;">
+        <div class="form-group col-sm-3" style="padding-left: 0px;">
             <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;<span
                 style="font-weight: bold">Select Data Base</span>
             <br/>
@@ -156,7 +234,7 @@
                 </div>
             </form>
         </div>
-        <div class="form-group col-sm-4" style="padding-left: 0px;">
+        <div class="form-group col-sm-3" style="padding-left: 0px;">
             <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;<span
                 style="font-weight: bold">Select Protein Form</span>
             <br/>
@@ -662,6 +740,7 @@ Please check help tab for complete list of APIs.">
                             <!--<span class="sr-only">20% </span>-->
                             <!--</div>-->
 
+
                             <div class="progress-bar-striped" id="progress3">
                                 <div class="progress-bar progress-bar-striped active" role="progressbar"
                                      aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"
@@ -671,6 +750,7 @@ Please check help tab for complete list of APIs.">
                                     <!--<b>{{getPercentage()}}%</b>-->
                                 </div>
                             </div>
+                            <p style="color: steelblue;font-size: small">Please don't change tabs while waiting for the results.</p>
                         </div>
 
                         <!--<div data-bind="progressBar: { value : percentage }"></div>-->
@@ -776,6 +856,9 @@ https://github.com/uc-bd2k/pinet-server
                             </button>
                             <br/>
                             <span ng-show="ctrl.uploadWaiting" style="color: steelblue;">
+                                <p>
+                                    &nbsp;Please don't change tabs while waiting for results.
+                                </p>
                                 <p>
                                     &nbsp;Server queries 500 peptides/sec, please wait.
                                 </p>
@@ -903,10 +986,17 @@ if __name__ == '__main__':
                     <br/>
                     <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR" target="_blank">
                         http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
+                    <br/>
+                    To see how peptides with values are mapped to (ptm)proteins and proteins http://pinet-server.org/pinet/api/peptidewithvalue/organism/{organism}_iso/peptides/{peptides with values separated by commas}
+                    <br/>
+                    <a href="http://www.pinet-server.org/pinet/api/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
+" target="_blank">
+                        http://www.pinet-server.org/pinet/api/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
+                    </a>
 
                     <hr/>
                     <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                        For Preotein Modification Query
+                        For Protein Modification Query
                     </h4>
                     Search by Mass and Delta, http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
                     <br/>
@@ -1493,7 +1583,7 @@ if __name__ == '__main__':
                 <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting && !ctrl.secondPageQuery"
                      style="background-color: transparent; border-color: #999999">
 
-                    <button class="btn btn-primary " ng-click="makeParallelGrid(ctrl.peptideToModificationList);">
+                    <button class="btn btn-primary " ng-click="makeParallelGrid(ctrl.peptideToModificationList, 1);">
                         Explore
                         Peptide to
                         Protein Mapping for Selected Peptides
@@ -1501,7 +1591,74 @@ if __name__ == '__main__':
                     <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
                         <p>The mapping gets updated based on the volcano plot selection.</p>
                     </div>
-                        <div class="panel panel-default " ng-show="ctrl.showOverAllParallelSVG">
+
+
+                    <div class="panel panel-default " ng-show="ctrl.showOverAllParallelSVG">
+
+                        <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;">
+                            <!--<div class="well col-sm-12">-->
+                            <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2" >Peptides2Proteins Representative Mapping
+                                <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                      data-delay='{"show":"0", "hide":"100"}'
+                                      data-toggle="popover-hover"
+
+
+                                      data-img="images/avg3-3.png"
+
+                                >
+                                        </span>
+                                <span  ng-show= "showRegi2" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                            </div>
+
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1" >Peptides2Proteins Averaged Mapping
+                                <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                      data-delay='{"show":"0", "hide":"100"}'
+                                      data-toggle="popover-hover"
+
+
+                                      data-img="images/avg2-3.png"
+
+                                >
+                                        </span>
+                                <span  ng-show= "showRegi1" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                            </div>
+
+                            <!--</div>-->
+                            <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3" >Peptides2Proteins Distinct Mapping
+                                <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                      data-delay='{"show":"0", "hide":"100"}'
+                                      data-toggle="popover-hover"
+
+                                      data-img="images/avg1-3.png" >
+                                        </span>
+                                <span  ng-show= "showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                <span  style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+                            </div>
+                            <!--</div>-->
+                            <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+
+
+
+
+                        </div>
+
 
                         <!--<div class="well well-sm" style="background-color: #c9c9c9">-->
 

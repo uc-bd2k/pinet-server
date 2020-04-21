@@ -7,16 +7,9 @@ import edu.uc.eh.uniprot.UniprotRepository;
 import edu.uc.eh.service.*;
 import edu.uc.eh.structures.StringDoubleStringList;
 import edu.uc.eh.utils.CsvToJson;
-import edu.uc.eh.utils.CsvToJson;
 import org.apache.commons.math3.stat.inference.TTest;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.SpreadsheetVersion;
-import org.apache.poi.ss.formula.udf.UDFFinder;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -40,7 +33,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static org.apache.commons.math3.stat.inference.TestUtils.pairedT;
 import static org.apache.commons.math3.stat.inference.TestUtils.t;
 
 //import org.apache.commons.math3.distribution.TDistribution;
@@ -73,6 +65,7 @@ public class RestAPI implements ErrorController {
     private static String UPLOADED_FOLDER = "/Users/shamsabz/Documents/tmp/";
 
     private final PeptideSearchService peptideSearchService;
+    private final PeptideWithValueService peptideWithValueService;
     private final PrositeService prositeService;
     private final PrositeService2 prositeService2;
     private final PsiModService psiModService;
@@ -107,8 +100,9 @@ public class RestAPI implements ErrorController {
 
     @Autowired
     //public RestAPI(HarmonizomeGeneService harmonizomeGeneService, HarmonizomeProteinService harmonizomeProteinService, PrositeService prositeService, PsiModService psiModService, UniprotService uniprotService, EnrichrService enrichrService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoService phosphoService, HarmonizomeGeneService harmonizomeGeneServics1) {
-    public RestAPI(ErrorAttributes errorAttributes, PeptideSearchService peptideSearchService, PrositeService prositeService, PrositeService2 prositeService2, PsiModService psiModService, UniprotService uniprotService, UniprotService2 uniprotService2, EnrichrService enrichrService, IlincsService ilincsService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoServiceV2 phosphoServiceV2, PhosphoService phosphoService, PirService pirService, EnrichrServiceV2 enrichrServiceV2, IteratorIncrementService iteratorIncrementService, NetworkFromCSVService networkFromCSV, PsiModExtensionService psiModExtensionService, PtmService ptmService, UniprotRepository uniprotRepository, PrideService prideService, FastaService fastaService, PeptideRegexServive peptideRegexServive, DeepPhosService deepPhosService) {
+    public RestAPI(ErrorAttributes errorAttributes, PeptideSearchService peptideSearchService, PeptideWithValueService peptideWithValueService, PrositeService prositeService, PrositeService2 prositeService2, PsiModService psiModService, UniprotService uniprotService, UniprotService2 uniprotService2, EnrichrService enrichrService, IlincsService ilincsService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoServiceV2 phosphoServiceV2, PhosphoService phosphoService, PirService pirService, EnrichrServiceV2 enrichrServiceV2, IteratorIncrementService iteratorIncrementService, NetworkFromCSVService networkFromCSV, PsiModExtensionService psiModExtensionService, PtmService ptmService, UniprotRepository uniprotRepository, PrideService prideService, FastaService fastaService, PeptideRegexServive peptideRegexServive, DeepPhosService deepPhosService) {
         this.peptideSearchService = peptideSearchService;
+        this.peptideWithValueService = peptideWithValueService;
 
         this.prositeService = prositeService;
         this.prositeService2 = prositeService2;
@@ -1375,7 +1369,7 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         url = ilincsService.getSignatureIds(geneList);
-        System.out.println(url);
+        //System.out.println(url);
         return url;
 
     }
@@ -1438,7 +1432,7 @@ public class RestAPI implements ErrorController {
 //            System.out.println(geneList[i]);
 //            geneListinfo.put(geneList[i].replaceAll("[^a-zA-Z0-9\\s]", ""), enrichrService.getGeneInfo(geneList[i].replaceAll("[^a-zA-Z0-9\\s]", "")));
 //        }
-
+        //System.out.println(network.toJSONString());
         return network;
         //return enrichrPostService.getTable(genes);
 
@@ -1487,12 +1481,27 @@ public class RestAPI implements ErrorController {
         JSONObject network = new JSONObject();
 
 
+
         network = networkFromCSV.computeNetwork();
 
 
         return network;
 
 
+    }
+
+    @RequestMapping(value = "api/peptidewithvalue/organism/{organism}/peptides/{peptideswithvalues:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject searchForPeptidesAndValues(@PathVariable String organism, @PathVariable String[] peptideswithvalues) {
+        //log.info(String.format("Run convertToPLN with argument: %s", peptide));
+//        try {
+//            incrementList(4);
+//        }catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
+        return peptideWithValueService.getTable(organism, peptideswithvalues);
     }
 
     @RequestMapping(value = "api/peptide/organism/{organism}/peptides/{peptides}", method = RequestMethod.GET)

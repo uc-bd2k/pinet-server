@@ -466,6 +466,17 @@
 
 }
 
+.AB3rotate1.active {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #013154), color-stop(1, #014270));
+    background:-moz-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-webkit-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-o-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-ms-linear-gradient(top, #013154 5%, #014270 100%);
+    background:linear-gradient(to bottom, #013154 5%, #014270 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+    background-color:#013154;
+}
+
 .AB3rotate2 {
     position: relative;
     display: inline-block;
@@ -515,6 +526,19 @@
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
     background-color:#0061a7;
 }
+
+.AB3rotate2.active {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #013154), color-stop(1, #014270));
+    background:-moz-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-webkit-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-o-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-ms-linear-gradient(top, #013154 5%, #014270 100%);
+    background:linear-gradient(to bottom, #013154 5%, #014270 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+    background-color:#013154;
+}
+
+
 
 /*.AB3rotate2:active {*/
     /*background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));*/
@@ -593,6 +617,16 @@
     background-color:#1e62d0;
 }
 
+.AB3rotate3.active {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #013154), color-stop(1, #014270));
+    background:-moz-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-webkit-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-o-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-ms-linear-gradient(top, #013154 5%, #014270 100%);
+    background:linear-gradient(to bottom, #013154 5%, #014270 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+    background-color:#013154;
+}
 
 .AB3rotate4 {
     position: relative;
@@ -647,7 +681,16 @@
 
 }
 
-
+.AB3rotate4.active {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #013154), color-stop(1, #014270));
+    background:-moz-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-webkit-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-o-linear-gradient(top, #013154 5%, #014270 100%);
+    background:-ms-linear-gradient(top, #013154 5%, #014270 100%);
+    background:linear-gradient(to bottom, #013154 5%, #014270 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+    background-color:#013154;
+}
 
 .AB3rotate5 {
     position: relative;
@@ -769,6 +812,52 @@
 }
 
 
+.AB3text1.active{                  /* CSS3 */
+    position: absolute;
+    top: 96px;
+    left: 40px;
+    /*font-weight: normal;*/
+    font-weight: bold;
+    color: #ffe03b;
+    font-family: "Arial";
+    font-style: italic;
+}
+
+.AB3text2.active{                  /* Accessibility */
+    position: absolute;
+    top: 165px;
+    left: 0px;
+    /*font-weight: bold;*/
+    color: #ffe03b;
+
+}
+
+.AB3text3.active{                  /* Breadcrumb */
+    position: absolute;
+    top: 165px;
+    left: 0px;
+    /*font-weight: bold;*/
+    color: #ffe03b;
+
+}
+.AB3text4.active{                  /* Breadcrumb */
+    position: absolute;
+    top: 165px;
+    left: 0px;
+    /*font-weight: bold;*/
+    color: #ffe03b;
+
+}
+.AB3text5.active{                  /* Breadcrumb */
+    position: absolute;
+    top: 84px;
+    left: 115px;
+    font-weight: lighter;
+    color: steelblue;
+    font-family: "Arial";
+    font-style: italic;
+
+}
 
 
 

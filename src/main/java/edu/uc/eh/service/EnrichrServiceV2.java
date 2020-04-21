@@ -487,11 +487,15 @@ public class EnrichrServiceV2 {
                     String pathwayText = (String) queryList.get(1);
                     Double pValue = (Double) queryList.get(2);
                     JSONArray geneList = (JSONArray) queryList.get(5);
+                    Double adjPValue = (Double) queryList.get(6);
+
                     iterator = iterator + 1;
                     if( iterator < 100) {
                         tableItem.put("pathway", pathwayText);
                         tableItem.put("pValue", pValue);
+                        tableItem.put("adjPValue", adjPValue);
                         tableItem.put("genes", geneList);
+                        System.out.println(tableItem);
                         table.add(tableItem);
                     }
                     if( iterator < 100)
@@ -499,6 +503,7 @@ public class EnrichrServiceV2 {
 
                         newNode = generateNode(pathwayText, idx, 2, -1.0*Math.log(pValue));
                         idx = idx + 1;
+                        System.out.println(newNode);
                         nodes.add(newNode);
 
                         for (int j = 0; j < geneList.size(); j++) {

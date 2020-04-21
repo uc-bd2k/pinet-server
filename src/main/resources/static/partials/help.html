@@ -264,7 +264,7 @@ if __name__ == '__main__':
 
                     <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                         <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                            For Preotein Modification Query
+                            For Protein Modification Query
                         </h4>
                         Search by Mass and Delta, http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
                         <br/>
@@ -325,7 +325,29 @@ if __name__ == '__main__':
 
                     <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                         <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                            For Gene-Pathway Associasion:
+                            For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign "
+                                                                          data-delay='{"show":"0", "hide":"100"}'
+                                                                          data-toggle="tooltip"
+                                                                          title="For complete list of pathways please visit Enrichr.">
+                                    </span>
+                        </h4>
+
+                        http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the
+                        URL, e.g.
+                        <br/>
+                        <a href="http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
+                           target="_blank">
+                            http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
+
+                    </div>
+
+                    <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
+                        <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                            For Gene-Pathway Association via Enrichr &nbsp;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign "
+                                                                           data-delay='{"show":"0", "hide":"100"}'
+                                                                           data-toggle="tooltip"
+                                                                           title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
+                                    </span>
                         </h4>
 
                         http://www.pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the

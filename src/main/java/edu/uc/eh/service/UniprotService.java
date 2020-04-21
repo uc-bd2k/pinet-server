@@ -52,15 +52,15 @@ public class UniprotService {
 //        JSONObject responseUniprot = new JSONObject();
 //
 //        String[] canonicalAccessionList = accession.split("-");
-        System.out.println("In findByAccessionApi");
+        System.out.println("In findByAccessionApi" + inputAccession);
         String canonicalAccession = canonicalAccessionList[0];
         try {
 
-            System.out.println("uniprotRepository.findByAccession");
-            System.out.println(canonicalAccession);
+//            System.out.println("uniprotRepository.findByAccession");
+//            System.out.println(canonicalAccession);
             response = uniprotRepository.findByAccession(canonicalAccession);
             responseUniprot = response.toJson();
-            System.out.println(response.toString());
+            //System.out.println(response.toString());
 
         } catch (Exception e) {
 
