@@ -190,6 +190,11 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                 >
                                         </span >
 
+                                &nbsp;<p ng-show="ctrl.organismForm !== '9606' && ctrl.organismForm !== '10090' && ctrl.organismForm !== '10116'"style="font-weight: bold;
+bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By Homo Sapiens May be Limited.  </p>
+
                                 </p>
 
                             </div>
@@ -1308,16 +1313,16 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                     <input type="radio" id="tab5" name="tab-control">
                                     <ul>
                                         <li title="Pathway"><label for="tab1"
-                                                                   role="button"><br><span>Pathway</span></label></li>
+                                                                   role="button" ><br><span>Pathway</span></label></li>
                                         <li title="Disease/Drug"><label for="tab2"
-                                                                        role="button"><br><span>Disease/Drug</span></label>
+                                                                        role="button" ><br><span>Disease/Drug</span></label>
                                         </li>
                                         <li title="Ontology"><label for="tab3"
-                                                                    role="button"><br><span>Ontology</span></label></li>
+                                                                    role="button" ><br><span>Ontology</span></label></li>
 
-                                        <li title="Transcription"><label for="tab4" role="button"><br><span>Transcription</span></label>
+                                        <li title="Transcription" ><label for="tab4" role="button" ><br><span>Transcription</span></label>
                                         </li>
-                                        <li title="Cell Type"><label for="tab5" role="button"><br><span>Cell Type</span></label>
+                                        <li title="Cell Type"><label for="tab5" role="button" ><br><span >Cell Type</span></label>
                                         </li>
                                     </ul>
 
@@ -1325,8 +1330,8 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                     <!--<div class="indicator"></div>-->
                                     <!--</div>-->
                                     <div class="content">
-                                        <section>
-                                            <h2>Pathways</h2>
+                                        <section >
+                                            <h2 >Pathways</h2>
                                             <select class="select-css"
                                                     ng-model="selectedEnrichmentPathways"
                                                     ng-change="changeEnrichmentValue(selectedEnrichmentPathways)"
@@ -1336,8 +1341,8 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
                                         </section>
-                                        <section>
-                                            <h2>Disease/Drugs</h2>
+                                        <section >
+                                            <h2 >Disease/Drugs</h2>
                                             <select class="select-css"
                                                     ng-model="selectedEnrichmentDiseaseDrugs"
                                                     ng-change="changeEnrichmentValue(selectedEnrichmentDiseaseDrugs)"
@@ -1347,8 +1352,8 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
                                         </section>
-                                        <section>
-                                            <h2>Ontology</h2>
+                                        <section >
+                                            <h2 >Ontology</h2>
                                             <select class="select-css"
                                                     ng-model="selectedEnrichmentOntology"
                                                     ng-change="changeEnrichmentValue(selectedEnrichmentOntology)"
@@ -1358,8 +1363,8 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
                                         </section>
-                                        <section>
-                                            <h2>Transcription</h2>
+                                        <section >
+                                            <h2 >Transcription</h2>
                                             <select class="select-css"
                                                     ng-model="selectedEnrichmentTranscription"
                                                     ng-change="changeEnrichmentValue(selectedEnrichmentTranscription)"
@@ -1369,8 +1374,8 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
                                         </section>
-                                        <section>
-                                            <h2>Cell Type</h2>
+                                        <section >
+                                            <h2 >Cell Type</h2>
                                             <select class="select-css"
                                                     ng-model="selectedEnrichmentCellType"
                                                     ng-change="changeEnrichmentValue(selectedEnrichmentCellType)"

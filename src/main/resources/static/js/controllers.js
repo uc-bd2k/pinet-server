@@ -34768,6 +34768,7 @@ if(1 == 0){
             $scope.selectedEnrichmentDiseaseDrugs = $scope.enrichmentDiseaseDrugs[0];
 
 
+
             $scope.enrichmentOntology = [
                 {value: "GO_Cellular_Component_2017b"},
                 {value: "GO_Biological_Process_2017b"},

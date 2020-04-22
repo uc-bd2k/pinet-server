@@ -70,7 +70,7 @@ public class PCGService {
         JSONArray empty = new JSONArray();
         notValid.put("gene_family",empty);
         notValid.put("hgnc_id","");
-        notValid.put("name","Not found in database!");
+        notValid.put("name","Homo sapien counter gene not found.");
         notValid.put("symbol","");
         notValid.put("uniprot_ids",empty);
         notValid.put("prev_symbol",empty);
