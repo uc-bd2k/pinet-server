@@ -21,8 +21,87 @@ public class DeepPhosService {
 
     private static final Logger log = LoggerFactory.getLogger(DeepPhosService.class);
 
+    @Value("${urls.NetworkInAPIUrl}")
+    String NetworkInAPIUrl;
+
+    @Value("${urls.NetworkInLocalAPIUrl}")
+    String NetworkInLocalAPIUrl;
+
     @Value("${urls.deepPhosUrl}")
     String deepPhosAddress;
+
+    public String getPhosphoPredictionNetworkinApi(String organism, String ptmList) throws Exception {
+        System.out.println("in getPhosphoPrediction");
+        System.out.println(organism);
+        System.out.println(ptmList);
+        JSONObject prediction = new JSONObject();
+        String predictionString;
+
+        String deepPhosUrl = String.format(NetworkInAPIUrl, organism, ptmList);
+        System.out.println("url:");
+        System.out.println(deepPhosUrl);
+
+
+        try {
+
+            predictionString = UtilsNetwork.getInstance().readUrlXml(deepPhosUrl);
+//            System.out.println("ResponseString:");
+//            System.out.println(predictionString);
+            //log.info(response);
+
+            JSONParser parser = new JSONParser();
+            prediction = (JSONObject) parser.parse(predictionString);
+
+
+        }
+        catch (Exception e) {
+
+            String msg =  String.format("Error in obtaining phosphoPredict");
+            log.warn(msg);
+            //throw new RuntimeException(msg);
+            return "{}";
+        }
+
+
+        return predictionString;
+    }
+
+
+    public String getPhosphoPredictionNetworkinLocal(String organism, String ptmList) throws Exception {
+        System.out.println("in getPhosphoPrediction");
+        System.out.println(organism);
+        System.out.println(ptmList);
+        JSONObject prediction = new JSONObject();
+        String predictionString;
+
+        String deepPhosUrl = String.format(NetworkInLocalAPIUrl, organism, ptmList);
+        System.out.println("url:");
+        System.out.println(deepPhosUrl);
+
+
+        try {
+
+            predictionString = UtilsNetwork.getInstance().readUrlXml(deepPhosUrl);
+//            System.out.println("ResponseString:");
+//            System.out.println(predictionString);
+            //log.info(response);
+
+            JSONParser parser = new JSONParser();
+            prediction = (JSONObject) parser.parse(predictionString);
+
+
+        }
+        catch (Exception e) {
+
+            String msg =  String.format("Error in obtaining phosphoPredict");
+            log.warn(msg);
+            //throw new RuntimeException(msg);
+            return "{}";
+        }
+
+
+        return predictionString;
+    }
 
     public JSONObject getPhosphoPrediction(String organism, String ptmList) throws Exception {
         System.out.println("in getPhosphoPrediction");

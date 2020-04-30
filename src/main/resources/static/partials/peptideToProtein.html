@@ -768,15 +768,208 @@ Please check help tab for complete list of APIs.">
             </div>
         </section>
         <section id="ex2" class="tab-panel">
-            <!--<h4>Network Analysis of site Specific PTM Proteins</h4>-->
-            <div class="container-fluid"
-                 style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);border-radius: 5px;">
-                <div class="well col-sm-12" style="border-color: black ">
 
-                    <!--<div class="row">-->
-                    <div class="col-sm-8 col-md-8 col-lg-8" style="font-size: smaller">
-                        <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                        <p style="display:inline">
+
+
+
+
+
+
+
+            <!--<div  class="container-fluid"-->
+                 <!--style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);border-radius: 5px;">-->
+                <!--<div class="well col-sm-12" style="border-color: black ">-->
+
+                    <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+                    <!--<div class="col-sm-8 col-md-8 col-lg-8" style="font-size: smaller">-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                        <!--<p style="display:inline">-->
+                            <!--<span class="boldText"> Please Use Mozilla Firefox for this analysis-->
+                            <!--<span-->
+                                    <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                    <!--data-toggle="tooltip"-->
+                                    <!--title="Some browsers,-->
+                                         <!--like Google Chrome, put a constraint on how many requests can be done. ">-->
+                            <!--</span> </span>-->
+                        <!--</p>-->
+                        <!--Submit a file in .csv format containing (in the first column) a list of peptide-->
+                        <!--sequences with PTM sites indicated using PSIMOD, UNIMOD,-->
+                        <!--mass difference or shorthand notation, and (in the subsequent columns)-->
+                        <!--their corresponding (normalized) peptide intensities or other (relative)-->
+                        <!--abundance measures for samples divided into two classes by using common-->
+                        <!--prefixes (e.g. ctrl_ vs. treat_) of their sample IDs.-->
+                            <!--<p style="display:inline">-->
+                                <!--<span class="boldText">-->
+                                    <!--Please use APIs or stand-alone version of piNET (-->
+                                    <!--<a href="https://github.com/uc-bd2k/pinet-server" target="_blank">-->
+
+<!--https://github.com/uc-bd2k/pinet-server-->
+                                    <!--</a>-->
+                                    <!--) to analyze large data sets. Currently, up to 4 thousand-->
+                                    <!--<span-->
+                                        <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Most browsers get very slow when dealing with a large amount of data and some browsers,-->
+                                         <!--like Google Chrome, put a constraint on how many requests can be outstanding.-->
+                                         <!--Once the constraint is reached,-->
+                                        <!--subsequent requests will fail with net::ERR_INSUFFICIENT_RESOURCES.-->
+                                        <!--This limitation is not a limit for what pinet can achieve, but imposed for better performance and compatibility with different browsers. ">-->
+                                    <!--</span>-->
+                                    <!--peptides/proteins can be processed using this interactive workflow.-->
+                                    <!--<a href="https://support.google.com/chrome/forum/AAAAP1KN0B0iJkRToypav0/?hl=fr" target="_blank">-->
+
+<!--(More Info Here)-->
+                                    <!--</a>-->
+
+                            <!--</span>-->
+                            <!--</p>-->
+                        <!--Please note that no data normalization is performed as part of this workflow: data are assumed to be normalized by the user, using an appropriate normalization scheme for the type of MS-based approach used to generate these data.-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4 col-lg-4 col-sm-4">-->
+                        <!--<div class="onerow">-->
+                            <!--<p>-->
+                            <!--Download-->
+
+                            <!--<a href="javascript:void(0);"-->
+                               <!--class="onerow"-->
+                               <!--ng-click="downloadCSVExample2()"-->
+                               <!--ng-style="{'font-weight': 'bold'}">-->
+                                <!--example 1</a>-->
+                            <!--<p style="display:inline">-->
+                            <!--<span class="boldText"> with acceptable template in csv format-->
+                            <!--<span-->
+                                    <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                    <!--data-toggle="tooltip"-->
+                                    <!--title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">-->
+                            <!--</span> </span></p> and try uploading the file.-->
+
+                            <!--</p>-->
+
+
+
+                            <!--<input type="file"  file-model="myFile" type="submit"-->
+                                   <!--class="onerow"/>-->
+                            <!--<button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload .csv File-->
+                                <!--and Start-->
+                                <!--Analysis-->
+                                <!--<span ng-show="waiting || ctrl.uploadWaiting">-->
+                                                    <!--<span class="glyphicon glyphicon-refresh glyphicon-spin">-->
+
+                                                    <!--</span>-->
+                                                <!--</span>-->
+                            <!--</button>-->
+                            <!--<br/>-->
+                            <!--<span ng-show="ctrl.uploadWaiting" style="color: steelblue;">-->
+                                <!--<p>-->
+                                    <!--&nbsp;Please don't change tabs while waiting for results.-->
+                                <!--</p>-->
+                                <!--<p>-->
+                                    <!--&nbsp;Server queries 500 peptides/sec, please wait.-->
+                                <!--</p>-->
+
+                            <!--</span>-->
+                            <!--<div  ng-if="ctrl.uploadErrorTag == 400" >-->
+
+
+                                <!--<p style="display:inline">-->
+                                    <!--<span class="boldText" style="color: maroon">-->
+                                        <!--{{ctrl.uploadErrorText}}-->
+                                        <!--<span-->
+                                                <!--style="color:maroon;" class="glyphicon glyphicon-question-sign"-->
+                                                <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                <!--data-toggle="tooltip"-->
+                                                <!--title="Please try fixing the input error before resubmitting, contact pinet support for more help or raise an issue in the github. ">-->
+                                        <!--</span>-->
+                                    <!--</span>-->
+                                <!--</p>-->
+
+
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<p ng-show="ctrl.uploadWaiting" style="color: steelblue; font-weight: bold">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Server queries 50 peptides/sec, please wait.&ndash;&gt;-->
+                                <!--&lt;!&ndash;</p>&ndash;&gt;-->
+                            <!--<div ng-show="waiting">-->
+
+
+                                <!--<div class="progress-bar-striped" id="progress44">-->
+                                    <!--<div class="progress-bar progress-bar-striped active" role="progressbar"-->
+                                         <!--aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"-->
+                                         <!--ng-style="{width : getPercentage() + '%'  }">-->
+                                        <!--<b>{{getPercentage()}}%</b>-->
+                                        <!--&lt;!&ndash;ng-style="{width : getPercentage() + '%'  }">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<b>{{getPercentage()}}%</b>&ndash;&gt;-->
+                                    <!--</div>-->
+
+                                <!--</div>-->
+                                <!--<br/>-->
+                                <!--<div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">-->
+                                    <!--<p style="color: steelblue">{{ctrl.progressText}}</p>-->
+                                <!--</div>-->
+
+                                <!--<br/>-->
+
+                            <!--</div>-->
+
+
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+
+
+
+
+
+            <!--<div class="container-fluid"-->
+                 <!--style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);border-radius: 5px;">-->
+
+                <div class=" container-fluid" style="margin-bottom:0px;margin-left: auto;
+  margin-right: auto;width: 100%; ">
+                    <!--<div class="row " style="width: 100%;">-->
+                    <!--<div class=" col-sm-12 col-md-12  col-lg-12"style="width: 100%;position: absolute;" >-->
+                    <div class="left active" >
+                        <!--<div class="  container-lightGrey splash" >-->
+                        <h1 style="  display: flex;
+  align-items: center;
+  justify-content: center;padding-top: 10px;font-size: 18px" >piNET Generic Example</h1>
+
+                        <!--</div>-->
+                    </div>
+                    <div class="right" >
+
+                        <h1 style="  display: flex;
+  align-items: center;
+  justify-content: center;padding-top: 10px;font-size: 18px" >MaxQuant Output</h1>
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="container-fluid  container-lightGrey shadowed"
+                     style="width: 100%;margin-top: 0px; margin-bottom: 10px;  padding-top: 20px; padding-bottom: 10px;margin-right: auto; margin-left: auto; ">
+
+
+                    <div class=" col-sm-12 col-md-12  col-lg-12">
+                        <div style="width: 100%;" >
+
+                            <div class="col-sm-7 col-md-7 col-lg-7" style="font-size: smaller" >
+                                <div ng-if="showPart_pinet">
+
+
+                                    <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                    <p style="display:inline">
                             <span class="boldText"> Please Use Mozilla Firefox for this analysis
                             <span
                                     style="color:steelblue;" class="glyphicon glyphicon-question-sign"
@@ -785,27 +978,26 @@ Please check help tab for complete list of APIs.">
                                     title="Some browsers,
                                          like Google Chrome, put a constraint on how many requests can be done. ">
                             </span> </span>
-                        </p>
-                        Submit a file in .csv format containing (in the first column) a list of peptide
-                        sequences with PTM sites indicated using PSIMOD, UNIMOD,
-                        mass difference or shorthand notation, and (in the subsequent columns)
-                        their corresponding (normalized) peptide intensities or other (relative)
-                        abundance measures for samples divided into two classes by using common
-                        prefixes (e.g. ctrl_ vs. treat_) of their sample IDs.
-                            <p style="display:inline">
+                                    </p>
+                                    Submit a file in .csv format containing (in the first column) a list of peptide
+                                    sequences with PTM sites indicated using PSIMOD, UNIMOD,
+                                    mass difference or shorthand notation, and (in the subsequent columns)
+                                    their corresponding (normalized) peptide intensities or other (relative)
+                                    abundance measures for samples divided into two classes by using common
+                                    prefixes (e.g. ctrl_ vs. treat_) of their sample IDs.
+                                    <p style="display:inline">
                                 <span class="boldText">
                                     Please use APIs or stand-alone version of piNET (
                                     <a href="https://github.com/uc-bd2k/pinet-server" target="_blank">
 
 https://github.com/uc-bd2k/pinet-server
                                     </a>
-                                    ) to analyze large data sets. Currently, up to 4 thousand
+                                    ) to analyze large data sets. Currently, up to 20 thousand
                                     <span
-                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                        data-delay='{"show":"0", "hide":"100"}'
-                                        data-toggle="tooltip"
-                                        title="Most browsers get very slow when dealing with a large amount of data and some browsers,
-                                         like Google Chrome, put a constraint on how many requests can be outstanding.
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="Please be advised that browser may get slow for processing large files. Google Chrome, put a constraint on how many requests can be outstanding.
                                          Once the constraint is reached,
                                         subsequent requests will fail with net::ERR_INSUFFICIENT_RESOURCES.
                                         This limitation is not a limit for what pinet can achieve, but imposed for better performance and compatibility with different browsers. ">
@@ -817,45 +1009,278 @@ https://github.com/uc-bd2k/pinet-server
                                     </a>
 
                             </span>
-                            </p>
-                        Please note that no data normalization is performed as part of this workflow: data are assumed to be normalized by the user, using an appropriate normalization scheme for the type of MS-based approach used to generate these data.
-                    </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4">
-                        <div class="onerow">
-                            <p>
-                            Download
-
-                            <a href="javascript:void(0);"
-                               class="onerow"
-                               ng-click="downloadCSVExample2()"
-                               ng-style="{'font-weight': 'bold'}">
-                                example 1</a>
-                            <p style="display:inline">
-                            <span class="boldText"> with acceptable template in csv format
-                            <span
-                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                    data-delay='{"show":"0", "hide":"100"}'
-                                    data-toggle="tooltip"
-                                    title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
-                            </span> </span></p> and try uploading the file.
-
-                            </p>
+                                    </p>
+                                    Please note that no data normalization is performed as part of this workflow: data are assumed to be normalized by the user, using an appropriate normalization scheme for the type of MS-based approach used to generate these data.
 
 
+                                </div>
 
-                            <input type="file"  file-model="myFile" type="submit"
-                                   class="onerow"/>
-                            <button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload .csv File
-                                and Start
-                                Analysis
-                                <span ng-show="waiting || ctrl.uploadWaiting">
+                                <div ng-if="showPart_maxquant">
+                                    <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                    <p style="display:inline">
+                                    <span class="boldText"> Please Use Mozilla Firefox for this analysis
+                                    <span
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="Some browsers,
+                                                 like Google Chrome, put a constraint on how many requests can be done. ">
+                                    </span> </span>
+                                    </p>
+                                    Submit MaxQuant evidence.txt file in a tab separated format. For more information about formatting please see <a href="http://www.coxdocs.org/doku.php?id=maxquant:table:evidencetable" target="_blank">
+
+                                    here
+                                </a>. Please identify the control and treatment sample IDs
+                                    in the following text boxes. The intensity values are assumed to be normalized, but if selected, the intensity values will be normalized based on
+                                    the area under the curve<span
+                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                        data-delay='{"show":"0", "hide":"100"}'
+                                        data-toggle="tooltip"
+                                        title="The intensity values are devided by summation of all of peptide intensities in each sample. Please contact
+                                        piNET team if you have any questions. More normalization methods will be added. ">
+                                    </span>. Then the samples will be grouped into control and treatment
+                                    groups based on input text boxes. For each peptide statistical Student's t-test and log-2 fold change is calculated.
+                                    <div class="row" >
+                                        <div class="col-sm-6 col-md-6 col-lg-6" >
+
+
+
+                                            <p style="display:inline">
+                                <span class="boldText">
+                                    Please enter sample IDs for condition one (Control)
+
+
+                                    <span
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="The sample IDs from Raw.file column.">
+                                    </span>
+
+
+                            </span>
+                                            </p>
+
+                                            <div style=" padding-top:8px;padding-bottom:5px;">
+
+                                                <textarea class="form-control " rows="5" ng-model="ctrl.textAreaControl"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-sm-3 col-md-3 col-lg-3" >-->
+
+                                            <!--<label style="padding-bottom: 15px;margin-left: -10px;">Control Sample IDs&nbsp;-->
+
+
+                                            <!--</label>-->
+                                            <!--<div class=" list-responsive-vertical4" style=" word-wrap:break-word;line-height: 20px;" id="ctrlleft">-->
+                                                <!--<div ng-repeat="motif in ctrl.uploadCtrl track by $index">{{motif}}<br/></div>-->
+                                            <!--</div>-->
+
+                                        <!--</div>-->
+                                        <div class="col-sm-6 col-md-6 col-lg-6" >
+                                            <p style="display:inline">
+                                <span class="boldText">
+                                    Please enter sample IDs for condition two (Treatment)
+
+
+                                    <span
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="The sample IDs from Raw.file column. ">
+                                    </span>
+
+
+                            </span>
+                                            </p>
+
+                                            <div style=" padding-top:8px;padding-bottom:10px;">
+
+                                                <textarea class="form-control " rows="5" ng-model="ctrl.textAreaTreatment"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-sm-3 col-md-3 col-lg-3" >-->
+                                            <!--<label style="padding-bottom: 15px;margin-left: -10px;">Treatment Sample IDs&nbsp;-->
+                                          <!---->
+
+                                            <!--</label>-->
+                                            <!--<div class=" list-responsive-vertical4" style=" word-wrap:break-word;line-height: 20px;" id="ctrlright">-->
+                                                <!--<div ng-repeat="motif in ctrl.uploadTrt track by $index">{{motif}}<br/></div>-->
+                                            <!--</div>-->
+
+
+
+
+
+                                        <!--</div>-->
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-5 col-lg-5 col-sm-5">
+                                <div class="onerow">
+                                    <div >
+                                        Download
+
+                                        <a href="javascript:void(0);"
+
+                                           ng-click="downloadCSVExample2()"
+                                           ng-style="{'font-weight': 'bold'}">
+                                            piNET Generic Input File</a>
+
+
+                                    <span class="boldText "> with acceptable template in csv format
+                                    <span
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
+                                    </span> </span>
+                                    or
+                                        <a href="javascript:void(0);"
+
+                                           ng-click="downloadTSVExample()"
+                                           ng-style="{'font-weight': 'bold'}">
+                                            MaxQuant Evidence File.txt</a>
+
+                                        <span class="boldText "> in tsv format
+                                            <span
+                                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                    data-delay='{"show":"0", "hide":"100"}'
+                                                    data-toggle="tooltip"
+                                                    title="Please see the detail in the 'MaxQuant Output' tab.
+                                                      ">
+                                            </span>
+                                        </span>
+
+                                    and try uploading the files.
+
+                                    </div>
+
+
+<br/>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-6" >
+                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                            <span style="font-weight: bold">
+                                                Selected Format
+                                                <span
+                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                        data-delay='{"show":"0", "hide":"100"}'
+                                                        data-toggle="tooltip"
+                                                        title="The selected format will change how the uploaded data in processed. ">
+                                                </span>
+                                            </span>
+                                            <br/>
+                                            <form>
+                                                <div id='type4'>
+                                                    <input type="radio" id="generic" name="r5" value="generic"/>
+                                                    <label for="generic" style="font-weight: normal"><span></span>piNET Generic Format</label>
+                                                    <p>
+                                                        <input type="radio" id="maxQuant" name="r5" value="maxQuant"/>
+                                                        <label for="maxQuant" style="font-weight: normal"><span></span>MaxQuant Evidence File</label>
+                                                    </p>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div  class="col-sm-6 col-md-6 col-lg-6" ng-show="ctrl.uploadFormat == 'maxQuant'">
+
+                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                            <span style="font-weight: bold">
+                                                Peptide Format Selection
+                                                <span
+                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                        data-delay='{"show":"0", "hide":"100"}'
+                                                        data-toggle="tooltip"
+                                                        title="This selection is provided by user based on the format of maxQuant_evidence.txt file. ">
+                                                </span>
+                                            </span>
+                                            <br/>
+                                            <form>
+                                                <div id='type7'>
+                                                    <input type="radio" id="modBefore" name="r9" value="modBefore"/>
+                                                    <label for="modBefore" style="font-weight: normal"><span></span>Amino Acid before Modification</label>
+                                                    <p>
+                                                        <input type="radio" id="modAfter" name="r9" value="modAfter"/>
+                                                        <label for="modAfter" style="font-weight: normal"><span></span>Amino Acid after Modification</label>
+                                                    </p>
+                                                </div>
+                                            </form>
+                                            <!--</div>-->
+                                            <!--<br/>-->
+                                            <!--<div class="col-sm-6 col-md-6 col-lg-6" ng-if="showPart_maxquant">-->
+                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                            <span style="font-weight: bold">
+                                                Normalization Selection
+                                                <span
+                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                        data-delay='{"show":"0", "hide":"100"}'
+                                                        data-toggle="tooltip"
+                                                        title="Please see MaxQuant Output tab on the left for more information. ">
+                                                </span>
+                                            </span>
+                                            <br/>
+                                            <!--Do Normalization: <input type="checkbox" id="myCheck"  onclick="myCheckFunction()">-->
+
+
+                                            <form name="myNormalizationForm" >
+                                                <div ng-repeat="gender in normalgenders">
+                                                    <div class="action-checkbox">
+                                                        {{gender}}:
+                                                        <input id="{{gender}}" type="checkbox" value="{{gender}}" ng-checked="normalSelection.indexOf(gender) > -1" ng-click="toggleNormalSelection(gender)" />
+                                                        <label for="{{gender}}"></label>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+
+                                        <!--<form>-->
+                                            <!--<div id='type42'>-->
+                                                <!--<input type="radio" id="generic2" name="r52" value="generic2"/>-->
+                                                <!--<label for="generic2" style="font-weight: normal"><span></span>piNET Generic Format</label>-->
+                                                <!--<p>-->
+                                                    <!--<input type="radio" id="maxQuant2" name="r52" value="maxQuant2"/>-->
+                                                    <!--<label for="maxQuant2" style="font-weight: normal"><span></span>MaxQuant Evidence File</label>-->
+                                                <!--</p>-->
+                                            <!--</div>-->
+                                        <!--</form>-->
+                                    </div>
+                                    </div>
+
+
+
+                                            <!--<form name="myNormalizationForm" >-->
+
+                                                <!--<label>Do Normalization:-->
+                                                    <!--<input type="checkbox" id="normalSelection" name="r6" value="maxQuant">-->
+                                                <!--</label><br/>-->
+
+                                                <!--value2 = {{ctrl.uploadNormal}}-->
+                                            <!--</form>-->
+
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <br/>
+                                    <input type="file"  file-model="myFile" type="submit"
+                                           class="onerow"/>
+                                    <button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload {{ctrl.uploadFormat}} Format File
+                                        and Start
+                                        Analysis
+                                        <span ng-show="waiting || ctrl.uploadWaiting">
                                                     <span class="glyphicon glyphicon-refresh glyphicon-spin">
 
                                                     </span>
                                                 </span>
-                            </button>
-                            <br/>
-                            <span ng-show="ctrl.uploadWaiting" style="color: steelblue;">
+                                    </button>
+                                    <br/>
+                                    <span ng-show="ctrl.uploadWaiting" style="color: steelblue;">
                                 <p>
                                     &nbsp;Please don't change tabs while waiting for results.
                                 </p>
@@ -864,11 +1289,11 @@ https://github.com/uc-bd2k/pinet-server
                                 </p>
 
                             </span>
-                            <div  ng-if="ctrl.uploadErrorTag == 400" >
+                                    <div  ng-if="ctrl.uploadErrorTag == 400" >
 
 
-                                <p style="display:inline">
-                                    <span class="boldText" style="color: maroon">
+                                        <p style="display:inline">
+                                    <span class="boldText" style="color: maroon; font-size: smaller">
                                         {{ctrl.uploadErrorText}}
                                         <span
                                                 style="color:maroon;" class="glyphicon glyphicon-question-sign"
@@ -877,46 +1302,81 @@ https://github.com/uc-bd2k/pinet-server
                                                 title="Please try fixing the input error before resubmitting, contact pinet support for more help or raise an issue in the github. ">
                                         </span>
                                     </span>
-                                </p>
+                                        </p>
 
 
-                            </div>
-                            <!--<p ng-show="ctrl.uploadWaiting" style="color: steelblue; font-weight: bold">-->
-                                    <!--Server queries 50 peptides/sec, please wait.-->
-                                <!--</p>-->
-                            <div ng-show="waiting">
-
-
-                                <div class="progress-bar-striped" id="progress4">
-                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                         aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"
-                                         ng-style="{width : getPercentage() + '%'  }">
-                                        <b>{{getPercentage()}}%</b>
-                                        <!--ng-style="{width : getPercentage() + '%'  }">-->
-                                        <!--<b>{{getPercentage()}}%</b>-->
                                     </div>
+                                    <!--<p ng-show="ctrl.uploadWaiting" style="color: steelblue; font-weight: bold">-->
+                                    <!--Server queries 50 peptides/sec, please wait.-->
+                                    <!--</p>-->
+                                    <div ng-show="waiting">
+
+
+                                        <div class="progress-bar-striped" id="progress4">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                                 aria-valuenow="60" aria-valuemin="20" aria-valuemax="100"
+                                                 ng-style="{width : getPercentage() + '%'  }">
+                                                <b>{{getPercentage()}}%</b>
+                                                <!--ng-style="{width : getPercentage() + '%'  }">-->
+                                                <!--<b>{{getPercentage()}}%</b>-->
+                                            </div>
+
+                                        </div>
+                                        <br/>
+                                        <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
+                                            <p style="color: steelblue">{{ctrl.progressText}}</p>
+                                        </div>
+
+                                        <br/>
+
+                                    </div>
+                                    <!--<div ng-if="showPart_maxquant">-->
+                                        <!--<br/>-->
+                                        <!--<div class="container" style="border-color: steelblue;border-radius: 5px">-->
+                                        <!--&lt;!&ndash;<div class="row" >&ndash;&gt;-->
+
+                                            <!--&lt;!&ndash;<div class="col-sm-6 col-md-6 col-lg-6" >&ndash;&gt;-->
+                                                <!--&lt;!&ndash;&ndash;&gt;-->
+
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<div class="col-sm-6 col-md-6 col-lg-6" >&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<label style="padding-bottom: 15px;margin-left: -10px;">Treatment Sample IDs&nbsp;&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"&ndash;&gt;&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;&lt;!&ndash;title="Input peptides with/out modifications are parsed and each amino acid sequence is captured. Peptides (after parsing out PTMs) are mapped to the selected reference proteome.">&ndash;&gt;&ndash;&gt;-->
+
+                                                    <!--&lt;!&ndash;&lt;!&ndash;</span>&ndash;&gt;&ndash;&gt;-->
+
+                                                <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<div class=" list-responsive-vertical4" style=" word-wrap:break-word;line-height: 20px;" id="ctrlright">&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;<div ng-repeat="motif in ctrl.uploadTrt track by $index">{{motif}}</div>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                        <!--</div>-->
+
+                                    <!--</div>-->
+
 
                                 </div>
-                                <br/>
-                                <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
-                                    <p style="color: steelblue">{{ctrl.progressText}}</p>
-                                </div>
-
-                                <br/>
 
                             </div>
-
 
                         </div>
 
+
                     </div>
 
-
-                    <!--</div>-->
                 </div>
 
-            </div>
-          
+
+
+            <!--</div>-->
+
         </section>
 
         <section id="ex3" class="tab-panel">
@@ -1167,8 +1627,10 @@ if __name__ == '__main__':
                                         {{mapping.pv}}
                                     </div>
                                 </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'" filter="{ fc: 'number'}"
-                                    sortable="'fc'" ng-if="mapping.fc != 'na' ">
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'
+
+"
+                                    sortable="'fc'" ng-if="mapping.fc != 'na' " >
                                     <div class="list-responsive-vertical">
                                         {{mapping.fc.toFixed(2)}}
                                         <span ng-if="mapping.fc == 10.0 || mapping.fc == -10.0" style="color: steelblue"> All samples in either CTRL or TREATMENT are zeros.</span>
@@ -1215,7 +1677,14 @@ if __name__ == '__main__':
                                 <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
                                 <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
                                 <div style="text-align: center;width: 750px">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change:</strong>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change
+                                    <span
+                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                            data-delay='{"show":"0", "hide":"100"}'
+                                            data-toggle="tooltip"
+                                            title="Log(2) [Mean(Group2)/Mean(Group1)] ">
+                                                </span>
+                                </strong>
                                     &nbsp;
                                     <span style="color: steelblue">{{ctrl.sliderFoldChangeValue}}</span>
                                     <br/>
@@ -1595,12 +2064,12 @@ if __name__ == '__main__':
 
 
                     <div class="panel panel-default " ng-show="ctrl.showOverAllParallelSVG">
-                        <p style="font-weight: bold">The mapping only shows the connected peptides.</p>
+
                         <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 5px;padding-bottom: 5px;">
                             <!--<div class="well col-sm-12">-->
                             <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2" >Peptides2Proteins Representative Mapping
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2" >Peptides2Proteins Mapping (Representative)
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -1618,7 +2087,7 @@ if __name__ == '__main__':
   color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
                             </div>
 
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1" >Peptides2Proteins Averaged Mapping
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1" >Peptides2Proteins Mapping (All)
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -1638,7 +2107,7 @@ if __name__ == '__main__':
 
                             <!--</div>-->
                             <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3" >Peptides2Proteins Distinct Mapping
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3" >Peptides2Proteins Mapping (Distinct)
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -1677,6 +2146,22 @@ if __name__ == '__main__':
                             </select>
                             <button id="btnReset">Reset Brushes</button>
                         </p>
+                        <br/>
+
+
+                        <p style="font-weight: bold; color: steelblue">Why there is nothing to show here or the connections don't look right
+                            <span
+                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                    data-delay='{"show":"0", "hide":"100"}'
+                                    data-toggle="tooltip"
+                                    title="This graph only shows the connected peptides to proteins based on the database and organism of selection.
+                                    If selected peptides in the volcano plot are not found in the database, they are not shown here.
+Also the type of peptide to protein mapping may change the graph.">
+                                                </span>
+
+
+                        </p>
+
 
                         <div id="parallelForPeptideToProtein" class="parcoords">
 

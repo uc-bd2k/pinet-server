@@ -226,7 +226,7 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                 <!--<div class="well col-sm-12">-->
                                 <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Peptides2Proteins Representative Mapping
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Peptides2Proteins Mapping (Representative)
                                     <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="popover-hover"
@@ -243,7 +243,7 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                 </div>
 
 
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Averaged Mapping
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">Peptides2Proteins Mapping (All)
                                     <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="popover-hover"
@@ -260,7 +260,7 @@ vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
                                 </div>
                                 <!--</div>-->
                                 <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Distinct Mapping
+                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Peptides2Proteins Mapping (Distinct)
                                     <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="popover-hover"
@@ -1270,6 +1270,13 @@ if __name__ == '__main__':
                                target="_blank">
                                 http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
 
+                            <p>To get unfiltered kinase-phosphosite predictions based on NetworKIN method for homo sapiens:</p>
+                            <a href="http://eh3.uc.edu/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]"
+                               target="_blank">
+                                http://eh3.uc.edu/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]
+                                </a>
+
+
                         </div>
                     </div>
 
@@ -1344,7 +1351,7 @@ if __name__ == '__main__':
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="makePtmGraph(ctrl.ptmNetwork, ctrl.ptmProteinToAbundanceMap, graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
+                                        ng-click="ctrl.makePtmGraph(ctrl.ptmNetwork, ctrl.ptmProteinToAbundanceMap, graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
                                     Network of Targeted PTM/Proteins via iPTMnet
                                 </button>
                                 <!--<button class="btn btn-primary "-->
@@ -1354,80 +1361,7 @@ if __name__ == '__main__':
                         </div>
 
                         <div ng-show="ctrl.showPtmGraph">
-                            <div ng-show="ctrl.showPtmGeneNetworkProcessed">
-                                <div class="well">
-                                    <h4>Mapping of iPTMnet for Targeted PTM/Proteins
-                                        <span ng-show="!ctrl.showPtmGeneNetworkProcessed && !ctrl.ptmError">
-                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
-                            </span>
-                                    </h4>
-                                    <div class="bs-callout bs-callout-primary">
-                                        <p>This table shows the enzymes that targets the PTM/Protein.
-                                        </p>
-                                    </div>
 
-
-                                    <!--</div>-->
-
-                                    <!--<div ng-show="ctrl.phosphoError">-->
-                                    <!--<p>-->
-                                    <!--Error in obtaining the kinases to targeted Phosphosite network, please try again-->
-                                    <!--later!-->
-                                    <!--</p>-->
-                                    <!--</div>-->
-
-                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
-
-                                    <!--<div class="well" ng-show="true">-->
-                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.PTM_table,'pinet-iPTMNet-PTMProteinMapping')">Download Table
-                                    </button>
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>PTM/Protein</th>
-                                            <!--<th>validity</th>-->
-                                            <th>PTM</th>
-                                            <th>Amino Acid</th>
-                                            <th>Site</th>
-                                            <th>Type</th>
-                                            <th>Enzyme</th>
-                                            <th>Score</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tbody pagination-id="metaData22">-->
-                                        <tr dir-paginate="gene in ctrl.PTM_table | filter:search | orderBy:'-blosum50ScorePercent' | itemsPerPage:10 "
-                                            pagination-id="metaData221">
-                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
-                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
-                                            <td>{{gene.PTMProtein}}</td>
-                                            <!--<td>{{gene.valid}}</td>-->
-                                            <td>{{gene.PTM}}</td>
-                                            <td>{{gene.amino}}</td>
-                                            <td>{{gene.site}}</td>
-                                            <td>{{gene.type}}</td>
-                                            <td>{{gene.enzyme}}</td>
-                                            <td>{{gene.score}}</td>
-
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls
-                                            pagination-id="metaData221"
-                                            max-size="10"
-                                            direction-links="true"
-                                            boundary-links="true">
-                                    </dir-pagination-controls>
-                                    <!--<dir-pagination-controls-->
-                                    <!--max-size="10"-->
-                                    <!--direction-links="true"-->
-                                    <!--boundary-links="true" >-->
-                                    <!--</dir-pagination-controls>-->
-                                </div>
-                                <br/>
-                                <!--</div>-->
-                            </div>
 
 
                             <div ng-show="ctrl.showPtmGeneNetworkProcessed">
@@ -1632,6 +1566,81 @@ if __name__ == '__main__':
                                 </div>
 
                             </div>
+
+                            <div ng-show="ctrl.showPtmGeneNetworkProcessed">
+                                <div class="well">
+                                    <h4>Mapping of iPTMnet for Targeted PTM/Proteins
+                                        <span ng-show="!ctrl.showPtmGeneNetworkProcessed && !ctrl.ptmError">
+                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
+                            </span>
+                                    </h4>
+                                    <div class="bs-callout bs-callout-primary">
+                                        <p>This table shows the enzymes that targets the PTM/Protein.
+                                        </p>
+                                    </div>
+
+
+                                    <!--</div>-->
+
+                                    <!--<div ng-show="ctrl.phosphoError">-->
+                                    <!--<p>-->
+                                    <!--Error in obtaining the kinases to targeted Phosphosite network, please try again-->
+                                    <!--later!-->
+                                    <!--</p>-->
+                                    <!--</div>-->
+
+                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
+
+                                    <!--<div class="well" ng-show="true">-->
+                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.PTM_table,'pinet-iPTMNet-PTMProteinMapping')">Download Table
+                                    </button>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>PTM/Protein</th>
+                                            <!--<th>validity</th>-->
+                                            <th>PTM</th>
+                                            <th>Amino Acid</th>
+                                            <th>Site</th>
+                                            <th>Type</th>
+                                            <th>Enzyme</th>
+                                            <th>Score</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--<tbody pagination-id="metaData22">-->
+                                        <tr dir-paginate="gene in ctrl.PTM_table | filter:search | orderBy:'-blosum50ScorePercent' | itemsPerPage:10 "
+                                            pagination-id="metaData221">
+                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
+                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
+                                            <td>{{gene.PTMProtein}}</td>
+                                            <!--<td>{{gene.valid}}</td>-->
+                                            <td>{{gene.PTM}}</td>
+                                            <td>{{gene.amino}}</td>
+                                            <td>{{gene.site}}</td>
+                                            <td>{{gene.type}}</td>
+                                            <td>{{gene.enzyme}}</td>
+                                            <td>{{gene.score}}</td>
+
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls
+                                            pagination-id="metaData221"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <!--<dir-pagination-controls-->
+                                    <!--max-size="10"-->
+                                    <!--direction-links="true"-->
+                                    <!--boundary-links="true" >-->
+                                    <!--</dir-pagination-controls>-->
+                                </div>
+                                <br/>
+                                <!--</div>-->
+                            </div>
                             <!--<div id="chart3"></div>-->
                         </div>
 
@@ -1686,7 +1695,7 @@ if __name__ == '__main__':
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="makeSignorGraph(ctrl.signor_Network, ctrl.ptmProteinToAbundanceMap, graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
+                                        ng-click="ctrl.makeSignorGraph(ctrl.signor_Network, ctrl.ptmProteinToAbundanceMap, graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
                                     Show
                                     Network of Targeted PTM/Proteins via SIGNOR
                                 </button>
@@ -1700,97 +1709,7 @@ if __name__ == '__main__':
 
 
                         <div ng-show="ctrl.showSignorGraph">
-                            <div ng-show="ctrl.showSignorGeneNetworkProcessed">
-                                <div class="well">
-                                    <h4>Mapping of Signor for Targeted PTM/Proteins
-                                        <span ng-show="!ctrl.showSignorGeneNetworkProcessed && !ctrl.signorError">
-                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
-                            </span>
-                                    </h4>
-                                    <div class="bs-callout bs-callout-primary">
-                                        <p>This table shows the enzymes that target the PTM/Protein.
-                                        </p>
-                                    </div>
 
-
-                                    <!--</div>-->
-
-                                    <!--<div ng-show="ctrl.phosphoError">-->
-                                    <!--<p>-->
-                                    <!--Error in obtaining the kinases to targeted Phosphosite network, please try again-->
-                                    <!--later!-->
-                                    <!--</p>-->
-                                    <!--</div>-->
-
-                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
-
-                                    <!--<div class="well" ng-show="true">-->
-                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(enrichmentTable,'pinet-SIGNOR-PTMProteinMapping')">Download Table
-                                    </button>
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-
-
-                                            <!--signorTableJson.put("PTMProtein", inputphosphoProteinUpper);-->
-                                            <!--signorTableJson.put("effect", effect);-->
-                                            <!--signorTableJson.put("mechanism", mechanism);-->
-                                            <!--signorTableJson.put("id", id);-->
-                                            <!--signorTableJson.put("enzyme", enzyme);-->
-                                            <!--signorTableJson.put("target", inputGene);-->
-
-
-                                            <th>PTM/Protein</th>
-                                            <!--<th>validity</th>-->
-                                            <th>PTM</th>
-                                            <th>Effect</th>
-                                            <th>Mechanism</th>
-                                            <th>Enzyme</th>
-                                            <th>Id</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tbody pagination-id="metaData22">-->
-                                        <tr dir-paginate="gene in ctrl.signor_table | filter:search | itemsPerPage:10 "
-                                            pagination-id="metaData2221">
-                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
-                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
-                                            <td>{{gene.PTMProtein}}</td>
-                                            <!--<td>{{gene.valid}}</td>-->
-                                            <td>{{gene.target}}</td>
-                                            <td>{{gene.effect}}</td>
-                                            <td>{{gene.mechanism}}</td>
-                                            <td>{{gene.enzyme}}</td>
-                                            <td>
-                                                <!--<a class="tabled"-->
-                                                   <!--ng-href="https://signor.uniroma2.it/relation_result.php?id={{gene.id}}"-->
-                                                   <!--target="_blank">-->
-
-                                                    <!--{{gene.id}}-->
-                                                <!--</a>-->
-
-                                                <a   href="#" ng-click="openIframeModal(gene.id,'pinetSignor')" >{{gene.id}} </a>
-                                            </td>
-
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls
-                                            pagination-id="metaData2221"
-                                            max-size="10"
-                                            direction-links="true"
-                                            boundary-links="true">
-                                    </dir-pagination-controls>
-                                    <!--<dir-pagination-controls-->
-                                    <!--max-size="10"-->
-                                    <!--direction-links="true"-->
-                                    <!--boundary-links="true" >-->
-                                    <!--</dir-pagination-controls>-->
-                                </div>
-                                <br/>
-                                <!--</div>-->
-                            </div>
 
 
                             <div ng-show="ctrl.showSignorGeneNetworkProcessed">
@@ -1995,6 +1914,98 @@ if __name__ == '__main__':
                                 </div>
 
                             </div>
+
+                            <div ng-show="ctrl.showSignorGeneNetworkProcessed">
+                                <div class="well">
+                                    <h4>Mapping of Signor for Targeted PTM/Proteins
+                                        <span ng-show="!ctrl.showSignorGeneNetworkProcessed && !ctrl.signorError">
+                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
+                            </span>
+                                    </h4>
+                                    <div class="bs-callout bs-callout-primary">
+                                        <p>This table shows the enzymes that target the PTM/Protein.
+                                        </p>
+                                    </div>
+
+
+                                    <!--</div>-->
+
+                                    <!--<div ng-show="ctrl.phosphoError">-->
+                                    <!--<p>-->
+                                    <!--Error in obtaining the kinases to targeted Phosphosite network, please try again-->
+                                    <!--later!-->
+                                    <!--</p>-->
+                                    <!--</div>-->
+
+                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
+
+                                    <!--<div class="well" ng-show="true">-->
+                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.signor_table,'pinet-SIGNOR-PTMProteinMapping')">Download Table
+                                    </button>
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+
+
+                                            <!--signorTableJson.put("PTMProtein", inputphosphoProteinUpper);-->
+                                            <!--signorTableJson.put("effect", effect);-->
+                                            <!--signorTableJson.put("mechanism", mechanism);-->
+                                            <!--signorTableJson.put("id", id);-->
+                                            <!--signorTableJson.put("enzyme", enzyme);-->
+                                            <!--signorTableJson.put("target", inputGene);-->
+
+
+                                            <th>PTM/Protein</th>
+                                            <!--<th>validity</th>-->
+                                            <th>PTM</th>
+                                            <th>Effect</th>
+                                            <th>Mechanism</th>
+                                            <th>Enzyme</th>
+                                            <th>Id</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--<tbody pagination-id="metaData22">-->
+                                        <tr dir-paginate="gene in ctrl.signor_table | filter:search | itemsPerPage:10 "
+                                            pagination-id="metaData2221">
+                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
+                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
+                                            <td>{{gene.PTMProtein}}</td>
+                                            <!--<td>{{gene.valid}}</td>-->
+                                            <td>{{gene.target}}</td>
+                                            <td>{{gene.effect}}</td>
+                                            <td>{{gene.mechanism}}</td>
+                                            <td>{{gene.enzyme}}</td>
+                                            <td>
+                                                <!--<a class="tabled"-->
+                                                <!--ng-href="https://signor.uniroma2.it/relation_result.php?id={{gene.id}}"-->
+                                                <!--target="_blank">-->
+
+                                                <!--{{gene.id}}-->
+                                                <!--</a>-->
+
+                                                <a   href="#" ng-click="openIframeModal(gene.id,'pinetSignor')" >{{gene.id}} </a>
+                                            </td>
+
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls
+                                            pagination-id="metaData2221"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <!--<dir-pagination-controls-->
+                                    <!--max-size="10"-->
+                                    <!--direction-links="true"-->
+                                    <!--boundary-links="true" >-->
+                                    <!--</dir-pagination-controls>-->
+                                </div>
+                                <br/>
+                                <!--</div>-->
+                            </div>
                             <!--<div id="chart3"></div>-->
                         </div>
                         <!--</div>-->
@@ -2071,7 +2082,7 @@ if __name__ == '__main__':
                             </div>
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="makePhosphoGraph(ctrl.phosphoNetwork, ctrl.ptmProteinToAbundanceMap, graphType4phos, circleSliderValue4phos,nodeSliderValue4phos, fontSliderValue4phos, widthSliderValue4phos )">
+                                        ng-click="ctrl.makePhosphoGraph(ctrl.phosphoNetwork, ctrl.ptmProteinToAbundanceMap, graphType4phos, circleSliderValue4phos,nodeSliderValue4phos, fontSliderValue4phos, widthSliderValue4phos )">
                                     Show Kinase Network for
                                     Phosphorylated Genes
                                 </button>
@@ -2086,102 +2097,7 @@ if __name__ == '__main__':
                         <div ng-show="ctrl.showPhosphoGraph">
 
 
-                            <div ng-show="ctrl.showPhosphoGeneNetwork">
-                                <div class="well">
-                                    <h4>Mapping Kinases to Targeted Phosphosite
 
-                                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed">
-                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
-                            </span>
-                                    </h4>
-                                    <div class="bs-callout bs-callout-primary">
-                                        <p>This table shows the known and predicted kinases targeting the input PTM
-                                            proteins. The kinases shown here
-                                            are based on the known kinases in the phosphositePlus and predicted kinases
-                                            based on the blosum50 similarity score
-                                            of the phosphosite sequence and known kinase target sequences.
-                                        </p>
-                                    </div>
-
-
-                                    <!--</div>-->
-
-                                    <div ng-show="ctrl.phosphoError" style="color: red">
-                                        <p>
-                                            Error in obtaining the kinases to targeted Phosphosite network, please try
-                                            again
-                                            later!
-                                        </p>
-                                    </div>
-
-                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
-
-                                    <!--<div class="well" ng-show="true">-->
-                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.blosum50Table,'pinet-phosphositePlus-PTMProteinMapping')">Download
-                                        Table
-                                    </button>
-
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>PTM/Protein</th>
-                                            <!--<th>PTM</th>-->
-                                            <th>Amino Acid</th>
-                                            <th>Sequence</th>
-                                            <th>Kinase</th>
-                                            <!--<th>Kinase Organism</th>-->
-
-                                            <th>Kinase Target Sequence</th>
-                                            <!--<th>Type</th>-->
-                                            <th>Blosum50 Score</th>
-                                            <!--<th>max blosum50</th>-->
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tbody pagination-id="metaData22">-->
-                                        <tr dir-paginate="gene in ctrl.blosum50Table | filter:search | orderBy:'-blosum50ScorePercent' | itemsPerPage:10 "
-                                            pagination-id="metaData222">
-                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
-                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
-                                            <td>{{gene.phosphoGene}}</td>
-                                            <!--<td>{{gene.ptm}}</td>-->
-                                            <td>{{gene.amino}}</td>
-                                            <td>
-                                                <!--<div class="list-responsive-vertical" style="word-wrap:break-word;">-->
-                                                {{gene.geneSequence.slice(0,7)}}<span style='color:red'>{{gene.geneSequence.slice(7,8)}}</span>{{gene.geneSequence.slice(8,gene.geneSequence.length)}}
-                                                <!--</div>-->
-
-                                                <!--{{gene.geneSequence}}-->
-                                            </td>
-                                            <td>{{gene.kinase}}</td>
-                                            <!--<td>{{gene.kinaseOrganism}}</td>-->
-
-                                            <td>
-                                                {{gene.kinasePeptide.slice(0,7)}}<span style='color:red'>{{gene.kinasePeptide.slice(7,8)}}</span>{{gene.kinasePeptide.slice(8,gene.kinasePeptide.length)}}
-                                                <!--{{gene.kinasePeptide}}-->
-                                            </td>
-                                            <!--<td>{{gene.valid}}</td>-->
-                                            <td>{{gene.blosum50ScorePercent}}/{{gene.blosum50MaxScore}}</td>
-                                            <!--<td>{{gene.blosum50MaxScore}}</td>-->
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls
-                                            pagination-id="metaData222"
-                                            max-size="10"
-                                            direction-links="true"
-                                            boundary-links="true">
-                                    </dir-pagination-controls>
-                                    <!--<dir-pagination-controls-->
-                                    <!--max-size="10"-->
-                                    <!--direction-links="true"-->
-                                    <!--boundary-links="true" >-->
-                                    <!--</dir-pagination-controls>-->
-                                </div>
-                                <br/>
-                                <!--</div>-->
-                            </div>
 
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
@@ -2378,6 +2294,103 @@ if __name__ == '__main__':
                                 </div>
 
                             </div>
+
+                            <div ng-show="ctrl.showPhosphoGeneNetwork">
+                                <div class="well">
+                                    <h4>Mapping Kinases to Targeted Phosphosite
+
+                                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed">
+                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
+                            </span>
+                                    </h4>
+                                    <div class="bs-callout bs-callout-primary">
+                                        <p>This table shows the known and predicted kinases targeting the input PTM
+                                            proteins. The kinases shown here
+                                            are based on the known kinases in the phosphositePlus and predicted kinases
+                                            based on the blosum50 similarity score
+                                            of the phosphosite sequence and known kinase target sequences.
+                                        </p>
+                                    </div>
+
+
+                                    <!--</div>-->
+
+                                    <div ng-show="ctrl.phosphoError" style="color: red">
+                                        <p>
+                                            Error in obtaining the kinases to targeted Phosphosite network, please try
+                                            again
+                                            later!
+                                        </p>
+                                    </div>
+
+                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
+
+                                    <!--<div class="well" ng-show="true">-->
+                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.blosum50Table,'pinet-phosphositePlus-PTMProteinMapping')">Download
+                                        Table
+                                    </button>
+
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>PTM/Protein</th>
+                                            <!--<th>PTM</th>-->
+                                            <th>Amino Acid</th>
+                                            <th>Sequence</th>
+                                            <th>Kinase</th>
+                                            <!--<th>Kinase Organism</th>-->
+
+                                            <th>Kinase Target Sequence</th>
+                                            <!--<th>Type</th>-->
+                                            <th>Blosum50 Score</th>
+                                            <!--<th>max blosum50</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--<tbody pagination-id="metaData22">-->
+                                        <tr dir-paginate="gene in ctrl.blosum50Table | filter:search | orderBy:'-blosum50ScorePercent' | itemsPerPage:10 "
+                                            pagination-id="metaData222">
+                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
+                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
+                                            <td>{{gene.phosphoGene}}</td>
+                                            <!--<td>{{gene.ptm}}</td>-->
+                                            <td>{{gene.amino}}</td>
+                                            <td>
+                                                <!--<div class="list-responsive-vertical" style="word-wrap:break-word;">-->
+                                                {{gene.geneSequence.slice(0,7)}}<span style='color:red'>{{gene.geneSequence.slice(7,8)}}</span>{{gene.geneSequence.slice(8,gene.geneSequence.length)}}
+                                                <!--</div>-->
+
+                                                <!--{{gene.geneSequence}}-->
+                                            </td>
+                                            <td>{{gene.kinase}}</td>
+                                            <!--<td>{{gene.kinaseOrganism}}</td>-->
+
+                                            <td>
+                                                {{gene.kinasePeptide.slice(0,7)}}<span style='color:red'>{{gene.kinasePeptide.slice(7,8)}}</span>{{gene.kinasePeptide.slice(8,gene.kinasePeptide.length)}}
+                                                <!--{{gene.kinasePeptide}}-->
+                                            </td>
+                                            <!--<td>{{gene.valid}}</td>-->
+                                            <td>{{gene.blosum50ScorePercent}}/{{gene.blosum50MaxScore}}</td>
+                                            <!--<td>{{gene.blosum50MaxScore}}</td>-->
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls
+                                            pagination-id="metaData222"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <!--<dir-pagination-controls-->
+                                    <!--max-size="10"-->
+                                    <!--direction-links="true"-->
+                                    <!--boundary-links="true" >-->
+                                    <!--</dir-pagination-controls>-->
+                                </div>
+                                <br/>
+                                <!--</div>-->
+                            </div>
                             <!--<div id="chart3"></div>-->
                         </div>
 
@@ -2451,7 +2464,7 @@ if __name__ == '__main__':
                             </div>
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="makeDeepPhosGraph(ctrl.deepPhosNetwork, ctrl.ptmProteinToAbundanceMap, graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep)">
+                                        ng-click="ctrl.makeDeepPhosGraph(ctrl.deepPhosNetwork, ctrl.ptmProteinToAbundanceMap, graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep)">
                                     Show DeepPhos network for
                                     phosphorylation site prediction
                                 </button>
@@ -2466,85 +2479,7 @@ if __name__ == '__main__':
                         <div ng-show="ctrl.showDeepPhosGraph">
 
 
-                            <div ng-show="ctrl.showPhosphoGeneNetwork">
-                                <div class="well">
-                                    <h4>Predicting Kinases to Substrate Phospho-Protein
 
-                                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed">
-                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
-                            </span>
-                                    </h4>
-                                    <div class="bs-callout bs-callout-primary">
-                                        <p>This table shows predicted kinase family targeting the input
-                                            phospho-proteins via deep learning. The scores are between 0 to 1, where 1 is the highest possibility.
-                                        </p>
-                                    </div>
-
-
-                                    <!--</div>-->
-
-                                    <div ng-show="ctrl.phosphoError" style="color: red">
-                                        <p>
-                                            Error in obtaining DeepPhos network for
-                                            phosphorylation site prediction, please try
-                                            again
-                                            later!
-                                        </p>
-                                    </div>
-
-                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
-
-                                    <!--<div class="well" ng-show="true">-->
-                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.deepPhosTable,'pinet-deepPhos-kinaseSubstratePrediction')">Download
-                                        Table
-                                    </button>
-
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-
-                                            <th>kinaseGroup</th>
-                                            <th>PTM/Protein</th>
-                                            <th>PTM</th>
-
-                                            <th>position</th>
-                                            <th>score</th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!--<tbody pagination-id="metaData22">-->
-                                        <tr dir-paginate="gene in ctrl.deepPhosTable | filter:search | orderBy:'-score' | itemsPerPage:10 "
-                                            pagination-id="metaData222deep">
-                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
-                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
-                                            <td>{{gene.kinaseGroup}}</td>
-                                            <!--<td>{{gene.ptm}}</td>-->
-                                            <td>{{gene.PTMProtein}}</td>
-                                            <td>{{gene.PTM}}</td>
-                                            <td>{{gene.position}}</td>
-                                            <td>{{gene.score}}</td>
-
-
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <dir-pagination-controls
-                                            pagination-id="metaData222deep"
-                                            max-size="10"
-                                            direction-links="true"
-                                            boundary-links="true">
-                                    </dir-pagination-controls>
-                                    <!--<dir-pagination-controls-->
-                                    <!--max-size="10"-->
-                                    <!--direction-links="true"-->
-                                    <!--boundary-links="true" >-->
-                                    <!--</dir-pagination-controls>-->
-                                </div>
-                                <br/>
-                                <!--</div>-->
-                            </div>
 
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
@@ -2751,6 +2686,86 @@ if __name__ == '__main__':
 
                                 </div>
 
+                            </div>
+
+                            <div ng-show="ctrl.showPhosphoGeneNetwork">
+                                <div class="well">
+                                    <h4>Predicting Kinases to Substrate Phospho-Protein
+
+                                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed">
+                            <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
+                            </span>
+                                    </h4>
+                                    <div class="bs-callout bs-callout-primary">
+                                        <p>This table shows predicted kinase family targeting the input
+                                            phospho-proteins via deep learning. The scores are between 0 to 1, where 1 is the highest possibility.
+                                        </p>
+                                    </div>
+
+
+                                    <!--</div>-->
+
+                                    <div ng-show="ctrl.phosphoError" style="color: red">
+                                        <p>
+                                            Error in obtaining DeepPhos network for
+                                            phosphorylation site prediction, please try
+                                            again
+                                            later!
+                                        </p>
+                                    </div>
+
+                                    <!--<div ng-show="ctrl.showPhosphoGeneNetworkProcessed">-->
+
+                                    <!--<div class="well" ng-show="true">-->
+                                    <button class="btn btn-primary " ng-click="exportCsvGeneral(ctrl.deepPhosTable,'pinet-deepPhos-kinaseSubstratePrediction')">Download
+                                        Table
+                                    </button>
+
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+
+                                            <th>kinaseGroup</th>
+                                            <th>PTM/Protein</th>
+                                            <th>PTM</th>
+
+                                            <th>position</th>
+                                            <th>score</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--<tbody pagination-id="metaData22">-->
+                                        <tr dir-paginate="gene in ctrl.deepPhosTable | filter:search | orderBy:'-score' | itemsPerPage:10 "
+                                            pagination-id="metaData222deep">
+                                            <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
+                                            <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
+                                            <td>{{gene.kinaseGroup}}</td>
+                                            <!--<td>{{gene.ptm}}</td>-->
+                                            <td>{{gene.PTMProtein}}</td>
+                                            <td>{{gene.PTM}}</td>
+                                            <td>{{gene.position}}</td>
+                                            <td>{{gene.score}}</td>
+
+
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <dir-pagination-controls
+                                            pagination-id="metaData222deep"
+                                            max-size="10"
+                                            direction-links="true"
+                                            boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <!--<dir-pagination-controls-->
+                                    <!--max-size="10"-->
+                                    <!--direction-links="true"-->
+                                    <!--boundary-links="true" >-->
+                                    <!--</dir-pagination-controls>-->
+                                </div>
+                                <br/>
+                                <!--</div>-->
                             </div>
                             <!--<div id="chart3"></div>-->
                         </div>

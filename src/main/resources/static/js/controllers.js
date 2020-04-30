@@ -202,9 +202,45 @@ appModule.factory('SharedService', function( $http, $q, $location, NgTableParams
     vars.ptmTitleText = "";
     vars.geneTitleText = "";
     vars.ontologyMappingsTable = [];
+    vars.uploadFormat = "generic";
+    vars.uploadFormat = "generic2";
+    vars.peptideModFormat = "modAfter";
+    vars.textAreaControl = "2018_05_31_09\n\
+2018_05_31_05\n\
+2018_05_31_07\n\
+2018_05_31_11\n\
+2018_05_31_12\n\
+2018_05_31_01";
+    vars.textAreaTreatment = "2018_05_31_02\n\
+2018_05_31_03\n\
+2018_05_31_04\n\
+2018_05_31_05\n\
+2018_05_31_06\n\
+2018_05_31_08";
     vars.textArea = "[meK]STGG[aK]APR	-0.0649\n\
 [aK]STGG[aK]APR	-0.0215\n\
 [meK][pS]TGGKAPR	-0.2427\n\
+[pS]PPAPGLQPM[+15.994]R 0.4706487\n\
+A[+42.010]TTATM[+15.994]ATSG[pS]AR -0.8267\n\
+RPH[pS]PEKAFSSNPVVR 0.67740\n\
+KPNIFYSGPA[pS]PARPR -0.324736\n\
+QGSGRE[pS]PSLASR 0.69807\n\
+HLP[pS]PPTLDSIITEYLR 0.13999\n\
+S[pT]FHAGQLR -0.5785\n\
+A[+42.010]TTATMATSG[pS]AR -1.60154\n\
+SM[pS]VDLSHIPLKDPLLFK -0.60759\n\
+[pS]LTAHSLLPLAEK -1.1335\n\
+IHVSR[pS]PTRPR 0.410076\n\
+TEFLDLDNSPLSPP[pS]PR 0.401256\n\
+LQ[pS]EPESIR -0.159615\n\
+RLI[pS]PYKK 0.271686\n\
+LLED[pS]EESSEETVSR 0.44265\n\
+RRL[pS]SLR -0.497748\n\
+RL[pS]ESQLSFRR -0.79106\n\
+RL[pS]LPGLLSQVSPR 0.329239\n\
+SPDKPGG[pS]PSASRR 0.131213\n\
+[pS]LTNSHLEKK 0.22196\n\
+LQTPN[pT]FPKR -0.344000\n\
 [meK]SAPATGGV[meK]KPHR	0.2786\n\
 EIAQDF[meK]TDLR	0.1569\n\
 IYQ[pY]IQSR[+42.010] 1.3012\n\
@@ -5471,6 +5507,23 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         }
     }
 
+    function convertToTSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += '\t'
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
 
     function convertToCSV(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
@@ -5488,6 +5541,36 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         }
 
         return str;
+    }
+
+    function exportTSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = convertToTSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.txt' || 'export.txt';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
     }
 
     function exportCSVFile(headers, items, fileTitle) {
@@ -5938,6 +6021,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     SharedService.setVar("peptideResultsPTMsChanged",self.peptideResultsPTMsChanged);
     self.peptideResultsGenesChanged = false;
     SharedService.setVar("peptideResultsGenesChanged",self.peptideResultsGenesChanged);
+    self.uploadFormat = SharedService.getVar("uploadFormat");
+    self.uploadFormat2 = SharedService.getVar("uploadFormat2");
+    self.peptideModFormat = SharedService.getVar("peptideModFormat");
+    console.log(self.uploadFormat);
+    console.log(self.peptideModFormat);
+
 
     //
     // $(document).ready(function(){
@@ -6036,6 +6125,96 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     });
 
 
+
+if(self.uploadFormat == 'generic'){
+    self.showPart_pinet = true;
+    self.showPart_maxquant = false;
+    self.showPart_info = false;
+    $scope.showPart_pinet = true;
+    $scope.showPart_maxquant = false;
+    $scope.showPart_info = false;
+    $(".left").addClass("active");
+    $(".right").removeClass("active");
+    $(".righter").removeClass("active");
+}
+else{
+    self.showPart_pinet = false;
+    self.showPart_maxquant = true;
+    self.showPart_info = false;
+    $scope.showPart_pinet = false;
+    $scope.showPart_maxquant = true;
+    $scope.showPart_info = false;
+    $(".left").removeClass("active");
+    $(".right").addClass("active");
+    $(".righter").removeClass("active");
+}
+
+
+
+
+    $(document).ready(function() {
+        $(".left").click(function () {
+            $(".left").removeClass("active");
+            console.log("left");
+            $(".right").removeClass("active");
+            $(".righter").removeClass("active");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(".left").addClass("active");
+            $scope.showPart_pinet = true;
+            $scope.showPart_maxquant = false;
+            $scope.showPart_info = false;
+
+            self.uploadFormat = 'generic';
+            $("#generic").prop("checked", true);
+            SharedService.setVar('uploadFormat',self.uploadFormat);
+
+            $scope.$apply();
+
+
+        });
+    });
+    $(document).ready(function() {
+        $(".right").click(function () {
+            $(".left").removeClass("active");
+            $(".right").removeClass("active");
+            $(".righter").removeClass("active");
+            console.log("right");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(".right").addClass("active");
+            $scope.showPart_pinet = false;
+            $scope.showPart_maxquant = true;
+            $scope.showPart_info = false;
+
+            self.uploadFormat = 'maxQuant';
+            $("#maxQuant").prop("checked", true);
+            SharedService.setVar('uploadFormat',self.uploadFormat);
+
+            $scope.$apply();
+
+        });
+    });
+    $(document).ready(function() {
+        $(".righter").click(function () {
+            $(".left").removeClass("active");
+            $(".right").removeClass("active");
+            $(".righter").removeClass("active");
+            console.log("right");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(".righter").addClass("active");
+            $scope.showPart_pinet = false;
+            $scope.showPart_maxquant = false;
+            $scope.showPart_info = true;
+            console.log($scope.showPart_pinet);
+            console.log($scope.showPart_maxquant);
+            console.log($scope.showPart_info);
+            $scope.$apply();
+        });
+
+    });
+
+
+
+
     self.resultTab = SharedService.getVar("resultTab");
 
 
@@ -6053,7 +6232,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         $(".btn-group > .btn").removeClass("active");
 
         $(this).addClass("active");
-        console.log(this);
+        // console.log(this);
         console.log(this.id);
         self.showOverAllParallelSVG = false;
 
@@ -6365,6 +6544,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //self.textAreaFormatMD = SharedService.getVar('textAreaFormatMD');
     //self.textAreaFormatSN = SharedService.getVar('textAreaFormatSN');
     self.textArea = SharedService.getVar('textArea');
+    self.textAreaControl = SharedService.getVar('textAreaControl');
+    self.textAreaTreatment = SharedService.getVar('textAreaTreatment');
     $scope.waiting = SharedService.getVar('waiting');
     self.showOutput = SharedService.getVar('showOutput');
     self.genes = SharedService.getVar('genes');
@@ -7145,6 +7326,11 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
             });
         }
+        // console.log(fc);
+        // console.log(pv);
+        // console.log(self.selectedPeptides);
+        // console.log(self.selectedArray);
+
         self.selectedArrayTable = new NgTableParams({
             count: 5
         }, {
@@ -7161,6 +7347,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         self.ptmCountAvg = {};
         self.geneCountAvg = {};
+
+        self.ptmCountFirstFound = {};
+        self.geneCountFirstFound = {};
 
 
 
@@ -7360,7 +7549,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.genesWithAbundanceAveraged = [];
         self.genesWithAbundanceUnique = [];
         self.genesWithAbundanceFirstFound = [];
-        console.log("before ptm 2 abundance aveage");
+        console.log("before ptm 2 abundance average");
 
         console.log(self.geneCountAvg);
 
@@ -7510,7 +7699,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         }
 
         for (var keyIter in self.ptmCountFirstFound) {
-            //console.log(keyIter);
+            console.log(keyIter);
             if (keyIter != "NA" && keyIter != "undefined") {
                 // console.log(keyIter);
                 // if ( keyIter != "undefined") {
@@ -7530,7 +7719,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 // }
             }
         }
-
+        console.log(self.ptmCountFirstFound);
+console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         self.peptideResultsGenes = true;
         self.peptideResultsPTMs = true;
         SharedService.setVar("peptideResultsGenes", self.peptideResultsGenes);
@@ -8778,14 +8968,17 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         SharedService.setVar("showOutputex1orex2",self.showOutputex1orex2);
         //console.log("uploadFile");
         var file = $scope.myFile;
-        var fd = new FormData();
+
         self.uploadWaiting = true;
         self.showOutput = false;
         self.uploadErrorTag = 200;
-        fd.append('file', file);
+
         //We can send anything in name parameter,
 //it is hard coded to abc as it is irrelavant in this case.
-        var uploadUrl = "api/upload?organism=" + self.organismForm + self.proteinForm;
+        //var uploadUrl = "api/upload?organism=" + self.organismForm + self.proteinForm + "?inputType=" + self.uploadFormat+ "?inputCtrl=" + self.uploadCtrl + "?inputTrt=" + self.uploadTrt;
+
+
+        console.log(uploadUrl);
         $http.get("api/increment/" + 1)
             .success(function (siteVisit) {
 
@@ -8798,6 +8991,26 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
             });
         //console.log(uploadUrl);
+
+
+        var uploadUrl = "api/upload";
+        var fd = new FormData();
+        //var data = new FormData();
+        fd.append('file', file);
+        fd.append('organism', self.organismForm + self.proteinForm);
+        fd.append('inputType', self.uploadFormat);
+        fd.append('inputCtrl', self.uploadCtrl);
+        fd.append('inputTrt', self.uploadTrt);
+        fd.append('normalFlag', $scope.normalSelectionValue);
+        fd.append('peptideModFormat', self.peptideModFormat);
+        // Append as many parameters as needed
+        // $http.post('jobseeker', data, {
+        //     withCredentials : false,
+        //     transformRequest : angular.identity,
+        //     headers : {
+        //         'Content-Type' : undefined
+        //     }
+        // })
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -9041,6 +9254,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                         var originalModFromInput = el;
                                         var modificationType = "";
                                         var modificationAmino = "";
+                                        if(self.modificationNameMap.hasOwnProperty(el.match(self.patt2))){
+                                            modificationType = self.modificationNameMap[el.match(self.patt2)];
+                                        }
+                                        else{
+                                            modificationType = el.match(self.patt2);
+                                        }
+
                                         modificationType = self.modificationNameMap[el.match(self.patt2)];
                                         modificationAmino = self.modificationAminoMap[el.match(self.patt1)];
                                         console.log("---------");
@@ -9055,103 +9275,110 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                         console.log(originalMAss);
                                         console.log(elMass);
                                         (function (modificationType, modificationAmino, originalModFromInput) {
-                                            $http.get("api/proteinptmbydescription/" + modificationType)
-                                                .success(function (res_data) {
-                                                    console.log("api/proteinptmbydescription/" + modificationType);
-                                                    console.log("res_data");
-                                                    console.log(res_data);
-                                                    var data = [];
-                                                    for(var i = 0; i < res_data.length; i++) {
-                                                        var obj = res_data[i];
-                                                        if (obj["description"].includes(modificationAmino) ||
-                                                            obj["name"].includes(modificationAmino) ||
-                                                            obj["shortName"].includes(modificationAmino)
-                                                        ){
-                                                            data.push(obj);
+                                            if (modificationType  === undefined) {
+                                            }
+                                            else {
+                                                $http.get("api/proteinptmbydescription/" + modificationType)
+                                                    .success(function (res_data) {
+                                                        if (res_data === undefined) {
+                                                        }
+                                                        else {
+                                                            console.log("api/proteinptmbydescription/" + modificationType);
+                                                            console.log("res_data");
+                                                            console.log(res_data);
+                                                            var data = [];
+                                                            for (var i = 0; i < res_data.length; i++) {
+                                                                var obj = res_data[i];
+                                                                if (obj["description"].includes(modificationAmino) ||
+                                                                    obj["name"].includes(modificationAmino) ||
+                                                                    obj["shortName"].includes(modificationAmino)
+                                                                ) {
+                                                                    data.push(obj);
+                                                                }
+
+                                                            }
+                                                            console.log("data:");
+                                                            console.log(data);
+                                                            //var data = res_data;
+
+                                                            var sorted_data = data.sort(function (a, b) {
+                                                                return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
+                                                            });
+                                                            ////console.log(sorted_data);
+                                                            var closest_sorted = sorted_data[0];
+                                                            ////console.log(closest_sorted);
+                                                            var result = {};
+                                                            result.mass = originalMAss;
+                                                            result.input = el;
+                                                            result.identifier = closest_sorted.accession;
+                                                            result.diffavg = closest_sorted.averageDeltaMass;
+
+                                                            result.description = closest_sorted.description;
+                                                            result.formula = closest_sorted.formula;
+                                                            var similarToPTM = [];
+                                                            sorted_data.forEach(function (element) {
+                                                                var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
+                                                                ////console.log(element);
+                                                                var similarToPTMItem = {};
+                                                                // similarToPTMItem["identifier"] = element.accession;
+                                                                similarToPTMItem["descriptionAll"] = similarToPTMAll;
+
+                                                                similarToPTM.push(similarToPTMItem);
+                                                            });
+                                                            // for (var i = 0; i < sorted_data.length; i++) {
+                                                            //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
+                                                            //
+                                                            //     similarToPTM.push(similarToPTMItem);
+                                                            //     //Do something
+                                                            // }
+
+                                                            result.similar = similarToPTM;
+                                                            ////console.log(result);
+
+                                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                                                self.ontologyMappingsUnique.push(el);
+                                                                self.ontologyMappings.push(result);
+                                                                //console.log(result);
+
+                                                            }
+                                                        }
+                                                        //self.ontologyMappings.push(result);
+
+                                                    })
+                                                    .error(function (data, status) {
+                                                        // //console.log(data);
+                                                        // //console.log(status);
+                                                        var result = {};
+                                                        result.identifier = "";
+                                                        result.input = el;
+                                                        result.formula = "";
+                                                        result.diffavg = "";
+                                                        result.description = "Error!";
+                                                        result.similar = [];
+
+
+                                                        // var result = {};
+                                                        // result.identifier = "";
+                                                        //
+                                                        // result.modification = elMass;
+                                                        // if (self.modificationMapReverse[elMass.match(self.patt3)]) {
+                                                        //     elShorthand = "[" + self.modificationMapReverse[elMass.match(self.patt3)] + elMass.match(self.patt1) + "]";
+                                                        // }
+                                                        // else {
+                                                        //     elShorthand = ""
+                                                        // }
+                                                        // result.shorthand = elShorthand;
+                                                        // result.diffavg = "";
+                                                        // result.description = "Error!";
+                                                        // result.similar = "";
+                                                        //self.ontologyMappings.push(result);
+                                                        if (self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                                            self.ontologyMappingsUnique.push(el);
+                                                            self.ontologyMappings.push(result);
                                                         }
 
-                                                    }
-                                                    console.log("data:");
-                                                    console.log(data);
-                                                    //var data = res_data;
-
-                                                    var sorted_data = data.sort(function (a, b) {
-                                                        return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
                                                     });
-                                                    ////console.log(sorted_data);
-                                                    var closest_sorted = sorted_data[0];
-                                                    ////console.log(closest_sorted);
-                                                    var result = {};
-                                                    result.mass = originalMAss;
-                                                    result.input = el;
-                                                    result.identifier = closest_sorted.accession;
-                                                    result.diffavg = closest_sorted.averageDeltaMass;
-
-                                                    result.description = closest_sorted.description;
-                                                    result.formula = closest_sorted.formula;
-                                                    var similarToPTM = [];
-                                                    sorted_data.forEach(function (element) {
-                                                        var similarToPTMAll = "{" + element.accession + "},{" + element.averageDeltaMass + "},{" + element.formula + "},{" + element.description + "}";
-                                                        ////console.log(element);
-                                                        var similarToPTMItem = {};
-                                                        // similarToPTMItem["identifier"] = element.accession;
-                                                        similarToPTMItem["descriptionAll"] = similarToPTMAll;
-
-                                                        similarToPTM.push(similarToPTMItem);
-                                                    });
-                                                    // for (var i = 0; i < sorted_data.length; i++) {
-                                                    //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
-                                                    //
-                                                    //     similarToPTM.push(similarToPTMItem);
-                                                    //     //Do something
-                                                    // }
-
-                                                    result.similar = similarToPTM;
-                                                    ////console.log(result);
-
-                                                    if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                        self.ontologyMappingsUnique.push(el);
-                                                        self.ontologyMappings.push(result);
-                                                        //console.log(result);
-
-                                                    }
-
-                                                    //self.ontologyMappings.push(result);
-
-                                                })
-                                                .error(function (data, status) {
-                                                    // //console.log(data);
-                                                    // //console.log(status);
-                                                    var result = {};
-                                                    result.identifier = "";
-                                                    result.input = el;
-                                                    result.formula = "";
-                                                    result.diffavg = "";
-                                                    result.description = "Error!";
-                                                    result.similar = [];
-
-
-                                                    // var result = {};
-                                                    // result.identifier = "";
-                                                    //
-                                                    // result.modification = elMass;
-                                                    // if (self.modificationMapReverse[elMass.match(self.patt3)]) {
-                                                    //     elShorthand = "[" + self.modificationMapReverse[elMass.match(self.patt3)] + elMass.match(self.patt1) + "]";
-                                                    // }
-                                                    // else {
-                                                    //     elShorthand = ""
-                                                    // }
-                                                    // result.shorthand = elShorthand;
-                                                    // result.diffavg = "";
-                                                    // result.description = "Error!";
-                                                    // result.similar = "";
-                                                    //self.ontologyMappings.push(result);
-                                                    if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                        self.ontologyMappingsUnique.push(el);
-                                                        self.ontologyMappings.push(result);
-                                                    }
-
-                                                });
+                                            }
                                         }(modificationType, modificationAmino, originalModFromInput));
                                     } else {
 
@@ -11364,6 +11591,40 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     }
 
 
+    $scope.downloadCSVExample3 = function(){
+        d3.tsv('./example/maxQuant_evidence.txt', function (data) {
+            var objKeys = Object.keys(data[0]);
+            console.log(objKeys);
+            var headers = {};
+            for (var i = 0; i < objKeys.length; i++){
+                headers[objKeys[i]] = objKeys[i];
+            }
+            var fileTitle = 'maxQuant_evidence'; // or 'my-unique-title'
+
+            exportCSVFile(headers, data, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+
+        })
+        // format the data
+
+    }
+
+    $scope.downloadTSVExample = function(){
+        d3.tsv('./example/PXD017523_evidence_modified.txt', function (data) {
+            var objKeys = Object.keys(data[0]);
+            console.log(objKeys);
+            var headers = {};
+            for (var i = 0; i < objKeys.length; i++){
+                headers[objKeys[i]] = objKeys[i];
+            }
+            var fileTitle = 'piNET_maxQuant_evidence'; // or 'my-unique-title'
+
+            exportTSVFile(headers, data, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+
+        })
+        // format the data
+
+    }
+
 
 
 
@@ -11598,6 +11859,58 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         return str;
     }
+
+
+    function convertToTSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += '\t'
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
+
+
+    function exportTSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = convertToTSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.txt' || 'export.txt';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
 
     function exportCSVFile(headers, items, fileTitle) {
         console.log(items);
@@ -12404,22 +12717,22 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         {value: "caenorhabditis elegans (nematodes) | taxonomy ID:6239"},
         {value: "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055"},
         {value: "danio rerio (zebrafish) | taxonomy ID:7955"},
-        {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
+        // {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
         {value: "drosophila melanogaster (fruit fly) | taxonomy ID:7227"},
 
         {value: "escherichia coli (enterobacteria) | taxonomy ID:562"},
-        {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
+        // {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
         {value: "homo sapiens (human) | taxonomy ID:9606"},
         {value: "mus musculus (house mouse) | taxonomy ID:10090"},
-        {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
+        // {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
         {value: "oryza sativa (rice) | taxonomy ID:4530"},
         {value: "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833"},
 
-        {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
+        // {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
         {value: "rattus norvegicus (Norway rat) | taxonomy ID:10116"},
         {value: "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932"},
         {value: "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896"},
-        {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
+        // {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
         {value: "xenopus laevis (African clawed frog) | taxonomy ID:8355"},
         {value: "zea mays (monocots) | taxonomy ID:4577"}
 
@@ -12450,31 +12763,96 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     };
 
 
+    $scope.normalgenders=['Do Normalization'];
+    $scope.normalSelection=[];
+    $scope.normalSelectionValue = "no";
 
 
+    $scope.toggleNormalSelection = function toggleNormalSelection(gender) {
+        var idx = $scope.normalSelection.indexOf(gender);
+        if (idx > -1) {
+            // is currently selected
+            $scope.normalSelection.splice(idx, 1);
+            $scope.normalSelectionValue = "no";
+
+        }
+        else {
+            // is newly selected
+            $scope.normalSelection.push(gender);
+            $scope.normalSelectionValue = "yes";
+
+        }
+        console.log($scope.normalSelection);
+        console.log($scope.normalSelectionValue);
+    };
+
+
+    $scope.myCheckFunction = function() {
+        var checkBox = document.getElementById("myCheck");
+        var text = document.getElementById("text");
+        if (checkBox.checked == true){
+            self.uploadNormal = true;
+            console.log(self.uploadNormal);
+        } else {
+            self.uploadNormal = false;
+            console.log(self.uploadNormal);
+        }
+    }
+console.log(self.peptideModFormat);
+    console.log(self.uploadFormat);
     $('input[name=r1][value=' + self.organismForm + ']').prop('checked',true);
     $('input[name=r2][value=' + self.proteinForm + ']').prop('checked',true);
     $('input[name=r3][value=' + self.proteinDb + ']').prop('checked',true);
     $('input[name=r4][value=' + self.peptideNormalizeFlag + ']').prop('checked',true);
+    $('input[name=r5][value=' + self.uploadFormat + ']').prop('checked',true);
+    $('input[name=r52][value=' + self.uploadFormat2 + ']').prop('checked',true);
+    $('input[name=r9][value=' + self.peptideModFormat + ']').prop('checked',true);
+
+
     //This is for radio button for index.html
     if (!$("input[name='r1']").is(":checked")) {
         //console.log("checked no");
         $("#homosapiens").prop("checked", true);
+        SharedService.setVar('organismForm',self.organismForm);
     }
     if (!$("input[name='r2']").is(":checked")) {
         //console.log("checked no");
         $("#canonical").prop("checked", true);
+        SharedService.setVar('proteinForm',self.proteinForm);
     }
     if (!$("input[name='r3']").is(":checked")) {
         //console.log("checked no");
         self.proteinDb = 'sp';
         $("#uniprotSp").prop("checked", true);
+        SharedService.setVar('proteinDb',self.proteinDb);
+    }
+    if (!$("input[name='r5']").is(":checked")) {
+        //console.log("checked no");
+        self.uploadFormat = 'generic';
+        $("#generic").prop("checked", true);
+        SharedService.setVar('uploadFormat',self.uploadFormat);
+    }
+    if (!$("input[name='r52']").is(":checked")) {
+        //console.log("checked no");
+        self.uploadFormat2 = 'generic2';
+        $("#generic2").prop("checked", true);
+        SharedService.setVar('uploadFormat2',self.uploadFormat2);
     }
     if (!$("input[name='r4']").is(":checked")) {
         //console.log("checked no");
         self.peptideNormalizeFlag = false;
         $("#norm-no").prop("checked", true);
+
+        SharedService.setVar('peptideNormalizeFlag',self.peptideNormalizeFlag);
     }
+
+    // if (!$("input[name='r9']").is(":checked")) {
+    //     //console.log("checked no");
+    //     self.peptideModFormat = "modBefore";
+    //     $("#modBefore").prop("checked", true);
+    //
+    //     SharedService.setVar('peptideModFormat',self.peptideModFormat);
+    // }
     // $("#homosapiens").prop("checked", true);
 
 
@@ -12494,6 +12872,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         SharedService.setVar('proteinDb',self.proteinDb);
         //console.log(self.proteinDb);
     });
+    $("input[name='r9']").click(function () {
+        self.peptideModFormat = this.value;
+        console.log(self.peptideModFormat);
+        SharedService.setVar('peptideModFormat',self.peptideModFormat);
+        console.log(self.peptideModFormat);
+    });
+
     $("input[name='r4']").click(function () {
         if (this.value === 'true')
         {
@@ -12505,6 +12890,60 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //self.peptideNormalizeFlag = this.value;
         SharedService.setVar('peptideNormalizeFlag',self.peptideNormalizeFlag);
         //console.log(self.peptideNormalizeFlag);
+    });
+    $("input[name='r52']").click(function () {
+        self.uploadFormat2 = this.value;
+        SharedService.setVar('uploadFormat2',self.uploadFormat2);
+
+
+    });
+    $("input[name='r5']").click(function () {
+        self.uploadFormat = this.value;
+        SharedService.setVar('uploadFormat',self.uploadFormat);
+
+
+        $(".left").removeClass("active");
+        console.log("left");
+        $(".right").removeClass("active");
+        $(".righter").removeClass("active");
+        // $(".tab").addClass("active"); // instead of this do the below
+        $(".left").addClass("active");
+        $scope.showPart_pinet = true;
+        $scope.showPart_maxquant = false;
+        $scope.showPart_info = false;
+
+        if(self.uploadFormat=='generic'){
+            $(".left").removeClass("active");
+            console.log("left");
+            $(".right").removeClass("active");
+            $(".righter").removeClass("active");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(".left").addClass("active");
+            $scope.showPart_pinet = true;
+            $scope.showPart_maxquant = false;
+            $scope.showPart_info = false;
+
+        }
+        if(self.uploadFormat=='maxQuant'){
+            $(".left").removeClass("active");
+            console.log("left");
+            $(".right").removeClass("active");
+            $(".righter").removeClass("active");
+            // $(".tab").addClass("active"); // instead of this do the below
+            $(".right").addClass("active");
+            $scope.showPart_pinet = false;
+            $scope.showPart_maxquant = true;
+            $scope.showPart_info = false;
+
+        }
+
+
+        $scope.$apply();
+
+
+
+
+        //console.log(self.proteinDb);
     });
 
 
@@ -12596,6 +13035,46 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //         }
     //     }
     // );
+
+    $scope.$watch(function () {
+        return self.textAreaControl
+    }, function (newValue, oldValue) {
+        //$window.sessionStorage.setItem("textAreaForPeptide2Protein", self.textArea);
+        // //console.log("Setting textArea");
+        //self.textArea = localStorage.getItem("textAreaForPeptide2Protein");
+
+        SharedService.setVar('textAreaControl', self.textAreaControl);
+
+        //self.uploadCtrl + "?inputTrt=" + self.uploadTrt;
+        // parse motifs
+        self.uploadCtrl = self.textAreaControl.replace('"', '')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    return e
+                }
+            });
+    });
+
+    $scope.$watch(function () {
+        return self.textAreaTreatment
+    }, function (newValue, oldValue) {
+        //$window.sessionStorage.setItem("textAreaForPeptide2Protein", self.textArea);
+        // //console.log("Setting textArea");
+        //self.textArea = localStorage.getItem("textAreaForPeptide2Protein");
+
+        SharedService.setVar('textAreaTreatment', self.textAreaTreatment);
+
+        //self.uploadCtrl + "?inputTrt=" + self.uploadTrt;
+        // parse motifs
+        self.uploadTrt = self.textAreaTreatment.replace('"', '')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    return e
+                }
+            });
+    });
 
     $scope.$watch(function () {
         return self.textArea
@@ -14779,7 +15258,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             var parallelUniqueProtein = [];
             var parallelUniqueGene = [];
             var parallelNrows = 0;
-            ////console.log(peptideToModificationList);
+            console.log(peptideToModificationList);
 
 
 
@@ -14797,12 +15276,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
-                    var parallelPep = e.motif;
-                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
-                        parallelUniquePep.push(parallelPep);
-                    }
+
 
                     e.response.map(function (e2) {
+                        var parallelPep = e.motif;
+                        if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                            parallelUniquePep.push(parallelPep);
+                        }
                         var parallelProt = e2.sequence_ac;
                         var parallelPtm = e2.ptmProteinsMixAll[0];
                         if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
@@ -14830,6 +15310,16 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             parallelJson.push(parallelJsonItem);
                             //parallelNrows += 1;
                         }
+                        // else{
+                        //     parallelJsonItem = {};
+                        //     parallelJsonItem.Peptide = parallelPep;
+                        //     // parallelJsonItem.Protein = "";
+                        //     // parallelJsonItem.Gene = "";
+                        //     // parallelJsonItem.ptmProtein = "";
+                        //
+                        //     parallelJson.push(parallelJsonItem);
+                        //
+                        // }
 
 
                     })
@@ -14851,12 +15341,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
-                    var parallelPep = e.motif;
-                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
-                        parallelUniquePep.push(parallelPep);
-                    }
+
 
                     if(e.response.length > 0) {
+                        var parallelPep = e.motif;
+                        if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                            parallelUniquePep.push(parallelPep);
+                        }
                         e2 = e.response[0];
                         var parallelProt = e2.sequence_ac;
                         var parallelPtm = e2.ptmProteinsMixAll[0];
@@ -14905,12 +15396,14 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
-                    var parallelPep = e.motif;
-                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
-                        parallelUniquePep.push(parallelPep);
-                    }
+
 
                     if (e.length == 1) {
+
+                        var parallelPep = e.motif;
+                        if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                            parallelUniquePep.push(parallelPep);
+                        }
                         e.response.map(function (e2) {
                             var parallelProt = e2.sequence_ac;
                             var parallelPtm = e2.ptmProteinsMixAll[0];
@@ -16386,11 +16879,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         Plotly.newPlot('goDiv', goData, goLayout);
 
-        if (self.showOutputex1orex2 === 'ex2Id') {
 
-            refineSelectedList(self.sliderFoldChangeValue, self.sliderSignificanceValue);
-            callVolcanoPlot(self.sliderFoldChangeValue, self.sliderSignificanceValue);
-        }
 
         // ===============================================================
         // ===============================================================
@@ -16706,6 +17195,13 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         SharedService.setVar('genesAveraged',self.genesWithAbundanceAveraged);
         SharedService.setVar('genesFirstFound',self.genesWithAbundanceFirstFound);
         SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
+
+
+        if (self.showOutputex1orex2 === 'ex2Id') {
+
+            refineSelectedList(self.sliderFoldChangeValue, self.sliderSignificanceValue);
+            callVolcanoPlot(self.sliderFoldChangeValue, self.sliderSignificanceValue);
+        }
 
         //SharedService.setVar("organismFormProteinToPathway", self.organismForm);
         //organismFormProteinToPathway
@@ -17443,22 +17939,22 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         {value: "caenorhabditis elegans (nematodes) | taxonomy ID:6239"},
         {value: "chlamydomonas reinhardtii (green algae) | taxonomy ID:3055"},
         {value: "danio rerio (zebrafish) | taxonomy ID:7955"},
-        {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
+        // {value: "dictyostelium discoideum (cellular slime molds) | taxonomy ID:44689"},
         {value: "drosophila melanogaster (fruit fly) | taxonomy ID:7227"},
 
         {value: "escherichia coli (enterobacteria) | taxonomy ID:562"},
-        {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
+        // {value: "hepacivirus C (viruses) | taxonomy ID:11103"},
         {value: "homo sapiens (human) | taxonomy ID:9606"},
         {value: "mus musculus (house mouse) | taxonomy ID:10090"},
-        {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
+        // {value: "mycoplasma pneumoniae (mycoplasmas) | taxonomy ID:2104"},
         {value: "oryza sativa (rice) | taxonomy ID:4530"},
         {value: "plasmodium falciparum (malaria parasite P. falciparum) | taxonomy ID:5833"},
 
-        {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
+        // {value: "pneumocystis carinii (ascomycetes) | taxonomy ID:4754"},
         {value: "rattus norvegicus (Norway rat) | taxonomy ID:10116"},
         {value: "saccharomyces cerevisiae (baker's yeast) | taxonomy ID:4932"},
         {value: "schizosaccharomyces pombe (fission yeast) | taxonomy ID:4896"},
-        {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
+        // {value: "takifugu rubripes (torafugu) | taxonomy ID:31033"},
         {value: "xenopus laevis (African clawed frog) | taxonomy ID:8355"},
         {value: "zea mays (monocots) | taxonomy ID:4577"}
 
@@ -17575,6 +18071,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             $scope.showRegi3 = false;
             $scope.showRegi4 = true;
             self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
+            console.log(self.inputMassPtmProteins);
 
 
         }
@@ -18588,15 +19085,15 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi2){
-            self.ptmTitleText = "Peptides2Proteins Distinct Mapping";
+            self.ptmTitleText = "Peptides2Proteins Mapping (Distinct)";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi3){
-            self.ptmTitleText = "Peptides2Proteins Averaged Mapping";
+            self.ptmTitleText = "Peptides2Proteins Mapping (All)";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi4){
-            self.ptmTitleText = "Peptides2Proteins Representative Mapping";
+            self.ptmTitleText = "Peptides2Proteins Mapping (Representative)";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
 
@@ -18825,7 +19322,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -18836,7 +19333,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -18847,7 +19344,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -18858,7 +19355,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -18871,7 +19368,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showSignorGraphTmp = true;
         self.showSignorGraph = false;
     }
-    $scope.makeSignorGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeSignorGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log(self.computeWeightForUpdateSignor);
 
 //
@@ -21996,7 +22493,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4deep = $(this).val();
 
         $scope.$apply();
-        $scope.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
 
     });
 
@@ -22007,7 +22504,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
 
     });
 
@@ -22018,7 +22515,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
 
     });
 
@@ -22029,7 +22526,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
 
     });
 
@@ -22040,7 +22537,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showDeepPhosGraphTmp = true;
         self.showDeepPhosGraph = false;
     }
-    $scope.makeDeepPhosGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeDeepPhosGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         // console.log("inside makeDeepPhosGraph");
         // console.log(graphType);
         console.log(self.showDeepPhosGraphTmp);
@@ -24370,7 +24867,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#node_slider4ptm', function() {
@@ -24380,7 +24877,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#font_slider4ptm', function() {
@@ -24390,7 +24887,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#width_slider4ptm', function() {
@@ -24400,7 +24897,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
 
 
     });
@@ -24411,7 +24908,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showPtmGraphTmp = true;
         self.showPtmGraph = false;
     }
-    $scope.makePtmGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePtmGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log(self.computeWeightForUpdatePtm);
         if(self.showPtmGraphTmp)
         {
@@ -27210,7 +27707,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4phos = $(this).val();
 
         $scope.$apply();
-        $scope.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -27221,7 +27718,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -27232,7 +27729,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -27243,7 +27740,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        $scope.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -27253,7 +27750,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showPhosphoGraph = false;
     }
 
-    $scope.makePhosphoGraph = function (phosphoNetwork, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePhosphoGraph = function (phosphoNetwork, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
 
         if(self.showPhosphoGraphTmp){
             self.showPhosphoGraphTmp = false;
@@ -29487,6 +29984,9 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     //self.showOutputex1orex2 = SharedService.getVar("showOutputex1orex2");
 
 
+
+
+
     $(document).ready(function () {
 
         $('.AB3rotate1').attr('disabled', true);
@@ -30393,6 +30893,9 @@ console.log(self.genes);
         self.showPathwayGraphTmp = false;
         self.showPtmGraphTmp = false;
         self.showEnrichmentGraphTmp = false;
+        self.showIlincsGraph1 = false;
+        self.showIlincsGraph2 = false;
+        self.showIlincsGraph3 = false;
         SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
         SharedService.setVar('showGeneEnrichmentProcessed', $scope.showGeneEnrichmentProcessed);
         SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
@@ -30416,15 +30919,15 @@ console.log(self.genes);
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi2){
-            self.geneTitleText = "Peptides2Proteins Distinct Mapping";
+            self.geneTitleText = "Peptides2Proteins Mapping (Distinct)";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi3){
-            self.geneTitleText = "Peptides2Proteins Averaged Mapping";
+            self.geneTitleText = "Peptides2Proteins Mapping (All)";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi4){
-            self.geneTitleText = "Peptides2Proteins Representative Mapping";
+            self.geneTitleText = "Peptides2Proteins Mapping (Representative)";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
 
@@ -30699,7 +31202,7 @@ console.log(self.genes);
         $scope.selectSliderValue4ilincs1 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
 
     });
 
@@ -30709,7 +31212,7 @@ console.log(self.genes);
         $scope.circleSliderValue4ilincs1 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
 
     });
 
@@ -30720,7 +31223,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
 
     });
 
@@ -30731,7 +31234,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
 
     });
 
@@ -30742,7 +31245,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
 
     });
 
@@ -30759,7 +31262,7 @@ console.log(self.genes);
         $scope.selectSliderValue4ilincs2 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
 
     });
 
@@ -30769,7 +31272,7 @@ console.log(self.genes);
         $scope.circleSliderValue4ilincs2 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
 
     });
 
@@ -30780,7 +31283,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
 
     });
 
@@ -30791,7 +31294,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
 
     });
 
@@ -30802,7 +31305,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
 
     });
 
@@ -30819,7 +31322,7 @@ console.log(self.genes);
         $scope.selectSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
 
     });
 
@@ -30829,7 +31332,7 @@ console.log(self.genes);
         $scope.circleSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-        $scope.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
 
     });
 
@@ -30840,7 +31343,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
 
     });
 
@@ -30851,7 +31354,7 @@ console.log(self.genes);
 
         $scope.$apply();
 
-        $scope.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
 
     });
 
@@ -30861,14 +31364,15 @@ console.log(self.genes);
         $scope.widthSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
+        console.log(self.ilincsPerturbations);
 
-        $scope.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
 
     });
 
 
 
-    $scope.makeIlincsGraph1 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph1 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log("in makeEnrichmentGraph");
         //console.log(inputNetwork);
         if(self.showIlincsGraph1Tmp)
@@ -31525,8 +32029,29 @@ if(1 == 0){
 
                 //network_nodes.push({"full_name":network_sorted[net_i]["treatment"]+"-KD / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
 
-                network_nodes.push({"full_name":network_sorted[net_i]["compound"]+" / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
-
+                if(network_sorted[net_i]["pValue"] < 0.0000000000000000000000000000001) {
+                    network_nodes.push({
+                        "full_name": network_sorted[net_i]["compound"] + " / " + network_sorted[net_i]["cellline"],
+                        "name": network_sorted[net_i]["signatureid"],
+                        "similarity": Math.abs(network_sorted[net_i]["similarity"]),
+                        "value": 30,
+                        "weight": Math.abs(network_sorted[net_i]["similarity"]),
+                        "id": net_i + 1,
+                        "idx": net_i + 1,
+                        "group": edge_tag
+                    });
+                }else{
+                    network_nodes.push({
+                        "full_name": network_sorted[net_i]["compound"] + " / " + network_sorted[net_i]["cellline"],
+                        "name": network_sorted[net_i]["signatureid"],
+                        "similarity": Math.abs(network_sorted[net_i]["similarity"]),
+                        "value": -1 * Math.log(network_sorted[net_i]["pValue"]),
+                        "weight": Math.abs(network_sorted[net_i]["similarity"]),
+                        "id": net_i + 1,
+                        "idx": net_i + 1,
+                        "group": edge_tag
+                    });
+                }
 
 
                 network_edges.push({"source":0,"tag":edge_tag,"target":net_i + 1});
@@ -31549,7 +32074,7 @@ if(1 == 0){
 
     }
 
-    $scope.makeIlincsGraph2 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph2 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log("in makeEnrichmentGraph");
         //console.log(inputNetwork);
         if(self.showIlincsGraph2Tmp)
@@ -32203,8 +32728,31 @@ if(1 == 0){
 
                 }
 
-                network_nodes.push({"full_name":network_sorted[net_i]["treatment"]+"-KD / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
+                if(network_sorted[net_i]["pValue"] < 0.0000000000000000000000000000001) {
+                    network_nodes.push({
+                        "full_name": network_sorted[net_i]["treatment"] + "-KD / " + network_sorted[net_i]["cellline"],
+                        "name": network_sorted[net_i]["signatureid"],
+                        "similarity": Math.abs(network_sorted[net_i]["similarity"]),
+                        "value": 30,
+                        "weight": Math.abs(network_sorted[net_i]["similarity"]),
+                        "id": net_i + 1,
+                        "idx": net_i + 1,
+                        "group": edge_tag
+                    });
+                }
+                else{
+                    network_nodes.push({
+                        "full_name": network_sorted[net_i]["treatment"] + "-KD / " + network_sorted[net_i]["cellline"],
+                        "name": network_sorted[net_i]["signatureid"],
+                        "similarity": Math.abs(network_sorted[net_i]["similarity"]),
+                        "value": -1 * Math.log(network_sorted[net_i]["pValue"]),
+                        "weight": Math.abs(network_sorted[net_i]["similarity"]),
+                        "id": net_i + 1,
+                        "idx": net_i + 1,
+                        "group": edge_tag
+                    });
 
+                }
                 //network_nodes.push({"full_name":network_sorted[net_i]["compound"]+" / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
 
 
@@ -32229,9 +32777,9 @@ if(1 == 0){
 
     }
 
-    $scope.makeIlincsGraph3 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph3 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log("in makeEnrichmentGraph");
-        //console.log(inputNetwork);
+        console.log(inputNetwork);
         if(self.showIlincsGraph3Tmp)
         {
             self.showIlincsGraph3Tmp = false;
@@ -32530,6 +33078,7 @@ if(1 == 0){
                             }
                             else {
                                 return xScale(d.value);
+                                // return 30*(d.similarity);
                             }
 
                         })
@@ -32886,8 +33435,18 @@ if(1 == 0){
                 }
 
                 //network_nodes.push({"full_name":network_sorted[net_i]["treatment"]+"-KD / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
+// console.log(network_sorted[net_i]);
+//                 console.log(-1*Math.log(network_sorted[net_i]["pValue"]));
+//                 console.log(-1.0*Math.log(network_sorted[net_i]["pValue"]));
+                if(network_sorted[net_i]["pValue"] < 0.0000000000000000000000000000001){
+                    network_nodes.push({"full_name":network_sorted[net_i]["compound"]+" / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":30,"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
 
-                network_nodes.push({"full_name":network_sorted[net_i]["compound"]+" / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
+                }
+                else{
+                    network_nodes.push({"full_name":network_sorted[net_i]["compound"]+" / "+network_sorted[net_i]["cellline"],"name":network_sorted[net_i]["signatureid"],"similarity":Math.abs(network_sorted[net_i]["similarity"]),"value":-1*Math.log(network_sorted[net_i]["pValue"]),"weight":Math.abs(network_sorted[net_i]["similarity"]),"id":net_i + 1,"idx":net_i + 1,"group":edge_tag});
+
+                }
+
 
 
 
@@ -32923,7 +33482,7 @@ if(1 == 0){
         $scope.circleSliderValue4enrich = $(this).val();
 
         $scope.$apply();
-        $scope.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -32934,7 +33493,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -32945,7 +33504,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -32956,7 +33515,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -32967,7 +33526,7 @@ if(1 == 0){
         self.showEnrichmentGraph = false;
     }
 
-    $scope.makeEnrichmentGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeEnrichmentGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         console.log("in makeEnrichmentGraph");
         console.log(inputNetwork);
         if(self.showEnrichmentGraphTmp)
@@ -35013,7 +35572,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35024,7 +35583,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35035,7 +35594,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35046,7 +35605,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35054,7 +35613,7 @@ if(1 == 0){
 
 
 
-    $scope.makePathwayGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePathwayGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log("in makePathwayGraph");
         //console.log(inputNetwork);
         if(self.showPathwayGraphTmp)
@@ -37709,7 +38268,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -37720,7 +38279,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -37731,7 +38290,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -37742,7 +38301,7 @@ if(1 == 0){
 
         $scope.$apply();
 
-        $scope.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -37768,7 +38327,7 @@ if(1 == 0){
         //     <polyline fill="none" stroke="black"
         // points="70,80 100,60" marker-end="url(#triangle)"/>
         // </svg>
-    $scope.makeKinaseGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeKinaseGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
 
         if(self.showKinaseGraphTmp){
             self.showKinaseGraphTmp = false;

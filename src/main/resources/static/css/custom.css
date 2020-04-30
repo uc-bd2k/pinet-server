@@ -244,6 +244,15 @@ body {
     word-wrap:break-word;
 }
 
+.list-responsive-vertical4 {
+    max-width:600px;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height:100px;
+    margin-left: 0px;
+    word-wrap:break-word;
+}
+
 .sort-icon {
     font-size: 9px;
     margin-left: 5px;
@@ -2299,4 +2308,101 @@ div.pictureCircos {
     margin:0; /* If you want no margin */
     padding:0; /*if your want to padding */
     //position: relative;
+}
+.container-lightGrey{
+    margin-left: auto;
+    margin-right: auto;
+    background: #efefef;
+
+    /*background: #efefef url(../images/bright-squares.png) repeat;*/
+}
+.shadowed {
+    margin-top: 20px;
+    box-shadow: 0px 0px 10px #888888;
+    font-size: 1.0em;
+    border-radius: 0px;
+}
+
+
+.left {
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+
+    /*background: #e5e5e5 url(../images/bright-squares.png) repeat;*/
+    height:40px;
+    width:250px;
+    /*left : 0px;*/
+    margin-bottom: 0px;
+    display:inline-block;
+    border-top-right-radius: 15px;
+    background-color: #d2d2d2;
+    vertical-align: middle;
+    /*z-index: 2;*/
+    /*position:absolute;*/
+
+
+}
+
+.right{
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    display:inline-block;
+    /*background: #d8d8d8 url(../images/bright-squares.png) repeat;*/
+    height:40px;
+    width:250px;
+    /*left:235px;*/
+    margin-bottom: 0px;
+    margin-left: 0px;
+    background-color: #a5a5a5;
+
+    border-top-right-radius: 15px;
+    vertical-align: middle;
+    /*z-index: 2;*/
+    /*position:absolute;*/
+
+}
+.righter{
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    display:inline-block;
+    /*background: #cecece url(../images/bright-squares.png) repeat;*/
+    height:40px;
+    width:250px;
+    /*left:235px;*/
+    margin-bottom: 0px;
+    margin-left: 0px;
+    background-color: #787878;
+
+    border-top-right-radius: 15px;
+    vertical-align: middle;
+    /*z-index: 2;*/
+    /*position:absolute;*/
+
+
+}
+
+.left:hover, .left:focus{
+    background-color: #dbdbdb;
+
+
+}
+.right:hover, .right:focus{
+    background-color: #dbdbdb;
+
+}
+.righter:hover, .righter:focus{
+    background-color: #dbdbdb;
+
+}
+.righter.active{
+    background-color: #efefef;
+
+}
+.right.active{
+    background-color: #efefef;
+
+}
+.left.active{
+    background-color: #efefef;
+
 }
