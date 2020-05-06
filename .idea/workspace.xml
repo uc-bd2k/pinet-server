@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02b7d2ad-71b7-4b34-a380-94ffae6b872f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/example/PXD017523 evidence.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/example/PXD017523_evidence_modified.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/example/artms_data_ph_evidence.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/example/artms_data_ph_evidence_2.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/static/example/maxQuant_evidence.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/images/avg3-3.png" afterPath="$PROJECT_DIR$/src/main/resources/static/images/avg3-3.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/uc/eh/controller/RestAPI.java" afterPath="$PROJECT_DIR$/src/main/java/edu/uc/eh/controller/RestAPI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java" afterPath="$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/DeepPhosService.java" afterPath="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/DeepPhosService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PeptideRegexServive.java" afterPath="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PeptideRegexServive.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.yml" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/css/custom.css" afterPath="$PROJECT_DIR$/src/main/resources/static/css/custom.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/js/controllers.js" afterPath="$PROJECT_DIR$/src/main/resources/static/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html" afterPath="$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/partials/proteinToPathway.html" afterPath="$PROJECT_DIR$/src/main/resources/static/partials/proteinToPathway.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html" afterPath="$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -44,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="32036" column="35" lean-forward="false" selection-start-line="32036" selection-start-column="35" selection-end-line="32036" selection-end-column="35" />
+            <state relative-caret-position="230">
+              <caret line="212" column="14" lean-forward="false" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
               <folding>
                 <element signature="e#219571#219969#0" expanded="false" />
                 <element signature="e#220007#220404#0" expanded="false" />
@@ -65,11 +52,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PeptideMatchCMD.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="491" column="10" lean-forward="false" selection-start-line="491" selection-start-column="10" selection-end-line="491" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="RestAPI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/controller/RestAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="1523" column="47" lean-forward="true" selection-start-line="1523" selection-start-column="39" selection-end-line="1523" selection-end-column="47" />
+            <state relative-caret-position="25296">
+              <caret line="1523" column="47" lean-forward="false" selection-start-line="1523" selection-start-column="39" selection-end-line="1523" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -78,7 +85,7 @@
       <file leaf-file-name="PeptideRegexServive.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PeptideRegexServive.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
+            <state relative-caret-position="1496">
               <caret line="97" column="21" lean-forward="false" selection-start-line="97" selection-start-column="21" selection-end-line="97" selection-end-column="21" />
               <folding />
             </state>
@@ -88,7 +95,7 @@
       <file leaf-file-name="proteinToPathway.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/proteinToPathway.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-949">
+            <state relative-caret-position="2635">
               <caret line="159" column="149" lean-forward="false" selection-start-line="159" selection-start-column="146" selection-end-line="159" selection-end-column="149" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -205,8 +212,8 @@
       <file leaf-file-name="peptideToProtein.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="2099" column="67" lean-forward="true" selection-start-line="2099" selection-start-column="67" selection-end-line="2099" selection-end-column="67" />
+            <state relative-caret-position="27914">
+              <caret line="2099" column="67" lean-forward="false" selection-start-line="2099" selection-start-column="67" selection-end-line="2099" selection-end-column="67" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
@@ -435,8 +442,8 @@
       <file leaf-file-name="ptmToModifier.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="258" column="76" lean-forward="true" selection-start-line="258" selection-start-column="76" selection-end-line="258" selection-end-column="76" />
+            <state relative-caret-position="3366">
+              <caret line="258" column="76" lean-forward="false" selection-start-line="258" selection-start-column="76" selection-end-line="258" selection-end-column="76" />
               <folding>
                 <element signature="n#nav#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -575,7 +582,7 @@
       <file leaf-file-name="custom.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
+            <state relative-caret-position="3859">
               <caret line="227" column="1" lean-forward="false" selection-start-line="227" selection-start-column="1" selection-end-line="227" selection-end-column="1" />
               <folding />
             </state>
@@ -1053,7 +1060,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/static/partials/help.html" />
         <option value="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PhosphoService.java" />
         <option value="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PCGService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/css/custom.css" />
         <option value="$PROJECT_DIR$/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/src/main/java/edu/uc/eh/service/DeepPhosService.java" />
@@ -1063,6 +1069,7 @@
         <option value="$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html" />
         <option value="$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html" />
         <option value="$PROJECT_DIR$/src/main/resources/static/js/controllers.js" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java" />
       </list>
     </option>
   </component>
@@ -1074,8 +1081,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="9" />
-    <option name="y" value="63" />
+    <option name="y" value="71" />
     <option name="width" value="1440" />
     <option name="height" value="822" />
   </component>
@@ -1095,7 +1101,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1196,37 +1201,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pinet-server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pinet-server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1282,7 +1257,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
+              <option name="myItemId" value="peptideMatch" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1290,6 +1265,7 @@
       </pane>
       <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1741,14 +1717,15 @@
       <workItem from="1587951662054" duration="9197000" />
       <workItem from="1588016193434" duration="1926000" />
       <workItem from="1588034453511" duration="72465000" />
+      <workItem from="1588770180524" duration="359000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="584482000" />
+    <option name="totallyTimeSpent" value="584841000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="9" y="63" width="1440" height="822" extended-state="0" />
+    <frame x="0" y="71" width="1440" height="822" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1771,9 +1748,8 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22389127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2267525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
@@ -1782,6 +1758,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1825,13 +1802,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PrositeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-202">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PrositeService2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-262">
@@ -2007,10 +1977,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="775">
           <caret line="1487" column="86" lean-forward="false" selection-start-line="1487" selection-start-column="86" selection-end-line="1487" selection-end-column="86" />
-          <folding>
-            <marker date="1586743277000" expanded="true" signature="15573:15583" ph="//..." />
-            <marker date="1586743277000" expanded="true" signature="194086:194427" ph="//..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2032,7 +1998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2059,7 +2024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12291">
           <caret line="723" column="41" lean-forward="false" selection-start-line="723" selection-start-column="36" selection-end-line="723" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2067,28 +2031,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="257">
           <caret line="42" column="22" lean-forward="false" selection-start-line="42" selection-start-column="2" selection-end-line="42" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="511" column="70" lean-forward="false" selection-start-line="511" selection-start-column="70" selection-end-line="511" selection-end-column="70" />
-          <folding>
-            <element signature="e#9873#9880#0" expanded="false" />
-            <element signature="e#10452#10481#0" expanded="false" />
-            <element signature="e#10598#10605#0" expanded="false" />
-            <element signature="e#14285#14303#0" expanded="false" />
-            <element signature="e#29712#29726#0" expanded="false" />
-            <element signature="e#30317#30326#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
+        <state relative-caret-position="3859">
           <caret line="227" column="1" lean-forward="false" selection-start-line="227" selection-start-column="1" selection-end-line="227" selection-end-column="1" />
           <folding />
         </state>
@@ -2098,7 +2046,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="969" lean-forward="false" selection-start-line="0" selection-start-column="964" selection-end-line="0" selection-end-column="969" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2106,7 +2053,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2114,13 +2060,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="344">
           <caret line="69" column="17" lean-forward="false" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/service/PeptideRegexServive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
+        <state relative-caret-position="1496">
           <caret line="97" column="21" lean-forward="false" selection-start-line="97" selection-start-column="21" selection-end-line="97" selection-end-column="21" />
           <folding />
         </state>
@@ -2130,14 +2075,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1003">
           <caret line="59" column="30" lean-forward="true" selection-start-line="59" selection-start-column="30" selection-end-line="59" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/controller/RestAPI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="1523" column="47" lean-forward="true" selection-start-line="1523" selection-start-column="39" selection-end-line="1523" selection-end-column="47" />
+        <state relative-caret-position="25296">
+          <caret line="1523" column="47" lean-forward="false" selection-start-line="1523" selection-start-column="39" selection-end-line="1523" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -2146,14 +2090,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-9952">
           <caret line="509" column="22" lean-forward="false" selection-start-line="509" selection-start-column="13" selection-end-line="509" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/peptideToProtein.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="2099" column="67" lean-forward="true" selection-start-line="2099" selection-start-column="67" selection-end-line="2099" selection-end-column="67" />
+        <state relative-caret-position="27914">
+          <caret line="2099" column="67" lean-forward="false" selection-start-line="2099" selection-start-column="67" selection-end-line="2099" selection-end-column="67" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#nav#0;n#!!top" expanded="true" />
@@ -2380,7 +2323,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/proteinToPathway.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-949">
+        <state relative-caret-position="2635">
           <caret line="159" column="149" lean-forward="false" selection-start-line="159" selection-start-column="146" selection-end-line="159" selection-end-column="149" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -2495,8 +2438,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/partials/ptmToModifier.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="258" column="76" lean-forward="true" selection-start-line="258" selection-start-column="76" selection-end-line="258" selection-end-column="76" />
+        <state relative-caret-position="3366">
+          <caret line="258" column="76" lean-forward="false" selection-start-line="258" selection-start-column="76" selection-end-line="258" selection-end-column="76" />
           <folding>
             <element signature="n#nav#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -2633,8 +2576,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="32036" column="35" lean-forward="false" selection-start-line="32036" selection-start-column="35" selection-end-line="32036" selection-end-column="35" />
+        <state relative-caret-position="230">
+          <caret line="212" column="14" lean-forward="false" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
           <folding>
             <element signature="e#219571#219969#0" expanded="false" />
             <element signature="e#220007#220404#0" expanded="false" />
@@ -2647,6 +2590,22 @@
             <element signature="e#540276#541807#0" expanded="false" />
             <element signature="e#592112#669178#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/uc/eh/peptideMatch/PeptideMatchCMD.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="491" column="10" lean-forward="false" selection-start-line="491" selection-start-column="10" selection-end-line="491" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>

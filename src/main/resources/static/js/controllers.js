@@ -205,18 +205,18 @@ appModule.factory('SharedService', function( $http, $q, $location, NgTableParams
     vars.uploadFormat = "generic";
     vars.uploadFormat = "generic2";
     vars.peptideModFormat = "modAfter";
-    vars.textAreaControl = "2018_05_31_09\n\
-2018_05_31_05\n\
-2018_05_31_07\n\
-2018_05_31_11\n\
-2018_05_31_12\n\
-2018_05_31_01";
-    vars.textAreaTreatment = "2018_05_31_02\n\
+    vars.textAreaControl = "2018_05_31_01\n\
+2018_05_31_02\n\
 2018_05_31_03\n\
 2018_05_31_04\n\
 2018_05_31_05\n\
-2018_05_31_06\n\
-2018_05_31_08";
+2018_05_31_06";
+    vars.textAreaTreatment = "2018_05_31_07\n\
+2018_05_31_08\n\
+2018_05_31_09\n\
+2018_05_31_10\n\
+2018_05_31_11\n\
+2018_05_31_12";
     vars.textArea = "[meK]STGG[aK]APR	-0.0649\n\
 [aK]STGG[aK]APR	-0.0215\n\
 [meK][pS]TGGKAPR	-0.2427\n\
