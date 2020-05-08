@@ -203,20 +203,21 @@ appModule.factory('SharedService', function( $http, $q, $location, NgTableParams
     vars.geneTitleText = "";
     vars.ontologyMappingsTable = [];
     vars.uploadFormat = "generic";
-    vars.uploadFormat = "generic2";
+    //vars.uploadFormat = "generic2";
+    vars.imputeFormat = "no_impute"
     vars.peptideModFormat = "modAfter";
-    vars.textAreaControl = "2018_05_31_01\n\
-2018_05_31_02\n\
-2018_05_31_03\n\
-2018_05_31_04\n\
-2018_05_31_05\n\
-2018_05_31_06";
-    vars.textAreaTreatment = "2018_05_31_07\n\
-2018_05_31_08\n\
-2018_05_31_09\n\
-2018_05_31_10\n\
-2018_05_31_11\n\
-2018_05_31_12";
+    vars.textAreaControl = "ctrl_2018_05_31_01\n\
+ctrl_2018_05_31_02\n\
+ctrl_2018_05_31_03\n\
+ctrl_2018_05_31_04\n\
+ctrl_2018_05_31_05\n\
+ctrl_2018_05_31_06";
+    vars.textAreaTreatment = "trt_2018_05_31_07\n\
+trt_2018_05_31_08\n\
+trt_2018_05_31_09\n\
+trt_2018_05_31_10\n\
+trt_2018_05_31_11\n\
+trt_2018_05_31_12";
     vars.textArea = "[meK]STGG[aK]APR	-0.0649\n\
 [aK]STGG[aK]APR	-0.0215\n\
 [meK][pS]TGGKAPR	-0.2427\n\
@@ -248,7 +249,7 @@ IYQ[pY]IQSR[+42.010] 1.3012\n\
 KA[pY]SF[myC]GTVE[pY]MAPEVVNR -0.5987\n\
 SVDLIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQ -0.3312\n\
 PHSHQY[pS]DRR 1.3267";
-        //"\nC[me2K]ISPEERR[pS]PPAPGL -2.11";
+    //"\nC[me2K]ISPEERR[pS]PPAPGL -2.11";
     //vars.textAreaFormatMD = "IYQY[+80]IQSR[+42.010] 1.3\nK[+112.1]SAPATGGVK[+42.010]K[+56]PHR -0.5";
     //vars.textAreaFormatSN = "IYQ[pY]IQS[aR] 1.3\n[aK]SAPATGGVK[meK]PHR -0.5";
     vars.showSplash = true;
@@ -624,147 +625,147 @@ CCNL2	0.61115";
 
 
 appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uibModalInstance', 'linkID','type',
-        function($scope,$sce,$window,$uibModalInstance,linkID,type) {
+    function($scope,$sce,$window,$uibModalInstance,linkID,type) {
 
-            $scope.ok = function () {
-                // $uibModalInstance.close($scope.selected.item);
-                $uibModalInstance.dismiss('cancel');
-            };
+        $scope.ok = function () {
+            // $uibModalInstance.close($scope.selected.item);
+            $uibModalInstance.dismiss('cancel');
+        };
 
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
 
-            init = function() {
-                //  console.log(linkID);
-                //  console.log(type);
-                // $scope.currentProject = $scope.projects[id];
-                // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier=CID000001833&required_score=200&limit=10&network_flavor=evidence");
-                // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier="+linkID+"&required_score=200&limit=10&network_flavor=evidence");
-                switch (type) {
-                    case "stitch":
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier="+linkID);  //stitch 4.0
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=11");  //without chemical-chemical links
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=12");  //with chemical-chemical links
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=01");  //Show stereo-isomers as separate compounds
-                        break;
-                    case "pubChem":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://pubchem.ncbi.nlm.nih.gov/compound/"+linkID);
-                        break;
+        init = function() {
+            //  console.log(linkID);
+            //  console.log(type);
+            // $scope.currentProject = $scope.projects[id];
+            // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier=CID000001833&required_score=200&limit=10&network_flavor=evidence");
+            // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier="+linkID+"&required_score=200&limit=10&network_flavor=evidence");
+            switch (type) {
+                case "stitch":
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/newstring_cgi/show_network_section.pl?identifier="+linkID);  //stitch 4.0
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=11");  //without chemical-chemical links
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=12");  //with chemical-chemical links
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://stitch.embl.de/interactions/"+linkID+"?species=9606&chemicalmode=01");  //Show stereo-isomers as separate compounds
+                    break;
+                case "pubChem":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://pubchem.ncbi.nlm.nih.gov/compound/"+linkID);
+                    break;
 
-                    case "modOntology":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ebi.ac.uk/ols/ontologies/mod/terms?obo_id="+linkID);
-                        break;
-                    case "pinetSignor":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://signor.uniroma2.it/relation_result.php?id="+linkID);
-                        break;
+                case "modOntology":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ebi.ac.uk/ols/ontologies/mod/terms?obo_id="+linkID);
+                    break;
+                case "pinetSignor":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://signor.uniroma2.it/relation_result.php?id="+linkID);
+                    break;
 
-                    case "pinetUniprot":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.rcsb.org/pdb/protein/"+linkID);
-                        break;
-                    case "pinetReactome":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://reactome.org/content/detail/"+linkID);
-                        break;
-                    case "pinetGO":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/QuickGO/term/"+linkID);
-                        break;
-                    case "pinetIlincs":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ilincs.org/ilincs/signature/"+linkID);
-                        break;
+                case "pinetUniprot":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.rcsb.org/pdb/protein/"+linkID);
+                    break;
+                case "pinetReactome":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://reactome.org/content/detail/"+linkID);
+                    break;
+                case "pinetGO":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/QuickGO/term/"+linkID);
+                    break;
+                case "pinetIlincs":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ilincs.org/ilincs/signature/"+linkID);
+                    break;
 
 
-                    case "pinetGeneCards":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
-                        break;
+                case "pinetGeneCards":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
+                    break;
 
-                    case "GPP":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://portals.broadinstitute.org/gpp/public/clone/details?cloneId="+linkID);
-                        break;
-                    case "Genes":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ncbi.nlm.nih.gov/gene?cmd=Retrieve&dopt=full_report&list_uids="+linkID);
-                        break;
-                    case "GeneNCBI":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ncbi.nlm.nih.gov/gene/"+linkID);
-                        break;
-                    case "Ensembl":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+linkID);
-                        break;
-                    case "LIFE":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://life.ccs.miami.edu/life/summary?mode=SmallMolecule&input="+linkID+"&source=LINCS");
-                        break;
-                    case "LDP":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://lincsportal.ccs.miami.edu/SmallMolecules/#/view/"+linkID);
-                        break;
-                    case "LDPcell":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://lincsportal.ccs.miami.edu/cells/#/view/"+linkID);
-                        break;
-                    case "CancerBrowser":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.cancerbrowser.org/cell_line/"+linkID.toLowerCase());
-                        break;
-                    case "Pharos":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://pharos.nih.gov/idg/ligands/"+linkID.toLowerCase());      //blocked by CORS
-                        break;
-                    case "GenomeBrowser":
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgTracks?org=Human&db=hg38&position="+linkID.toLowerCase());      //no reacting on org or db
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgTracks?position="+linkID);      //no reacting on org or db
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgGene?db=hg38&hgg_gene="+linkID);      //no reacting on org or db
-                        break;
-                    case "Harmonizome":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://amp.pharm.mssm.edu/Harmonizome/gene/"+linkID);
-                        break;
-                    case "geneCards":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
-                        break;
-                    case "NCBOdisease":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://bioportal.bioontology.org/ontologies/DOID/?p=classes&conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F"+linkID);
-                        break;
-                    case "YouTube":
-                        //  $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v=K1tUuuNi3nA&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ&index=9");
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID+"&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ");
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID);
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/v/"+linkID+"&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ");
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ&v="+linkID);
-                        //$scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID);
-                        $scope.currentSiteEmb = $sce.trustAsResourceUrl("https://www.youtube.com/embed/"+linkID);
-                        // $scope.currentSiteEmb = $sce.trustAsResourceUrl("https://www.youtube.com/v/"+linkID);
-                        break;
-                    case "ScrubChem":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.scrubchem.org/Home/Results?CIDs="+linkID+"&getJustifications=true");
-                        break;
-                    case "kNet":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://knet.ccs.miami.edu/results/"+linkID);
-                        break;
-                    case "GTEx":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://gtexportal.org/home/gene/"+linkID);
-                        break;
-                    case "atlasHeatmap":
-                        // $scope.currentSiteUrl = $sce.trustAsResourceUrl("/ilincs/atlasHeatmap.html?gene="+linkID);
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/gxa/genes/"+linkID);
-                        break;
-                    case "EBIexp":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/arrayexpress/experiments/"+linkID);
-                        break;
-                    case "FWDsig":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://amp.pharm.mssm.edu/dmoa/sig/"+linkID);
-                        break;
-                    case "clueIoCompound":  //X-Frame Options deny
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://clue.io/command?q="+linkID);
-                        break;
-                    case "corrPlot":
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl(linkID);
-                        break;
-                    default:
-                        $scope.currentSiteUrl = $sce.trustAsResourceUrl(linkID);
-
-                }
+                case "GPP":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://portals.broadinstitute.org/gpp/public/clone/details?cloneId="+linkID);
+                    break;
+                case "Genes":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ncbi.nlm.nih.gov/gene?cmd=Retrieve&dopt=full_report&list_uids="+linkID);
+                    break;
+                case "GeneNCBI":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ncbi.nlm.nih.gov/gene/"+linkID);
+                    break;
+                case "Ensembl":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+linkID);
+                    break;
+                case "LIFE":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://life.ccs.miami.edu/life/summary?mode=SmallMolecule&input="+linkID+"&source=LINCS");
+                    break;
+                case "LDP":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://lincsportal.ccs.miami.edu/SmallMolecules/#/view/"+linkID);
+                    break;
+                case "LDPcell":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://lincsportal.ccs.miami.edu/cells/#/view/"+linkID);
+                    break;
+                case "CancerBrowser":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.cancerbrowser.org/cell_line/"+linkID.toLowerCase());
+                    break;
+                case "Pharos":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://pharos.nih.gov/idg/ligands/"+linkID.toLowerCase());      //blocked by CORS
+                    break;
+                case "GenomeBrowser":
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgTracks?org=Human&db=hg38&position="+linkID.toLowerCase());      //no reacting on org or db
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgTracks?position="+linkID);      //no reacting on org or db
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://genome.cse.ucsc.edu/cgi-bin/hgGene?db=hg38&hgg_gene="+linkID);      //no reacting on org or db
+                    break;
+                case "Harmonizome":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://amp.pharm.mssm.edu/Harmonizome/gene/"+linkID);
+                    break;
+                case "geneCards":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
+                    break;
+                case "NCBOdisease":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://bioportal.bioontology.org/ontologies/DOID/?p=classes&conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F"+linkID);
+                    break;
+                case "YouTube":
+                    //  $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v=K1tUuuNi3nA&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ&index=9");
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID+"&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ");
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID);
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/v/"+linkID+"&list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ");
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?list=PL0Bwuj8819U8d0lSxu4hxaPX64yJUOlzQ&v="+linkID);
+                    //$scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.youtube.com/watch?v="+linkID);
+                    $scope.currentSiteEmb = $sce.trustAsResourceUrl("https://www.youtube.com/embed/"+linkID);
+                    // $scope.currentSiteEmb = $sce.trustAsResourceUrl("https://www.youtube.com/v/"+linkID);
+                    break;
+                case "ScrubChem":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.scrubchem.org/Home/Results?CIDs="+linkID+"&getJustifications=true");
+                    break;
+                case "kNet":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://knet.ccs.miami.edu/results/"+linkID);
+                    break;
+                case "GTEx":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://gtexportal.org/home/gene/"+linkID);
+                    break;
+                case "atlasHeatmap":
+                    // $scope.currentSiteUrl = $sce.trustAsResourceUrl("/ilincs/atlasHeatmap.html?gene="+linkID);
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/gxa/genes/"+linkID);
+                    break;
+                case "EBIexp":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/arrayexpress/experiments/"+linkID);
+                    break;
+                case "FWDsig":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://amp.pharm.mssm.edu/dmoa/sig/"+linkID);
+                    break;
+                case "clueIoCompound":  //X-Frame Options deny
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://clue.io/command?q="+linkID);
+                    break;
+                case "corrPlot":
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl(linkID);
+                    break;
+                default:
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl(linkID);
 
             }
 
+        }
 
 
-            init();
 
-        }]);
+        init();
+
+    }]);
 
 
 
@@ -921,38 +922,38 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-        .success(function(response){
-            console.log(response);
-            var pNetwork = response;
-            var ptmToAbundance = {};
-            for (var iterNetNode = 0; iterNetNode < pNetwork.nodes.length; iterNetNode++)
-            {
-                //pNetwork.nodes[iterNetNode]["weight"] = 0;
-                var iterNetNodeKey = pNetwork.nodes[iterNetNode]["name"];
-                ptmToAbundance[iterNetNodeKey] = "NA";
-                // if (iterNetNodeKey in ptmToAbundance)
-                // {
-                //     //console.log(iterNetNodeKey);
-                //     if (ptmToAbundance[iterNetNodeKey] == "NA")
-                //     {
-                //         pNetwork.nodes[iterNetNode]["value"] = 0.0;
-                //     }
-                //     else {
-                //         pNetwork.nodes[iterNetNode]["value"] = ptmToAbundance[iterNetNodeKey];
-                //     }
-                // }
-            }
+            .success(function(response){
+                console.log(response);
+                var pNetwork = response;
+                var ptmToAbundance = {};
+                for (var iterNetNode = 0; iterNetNode < pNetwork.nodes.length; iterNetNode++)
+                {
+                    //pNetwork.nodes[iterNetNode]["weight"] = 0;
+                    var iterNetNodeKey = pNetwork.nodes[iterNetNode]["name"];
+                    ptmToAbundance[iterNetNodeKey] = "NA";
+                    // if (iterNetNodeKey in ptmToAbundance)
+                    // {
+                    //     //console.log(iterNetNodeKey);
+                    //     if (ptmToAbundance[iterNetNodeKey] == "NA")
+                    //     {
+                    //         pNetwork.nodes[iterNetNode]["value"] = 0.0;
+                    //     }
+                    //     else {
+                    //         pNetwork.nodes[iterNetNode]["value"] = ptmToAbundance[iterNetNodeKey];
+                    //     }
+                    // }
+                }
 
 
 
-            $scope.makeGEGraph(response, ptmToAbundance, fileName, $scope.fontSliderValue, $scope.widthSliderValue, $scope.circleSliderValue, $scope.nodeSliderValue, $scope.graphType);
-            self.uploadGraphWaiting = false;
-            self.showGEGraph = true;
-        })
-        .error(function(response){
-            self.uploadGraphWaiting = false;
-            self.showGEGraph = true;
-        });
+                $scope.makeGEGraph(response, ptmToAbundance, fileName, $scope.fontSliderValue, $scope.widthSliderValue, $scope.circleSliderValue, $scope.nodeSliderValue, $scope.graphType);
+                self.uploadGraphWaiting = false;
+                self.showGEGraph = true;
+            })
+            .error(function(response){
+                self.uploadGraphWaiting = false;
+                self.showGEGraph = true;
+            });
     }
 
 
@@ -1859,8 +1860,8 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                             }
 
                             else{
-                            return("#000000");
-                        }
+                                return("#000000");
+                            }
 
 
 
@@ -2470,18 +2471,18 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                             y2 = d.target.y;
 
 
-                            // if( (a1*c2 - a2*c1) > 0)
-                            // {
-                            //     sweep = 0
-                            // }
-                            // else
-                            // {sweep = 1}
-                            if( (c1*d2 - c2*d1) > 0)
-                            {
-                                sweep = 0
-                            }
-                            else
-                            {sweep = 1}
+                        // if( (a1*c2 - a2*c1) > 0)
+                        // {
+                        //     sweep = 0
+                        // }
+                        // else
+                        // {sweep = 1}
+                        if( (c1*d2 - c2*d1) > 0)
+                        {
+                            sweep = 0
+                        }
+                        else
+                        {sweep = 1}
 
 
                         return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
@@ -2959,8 +2960,8 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                             }
 
                             else{
-                            return("#000000");
-                        }
+                                return("#000000");
+                            }
 
 
 
@@ -3054,12 +3055,12 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
 
                         //if(!first_click) {
                         is_connected_on_click(d, 0.1);
-                            node.transition().duration(100).attr("r", function (d) {
-                                return xScale(d.weight);
-                            })
-                            d3.select(this).transition().duration(100).attr("r", function (d) {
-                                return xScale(d.weight + 3);
-                            })
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
 
                     })
 
@@ -3272,7 +3273,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                 var parallelCoordx = function (group, maxId) {
 
 
-                        return group * w/(maxId + 1)+ w/(maxId + 1);
+                    return group * w/(maxId + 1)+ w/(maxId + 1);
 
                 }
 
@@ -3586,16 +3587,16 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                         //return "M" + d.source.x + "," + d.source.y + ","+ d.target.x + "," + d.target.y;
                         //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
                     });
-                    // .attr("d", function (d) {
-                    //     var dx = d.target.x - d.source.x,
-                    //         dy = d.target.y - d.source.y,
-                    //         dr = Math.sqrt(dx * dx + dy * dy);
-                    //     return "M" +
-                    //         d.source.x + "," +
-                    //         d.source.y + "," +
-                    //         d.target.x + "," +
-                    //         d.target.y;
-                    // });
+                // .attr("d", function (d) {
+                //     var dx = d.target.x - d.source.x,
+                //         dy = d.target.y - d.source.y,
+                //         dr = Math.sqrt(dx * dx + dy * dy);
+                //     return "M" +
+                //         d.source.x + "," +
+                //         d.source.y + "," +
+                //         d.target.x + "," +
+                //         d.target.y;
+                // });
 
 
                 // nodes.weight = lines.filter(function(l) {
@@ -4727,9 +4728,9 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                         else if (d.group == 128) {
                                 return ("#FFFF75FF");
                             }
-                        else{
-                            return("#000000");
-                        }
+                            else{
+                                return("#000000");
+                            }
 
 
 
@@ -5438,17 +5439,17 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         }
         //console.log(self.computeWeightForupdatePtm);
         // if(self.computeWeightForUpdateGE) {
-            //console.log("---  inside computeWeightForUpdatePtm");
-            for (var iterNetNode = 0; iterNetNode < network.edges.length; iterNetNode++) {
-                //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
-                var idx1 = network.edges[iterNetNode]["source"];
-                var idx2 = network.edges[iterNetNode]["target"];
-                network.nodes[idx1]["weight"] += 1;
-                network.nodes[idx2]["weight"] += 1;
+        //console.log("---  inside computeWeightForUpdatePtm");
+        for (var iterNetNode = 0; iterNetNode < network.edges.length; iterNetNode++) {
+            //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
+            var idx1 = network.edges[iterNetNode]["source"];
+            var idx2 = network.edges[iterNetNode]["target"];
+            network.nodes[idx1]["weight"] += 1;
+            network.nodes[idx2]["weight"] += 1;
 
-            }
-            self.computeWeightForUpdateGE = false;
-            SharedService.setVar('computeWeightForUpdateGE',self.computeWeightForUpdateGE);
+        }
+        self.computeWeightForUpdateGE = false;
+        SharedService.setVar('computeWeightForUpdateGE',self.computeWeightForUpdateGE);
         // }
         //console.log(network);
         updateGE(network.nodes, network.edges, fontSize, widthSize, circleSize, nodeSize);
@@ -6022,7 +6023,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.peptideResultsGenesChanged = false;
     SharedService.setVar("peptideResultsGenesChanged",self.peptideResultsGenesChanged);
     self.uploadFormat = SharedService.getVar("uploadFormat");
-    self.uploadFormat2 = SharedService.getVar("uploadFormat2");
+    self.imputeFormat = SharedService.getVar("imputeFormat");
     self.peptideModFormat = SharedService.getVar("peptideModFormat");
     console.log(self.uploadFormat);
     console.log(self.peptideModFormat);
@@ -6080,12 +6081,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     });
 
 
-        var isSyncingLeftScroll = false;
-        var isSyncingRightScroll = false;
-        var isSyncingRighterScroll = false;
-        var leftDiv = document.getElementById('left');
-        var rightDiv = document.getElementById('right');
-        var righterDiv = document.getElementById('righter');
+    var isSyncingLeftScroll = false;
+    var isSyncingRightScroll = false;
+    var isSyncingRighterScroll = false;
+    var leftDiv = document.getElementById('left');
+    var rightDiv = document.getElementById('right');
+    var righterDiv = document.getElementById('righter');
 
     $(document).ready(function() {
         if ($('#left').length) {
@@ -6126,28 +6127,28 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
 
-if(self.uploadFormat == 'generic'){
-    self.showPart_pinet = true;
-    self.showPart_maxquant = false;
-    self.showPart_info = false;
-    $scope.showPart_pinet = true;
-    $scope.showPart_maxquant = false;
-    $scope.showPart_info = false;
-    $(".left").addClass("active");
-    $(".right").removeClass("active");
-    $(".righter").removeClass("active");
-}
-else{
-    self.showPart_pinet = false;
-    self.showPart_maxquant = true;
-    self.showPart_info = false;
-    $scope.showPart_pinet = false;
-    $scope.showPart_maxquant = true;
-    $scope.showPart_info = false;
-    $(".left").removeClass("active");
-    $(".right").addClass("active");
-    $(".righter").removeClass("active");
-}
+    if(self.uploadFormat == 'generic'){
+        self.showPart_pinet = true;
+        self.showPart_maxquant = false;
+        self.showPart_info = false;
+        $scope.showPart_pinet = true;
+        $scope.showPart_maxquant = false;
+        $scope.showPart_info = false;
+        $(".left").addClass("active");
+        $(".right").removeClass("active");
+        $(".righter").removeClass("active");
+    }
+    else{
+        self.showPart_pinet = false;
+        self.showPart_maxquant = true;
+        self.showPart_info = false;
+        $scope.showPart_pinet = false;
+        $scope.showPart_maxquant = true;
+        $scope.showPart_info = false;
+        $(".left").removeClass("active");
+        $(".right").addClass("active");
+        $(".righter").removeClass("active");
+    }
 
 
 
@@ -6448,21 +6449,21 @@ else{
             'N': 'asparagine',
             'D': 'aspartic',
             'C': 'cysteine',
-        'Q': 'glutamine',
-        'E': 'glutamic',
-        'G': 'glycine',
-        'H': 'histidine',
-        'I': 'isoleucine',
-        'L': 'leucine',
-        'K': 'lysine',
-        'M': 'methionine',
-        'F': 'phenylalanine',
-        'P': 'proline',
-        'S': 'serine',
-        'T': 'threonine',
-        'W': 'tryptophan',
-        'Y': 'tyrosine',
-        'V': 'valine'
+            'Q': 'glutamine',
+            'E': 'glutamic',
+            'G': 'glycine',
+            'H': 'histidine',
+            'I': 'isoleucine',
+            'L': 'leucine',
+            'K': 'lysine',
+            'M': 'methionine',
+            'F': 'phenylalanine',
+            'P': 'proline',
+            'S': 'serine',
+            'T': 'threonine',
+            'W': 'tryptophan',
+            'Y': 'tyrosine',
+            'V': 'valine'
         };
 
 
@@ -6642,29 +6643,29 @@ else{
 
 
     function BrowserDetection() {
-    // Opera 8.0+
-    var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        // Opera 8.0+
+        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
 // Firefox 1.0+
-    var isFirefox = typeof InstallTrigger !== 'undefined';
+        var isFirefox = typeof InstallTrigger !== 'undefined';
 
 // Safari 3.0+ "[object HTMLElementConstructor]"
-    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
 // Internet Explorer 6-11
-    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+        var isIE = /*@cc_on!@*/false || !!document.documentMode;
 
 // Edge 20+
-    var isEdge = !isIE && !!window.StyleMedia;
+        var isEdge = !isIE && !!window.StyleMedia;
 
 // Chrome 1 - 71
-    var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 
 // Edge (based on chromium) detection
-    var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+        var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
 
 // Blink engine detection
-    var isBlink = (isChrome || isOpera) && !!window.CSS;
+        var isBlink = (isChrome || isOpera) && !!window.CSS;
 
         //Check if browser is IE
 
@@ -6681,16 +6682,16 @@ else{
             $('#firstModal').modal('show');
         }
 
-    var output = 'Detecting browsers by ducktyping:<hr>';
-    output += 'isFirefox: ' + isFirefox + '<br>';
-    output += 'isChrome: ' + isChrome + '<br>';
-    output += 'isSafari: ' + isSafari + '<br>';
-    output += 'isOpera: ' + isOpera + '<br>';
-    output += 'isIE: ' + isIE + '<br>';
-    output += 'isEdge: ' + isEdge + '<br>';
-    output += 'isEdgeChromium: ' + isEdgeChromium + '<br>';
-    output += 'isBlink: ' + isBlink + '<br>';
-    console.log(output);
+        var output = 'Detecting browsers by ducktyping:<hr>';
+        output += 'isFirefox: ' + isFirefox + '<br>';
+        output += 'isChrome: ' + isChrome + '<br>';
+        output += 'isSafari: ' + isSafari + '<br>';
+        output += 'isOpera: ' + isOpera + '<br>';
+        output += 'isIE: ' + isIE + '<br>';
+        output += 'isEdge: ' + isEdge + '<br>';
+        output += 'isEdgeChromium: ' + isEdgeChromium + '<br>';
+        output += 'isBlink: ' + isBlink + '<br>';
+        console.log(output);
     };
     BrowserDetection();
 
@@ -7720,7 +7721,7 @@ else{
             }
         }
         console.log(self.ptmCountFirstFound);
-console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
+        console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         self.peptideResultsGenes = true;
         self.peptideResultsPTMs = true;
         SharedService.setVar("peptideResultsGenes", self.peptideResultsGenes);
@@ -7735,7 +7736,9 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         SharedService.setVar('genesFirstFound',self.genesWithAbundanceFirstFound);
         SharedService.setVar('genesUnique',self.genesWithAbundanceUnique);
 
-
+        self.showOverAllParallelSVG = false;
+        console.log(self.showOverAllParallelSVG);
+        $scope.makeParallelGrid(self.peptideToModificationList, 2);
 
     }
 
@@ -7789,7 +7792,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
             return d;
         }
 
-            // function to turn string into number if possible
+        // function to turn string into number if possible
         function numberParser(value) {
             return (+value) ? +value : value;
         }
@@ -7993,18 +7996,18 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                         .on("mouseout", function(d) {
                             d3.select("#myText").remove();
                         });
-                        // .on('mouseleave', function (d) {
-                        //     return text.style('visibility', 'hidden');
-                        // });
+                    // .on('mouseleave', function (d) {
+                    //     return text.style('visibility', 'hidden');
+                    // });
 
 
 
 
-                        // .on('mouseenter', tipEnter2)
-                        // .on("mousemove", tipMove)
-                        // .on('mouseleave', function (d) {
-                        //     return tooltip.style('visibility', 'hidden');
-                        // });
+                    // .on('mouseenter', tipEnter2)
+                    // .on("mousemove", tipMove)
+                    // .on('mouseleave', function (d) {
+                    //     return tooltip.style('visibility', 'hidden');
+                    // });
 
                     var thresholdLines = svg.append('g')
                         .attr('class', 'thresholdLines');
@@ -8046,17 +8049,17 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
                         // Specify where to put label of text
                         svg.append("text")
-                            // .attr('cx', function (d) {
-                            //     return xScale(d[xColumn]);
-                            // })
-                            // .attr('cy', function (d) {
-                            //     return yScale(d[yColumn]);
-                            // })
+                        // .attr('cx', function (d) {
+                        //     return xScale(d[xColumn]);
+                        // })
+                        // .attr('cy', function (d) {
+                        //     return yScale(d[yColumn]);
+                        // })
                             .attr("id", "myText")
                             .attr({
-                            //id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
-                            x: function() { return xScale(d[xColumn]); },
-                            y: function() { return yScale(d[yColumn]); }
+                                //id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+                                x: function() { return xScale(d[xColumn]); },
+                                y: function() { return yScale(d[yColumn]); }
                             })
 
                             .text(function() {
@@ -8288,7 +8291,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
     //     callVolcanoPlot(self.sliderFoldChangeValue, self.sliderSignificanceValue);
     // }
     //$scope.sliderData = [$scope.sliderFoldChangeValue, $scope.sliderSignificanceValue];
-    
+
     $(document).on('input', '#h_slider', function() {
         $('#h_slider_value').html( $(this).val() );
         ////console.log($(this).val());
@@ -8978,7 +8981,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         //var uploadUrl = "api/upload?organism=" + self.organismForm + self.proteinForm + "?inputType=" + self.uploadFormat+ "?inputCtrl=" + self.uploadCtrl + "?inputTrt=" + self.uploadTrt;
 
 
-        console.log(uploadUrl);
+        //console.log(uploadUrl);
         $http.get("api/increment/" + 1)
             .success(function (siteVisit) {
 
@@ -9002,15 +9005,13 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         fd.append('inputCtrl', self.uploadCtrl);
         fd.append('inputTrt', self.uploadTrt);
         fd.append('normalFlag', $scope.normalSelectionValue);
-        fd.append('peptideModFormat', self.peptideModFormat);
-        // Append as many parameters as needed
-        // $http.post('jobseeker', data, {
-        //     withCredentials : false,
-        //     transformRequest : angular.identity,
-        //     headers : {
-        //         'Content-Type' : undefined
-        //     }
-        // })
+        fd.append('quantileFlag', $scope.quantileSelectionValue);
+        fd.append('discardFlag', $scope.discardSelectionValue);
+        fd.append('imputeFlag', self.imputeFormat);
+
+
+        //  fd.append('peptideModFormat', self.peptideModFormat);
+
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -9021,9 +9022,15 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                     "Searching for Connected Proteins.";
                 //console.log(uploadUrl);
                 //console.log("successs");
-                //console.log(response);
+                console.log(response);
                 self.uploadedFalg = true;
                 self.uploadWaiting = false;
+                self.useTrembl = response["useTrembl"];
+                console.log(self.useTrembl);
+                if(self.useTrembl){
+                    self.proteinDB = 'sptr';
+                    console.log(self.proteinDB);
+                }
 
                 self.parsedMotifs = response["localMotifs"];
                 self.parsedPeptides = response["localPeptides"];
@@ -9034,6 +9041,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                 self.volcanoJson = response["volcanoArray"];
                 self.peptideAbundance = [];
                 self.parsedModificationsFromUpload = [];
+                self.numberOfDiscarded = response["discarded"].length;
 
                 SharedService.setVar("uploadErrorTag",self.uploadErrorTag);
                 SharedService.setVar("uploadErrorText",self.uploadErrorText);
@@ -9170,54 +9178,54 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                                             //
                                             // }
                                             // else {
-                                                var result = {};
-                                                result.input = el;
-                                                if (data.length === 0) {
-                                                    result.identifier = "";
-                                                    // result.original = data.string;
-                                                    // result.modification = elMass;
-                                                    // result.shorthand = shorthandInput;
-                                                    result.diffavg = "";
-                                                    result.mass = "";
-                                                    result.similar = [];
-                                                    result.formula = "";
-                                                    result.description = "";
+                                            var result = {};
+                                            result.input = el;
+                                            if (data.length === 0) {
+                                                result.identifier = "";
+                                                // result.original = data.string;
+                                                // result.modification = elMass;
+                                                // result.shorthand = shorthandInput;
+                                                result.diffavg = "";
+                                                result.mass = "";
+                                                result.similar = [];
+                                                result.formula = "";
+                                                result.description = "";
 
-                                                }
+                                            }
 
-                                                result.identifier = data.accession;
-                                                result.diffavg = data.averageDeltaMass;
-                                                result.mass = data.averageDeltaMass;
-                                                result.description = data.description;
-                                                result.formula = data.formula;
-
-
-                                                var similarToPTM = [];
-
-                                                var similarToPTMAll = "{" + data.accession + "},{" + data.averageDeltaMass + "},{" + data.formula + "},{" + data.description + "}";
-                                                ////console.log(element);
-                                                var similarToPTMItem = {};
-                                                // similarToPTMItem["identifier"] = element.accession;
-                                                similarToPTMItem["descriptionAll"] = similarToPTMAll;
-
-                                                similarToPTM.push(similarToPTMItem);
-
-                                                // for (var i = 0; i < sorted_data.length; i++) {
-                                                //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
-                                                //
-                                                //     similarToPTM.push(similarToPTMItem);
-                                                //     //Do something
-                                                // }
-
-                                                result.similar = similarToPTM;
+                                            result.identifier = data.accession;
+                                            result.diffavg = data.averageDeltaMass;
+                                            result.mass = data.averageDeltaMass;
+                                            result.description = data.description;
+                                            result.formula = data.formula;
 
 
-                                                if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                    self.ontologyMappingsUnique.push(el);
-                                                    self.ontologyMappings.push(result);
-                                                }
+                                            var similarToPTM = [];
 
-                                                //self.ontologyMappings.push(result);
+                                            var similarToPTMAll = "{" + data.accession + "},{" + data.averageDeltaMass + "},{" + data.formula + "},{" + data.description + "}";
+                                            ////console.log(element);
+                                            var similarToPTMItem = {};
+                                            // similarToPTMItem["identifier"] = element.accession;
+                                            similarToPTMItem["descriptionAll"] = similarToPTMAll;
+
+                                            similarToPTM.push(similarToPTMItem);
+
+                                            // for (var i = 0; i < sorted_data.length; i++) {
+                                            //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
+                                            //
+                                            //     similarToPTM.push(similarToPTMItem);
+                                            //     //Do something
+                                            // }
+
+                                            result.similar = similarToPTM;
+
+
+                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                                self.ontologyMappingsUnique.push(el);
+                                                self.ontologyMappings.push(result);
+                                            }
+
+                                            //self.ontologyMappings.push(result);
                                             // }
 
                                         })
@@ -9263,17 +9271,17 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
                                         modificationType = self.modificationNameMap[el.match(self.patt2)];
                                         modificationAmino = self.modificationAminoMap[el.match(self.patt1)];
-                                        console.log("---------");
-                                        console.log("unimod or psimod");
-                                        console.log(el.match(self.patt2));
-                                        console.log(modificationType);
-                                        console.log(el.match(self.patt1));
-                                        console.log(modificationAmino);
-
-                                        console.log(shorthandInput);
-                                        console.log(originalModFromInput);
-                                        console.log(originalMAss);
-                                        console.log(elMass);
+                                        // console.log("---------");
+                                        // console.log("unimod or psimod");
+                                        // console.log(el.match(self.patt2));
+                                        // console.log(modificationType);
+                                        // console.log(el.match(self.patt1));
+                                        // console.log(modificationAmino);
+                                        //
+                                        // console.log(shorthandInput);
+                                        // console.log(originalModFromInput);
+                                        // console.log(originalMAss);
+                                        // console.log(elMass);
                                         (function (modificationType, modificationAmino, originalModFromInput) {
                                             if (modificationType  === undefined) {
                                             }
@@ -9283,9 +9291,9 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                                                         if (res_data === undefined) {
                                                         }
                                                         else {
-                                                            console.log("api/proteinptmbydescription/" + modificationType);
-                                                            console.log("res_data");
-                                                            console.log(res_data);
+                                                            // console.log("api/proteinptmbydescription/" + modificationType);
+                                                            // console.log("res_data");
+                                                            // console.log(res_data);
                                                             var data = [];
                                                             for (var i = 0; i < res_data.length; i++) {
                                                                 var obj = res_data[i];
@@ -9297,8 +9305,8 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                                                                 }
 
                                                             }
-                                                            console.log("data:");
-                                                            console.log(data);
+                                                            // console.log("data:");
+                                                            // console.log(data);
                                                             //var data = res_data;
 
                                                             var sorted_data = data.sort(function (a, b) {
@@ -9387,19 +9395,19 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
                                         var shorthandInput = '';
                                         var originalMAss = el.replace(/[a-zA-Z+\[\]']/g, '');
-                                        console.log("---------");
-                                        console.log("+++++++");
-                                        console.log(shorthandInput);
-                                        console.log(originalModFromInput);
-                                        console.log(originalMAss);
-                                        console.log(elMass);
-                                        console.log(originalMAss);
+                                        // console.log("---------");
+                                        // console.log("+++++++");
+                                        // console.log(shorthandInput);
+                                        // console.log(originalModFromInput);
+                                        // console.log(originalMAss);
+                                        // console.log(elMass);
+                                        // console.log(originalMAss);
                                         (function (originalMAss, shorthandInput, originalModFromInput) {
                                             $http.get("api/proteinptmbymass/" + originalMAss + "/delta/0.001")
                                                 .success(function (data) {
-                                                    console.log("api/proteinptmbymass/"+ originalMAss + "/delta/0.001");
-                                                    console.log("data:");
-                                                    console.log(data);
+                                                    // console.log("api/proteinptmbymass/"+ originalMAss + "/delta/0.001");
+                                                    // console.log("data:");
+                                                    // console.log(data);
 
                                                     if(data.length > 0){
                                                         var sorted_data = data.sort(function (a, b) {
@@ -9408,7 +9416,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
                                                         ////console.log(sorted_data);
                                                         var closest_sorted = sorted_data[0];
-                                                        console.log(closest_sorted);
+                                                        //console.log(closest_sorted);
                                                         var result = {};
                                                         result.mass = originalMAss;
                                                         result.input = el;
@@ -9596,9 +9604,9 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                     self.uploadWaiting = false;
                 }
                 //The file upload was ok!
-                    else {
+                else {
                     //Not using prosite for the peptide search
-                    (function (localMotifs, localPeptides) {
+                    (function (localMotifs, localPeptides, useTrembl ) {
                         //console.log("localMotifs");
                         //console.log(localMotifs);
                         //console.log("localPeptides");
@@ -9621,7 +9629,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
 
 
-                        (function (dataForAll) {
+                        (function (dataForAll, useTrembl) {
 
 
                             //var str = "{ hello: 'world', places: ['Africa', 'America', 'Asia', 'Australia'] }"
@@ -9641,56 +9649,70 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                             self.uniprotResponseIteratorTotal = 0;
 
                             //Handling the Trembl and Swissprot
-
-                            if (self.proteinDb === 'sp') {
-                                var dataForAllModified = {};
-                                for (var key in dataForAll) {
-                                    // if(key === "ALQLLHCFPLDIR"){
-                                    //
-                                    // }
-                                    if (dataForAll.hasOwnProperty(key)) {
-                                        ////console.log(key + " -> " + dataForAll[key]);
-                                        var n_matchModified = 0;
-                                        var matchsetModified = [];
-                                        dataForAll[key].matchset.map(function (e2) {
-                                            if (e2.sequence_db == 'sp') {
-                                                matchsetModified.push(e2);
-                                                n_matchModified = n_matchModified + 1;
-                                            }
-                                        })
-
-                                        var valueModified = {};
-                                        valueModified['n_match'] = n_matchModified;
-                                        valueModified['matchset'] = matchsetModified;
-                                        dataForAllModified[key] = valueModified;
-                                    }
-                                }
-                                dataForAll = dataForAllModified;
+                            //if(self.)
+                            // console.log(self.proteinDb);
+                            // console.log("dataForAll");
+                            // console.log(dataForAll);
+                            if(useTrembl){
+                                self.proteinDB = 'sptr';
+                                console.log(self.proteinDB);
                             }
+                            // console.log(useTrembl);
+                            // console.log("proteinDb");
+                            // console.log(self.proteinDb);
 
-                            if (self.proteinDb == 'tr') {
-                                var dataForAllModified = {};
-                                for (var key in dataForAll) {
-                                    if (dataForAll.hasOwnProperty(key)) {
-                                        ////console.log(key + " -> " + dataForAll[key]);
-                                        var n_matchModified = 0;
-                                        var matchsetModified = [];
-                                        dataForAll[key].matchset.map(function (e2) {
-                                            if (e2.sequence_db == 'tr') {
-                                                matchsetModified.push(e2);
-                                                n_matchModified = n_matchModified + 1;
-                                            }
-                                        })
+                            if (!useTrembl) {
+                                if (self.proteinDb === 'sp') {
+                                    var dataForAllModified = {};
+                                    for (var key in dataForAll) {
+                                        // if(key === "ALQLLHCFPLDIR"){
+                                        //
+                                        // }
+                                        if (dataForAll.hasOwnProperty(key)) {
+                                            ////console.log(key + " -> " + dataForAll[key]);
+                                            var n_matchModified = 0;
+                                            var matchsetModified = [];
+                                            dataForAll[key].matchset.map(function (e2) {
+                                                if (e2.sequence_db == 'sp') {
+                                                    matchsetModified.push(e2);
+                                                    n_matchModified = n_matchModified + 1;
+                                                }
+                                            })
 
-                                        var valueModified = {};
-                                        valueModified['n_match'] = n_matchModified;
-                                        valueModified['matchset'] = matchsetModified;
-                                        dataForAllModified[key] = valueModified;
+                                            var valueModified = {};
+                                            valueModified['n_match'] = n_matchModified;
+                                            valueModified['matchset'] = matchsetModified;
+                                            dataForAllModified[key] = valueModified;
+                                        }
                                     }
+                                    dataForAll = dataForAllModified;
                                 }
-                                dataForAll = dataForAllModified;
+
+                                if (self.proteinDb == 'tr') {
+                                    var dataForAllModified = {};
+                                    for (var key in dataForAll) {
+                                        if (dataForAll.hasOwnProperty(key)) {
+                                            ////console.log(key + " -> " + dataForAll[key]);
+                                            var n_matchModified = 0;
+                                            var matchsetModified = [];
+                                            dataForAll[key].matchset.map(function (e2) {
+                                                if (e2.sequence_db == 'tr') {
+                                                    matchsetModified.push(e2);
+                                                    n_matchModified = n_matchModified + 1;
+                                                }
+                                            })
+
+                                            var valueModified = {};
+                                            valueModified['n_match'] = n_matchModified;
+                                            valueModified['matchset'] = matchsetModified;
+                                            dataForAllModified[key] = valueModified;
+                                        }
+                                    }
+                                    dataForAll = dataForAllModified;
+                                }
                             }
-                            //console.log("dataForAllModified");
+                            // console.log("dataForAll");
+                            // console.log(dataForAll);
                             //console.log(dataForAllModified);
                             // self.uniprotResponseIterator = 0;
                             for (var localPeptideIterator = 0; localPeptideIterator < localMotifs.length; localPeptideIterator++) {
@@ -10185,10 +10207,10 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                                                     self.uniprotResponseIterator += 1;
 
 
-                                                        self.uploadErrorTag = 400;
-                                                        self.uploadedFalg = false;
+                                                    self.uploadErrorTag = 400;
+                                                    self.uploadedFalg = false;
 
-                                                        self.uploadWaiting = false;
+                                                    self.uploadWaiting = false;
                                                     self.uploadedFalg = false;
                                                     self.uploadWaiting = false;
                                                     $scope.waiting = false;
@@ -10196,8 +10218,8 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                                                     self.uploadErrorText = "net::ERR_INSUFFICIENT_RESOURCES.\n" +
                                                         "Reaching the limits of the browser,\n" +
                                                         "please refresh the page and start over.\n"+
-                                                            " Error in getting information about "+
-                                                    uniprotIdForInsideQuery;
+                                                        " Error in getting information about "+
+                                                        uniprotIdForInsideQuery;
 
                                                     //console.log(self.uniprotResponseIterator);
                                                     //console.log(self.uniprotResponseIteratorTotalForPercentage);
@@ -10258,7 +10280,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                             // //console.log(prositeResponseIterator);
 
                             //++++++++++++++++++++++++++++++++++++++
-                        })(self.dataForAllPeptides)
+                        })(self.dataForAllPeptides, useTrembl)
 
                         //Error in api/peptide
                         //     .error(function (data, status) {
@@ -10355,7 +10377,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                         //     })
 
 
-                    })(self.parsedMotifs, self.parsedPeptides);
+                    })(self.parsedMotifs, self.parsedPeptides, self.useTrembl);
 
                 }
             })
@@ -10499,7 +10521,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
                             }
                         }
 
-                            self.textArea += "\n";
+                        self.textArea += "\n";
 
                     }
                 }
@@ -10800,6 +10822,8 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
 
     $scope.initPlotly = function () {
+
+
         //console.log("in initplotly");
         var subCellularData = [{
             values: self.subCellularValues,
@@ -10911,6 +10935,12 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
             callVolcanoPlot(self.sliderFoldChangeValue, self.sliderSignificanceValue);
         }
 
+        self.showOverAllParallelSVG = false;
+        console.log(self.showOverAllParallelSVG);
+
+
+        $scope.makeParallelGrid(self.peptideToModificationList, 2);
+
     };
 
     //self.proteinForm = "";//"" for canonical, "{+iso" for canonical+isoform
@@ -10957,7 +10987,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
     $scope.changePLNJsonInlineInchAllhits2 = function(input) {
 
 
-            self.plnFormatted = input;
+        self.plnFormatted = input;
 //console.log(self.plnFormatted);
 
         //     <div ng-if="!ctrl.formatAsInchOrAllhits">
@@ -11616,7 +11646,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
             for (var i = 0; i < objKeys.length; i++){
                 headers[objKeys[i]] = objKeys[i];
             }
-            var fileTitle = 'piNET_maxQuant_evidence'; // or 'my-unique-title'
+            var fileTitle = 'piNET_Zebrafish-maxQuant_evidence'; // or 'my-unique-title'
 
             exportTSVFile(headers, data, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
 
@@ -11832,7 +11862,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
 
         console.log(self.plnForDownload);
-       // alasql('SELECT * INTO XLSX("PLN.xlsx",{headers:true}) FROM ?', [self.plnForDownload]);
+        // alasql('SELECT * INTO XLSX("PLN.xlsx",{headers:true}) FROM ?', [self.plnForDownload]);
 
         $scope.exportCsvGeneral(self.plnForDownload,'pinet-Protein-Line-Notation(PLN)');
         //
@@ -12199,7 +12229,7 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         //console.log(originaldescription);
         ////console.log(similaMass);
         //console.log(originalMass);
-            ////console.log($scope.itemScope);
+        ////console.log($scope.itemScope);
         ////console.log($scope.descriptionAllSent);
         ////console.log($scope.similar.descriptionAll);
         ////console.log(self.ontologyMappings);
@@ -12550,22 +12580,22 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
 
 
     //$scope.aboutInit = function () {
-        // self.showSplash = false;
-        // self.firstVisit = false;
-        // $http.get("api/increment/" + 0)
-        //     .success(function (siteVisit) {
-        //         //console.log("siteVisit");
-        //         //console.log(siteVisit);
-        //         self.siteVisit = siteVisit;
-        //
-        //     })
-        //     .error(function (data, status) {
-        //
-        //         //console.log(data);
-        //         //console.log(status);
-        //
-        //
-        //     });
+    // self.showSplash = false;
+    // self.firstVisit = false;
+    // $http.get("api/increment/" + 0)
+    //     .success(function (siteVisit) {
+    //         //console.log("siteVisit");
+    //         //console.log(siteVisit);
+    //         self.siteVisit = siteVisit;
+    //
+    //     })
+    //     .error(function (data, status) {
+    //
+    //         //console.log(data);
+    //         //console.log(status);
+    //
+    //
+    //     });
     //};
 
     $scope.retrievePeptides = function () {
@@ -12763,9 +12793,11 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
     };
 
 
-    $scope.normalgenders=['Do Normalization'];
+    $scope.normalgenders=['Total (Area Sum/Intensity) Normalization', 'Quantile Renormalization'];
     $scope.normalSelection=[];
+
     $scope.normalSelectionValue = "no";
+    $scope.quantileSelectionValue = "no";
 
 
     $scope.toggleNormalSelection = function toggleNormalSelection(gender) {
@@ -12773,18 +12805,63 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
         if (idx > -1) {
             // is currently selected
             $scope.normalSelection.splice(idx, 1);
-            $scope.normalSelectionValue = "no";
+
+            if(gender.includes("Quantile")){
+                $scope.quantileSelectionValue = "no";
+            }
+            if(gender.includes("Total")){
+                $scope.normalSelectionValue = "no";
+            }
+
 
         }
         else {
             // is newly selected
             $scope.normalSelection.push(gender);
-            $scope.normalSelectionValue = "yes";
+            //$scope.normalSelectionValue = "yes";
+            if(gender.includes("Quantile")){
+                $scope.quantileSelectionValue = "yes";
+            }
+            if(gender.includes("Total")){
+                $scope.normalSelectionValue = "yes";
+            }
 
         }
-        console.log($scope.normalSelection);
+        console.log($scope.quantileSelectionValue);
         console.log($scope.normalSelectionValue);
     };
+
+
+    $scope.discardgenders=['Discard Peptides with Missing Data'];
+    $scope.discardSelection=[];
+
+    $scope.discardSelectionValue = "no";
+
+
+
+    $scope.toggleDiscardSelection = function toggleDiscardSelection(gender) {
+        var idx = $scope.discardSelection.indexOf(gender);
+        if (idx > -1) {
+            // is currently selected
+            $scope.discardSelection.splice(idx, 1);
+            $scope.discardSelectionValue = "no";
+
+
+
+
+        }
+        else {
+            // is newly selected
+            $scope.discardSelection.push(gender);
+            $scope.discardSelectionValue = "yes";
+
+
+        }
+        console.log($scope.discardSelectionValue);
+
+    };
+
+
 
 
     $scope.myCheckFunction = function() {
@@ -12798,14 +12875,14 @@ console.log(self.proteinIdListMassCombinedWithAbundanceFirstFound);
             console.log(self.uploadNormal);
         }
     }
-console.log(self.peptideModFormat);
+    console.log(self.peptideModFormat);
     console.log(self.uploadFormat);
     $('input[name=r1][value=' + self.organismForm + ']').prop('checked',true);
     $('input[name=r2][value=' + self.proteinForm + ']').prop('checked',true);
     $('input[name=r3][value=' + self.proteinDb + ']').prop('checked',true);
     $('input[name=r4][value=' + self.peptideNormalizeFlag + ']').prop('checked',true);
     $('input[name=r5][value=' + self.uploadFormat + ']').prop('checked',true);
-    $('input[name=r52][value=' + self.uploadFormat2 + ']').prop('checked',true);
+    $('input[name=r52][value=' + self.imputeFormat + ']').prop('checked',true);
     $('input[name=r9][value=' + self.peptideModFormat + ']').prop('checked',true);
 
 
@@ -12826,17 +12903,17 @@ console.log(self.peptideModFormat);
         $("#uniprotSp").prop("checked", true);
         SharedService.setVar('proteinDb',self.proteinDb);
     }
-    if (!$("input[name='r5']").is(":checked")) {
-        //console.log("checked no");
-        self.uploadFormat = 'generic';
-        $("#generic").prop("checked", true);
-        SharedService.setVar('uploadFormat',self.uploadFormat);
-    }
+    // if (!$("input[name='r5']").is(":checked")) {
+    //     //console.log("checked no");
+    //     self.uploadFormat = 'generic';
+    //     $("#generic").prop("checked", true);
+    //     SharedService.setVar('uploadFormat',self.uploadFormat);
+    // }
     if (!$("input[name='r52']").is(":checked")) {
         //console.log("checked no");
-        self.uploadFormat2 = 'generic2';
-        $("#generic2").prop("checked", true);
-        SharedService.setVar('uploadFormat2',self.uploadFormat2);
+        self.imputeFormat = 'no_impute';
+        $("#impute_with_mean").prop("checked", true);
+        SharedService.setVar('imputeFormat',self.imputeFormat);
     }
     if (!$("input[name='r4']").is(":checked")) {
         //console.log("checked no");
@@ -12892,8 +12969,8 @@ console.log(self.peptideModFormat);
         //console.log(self.peptideNormalizeFlag);
     });
     $("input[name='r52']").click(function () {
-        self.uploadFormat2 = this.value;
-        SharedService.setVar('uploadFormat2',self.uploadFormat2);
+        self.imputeFormat = this.value;
+        SharedService.setVar('imputeFormat',self.imputeFormat);
 
 
     });
@@ -13136,7 +13213,7 @@ console.log(self.peptideModFormat);
                     //  //   return e.match(self.modificationPatternWithLetter);
                     // //} else {
                     //     //console.log(e.match(self.modificationPatternSecondFormat));
-                        return modList ;
+                    return modList ;
                     //}
                 }
             });
@@ -13671,54 +13748,54 @@ console.log(self.peptideModFormat);
                                     //
                                     // }
                                     // else {
-                                        var result = {};
-                                        result.input = el;
-                                        if (data.length === 0) {
-                                            result.identifier = "";
-                                            // result.original = data.string;
-                                            // result.modification = elMass;
-                                            // result.shorthand = shorthandInput;
-                                            result.diffavg = "";
-                                            result.mass = "";
-                                            result.similar = [];
-                                            result.formula = "";
-                                            result.description = "";
+                                    var result = {};
+                                    result.input = el;
+                                    if (data.length === 0) {
+                                        result.identifier = "";
+                                        // result.original = data.string;
+                                        // result.modification = elMass;
+                                        // result.shorthand = shorthandInput;
+                                        result.diffavg = "";
+                                        result.mass = "";
+                                        result.similar = [];
+                                        result.formula = "";
+                                        result.description = "";
 
-                                        }
+                                    }
 
-                                        result.identifier = data.accession;
-                                        result.diffavg = data.averageDeltaMass;
-                                        result.mass = data.averageDeltaMass;
-                                        result.description = data.description;
-                                        result.formula = data.formula;
-
-
-                                        var similarToPTM = [];
-
-                                        var similarToPTMAll = "{" + data.accession + "},{" + data.averageDeltaMass + "},{" + data.formula + "},{" + data.description + "}";
-                                        ////console.log(element);
-                                        var similarToPTMItem = {};
-                                        // similarToPTMItem["identifier"] = element.accession;
-                                        similarToPTMItem["descriptionAll"] = similarToPTMAll;
-
-                                        similarToPTM.push(similarToPTMItem);
-
-                                        // for (var i = 0; i < sorted_data.length; i++) {
-                                        //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
-                                        //
-                                        //     similarToPTM.push(similarToPTMItem);
-                                        //     //Do something
-                                        // }
-
-                                        result.similar = similarToPTM;
+                                    result.identifier = data.accession;
+                                    result.diffavg = data.averageDeltaMass;
+                                    result.mass = data.averageDeltaMass;
+                                    result.description = data.description;
+                                    result.formula = data.formula;
 
 
-                                        if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                            self.ontologyMappingsUnique.push(el);
-                                            self.ontologyMappings.push(result);
-                                        }
+                                    var similarToPTM = [];
 
-                                        //self.ontologyMappings.push(result);
+                                    var similarToPTMAll = "{" + data.accession + "},{" + data.averageDeltaMass + "},{" + data.formula + "},{" + data.description + "}";
+                                    ////console.log(element);
+                                    var similarToPTMItem = {};
+                                    // similarToPTMItem["identifier"] = element.accession;
+                                    similarToPTMItem["descriptionAll"] = similarToPTMAll;
+
+                                    similarToPTM.push(similarToPTMItem);
+
+                                    // for (var i = 0; i < sorted_data.length; i++) {
+                                    //     similarToPTMItem = "{"+ sorted_data.[i].accession+","+sorted_data[i].averageDeltaMass +","+ sorted_data[i].formula+","+sorted_data[i].description +"}";
+                                    //
+                                    //     similarToPTM.push(similarToPTMItem);
+                                    //     //Do something
+                                    // }
+
+                                    result.similar = similarToPTM;
+
+
+                                    if (self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                        self.ontologyMappingsUnique.push(el);
+                                        self.ontologyMappings.push(result);
+                                    }
+
+                                    //self.ontologyMappings.push(result);
                                     //}
 
                                 })
@@ -13990,8 +14067,8 @@ console.log(self.peptideModFormat);
             // //console.log(self.ontologyMappings);
         });
 
-    //     resolve();
-    // });
+        //     resolve();
+        // });
     }
 
     $scope.$watch(function () {
@@ -15232,12 +15309,46 @@ console.log(self.peptideModFormat);
     //var svg5 = d3.selectAll("#parallel").append("svg");
 
 
+    var plotlyParallelDivTrace = {
+        type: 'parcoords',
+        line: {
+            color: 'blue'
+        },
+
+        dimensions: [{
+            range: [1, 5],
+            constraintrange: [1, 2],
+            label: 'A',
+            values: [1,4]
+        }, {
+            range: [1,5],
+            label: 'B',
+            values: [3,1.5],
+            tickvals: [1.5,3,4.5]
+        }, {
+            range: [1, 5],
+            label: 'C',
+            values: [2,4],
+            tickvals: [1,2,4,5],
+            ticktext: ['text 1','text 2','text 4','text 5']
+        }, {
+            range: [1, 5],
+            label: 'D',
+            values: [4,2]
+        }]
+    };
+
+    var plotlyParallelDivData = [plotlyParallelDivTrace]
+
+    // Plotly.newPlot('plotlyParallelDiv', plotlyParallelDivData);
 
     $scope.makeParallelGrid = function (peptideToModificationList, input_flag) {
         // d3.selectAll("svg > *").remove();
         // svg5.selectAll("*").remove();
         //
         // svg5.remove();
+        console.log("in makeParallelGrid");
+        console.log(peptideToModificationList);
 //This is for making csv from json
         //d3.selectAll("svg > *").remove();
         if(self.showOverAllParallelSVG)
@@ -15253,6 +15364,7 @@ console.log(self.peptideModFormat);
             self.showOverAllParallelSVG = true;
 
             var parallelJson = [];
+            var parallelJson2 = [];
             var parallelUniquePep = [];
             var parallelUniquePtm = [];
             var parallelUniqueProtein = [];
@@ -15276,13 +15388,13 @@ console.log(self.peptideModFormat);
 
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
-
+                    var parallelPep = e.motif;
+                    if (parallelUniquePep.indexOf(parallelPep) === -1) {
+                        parallelUniquePep.push(parallelPep);
+                    }
 
                     e.response.map(function (e2) {
-                        var parallelPep = e.motif;
-                        if (parallelUniquePep.indexOf(parallelPep) === -1) {
-                            parallelUniquePep.push(parallelPep);
-                        }
+
                         var parallelProt = e2.sequence_ac;
                         var parallelPtm = e2.ptmProteinsMixAll[0];
                         if (parallelUniqueProtein.indexOf(parallelProt) === -1) {
@@ -15310,22 +15422,33 @@ console.log(self.peptideModFormat);
                             parallelJson.push(parallelJsonItem);
                             //parallelNrows += 1;
                         }
-                        // else{
-                        //     parallelJsonItem = {};
-                        //     parallelJsonItem.Peptide = parallelPep;
-                        //     // parallelJsonItem.Protein = "";
-                        //     // parallelJsonItem.Gene = "";
-                        //     // parallelJsonItem.ptmProtein = "";
+                        else{
+                            parallelJsonItem = {};
+                            parallelJsonItem.Peptide = parallelPep;
+                            parallelJsonItem.Protein = "";
+                            parallelJsonItem.Gene = "";
+                            parallelJsonItem.ptmProtein = "";
+
+                            parallelJson2.push(parallelJsonItem);
+
+                        }
+                        // parallelJsonItem = {};
+                        // parallelJsonItem.Peptide = parallelPep+"====="+parallelProt;
+                        // parallelJsonItem.Protein = "";
+                        // parallelJsonItem.Gene = "";
+                        // parallelJsonItem.ptmProtein = "";
                         //
-                        //     parallelJson.push(parallelJsonItem);
-                        //
-                        // }
+                        // parallelJson2.push(parallelJsonItem);
 
 
                     })
 
 
                 })
+                for (var indexprjson = 0; indexprjson < parallelJson.length; indexprjson++) {
+                    parallelJson2.push(parallelJson[indexprjson]);
+                }
+                //console.log(parallelJson)
             }
 
             if(input_flag == 2){
@@ -15376,12 +15499,26 @@ console.log(self.peptideModFormat);
                             parallelJson.push(parallelJsonItem);
                             //parallelNrows += 1;
                         }
+                        else{
+                            parallelJsonItem = {};
+                            parallelJsonItem.Peptide = parallelPep;
+                            parallelJsonItem.Protein = "";
+                            parallelJsonItem.Gene = "";
+                            parallelJsonItem.ptmProtein = "";
+
+                            parallelJson2.push(parallelJsonItem);
+
+                        }
+
 
 
                     }
 
 
                 })
+                for (var indexprjson = 0; indexprjson < parallelJson.length; indexprjson++) {
+                    parallelJson2.push(parallelJson[indexprjson]);
+                }
             }
 
             if(input_flag == 3){
@@ -15432,16 +15569,41 @@ console.log(self.peptideModFormat);
                                 parallelJson.push(parallelJsonItem);
                                 //parallelNrows += 1;
                             }
+                            else{
+                                parallelJsonItem = {};
+                                parallelJsonItem.Peptide = parallelPep;
+                                parallelJsonItem.Protein = "";
+                                parallelJsonItem.Gene = "";
+                                parallelJsonItem.ptmProtein = "";
+
+                                parallelJson2.push(parallelJsonItem);
+
+                            }
 
 
                         })
                     }
+                    else{
+                        parallelJsonItem = {};
+                        parallelJsonItem.Peptide = parallelPep;
+                        parallelJsonItem.Protein = "";
+                        parallelJsonItem.Gene = "";
+                        parallelJsonItem.ptmProtein = "";
+
+                        parallelJson2.push(parallelJsonItem);
+
+                    }
 
 
                 })
+                for (var indexprjson = 0; indexprjson < parallelJson.length; indexprjson++) {
+                    parallelJson2.push(parallelJson[indexprjson]);
+                }
             }
 
-
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = true;
 
             parallelNrows = Math.max(parallelUniqueGene.length, parallelUniqueProtein.length, parallelUniquePep.length, parallelUniquePtm.length)
 
@@ -15451,15 +15613,22 @@ console.log(self.peptideModFormat);
 
 
             // quantitative color scale
-            var blue_to_brown = d3.scale.linear()
-                .domain([9, 50])
-                .range(["steelblue", "brown"])
+            var white_to_blue = d3.scale.linear()
+                .domain([0, 5])
+                .range(["white","steelblue"])
                 .interpolate(d3.interpolateLab);
 
-            // var color = function(d) { return blue_to_brown(d['Peptide']); };
-            var color = function (d) {
-                return blue_to_brown(9);
-            };
+            var color = function(d) { return white_to_blue(d['Protein'].length); };
+
+            var shaded_darkness = d3.scale.linear()
+                .domain([0, 5])
+                .range([0,1])
+                .interpolate(d3.interpolateLab);
+
+            var alpha = function(d) { return shaded_darkness(d['Protein'].length); };
+            // var color = function (d) {
+            //     return blue_to_brown(9);
+            // };
             ////console.log(color);
             // var parcoords = d3.parcoords()("#parallel")
             //     .color(color)
@@ -15469,8 +15638,9 @@ console.log(self.peptideModFormat);
             // .width(width + margin.left + margin.right)
             // .height(height + margin.top + margin.bottom)
             //.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-            //.color(color)
-            //.alpha(0.4)
+                .color(color)
+
+                .alpha(alpha)
                 .height(Math.max(parallelNrows * 12, 400))
                 .width(1200);
             self.parallelHeight = parcoords2.height() + 20;
@@ -15492,7 +15662,7 @@ console.log(self.peptideModFormat);
             //     .append("g")
             //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            self.dataForParallelPeptideToProtein = parallelJson;
+            self.dataForParallelPeptideToProtein = parallelJson2;
             //***************
             //***************
 
@@ -15557,7 +15727,7 @@ console.log(self.peptideModFormat);
 
             parcoords2
                 .data(self.dataForParallelPeptideToProtein)
-                .composite("darker")
+                .composite("source-over")
                 .dimensions(dimensionsForParCoordsPepToProt)
                 // .hideAxis(['name'])
                 .render()
@@ -17021,16 +17191,16 @@ console.log(self.peptideModFormat);
                 // if ( keyIter != "undefined") {
                 //     console.log(keyIter);
                 //     if (!isNaN(keyIter) ) {
-                        //console.log(keyIter);
-                        if (self.geneToAbundance.hasOwnProperty(keyIter)) {
-                            var valueIter = self.geneToAbundance[keyIter];
-                            if (!isNaN(valueIter)) {
-                                self.genesWithAbundance.push(keyIter + " " + valueIter.toFixed(6))
-                            }
-                            else {
-                                self.genesWithAbundance.push(keyIter)
-                            }
-                        }
+                //console.log(keyIter);
+                if (self.geneToAbundance.hasOwnProperty(keyIter)) {
+                    var valueIter = self.geneToAbundance[keyIter];
+                    if (!isNaN(valueIter)) {
+                        self.genesWithAbundance.push(keyIter + " " + valueIter.toFixed(6))
+                    }
+                    else {
+                        self.genesWithAbundance.push(keyIter)
+                    }
+                }
                 //     }
                 // }
             }
@@ -17201,6 +17371,9 @@ console.log(self.peptideModFormat);
 
             refineSelectedList(self.sliderFoldChangeValue, self.sliderSignificanceValue);
             callVolcanoPlot(self.sliderFoldChangeValue, self.sliderSignificanceValue);
+        }
+        else{
+            $scope.makeParallelGrid(self.peptideToModificationList, 2);
         }
 
         //SharedService.setVar("organismFormProteinToPathway", self.organismForm);
@@ -17729,7 +17902,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     self.modificationPatternSecondFormat = /\[[a-z]+[A-Z]+\]/g;
     //self.modificationPatternForAllPTMs = /[^[\]]+(?=])/g;
 
-   // self.modificationPatternForAllPTMs = /{([()]+)}/g;
+    // self.modificationPatternForAllPTMs = /{([()]+)}/g;
     self.modificationPatternForAllPTMs = /{(.+)}/g;
     //self.modificationPatternForAllPTMs = /[^{\}]+(?=})/g
     self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
@@ -17882,7 +18055,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     // self.showOutputPtm = false;
     // self.showOutputPathway = false;
     //     self.showGeneNetwork = false;
-            //var svg = SharedService.getVar('svg');
+    //var svg = SharedService.getVar('svg');
     //SharedService.setVar('showModal', false);
 
 
@@ -18524,42 +18697,42 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         //d3.csv('./example/graph_illustration.csv', function (data) {
 
-            //console.log(data);
-            // var itemsFormatted = [];
+        //console.log(data);
+        // var itemsFormatted = [];
         var objKeys = Object.keys(self.blosum50Table[0]);
         console.log(objKeys);
 
-            // var headers = {
-            //     Category1: 'Category1'.replace(/,/g, ''), // remove commas to avoid errors
-            //     Category2: "Category2",
-            //     Relation: "Relation",
-            //     Category1Id: "Category1Id",
-            //     Category2Id: "Category2Id",
-            //     EdgeId: "EdgeId"
-            // };
+        // var headers = {
+        //     Category1: 'Category1'.replace(/,/g, ''), // remove commas to avoid errors
+        //     Category2: "Category2",
+        //     Relation: "Relation",
+        //     Category1Id: "Category1Id",
+        //     Category2Id: "Category2Id",
+        //     EdgeId: "EdgeId"
+        // };
 
         var headers = {};
         for (var i = 0; i < objKeys.length; i++){
             headers[objKeys[i]] = objKeys[i];
         }
         console.log(headers);
-            // var itemsNotFormatted = data;
-            // itemsNotFormatted.forEach( function(item){
-            //     itemsFormatted.push({
-            //         Category1: item.Category1.replace(/,/g, ''), // remove commas to avoid errors,
-            //         Category2: item.Category2.replace(/,/g, ''),
-            //         Relation: item.Relation.replace(/,/g, ''),
-            //         Category1Id: item.Category1Id.replace(/,/g, ''),
-            //         Category2Id: item.Category2Id.replace(/,/g, ''),
-            //         EdgeId: item.EdgeId.replace(/,/g, '')
-            //
-            //     });
-            // });
+        // var itemsNotFormatted = data;
+        // itemsNotFormatted.forEach( function(item){
+        //     itemsFormatted.push({
+        //         Category1: item.Category1.replace(/,/g, ''), // remove commas to avoid errors,
+        //         Category2: item.Category2.replace(/,/g, ''),
+        //         Relation: item.Relation.replace(/,/g, ''),
+        //         Category1Id: item.Category1Id.replace(/,/g, ''),
+        //         Category2Id: item.Category2Id.replace(/,/g, ''),
+        //         EdgeId: item.EdgeId.replace(/,/g, '')
+        //
+        //     });
+        // });
         console.log(self.blosum50Table);
 
-            var fileTitle = 'phosphositePlus-PTMProteinMapping'; // or 'my-unique-title'
+        var fileTitle = 'phosphositePlus-PTMProteinMapping'; // or 'my-unique-title'
 
-            exportCSVFile(headers, self.blosum50Table, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+        exportCSVFile(headers, self.blosum50Table, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
 
         //})
         // format the data
@@ -18721,11 +18894,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
-                //     console.log(e);
-                // console.log(e.match(self.modificationPatternForAllPTMs));
-                //     return e.match(self.modificationPatternForAllPTMs);
-                //
-                // });
+            //     console.log(e);
+            // console.log(e.match(self.modificationPatternForAllPTMs));
+            //     return e.match(self.modificationPatternForAllPTMs);
+            //
+            // });
             console.log("After parsing parsedPTMs");
             console.log(self.parsedPTMs);
 
@@ -18852,12 +19025,12 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 });
 
 
-                // .split(self.rowSplitPatternGenes)
-                // .map(function (e) {
-                //     if (e.indexOf('[') == -1) {
-                //         return e
-                //     }
-                // });
+            // .split(self.rowSplitPatternGenes)
+            // .map(function (e) {
+            //     if (e.indexOf('[') == -1) {
+            //         return e
+            //     }
+            // });
             self.parsedGenes.clean(undefined);
             //console.log(self.parsedGenes);
             self.geneAbundance = self.genes
@@ -19085,15 +19258,15 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi2){
-            self.ptmTitleText = "Peptides2Proteins Mapping (Distinct)";
+            self.ptmTitleText = "Unambiguously Matching Proteins";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi3){
-            self.ptmTitleText = "Peptides2Proteins Mapping (All)";
+            self.ptmTitleText = "All Matching Proteins";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi4){
-            self.ptmTitleText = "Peptides2Proteins Mapping (Representative)";
+            self.ptmTitleText = "Representative/Leading Proteins";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
 
@@ -19394,7 +19567,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 //console.log("inside deepPhosGraph");
 //             self.showDeepPhosGraphTmp = true;
 //             self.showDeepPhosGraph = false;
-        // if (!self.showSignorGraphTmp) {
+            // if (!self.showSignorGraphTmp) {
             console.log("in makeSignorGraph");
             self.showSignorGraphTmp = true;
             self.showSignorGraph = false;
@@ -20654,7 +20827,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     // var width = bbox.width;
                     // var height = bbox.height;
                     var labels = gnodes.append("text")
-                        //.style("font", "14px Times New Roman")
+                    //.style("font", "14px Times New Roman")
                         .style("font", String(fontValue) + "px Arial")
                         .attr("dx", function (d) {
                             return textPlacePlusMinus(d.group);
@@ -23927,63 +24100,63 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     min_data = -1000;
 
 
-                        var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
-                        var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
 
 
-                        var colorScale2 = d3.scale.threshold()
-                            .domain(domain_data)
-                            .range(colors);
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
 
 
-                        var legend2 = svg4deep.selectAll(".legend")
+                    var legend2 = svg4deep.selectAll(".legend")
 
-                        //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
-                            .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
 
-                                return d;
-                            });
+                            return d;
+                        });
 
-                        // //console.log("colorScale.quantiles()");
-                        // //console.log(colorScale.quantiles());
-                        legend2.enter().append("g")
-                            .attr("class", "legend");
-                        var gridSize = Math.floor(Math.min(1500, globalW) / 40);
-                        var legendElementWidth = gridSize * 2;
-                        legend2.append("rect")
-                            .attr("x", function (d, i) {
-                                return legendElementWidth * i;
-                            })
-                            .attr("y", globalHPlus50 - 40)
-                            .attr("width", legendElementWidth)
-                            .attr("height", gridSize / 2)
-                            .style("fill", function (d, i) {
-                                return colors[i];
-                            });
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(Math.min(1500, globalW) / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
 
-                        legend2.append("text")
-                        //.attr("class", "mono")
-                            .text(function (d, i) {
-                                if (i == 0) {
-                                    return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                                }
-                                else if (i == svg4deep.selectAll(".legend").data().length - 1) {
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svg4deep.selectAll(".legend").data().length - 1) {
 
-                                    return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
-                                }
-                                else {
+                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
 
-                                    return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                                }
-                                //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
-                            })
-                            .style("font", String(Math.trunc(11*Math.min(1500, globalW) /1500)) + "px Times New Roman")
-                            .attr("x", function (d, i) {
-                                return legendElementWidth * i;
-                            })
-                            .attr("y", globalHPlus50 - 40 + gridSize);
+                                return parseFloat(Math.round((svg4deep.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", String(Math.trunc(11*Math.min(1500, globalW) /1500)) + "px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
 
-                        legend2.exit().remove();
+                    legend2.exit().remove();
 
 
 
@@ -25450,9 +25623,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                             n.y = parallelCoordy(n2, totalN2)
                             n2 = n2 + 1;
                         }
-                            // n.weight = links.filter(function (l) {
-                            //     return l.source.index == n.index || l.target.index == n.index
-                            // }).size();
+                        // n.weight = links.filter(function (l) {
+                        //     return l.source.index == n.index || l.target.index == n.index
+                        // }).size();
 
                     });
 
@@ -25519,14 +25692,14 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     //
                     // });
                     var node = gnodes.append("circle")
-                        //.attr("r", function(d) {
-                            // d.sizes = lines.filter(function(l) {
-                            //     return l.source.index == d.index || l.target.index == d.index
-                            // }).size();
-                            // var minRadius = 5;
-                            // return minRadius + (d.sizes * 2);
-                        //     return colorScale(d.weight);
-                        // })
+                    //.attr("r", function(d) {
+                    // d.sizes = lines.filter(function(l) {
+                    //     return l.source.index == d.index || l.target.index == d.index
+                    // }).size();
+                    // var minRadius = 5;
+                    // return minRadius + (d.sizes * 2);
+                    //     return colorScale(d.weight);
+                    // })
                         .attr("r", function (d) {
                             return xScale(d.weight);
                         })
@@ -25835,18 +26008,18 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                             return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
                         })
 
-                        //
-                        // .attr("d", function (d) {
-                        //     var dx = d.target.x - d.source.x,
-                        //         dy = d.target.y - d.source.y,
-                        //         dr = Math.sqrt(dx * dx + dy * dy);
-                        //     return "M" +
-                        //         d.source.x + "," +
-                        //         d.source.y + "," +
-                        //         d.target.x + "," +
-                        //         d.target.y;
-                        //
-                        // });
+                    //
+                    // .attr("d", function (d) {
+                    //     var dx = d.target.x - d.source.x,
+                    //         dy = d.target.y - d.source.y,
+                    //         dr = Math.sqrt(dx * dx + dy * dy);
+                    //     return "M" +
+                    //         d.source.x + "," +
+                    //         d.source.y + "," +
+                    //         d.target.x + "," +
+                    //         d.target.y;
+                    //
+                    // });
 
 
                     var gnodes = svg4.selectAll('g.gnode')
@@ -26202,9 +26375,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                                 }
                                 ////console.log(d.value);
                                 //return colorScale(d.value);
-                             //   return d3.scale.threshold()
-                             //       .domain(d.value)
-                             //       .range(colorsForAbundance);
+                                //   return d3.scale.threshold()
+                                //       .domain(d.value)
+                                //       .range(colorsForAbundance);
 
                             }
                             else {
@@ -28767,17 +28940,17 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
                             return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
                         });
-                        // .attr("d", function (d) {
-                        //     var dx = d.target.x - d.source.x,
-                        //         dy = d.target.y - d.source.y,
-                        //         dr = Math.sqrt(dx * dx + dy * dy);
-                        //     return "M" +
-                        //         d.source.x + "," +
-                        //         d.source.y + "," +
-                        //         d.target.x + "," +
-                        //         d.target.y;
-                        //
-                        // });
+                    // .attr("d", function (d) {
+                    //     var dx = d.target.x - d.source.x,
+                    //         dy = d.target.y - d.source.y,
+                    //         dr = Math.sqrt(dx * dx + dy * dy);
+                    //     return "M" +
+                    //         d.source.x + "," +
+                    //         d.source.y + "," +
+                    //         d.target.x + "," +
+                    //         d.target.y;
+                    //
+                    // });
 
 
                     var gnodes = svg3.selectAll('g.gnode')
@@ -29525,7 +29698,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
             }
 
-     
+
             $scope.phosphoOptions = [
                 {value: "Known_Kinase_TargetGene"},
                 {value: "Predicted_Blosum50_Kinase_TargetGene"},
@@ -30412,7 +30585,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     }
     if (typeof self.listOfGenesOrptmProteins !== 'undefined' && self.listOfGenesOrptmProteins.length > 0 )
     {
-       // self.genes = self.listOfGenesOrptmProteins;
+        // self.genes = self.listOfGenesOrptmProteins;
     }
 
 
@@ -30634,7 +30807,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     var timeout;
-console.log(self.genes);
+    console.log(self.genes);
     $scope.$watch(function () {
         return self.genes
     }, function (newValue, oldValue) {
@@ -30919,15 +31092,15 @@ console.log(self.genes);
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi2){
-            self.geneTitleText = "Peptides2Proteins Mapping (Distinct)";
+            self.geneTitleText = "Unambiguously Matching Proteins";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi3){
-            self.geneTitleText = "Peptides2Proteins Mapping (All)";
+            self.geneTitleText = "All Matching Proteins";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi4){
-            self.geneTitleText = "Peptides2Proteins Mapping (Representative)";
+            self.geneTitleText = "Representative/Leading Proteins";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
 
@@ -30990,9 +31163,9 @@ console.log(self.genes);
                             total: self.ilincsKnockdown.length,  dataset: self.ilincsKnockdown,counts: [5, 10, 25]});
 
                         self.ilincsCmapTable= new NgTableParams({
-                        count: 5
+                            count: 5
                         }, {
-                        total: self.ilincsCmap.length,  dataset: self.ilincsCmap,counts: [5, 10, 25]});
+                            total: self.ilincsCmap.length,  dataset: self.ilincsCmap,counts: [5, 10, 25]});
 
                         self.ilincsPerturbationsTable = new NgTableParams({
                             count: 5
@@ -31015,9 +31188,9 @@ console.log(self.genes);
 
                     })
                     .error(function (apiIlincsError) {
-                        //console.log("Error in obtaining network from api/ilincs/signature/");
-                        //console.log(apiIlincsError);
-                        self.ilincs = {"cMAP":[],"perturbations":[],"knockdown":[]};
+                            //console.log("Error in obtaining network from api/ilincs/signature/");
+                            //console.log(apiIlincsError);
+                            self.ilincs = {"cMAP":[],"perturbations":[],"knockdown":[]};
                             self.ilincsCmap = self.ilincs["cMAP"];
                             self.ilincsPerturbations = self.ilincs["perturbations"];
                             self.ilincsKnockdown = self.ilincs["knockdown"];
@@ -31041,8 +31214,8 @@ console.log(self.genes);
                             SharedService.setVar('ilincsPerturbationsTable', self.ilincsPerturbationsTable);
                             SharedService.setVar('ilincsCmapTable', self.ilincsCmapTable);
                             SharedService.setVar('ilincsKnockdownTable', self.ilincsKnockdownTable);
-                        $scope.geneIlincsError = true;
-                    }
+                            $scope.geneIlincsError = true;
+                        }
                     );
             }
             else{
@@ -31761,68 +31934,68 @@ console.log(self.genes);
                     max_data = 1000;
                     min_data = -1000;
 
-if(1 == 0){
-                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
-                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+                    if(1 == 0){
+                        var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                        var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
 
 
-                    var colorScale2 = d3.scale.threshold()
-                        .domain(domain_data)
-                        .range(colors);
+                        var colorScale2 = d3.scale.threshold()
+                            .domain(domain_data)
+                            .range(colors);
 
 
-                    var legend2 = svgIlincs1.selectAll(".legend")
+                        var legend2 = svgIlincs1.selectAll(".legend")
 
-                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
-                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+                        //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                            .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
 
-                            return d;
-                        });
+                                return d;
+                            });
 
-                    // //console.log("colorScale.quantiles()");
-                    // //console.log(colorScale.quantiles());
-                    legend2.enter().append("g")
-                        .attr("class", "legend");
-                    var gridSize = Math.floor(Math.min(1500, globalW) / 40);
-                    var legendElementWidth = gridSize * 2;
-                    legend2.append("rect")
-                        .attr("x", function (d, i) {
-                            return legendElementWidth * i;
-                        })
-                        .attr("y", globalHPlus50 - 40)
-                        .attr("width", legendElementWidth)
-                        .attr("height", gridSize / 2)
-                        .style("fill", function (d, i) {
-                            return colors[i];
-                        });
+                        // //console.log("colorScale.quantiles()");
+                        // //console.log(colorScale.quantiles());
+                        legend2.enter().append("g")
+                            .attr("class", "legend");
+                        var gridSize = Math.floor(Math.min(1500, globalW) / 40);
+                        var legendElementWidth = gridSize * 2;
+                        legend2.append("rect")
+                            .attr("x", function (d, i) {
+                                return legendElementWidth * i;
+                            })
+                            .attr("y", globalHPlus50 - 40)
+                            .attr("width", legendElementWidth)
+                            .attr("height", gridSize / 2)
+                            .style("fill", function (d, i) {
+                                return colors[i];
+                            });
 
-                    legend2.append("text")
-                    //.attr("class", "mono")
-                        .text(function (d, i) {
-                            if (i == 0) {
-                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                            }
-                            else if (i == svgIlincs1.selectAll(".legend").data().length - 1) {
+                        legend2.append("text")
+                        //.attr("class", "mono")
+                            .text(function (d, i) {
+                                if (i == 0) {
+                                    return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                }
+                                else if (i == svgIlincs1.selectAll(".legend").data().length - 1) {
 
-                                return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
-                            }
-                            else {
+                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                                }
+                                else {
 
-                                return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                            }
-                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
-                        })
-                        .style("font", String(Math.trunc(11 * Math.min(1500, globalW) / 1500)) + "px Times New Roman")
-                        .attr("x", function (d, i) {
-                            return legendElementWidth * i;
-                        })
-                        .attr("y", globalHPlus50 - 40 + gridSize);
+                                    return parseFloat(Math.round((svgIlincs1.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                                }
+                                //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                            })
+                            .style("font", String(Math.trunc(11 * Math.min(1500, globalW) / 1500)) + "px Times New Roman")
+                            .attr("x", function (d, i) {
+                                return legendElementWidth * i;
+                            })
+                            .attr("y", globalHPlus50 - 40 + gridSize);
 
 
 
-                    legend2.exit().remove();
+                        legend2.exit().remove();
 
-}
+                    }
 
 
                 };
@@ -34262,17 +34435,17 @@ if(1 == 0){
 
                             return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
                         });
-                        // .attr("d", function (d) {
-                        //     var dx = d.target.x - d.source.x,
-                        //         dy = d.target.y - d.source.y,
-                        //         dr = Math.sqrt(dx * dx + dy * dy);
-                        //     return "M" +
-                        //         d.source.x + "," +
-                        //         d.source.y + "," +
-                        //         d.target.x + "," +
-                        //         d.target.y;
-                        //
-                        // });
+                    // .attr("d", function (d) {
+                    //     var dx = d.target.x - d.source.x,
+                    //         dy = d.target.y - d.source.y,
+                    //         dr = Math.sqrt(dx * dx + dy * dy);
+                    //     return "M" +
+                    //         d.source.x + "," +
+                    //         d.source.y + "," +
+                    //         d.target.x + "," +
+                    //         d.target.y;
+                    //
+                    // });
 
 
                     var gnodes = svg5.selectAll('g.gnode')
@@ -36591,17 +36764,17 @@ if(1 == 0){
 
                             return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
                         });
-                        // .attr("d", function (d) {
-                        //     var dx = d.target.x - d.source.x,
-                        //         dy = d.target.y - d.source.y,
-                        //         dr = Math.sqrt(dx * dx + dy * dy);
-                        //     return "M" +
-                        //         d.source.x + "," +
-                        //         d.source.y + "," +
-                        //         d.target.x + "," +
-                        //         d.target.y;
-                        //
-                        // });
+                    // .attr("d", function (d) {
+                    //     var dx = d.target.x - d.source.x,
+                    //         dy = d.target.y - d.source.y,
+                    //         dr = Math.sqrt(dx * dx + dy * dy);
+                    //     return "M" +
+                    //         d.source.x + "," +
+                    //         d.source.y + "," +
+                    //         d.target.x + "," +
+                    //         d.target.y;
+                    //
+                    // });
 
 
                     var gnodes = svg.selectAll('g.gnode')
@@ -38175,20 +38348,20 @@ if(1 == 0){
             // //console.log(network.circular);
             // update(network.nodes, network.edges, network.parallel, network.circular);
             if (self.computeWeightForUpdate) {
-            for (var iterNetNode = 0; iterNetNode < network.nodes.length; iterNetNode++)
-            {
-                var iterNetNodeKey = network.nodes[iterNetNode]["name"]
-                if (iterNetNodeKey in geneToAbundance)
+                for (var iterNetNode = 0; iterNetNode < network.nodes.length; iterNetNode++)
                 {
-                    if (geneToAbundance[iterNetNodeKey] == "NA")
+                    var iterNetNodeKey = network.nodes[iterNetNode]["name"]
+                    if (iterNetNodeKey in geneToAbundance)
                     {
-                        network.nodes[iterNetNode]["value"] = 0.0;
-                    }
-                    else {
-                        network.nodes[iterNetNode]["value"] = geneToAbundance[iterNetNodeKey];
+                        if (geneToAbundance[iterNetNodeKey] == "NA")
+                        {
+                            network.nodes[iterNetNode]["value"] = 0.0;
+                        }
+                        else {
+                            network.nodes[iterNetNode]["value"] = geneToAbundance[iterNetNodeKey];
+                        }
                     }
                 }
-            }
 
                 for (var iterNetNode = 0; iterNetNode < network.edges.length; iterNetNode++) {
                     //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
@@ -38314,19 +38487,19 @@ if(1 == 0){
         self.showKinaseGraph = false;
     }
 
-        //     <svg width="200" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        //     <defs>
-        //     <marker id="triangle" viewBox="-1 -10 2 20"
-        // refX="0" refY="0"
-        // markerUnits="strokeWidth"
-        // markerWidth="10" markerHeight="10"
-        // orient="auto">
-        //     <path d="M 0,0 m -1,-10 L 1,-10 L 1,10 L -1,10 Z" fill="#f00"/>
-        //     </marker>
-        //     </defs>
-        //     <polyline fill="none" stroke="black"
-        // points="70,80 100,60" marker-end="url(#triangle)"/>
-        // </svg>
+    //     <svg width="200" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    //     <defs>
+    //     <marker id="triangle" viewBox="-1 -10 2 20"
+    // refX="0" refY="0"
+    // markerUnits="strokeWidth"
+    // markerWidth="10" markerHeight="10"
+    // orient="auto">
+    //     <path d="M 0,0 m -1,-10 L 1,-10 L 1,10 L -1,10 Z" fill="#f00"/>
+    //     </marker>
+    //     </defs>
+    //     <polyline fill="none" stroke="black"
+    // points="70,80 100,60" marker-end="url(#triangle)"/>
+    // </svg>
     self.makeKinaseGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
 
         if(self.showKinaseGraphTmp){
@@ -38510,7 +38683,7 @@ if(1 == 0){
                             return "link ";
                         })
                         //.attr('marker-end', function(d,i){ return 'url(#marker_stub)' });
-                       .attr('marker-end', 'url(#arrowhead)');
+                        .attr('marker-end', 'url(#arrowhead)');
                     //.attr("marker-end", "url(#arrow)");
 
 
@@ -39378,379 +39551,379 @@ if(1 == 0){
 
                 };
 
-               function circosView2(){
-                   svg2.remove();
+                function circosView2(){
+                    svg2.remove();
 
-                   xScale.domain(d3.extent(nodes, function (d) {
-                       return d.weight;
-                   }));
-                   colNodeScaleSeparate.domain(d3.extent(nodes, function (d) {
-                       return d.group;
-                   }));
-                   colScale.domain(d3.extent(links, function (d) {
-                       return d.weight;
-                   }));
-                   var margin = 75,
-                       w = widthValue - 2 * margin,
-                       h = w,
-                       radius = w / 2,
-                       strokeWidth = 4,
-                       hyp2 = Math.pow(radius, 2),
-                       nodeBaseRad = 5;
+                    xScale.domain(d3.extent(nodes, function (d) {
+                        return d.weight;
+                    }));
+                    colNodeScaleSeparate.domain(d3.extent(nodes, function (d) {
+                        return d.group;
+                    }));
+                    colScale.domain(d3.extent(links, function (d) {
+                        return d.weight;
+                    }));
+                    var margin = 75,
+                        w = widthValue - 2 * margin,
+                        h = w,
+                        radius = w / 2,
+                        strokeWidth = 4,
+                        hyp2 = Math.pow(radius, 2),
+                        nodeBaseRad = 5;
 
 //These variables are global variables
-                   globalH = h;
-                   globalHPlus50 = h + 50;
-                   globalW = w;
+                    globalH = h;
+                    globalHPlus50 = h + 50;
+                    globalW = w;
 
-                   svg2 = d3.select("#chart2")
-                       .append("svg")
-                       .attr("style", "outline: thin solid yellow;")
-                       .attr("width", w)
-                       .attr("height", globalHPlus50);
-                   svg2.append("rect")
-                       .attr("width", "100%")
-                       .attr("height", "100%")
-                       .attr("fill", "white");
-
-
-                   // This is for grouping nodes
+                    svg2 = d3.select("#chart2")
+                        .append("svg")
+                        .attr("style", "outline: thin solid yellow;")
+                        .attr("width", w)
+                        .attr("height", globalHPlus50);
+                    svg2.append("rect")
+                        .attr("width", "100%")
+                        .attr("height", "100%")
+                        .attr("fill", "white");
 
 
-                   var force = d3.layout.force()
-                       .nodes(nodes)
-                       .links(links)
-                       .size([w, h]);
+                    // This is for grouping nodes
+
+
+                    var force = d3.layout.force()
+                        .nodes(nodes)
+                        .links(links)
+                        .size([w, h]);
 
 // evenly spaces nodes along arc
-                   var circleCoord = function (node, index, num_nodes) {
-                       var circumference = circle.node().getTotalLength();
-                       var pointAtLength = function (l) {
-                           return circle.node().getPointAtLength(l)
-                       };
-                       var sectionLength = (circumference) / num_nodes;
-                       var position = sectionLength * index + sectionLength / 2;
-                       return pointAtLength(circumference - position)
-                   }
+                    var circleCoord = function (node, index, num_nodes) {
+                        var circumference = circle.node().getTotalLength();
+                        var pointAtLength = function (l) {
+                            return circle.node().getPointAtLength(l)
+                        };
+                        var sectionLength = (circumference) / num_nodes;
+                        var position = sectionLength * index + sectionLength / 2;
+                        return pointAtLength(circumference - position)
+                    }
 
-                   var is_connected = function (d, opacity) {
-                       lines.transition().style("stroke-opacity", function (o) {
-                           return o.source === d || o.target === d ? 1 : opacity;
-                       });
-                   }
+                    var is_connected = function (d, opacity) {
+                        lines.transition().style("stroke-opacity", function (o) {
+                            return o.source === d || o.target === d ? 1 : opacity;
+                        });
+                    }
 
-                   var dim = w - (widthValue - circleValue);
-                   var circle = svg2.append("path")
-                       .attr("d", "M " + String((widthValue - circleValue)/2) + ", " + (dim / 2 + (widthValue - circleValue)/2) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
-                       .style("fill", "white");
+                    var dim = w - (widthValue - circleValue);
+                    var circle = svg2.append("path")
+                        .attr("d", "M " + String((widthValue - circleValue)/2) + ", " + (dim / 2 + (widthValue - circleValue)/2) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                        .style("fill", "white");
 
-                   // var dim = w - 900;
-                   // var circle = svg2.append("path")
-                   //     .attr("d", "M 450, " + (dim / 2 + 450) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
-                   //     .style("fill", "white");
+                    // var dim = w - 900;
+                    // var circle = svg2.append("path")
+                    //     .attr("d", "M 450, " + (dim / 2 + 450) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                    //     .style("fill", "white");
 
-                   force.start();
+                    force.start();
 
-                   nodes.forEach(function (n, i) {
-                       var coord = circleCoord(n, i, nodes.length)
-                       n.x = coord.x
-                       n.y = coord.y
-                   });
-
-
-                   // use this one for straight line links...
-                   // var lines = svg.selectAll("line.node-link")
-                   //     .data(links).enter().append("line")
-                   //     .attr("class", "node-link")
-                   //     .attr("x1", function(d) { return d.source.x; })
-                   //     .attr("y1", function(d) { return d.source.y; })
-                   //     .attr("x2", function(d) { return d.target.x; })
-                   //     .attr("y2", function(d) { return d.target.y; });
+                    nodes.forEach(function (n, i) {
+                        var coord = circleCoord(n, i, nodes.length)
+                        n.x = coord.x
+                        n.y = coord.y
+                    });
 
 
-                   svg2.append('defs').append('marker')
-                       .attr({
-                           'id': 'arrowhead',
-                           'viewBox': '-0 -5 10 10',
-                           'refX': 25,
-                           'refY': 0,
-                           //'markerUnits':'strokeWidth',
-                           'orient': 'auto',
-                           'markerWidth': 5,
-                           'markerHeight': 6,
-                           'xoverflow': 'visible'
-                       })
-                       .append('svg:path')
-                       .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-                       .attr('fill', 'black')
-                       .attr('stroke', '#ccc');
+                    // use this one for straight line links...
+                    // var lines = svg.selectAll("line.node-link")
+                    //     .data(links).enter().append("line")
+                    //     .attr("class", "node-link")
+                    //     .attr("x1", function(d) { return d.source.x; })
+                    //     .attr("y1", function(d) { return d.source.y; })
+                    //     .attr("x2", function(d) { return d.target.x; })
+                    //     .attr("y2", function(d) { return d.target.y; });
 
 
-                   var lines = svg2.selectAll("path.node-link")
-                       .data(links).enter().append("path")
-                       .style("fill", "none")
-                       .style("stroke", "#726363")
-                       .attr("class", "node-link")
-                       .attr("d", function (d) {
-
-                           var dx = d.target.x - d.source.x,
-                               dy = d.target.y - d.source.y,
-                               dr = Math.sqrt(dx * dx + dy * dy),
-                               a1 = dx,
-                               a2 = dy,
-                               c1 = w / 2 - d.source.x,
-                               c2 = h / 2 - d.source.y,
-                               d1 = w / 2 - d.target.x,
-                               d2 = h / 2 - d.target.y,
-
-                               drx = dr / 1.5,
-                               dry = dr / 1.5,
-                               xRotation = 0, // degrees
-                               largeArc = 0, // 1 or 0
-
-                               sweep = 1, // 1 or 0
-                               x2 = d.target.x,
-                               y2 = d.target.y;
+                    svg2.append('defs').append('marker')
+                        .attr({
+                            'id': 'arrowhead',
+                            'viewBox': '-0 -5 10 10',
+                            'refX': 25,
+                            'refY': 0,
+                            //'markerUnits':'strokeWidth',
+                            'orient': 'auto',
+                            'markerWidth': 5,
+                            'markerHeight': 6,
+                            'xoverflow': 'visible'
+                        })
+                        .append('svg:path')
+                        .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+                        .attr('fill', 'black')
+                        .attr('stroke', '#ccc');
 
 
-                           // if( (a1*c2 - a2*c1) > 0)
-                           // {
-                           //     sweep = 0
-                           // }
-                           // else
-                           // {sweep = 1}
-                           if ((c1 * d2 - c2 * d1) > 0) {
-                               sweep = 0
-                           }
-                           else {
-                               sweep = 1
-                           }
+                    var lines = svg2.selectAll("path.node-link")
+                        .data(links).enter().append("path")
+                        .style("fill", "none")
+                        .style("stroke", "#726363")
+                        .attr("class", "node-link")
+                        .attr("d", function (d) {
 
-                           if (d.target.x === d.source.x && d.target.y === d.source.y) {
-                               // Fiddle with this angle to get loop oriented.
-                               xRotation = -45;
+                            var dx = d.target.x - d.source.x,
+                                dy = d.target.y - d.source.y,
+                                dr = Math.sqrt(dx * dx + dy * dy),
+                                a1 = dx,
+                                a2 = dy,
+                                c1 = w / 2 - d.source.x,
+                                c2 = h / 2 - d.source.y,
+                                d1 = w / 2 - d.target.x,
+                                d2 = h / 2 - d.target.y,
 
-                               // Needs to be 1.
-                               largeArc = 1;
+                                drx = dr / 1.5,
+                                dry = dr / 1.5,
+                                xRotation = 0, // degrees
+                                largeArc = 0, // 1 or 0
 
-                               // Change sweep to change orientation of loop.
-                               //sweep = 0;
-
-                               // Make drx and dry different to get an ellipse
-                               // instead of a circle.
-                               drx = 30;
-                               dry = 20;
-
-                               // For whatever reason the arc collapses to a point if the beginning
-                               // and ending points of the arc are the same, so kludge it.
-                               x2 = d.target.x + 1;
-                               y2 = d.target.y + 1;
-
-                           }
+                                sweep = 1, // 1 or 0
+                                x2 = d.target.x,
+                                y2 = d.target.y;
 
 
-                           return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
-                       })
+                            // if( (a1*c2 - a2*c1) > 0)
+                            // {
+                            //     sweep = 0
+                            // }
+                            // else
+                            // {sweep = 1}
+                            if ((c1 * d2 - c2 * d1) > 0) {
+                                sweep = 0
+                            }
+                            else {
+                                sweep = 1
+                            }
+
+                            if (d.target.x === d.source.x && d.target.y === d.source.y) {
+                                // Fiddle with this angle to get loop oriented.
+                                xRotation = -45;
+
+                                // Needs to be 1.
+                                largeArc = 1;
+
+                                // Change sweep to change orientation of loop.
+                                //sweep = 0;
+
+                                // Make drx and dry different to get an ellipse
+                                // instead of a circle.
+                                drx = 30;
+                                dry = 20;
+
+                                // For whatever reason the arc collapses to a point if the beginning
+                                // and ending points of the arc are the same, so kludge it.
+                                x2 = d.target.x + 1;
+                                y2 = d.target.y + 1;
+
+                            }
 
 
-
-
-                       // .attr("d", function (d) {
-                       //     var dx = d.target.x - d.source.x,
-                       //         dy = d.target.y - d.source.y,
-                       //         dr = Math.sqrt(dx * dx + dy * dy),
-                       //         drx = dr,
-                       //         dry = dr,
-                       //         xRotation = 0, // degrees
-                       //         largeArc = 0, // 1 or 0
-                       //         sweep = 1, // 1 or 0
-                       //         x2 = d.target.x,
-                       //         y2 = d.target.y;
-                       //     ////console.log(d.source.x);
-                       //     // //console.log(d.target.x);
-                       //
-                       //     if (d.target.x === d.source.x && d.target.y === d.source.y) {
-                       //         // Fiddle with this angle to get loop oriented.
-                       //         xRotation = -45;
-                       //
-                       //         // Needs to be 1.
-                       //         largeArc = 1;
-                       //
-                       //         // Change sweep to change orientation of loop.
-                       //         //sweep = 0;
-                       //
-                       //         // Make drx and dry different to get an ellipse
-                       //         // instead of a circle.
-                       //         drx = 30;
-                       //         dry = 20;
-                       //
-                       //         // For whatever reason the arc collapses to a point if the beginning
-                       //         // and ending points of the arc are the same, so kludge it.
-                       //         x2 = d.target.x + 1;
-                       //         y2 = d.target.y + 1;
-                       //     }
-                       //
-                       //     return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
-                       //
-                       //
-                       //     //return "M" + d.source.x + "," + d.source.y + ","+ d.target.x + "," + d.target.y;
-                       //     //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-                       // })
-
-                       .attr('marker-end', 'url(#arrowhead)');
-
-
-                   var gnodes = svg2.selectAll('g.gnode')
-                       .data(nodes).enter().append('g')
-                       .attr("transform", function (d) {
-                           return "translate(" + d.x + "," + d.y + ")"
-                       })
-                       .classed('gnode', true);
-
-
-                   // node.append("circle")
-                   //     .attr("r", function (d) { return xScale(d.weight); })
-                   //     .style("fill", function(d) { return colNodeScale(d.group); });
-
-                   var node = gnodes.append("circle")
-                       .attr("r", function (d) {
-                           return xScale(d.weight);
-                       })
-                       .style("fill", function (d) {
-                           if (d.group == 0) {
-                               return colorScale(d.value);
-                           }
-                           else {
-
-                               return colNodeScaleSeparate(d.group);
-                           }
-                           //return colNodeScaleSeparate(d.group);
-                       })
-                       .style("stroke", "#333")
-                       .style("stroke-width", "2px")
-                       //.attr("class", "node")
-                       .on("mouseenter", function (d) {
-                           is_connected(d, 0.1)
-                           node.transition().duration(100).attr("r", function (d) {
-                               return xScale(d.weight);
-                           })
-                           d3.select(this).transition().duration(100).attr("r", function (d) {
-                               return xScale(d.weight + 10);
-                           })
-                       })
-                       .on("mouseleave", function (d) {
-                           node.transition().duration(100).attr("r", function (d) {
-                               return xScale(d.weight);
-                           })
-                           is_connected(d, 1);
-                       })
-                       .call(force.drag);
-
-                   var labels = gnodes.append("text")
-                       .attr("dx", 4)
-                       .attr("dy", 4)
-                       .style("font", String(fontValue) + "px Arial")
-                       //.style("font", "14px Times New Roman")
-                       .attr("text-anchor", function (d) {
-                           return d.x < w / 2 ? "end" : "start";
-                       })
-                       .attr("transform", function (d) {
-                           return d.x < w / 2 ? "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(-20)" : "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(20)";
-                       })
-                       //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
-                       //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
-                       .text(function (d) {
-                           return d.full_name
-                       })
-
-                   var drag = force.drag()
-                       .on("dragstart", dragstart);
-                   //.on("dragstart", dragstartAll);
-
-
-                   //For not moving after drag
-                   function dragstart(d) {
-                       d3.select(this).classed("fixed", d.fixed = true);
-
-                       for (i = 0; i < nodes.length; i++) {
-                           nodes[i].fixed = true;
-                       }
-                   }
-
-                   var svgText = svg2.append("text");
-                   svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
-
-                   //Added from here for coloring the legend
-                   max_data = 1000;
-                   min_data = -1000;
-
-
-                   var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
-                   var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
-
-
-                   var colorScale2 = d3.scale.threshold()
-                       .domain(domain_data)
-                       .range(colors);
-
-
-
-                   var legend2 = svg2.selectAll(".legend")
-
-                   //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
-                       .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
-
-                           return d;
-                       });
-
-                   // //console.log("colorScale.quantiles()");
-                   // //console.log(colorScale.quantiles());
+                            return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+                        })
 
 
 
 
+                        // .attr("d", function (d) {
+                        //     var dx = d.target.x - d.source.x,
+                        //         dy = d.target.y - d.source.y,
+                        //         dr = Math.sqrt(dx * dx + dy * dy),
+                        //         drx = dr,
+                        //         dry = dr,
+                        //         xRotation = 0, // degrees
+                        //         largeArc = 0, // 1 or 0
+                        //         sweep = 1, // 1 or 0
+                        //         x2 = d.target.x,
+                        //         y2 = d.target.y;
+                        //     ////console.log(d.source.x);
+                        //     // //console.log(d.target.x);
+                        //
+                        //     if (d.target.x === d.source.x && d.target.y === d.source.y) {
+                        //         // Fiddle with this angle to get loop oriented.
+                        //         xRotation = -45;
+                        //
+                        //         // Needs to be 1.
+                        //         largeArc = 1;
+                        //
+                        //         // Change sweep to change orientation of loop.
+                        //         //sweep = 0;
+                        //
+                        //         // Make drx and dry different to get an ellipse
+                        //         // instead of a circle.
+                        //         drx = 30;
+                        //         dry = 20;
+                        //
+                        //         // For whatever reason the arc collapses to a point if the beginning
+                        //         // and ending points of the arc are the same, so kludge it.
+                        //         x2 = d.target.x + 1;
+                        //         y2 = d.target.y + 1;
+                        //     }
+                        //
+                        //     return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+                        //
+                        //
+                        //     //return "M" + d.source.x + "," + d.source.y + ","+ d.target.x + "," + d.target.y;
+                        //     //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                        // })
 
-                   legend2.enter().append("g")
-                       .attr("class", "legend");
-                   var gridSize = Math.floor(Math.min(1500, globalW) / 40);
-                   var legendElementWidth = gridSize * 2;
-                   legend2.append("rect")
-                       .attr("x", function (d, i) {
-                           return legendElementWidth * i;
-                       })
-                       .attr("y", globalHPlus50 - 40)
-                       .attr("width", legendElementWidth)
-                       .attr("height", gridSize / 2)
-                       .style("fill", function (d, i) {
-                           return colors[i];
-                       });
-
-                   legend2.append("text")
-                   //.attr("class", "mono")
-                       .text(function (d, i) {
-                           if (i == 0) {
-                               return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                           }
-                           else if (i == svg2.selectAll(".legend").data().length - 1) {
-
-                               return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
-                           }
-                           else {
-
-                               return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
-                           }
-                           //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
-                       })
-                       .style("font", String(Math.trunc(11*Math.min(1500, globalW) /1500)) + "px Times New Roman")
-                       .attr("x", function (d, i) {
-                           return legendElementWidth * i;
-                       })
-                       .attr("y", globalHPlus50 - 40 + gridSize);
-
-                   legend2.exit().remove();
+                        .attr('marker-end', 'url(#arrowhead)');
 
 
-               };
+                    var gnodes = svg2.selectAll('g.gnode')
+                        .data(nodes).enter().append('g')
+                        .attr("transform", function (d) {
+                            return "translate(" + d.x + "," + d.y + ")"
+                        })
+                        .classed('gnode', true);
+
+
+                    // node.append("circle")
+                    //     .attr("r", function (d) { return xScale(d.weight); })
+                    //     .style("fill", function(d) { return colNodeScale(d.group); });
+
+                    var node = gnodes.append("circle")
+                        .attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        .style("fill", function (d) {
+                            if (d.group == 0) {
+                                return colorScale(d.value);
+                            }
+                            else {
+
+                                return colNodeScaleSeparate(d.group);
+                            }
+                            //return colNodeScaleSeparate(d.group);
+                        })
+                        .style("stroke", "#333")
+                        .style("stroke-width", "2px")
+                        //.attr("class", "node")
+                        .on("mouseenter", function (d) {
+                            is_connected(d, 0.1)
+                            node.transition().duration(100).attr("r", function (d) {
+                                return xScale(d.weight);
+                            })
+                            d3.select(this).transition().duration(100).attr("r", function (d) {
+                                return xScale(d.weight + 10);
+                            })
+                        })
+                        .on("mouseleave", function (d) {
+                            node.transition().duration(100).attr("r", function (d) {
+                                return xScale(d.weight);
+                            })
+                            is_connected(d, 1);
+                        })
+                        .call(force.drag);
+
+                    var labels = gnodes.append("text")
+                        .attr("dx", 4)
+                        .attr("dy", 4)
+                        .style("font", String(fontValue) + "px Arial")
+                        //.style("font", "14px Times New Roman")
+                        .attr("text-anchor", function (d) {
+                            return d.x < w / 2 ? "end" : "start";
+                        })
+                        .attr("transform", function (d) {
+                            return d.x < w / 2 ? "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(-20)" : "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(20)";
+                        })
+                        //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
+                        //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
+                        .text(function (d) {
+                            return d.full_name
+                        })
+
+                    var drag = force.drag()
+                        .on("dragstart", dragstart);
+                    //.on("dragstart", dragstartAll);
+
+
+                    //For not moving after drag
+                    function dragstart(d) {
+                        d3.select(this).classed("fixed", d.fixed = true);
+
+                        for (i = 0; i < nodes.length; i++) {
+                            nodes[i].fixed = true;
+                        }
+                    }
+
+                    var svgText = svg2.append("text");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+
+                    //Added from here for coloring the legend
+                    max_data = 1000;
+                    min_data = -1000;
+
+
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+
+
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
+
+
+
+                    var legend2 = svg2.selectAll(".legend")
+
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+
+                            return d;
+                        });
+
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+
+
+
+
+
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(Math.min(1500, globalW) / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
+
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svg2.selectAll(".legend").data().length - 1) {
+
+                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
+
+                                return parseFloat(Math.round((svg2.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", String(Math.trunc(11*Math.min(1500, globalW) /1500)) + "px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
+
+                    legend2.exit().remove();
+
+
+                };
 
 
                 function parallelView2() {
@@ -40020,9 +40193,9 @@ if(1 == 0){
 
                             }
                             else if (d.target.x === d.source.x ) {
-                                    drx = 30;
-                                    dry = 20;
-                                    return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+                                drx = 30;
+                                dry = 20;
+                                return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
 
                             }
                             else{
@@ -40426,18 +40599,18 @@ if(1 == 0){
 
 
             }
-if(self.computeWeightForUpdateKinase) {
-    for (var iterNetNode = 0; iterNetNode < inputNetwork.edges.length; iterNetNode++) {
-        //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
-        var idx1 = inputNetwork.edges[iterNetNode]["source"];
-        var idx2 = inputNetwork.edges[iterNetNode]["target"];
-        inputNetwork.nodes[idx1]["weight"] += 1;
-        inputNetwork.nodes[idx2]["weight"] += 1;
+            if(self.computeWeightForUpdateKinase) {
+                for (var iterNetNode = 0; iterNetNode < inputNetwork.edges.length; iterNetNode++) {
+                    //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
+                    var idx1 = inputNetwork.edges[iterNetNode]["source"];
+                    var idx2 = inputNetwork.edges[iterNetNode]["target"];
+                    inputNetwork.nodes[idx1]["weight"] += 1;
+                    inputNetwork.nodes[idx2]["weight"] += 1;
 
-    }
-    self.computeWeightForUpdateKinase = false;
-    SharedService.setVar('computeWeightForUpdateKinase',self.computeWeightForUpdateKinase);
-}
+                }
+                self.computeWeightForUpdateKinase = false;
+                SharedService.setVar('computeWeightForUpdateKinase',self.computeWeightForUpdateKinase);
+            }
 
             for (var iterNetNode = 0; iterNetNode < inputNetwork.nodes.length; iterNetNode++)
             {

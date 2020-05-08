@@ -324,17 +324,25 @@ public class RestAPI implements ErrorController {
 
 //                                        @RequestParam("file") MultipartFile file){
     public JSONObject handleFileUpload2(@RequestParam("organism") String organism,
-                                       @RequestParam("inputType") String inputType,
-                                       @RequestParam("inputCtrl") String[] inputCtrl,
-                                       @RequestParam("inputTrt") String[] inputTrt,
+                                        @RequestParam("inputType") String inputType,
+                                        @RequestParam("inputCtrl") String[] inputCtrl,
+                                        @RequestParam("inputTrt") String[] inputTrt,
                                         @RequestParam("normalFlag") String normalFlag,
-                                        @RequestParam("peptideModFormat") String peptideModFormat,
-                                       @RequestParam("file") MultipartFile file) {
+                                        @RequestParam("quantileFlag") String quantileFlag,
+                                        @RequestParam("discardFlag") String discardFlag,
+                                        @RequestParam("imputeFlag") String imputeFlag,
+//                                        @RequestParam("peptideModFormat") String peptideModFormat,
+                                        @RequestParam("file") MultipartFile file) {
 //        public ResponseEntity<?> handleFileUpload(@RequestParam("name") String name,
 //                @RequestParam("file") MultipartFile file){
+        System.out.println("------------inside upload file-----------");
         System.out.println(organism);
         System.out.println(inputType);
-        System.out.println(peptideModFormat);
+        System.out.println(normalFlag);
+        System.out.println(quantileFlag);
+        System.out.println(discardFlag);
+        System.out.println(imputeFlag);
+//        System.out.println(peptideModFormat);
 
         System.out.println(Arrays.toString(inputTrt));
         for (int i = 0; i < inputTrt.length; i++) {
@@ -349,25 +357,25 @@ public class RestAPI implements ErrorController {
         List<String> inputCtrlArray = Arrays.asList(inputCtrl);
         List<String> inputTrtArray = Arrays.asList(inputTrt);
 
-        System.out.println(inputCtrlArray);
-        System.out.println(inputTrtArray);
-        System.out.println(normalFlag);
+//        System.out.println(inputCtrlArray);
+//        System.out.println(inputTrtArray);
+
         JSONObject normalSumJson = new JSONObject();
-        for(int i=0; i<inputCtrlArray.size(); i++){
-            normalSumJson.put(inputCtrlArray.get(i),Long.valueOf(0));
+        for (int i = 0; i < inputCtrlArray.size(); i++) {
+            normalSumJson.put(inputCtrlArray.get(i), Long.valueOf(0));
         }
-        for(int i=0; i<inputTrtArray.size(); i++){
-            normalSumJson.put(inputTrtArray.get(i),Long.valueOf(0));
+        for (int i = 0; i < inputTrtArray.size(); i++) {
+            normalSumJson.put(inputTrtArray.get(i), Long.valueOf(0));
         }
 
-        System.out.println(normalSumJson.toJSONString());
+        //System.out.println(normalSumJson.toJSONString());
         Long a = Long.valueOf(12500);
-        System.out.println(a/10);
-        System.out.println(a/100);
-        System.out.println(a/500);
-        System.out.println(a/1000);
-
-        System.out.println(a/10000);
+//        System.out.println(a / 10);
+//        System.out.println(a / 100);
+//        System.out.println(a / 500);
+//        System.out.println(a / 1000);
+//
+//        System.out.println(a / 10000);
 
 
         if (!file.isEmpty()) {
@@ -383,8 +391,10 @@ public class RestAPI implements ErrorController {
             ArrayList keys = new ArrayList();
             ArrayList<String> peptides = new ArrayList<String>();
             ArrayList<String> motifs = new ArrayList<String>();
+            ArrayList<String> discardedArray = new ArrayList<String>();
             //JSONObject error1 = new JSONObject();
             JSONObject output = new JSONObject();
+            Boolean useTrembl = false;
 
             JSONObject parsedPeptide = new JSONObject();
             //JSONArray errorArray1 = new JSONArray();
@@ -396,6 +406,8 @@ public class RestAPI implements ErrorController {
             Double pv, fc;
             String message;
             String fileName = file.getOriginalFilename();
+            JSONObject peptideDictionary = new JSONObject();
+            JSONObject peptideToRazorDictionary = new JSONObject();
 
 
             JSONObject outputError = new JSONObject();
@@ -461,6 +473,7 @@ public class RestAPI implements ErrorController {
 
                     int rowIter;
                     int colIter;
+
                     Boolean first_line = true;
 
                     SXSSFWorkbook workbook = new SXSSFWorkbook();
@@ -496,7 +509,7 @@ public class RestAPI implements ErrorController {
                                 }
 
 
-                                System.out.println(keys);
+                                //System.out.println(keys);
                                 if (colIter > 2 && colIter < 5) {
 
                                     outputError.put("message", "Error: Data file column size error, at least one the groups has less than two samples.");
@@ -559,7 +572,7 @@ public class RestAPI implements ErrorController {
                                 //RowNum += 1;
                                 firstGroup = groupsArray.get(0);
                                 secondGroup = groupsArray.get(1);
-                                System.out.println("\n" + RowNum + "------------");
+                                //System.out.println("\n" + RowNum + "------------");
 
                                 JSONObject responseJSON = new JSONObject();
                                 JSONObject volcanoJSON = new JSONObject();
@@ -571,12 +584,14 @@ public class RestAPI implements ErrorController {
                                 Boolean lis1Flag = false;
                                 Boolean lis2Flag = false;
                                 Boolean eachRowError = false;
+                                JSONArray ctrlList = new JSONArray();
+                                JSONArray trtList = new JSONArray();
 
 
                                 for (colIter = 0; colIter < str.length; colIter++) {
                                     currentRow.createCell(colIter)
                                             .setCellValue(str[colIter]);
-                                    System.out.print(str[colIter] + "    ");
+                                    //System.out.print(str[colIter] + "    ");
 
 
                                     if (colIter == 0) {
@@ -600,8 +615,6 @@ public class RestAPI implements ErrorController {
                                         responseJSON.put("Peptide", peptide);
                                         responseJSON.put("sequence", motif);
                                         responseJSON.put("modification", parsedPeptide.get("modifications"));
-                                        responseJSON.put("group1", firstGroup);
-                                        responseJSON.put("group2", secondGroup);
 
 
                                     } else {
@@ -615,24 +628,30 @@ public class RestAPI implements ErrorController {
 
                                             if (groupsJson.get(keys.get(colIter)).equals(firstGroup)) {
                                                 list1.add(cellValueDouble);
+                                                JSONObject ctrlListItem = new JSONObject();
+                                                ctrlListItem.put(keys.get(colIter), cellValueDouble);
+                                                ctrlList.add(ctrlListItem);
                                                 if (cellValueDouble != 0.0) lis1Flag = true;
 
                                             } else {
                                                 list2.add(cellValueDouble);
+                                                JSONObject trtListItem = new JSONObject();
+                                                trtListItem.put(keys.get(colIter), cellValueDouble);
+                                                trtList.add(trtListItem);
                                                 if (cellValueDouble != 0.0) lis2Flag = true;
                                             }
                                             responseJSON.put(keys.get(colIter), cellValueDouble);
 
                                             if (cellValueDouble.isNaN()) {
                                                 eachRowError = true;
-                                                System.out.println(eachRowError.toString() + "--------------");
+                                                //System.out.println(eachRowError.toString() + "--------------");
                                             }
 
                                         } catch (Exception e) {
                                             outputError.put("message", String.format("Error: Value %s is not double.", str[colIter]));
                                             //return outputError;
                                             eachRowError = true;
-                                            System.out.println(eachRowError.toString() + ".........");
+                                            //System.out.println(eachRowError.toString() + ".........");
                                         }
 
 
@@ -641,7 +660,8 @@ public class RestAPI implements ErrorController {
 
                                 }
 
-
+                                responseJSON.put("group1", ctrlList);
+                                responseJSON.put("group2", trtList);
 //                        System.out.println(list1);
                                 System.out.println(eachRowError);
                                 if (!eachRowError) {
@@ -731,7 +751,7 @@ public class RestAPI implements ErrorController {
                         String currentLine = null;
                         JSONObject sheetDic = new JSONObject();
                         int RowNum = -1;
-                        JSONObject peptideDictionary = new JSONObject();
+
                         BufferedReader br = new BufferedReader(new FileReader(convertMultipartToFile(file)));
                         colIter = 0;
                         while ((currentLine = br.readLine()) != null) {
@@ -742,7 +762,8 @@ public class RestAPI implements ErrorController {
 //
 //                            }
                             RowNum++;
-//                            if (RowNum > 4000) {
+                            //System.out.println(RowNum);
+                            //                            if (RowNum > 4000) {
 //                                outputError.put("message", "Error: please contact pinet support for pinet-stand-alone package to analyze larger files..");
 //                                return outputError;
 //
@@ -797,7 +818,7 @@ public class RestAPI implements ErrorController {
                                 }
 
 
-                                System.out.println(sheetDic.toJSONString());
+                                //System.out.println(sheetDic.toJSONString());
 //                                if (colIter > 2 && colIter < 5) {
 //
 //                                    outputError.put("message", "Error: Data file column size error, at least one the groups has less than two samples.");
@@ -862,9 +883,10 @@ public class RestAPI implements ErrorController {
 //                                secondGroup = groupsArray.get(1);
 //                                try {
 
-                                if(isNumeric(str[(int) sheetDic.get("intensity")])){
-                                    Long intensity = Long.valueOf(str[(int) sheetDic.get("intensity")]) / 1000;
-
+                                if (isNumeric(str[(int) sheetDic.get("intensity")])) {
+                                    //Double.valueOf("9.78313E+2").longValue()
+                                    Long intensity = Long.valueOf(Double.valueOf(str[(int) sheetDic.get("intensity")]).longValue());
+                                    //System.out.println(intensity);
 
 //                                    System.out.println("\n" + RowNum + "------------");
 //                                    System.out.println(str[(int) sheetDic.get("proteins")]);
@@ -898,11 +920,6 @@ public class RestAPI implements ErrorController {
                                     String rawFile = str[(int) sheetDic.get("rawFile")];
 
 
-
-
-
-
-
                                     String peptideDictionaryKey = "";
                                     if (!modifiedSequence.equals("")) {
                                         peptideDictionaryKey = modifiedSequence;
@@ -923,6 +940,8 @@ public class RestAPI implements ErrorController {
 //                                    System.out.println(leadingRazorprotein);
 //                                    System.out.println(rawFile);
 //                                    System.out.println(intensity);
+                                    //peptideToRazorDictionary.put(sequensce, leadingRazorprotein);
+
                                     if (!peptideDictionary.containsKey(peptideDictionaryKey)) {
                                         JSONObject peptideDictionaryItem = new JSONObject();
                                         peptideDictionaryItem.put("ctrl", new JSONArray());
@@ -968,250 +987,294 @@ public class RestAPI implements ErrorController {
 //                                catch (Exception e){
 //                                    System.out.println("There was an error in row ");
 //
-                                }else{
-                                    System.out.println(" non numeric ------------");
+                                } else {
+                                    //System.out.println(" non numeric ------------");
 
-                                    System.out.println(str[(int) sheetDic.get("modifiedSequence")]);
-                                    System.out.println(str[(int) sheetDic.get("intensity")]);
-                                    System.out.println(isNumeric(str[(int) sheetDic.get("intensity")]));
-                                    System.out.println("------------");
+                                    //System.out.println(str[(int) sheetDic.get("modifiedSequence")]);
+                                    //System.out.println(str[(int) sheetDic.get("intensity")]);
+                                    //System.out.println(isNumeric(str[(int) sheetDic.get("intensity")]));
+                                    //System.out.println("------------");
                                 }
                             }
                         }
+                        //System.out.println("After first loop");
+                        //System.out.println("After first loop");
                         System.out.println("After first loop");
-                        System.out.println("After first loop");
-                        System.out.println("After first loop");
+                        int discarded = 0;
+                        JSONObject peptideDictionaryRefined = new JSONObject();
+                        JSONObject peptideDictionaryModified = new JSONObject();
 
                         for (Object key : peptideDictionary.keySet()) {
                             //try {
-                                //based on you key types
-                                String keySter = (String) key;
-                                Object keyvalue = peptideDictionary.get(keySter);
+                            //based on you key types
+                            String keySter = (String) key;
+                            Object keyvalue = peptideDictionary.get(keySter);
 
-                                //Print key and value
-                                System.out.println("key: " + keySter + " value: " + keyvalue);
-                                JSONObject responseJSON = new JSONObject();
-                                JSONObject volcanoJSON = new JSONObject();
-                                peptide = "";
+                            JSONArray trtArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("trt");
 
-                                ArrayList list1 = new ArrayList<Double>();
-                                ArrayList list2 = new ArrayList<Double>();
-                                ArrayList pvAndFc = new ArrayList<Double>(2);
-                                Boolean lis1Flag = false;
-                                Boolean lis2Flag = false;
-                                Boolean eachRowError = false;
 
-                                if (peptideModFormat.equals("modBefore")) {
-                                    parsedPeptide = getMotifAndModificationFromPeptideMaxQuantBefore(keySter);
-                                } else {
-                                    parsedPeptide = getMotifAndModificationFromPeptideMaxQuantAfter(keySter);
+                            JSONArray ctrlArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("ctrl");
+
+
+                            if (trtArray.size() > 0 && ctrlArray.size() > 0) {
+
+                                if ((discardFlag.equals("yes") && (trtArray.size() > (Double) (inputTrtArray.size() / 2.0) && ctrlArray.size() > (Double) (inputCtrlArray.size() / 2.0))) || discardFlag.equals("no")) {
+
+
+                                    peptideDictionaryRefined.put(keySter, keyvalue);
+
+
+
+                                }//End of check for the length of treatment and ctrl
+                                else {
+//                                    System.out.println((imputeFlag.equals("yes")));
+//                                    System.out.println((imputeFlag.equals("no")));
+//                                    System.out.println((imputeFlag.equals("yes") && (trtArray.size() > (Double) (inputTrtArray.size() / 2.0) && ctrlArray.size() > (Double) (inputCtrlArray.size() / 2.0))));
+//                                    System.out.println(( ctrlArray.size() > (Double) (inputCtrlArray.size() / 2.0))) ;
+//                                    System.out.println(( trtArray.size() > (Double) (inputTrtArray.size() / 2.0) ));
+//
+//                                    System.out.println((imputeFlag.equals("yes") && (trtArray.size() > (Double) (inputTrtArray.size() / 2.0) && ctrlArray.size() > (Double) (inputCtrlArray.size() / 2.0))) || imputeFlag.equals("no"));
+
+                                        discarded += 1;
+                                    discardedArray.add((String) key);
+//                                    System.out.println("here1");
+//                                    System.out.println("notvalid " + discarded + "-----------");
+//                                    System.out.println((String) key);
+//                                    System.out.println(trtArray);
+//                                    System.out.println(ctrlArray);
+                                    //System.out.println("trtsize: " + trtArray.size() + "  inputtrtsize/2: " + (Double) (inputTrtArray.size() / 2.0) + " ctrlsize: " + ctrlArray.size() + "  inputctrl/2: " + (Double) (inputCtrlArray.size() / 2.0));
+                                    //System.out.println("================================================");
+
                                 }
-
-                                peptide = (String) parsedPeptide.get("peptide");
-
-                                motif = (String) parsedPeptide.get("motif");
-
-
-                                peptides.add(peptide);
-                                motifs.add(motif);
-
-                                responseJSON.put("Peptide", peptide);
-                                responseJSON.put("sequence", motif);
-                                responseJSON.put("modification", parsedPeptide.get("modifications"));
-                                responseJSON.put("group1", "Control");
-                                responseJSON.put("group2", "Treatment");
-                                System.out.println(parsedPeptide);
-
-
-                                JSONArray trtArray = (JSONArray) ((JSONObject)peptideDictionary.get(keySter)).get("trt");
+                            } else {
+                                //System.out.println((trtArray.size() > 1 && ctrlArray.size() > 1));
+                                discarded += 1;
+                                discardedArray.add((String) key);
+//                                System.out.println("here2");
+                                //System.out.println("notvalid " + discarded + "-----------");
+//                                System.out.println((String) key);
+//                                System.out.println(trtArray);
+//                                System.out.println(ctrlArray);
+                                //System.out.println("trtsize: " + trtArray.size() + "  inputtrtsize/2: " + (Double) (inputTrtArray.size() / 2.0) + " ctrlsize: " + ctrlArray.size() + "  inputctrl/2: " + (Double) (inputCtrlArray.size() / 2.0));
+                                //System.out.println("================================================");
+                            }
+                        }
+                        //System.out.println("before normalizeAndImputeAndPValAndFc");
+                        //System.out.println("input is: " + peptideDictionaryRefined);
+                        peptideDictionaryModified = normalizeAndImputeAndPValAndFc(peptideDictionaryRefined, normalSumJson, normalFlag, quantileFlag, imputeFlag, inputCtrlArray.size(), inputTrtArray.size());
 
 
-                                JSONArray ctrlArray = (JSONArray) ((JSONObject)peptideDictionary.get(keySter)).get("ctrl");
+                        for (Object key : peptideDictionaryModified.keySet()) {
+                            //try {
+                            //based on you key types
+                            String keySter = (String) key;
+                            Object keyvalue = peptideDictionary.get(keySter);
+
+                            JSONArray trtArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("trt");
+
+
+                            JSONArray ctrlArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("ctrl");
+
+//
+//
+                            pv = (Double) ((JSONObject) peptideDictionary.get(keySter)).get("pv");
+
+                            fc = (Double) ((JSONObject) peptideDictionary.get(keySter)).get("fc");
+
+                            //System.out.println("key: " + keySter + " value: " + keyvalue);
+                            JSONObject responseJSON = new JSONObject();
+                            JSONObject volcanoJSON = new JSONObject();
+                            peptide = "";
+
+//                            ArrayList list1 = new ArrayList<Double>();
+//                            ArrayList list2 = new ArrayList<Double>();
+//                            ArrayList pvAndFc = new ArrayList<Double>(2);
+//                            Boolean lis1Flag = false;
+//                            Boolean lis2Flag = false;
+//                            Boolean eachRowError = false;
+
+//                                if (peptideModFormat.equals("modBefore")) {
+//                                    parsedPeptide = getMotifAndModificationFromPeptideMaxQuantBefore(keySter);
+//                                } else {
+                            parsedPeptide = getMotifAndModificationFromPeptideMaxQuantBeforeModifiedToGetRidOfInitialModification(keySter);
+                            //}
+
+                            peptide = (String) parsedPeptide.get("peptide");
+
+                            motif = (String) parsedPeptide.get("motif");
+
+
+                            String leadingRazorprotein = (String)((JSONObject) peptideDictionary.get(keySter)).get("leadingRazorprotein");
+
+                            peptideToRazorDictionary.put(motif, leadingRazorprotein);
+
+
+
+                            peptides.add(peptide);
+                            motifs.add(motif);
+
+                            responseJSON.put("Peptide", peptide);
+                            responseJSON.put("sequence", motif);
+                            responseJSON.put("modification", parsedPeptide.get("modifications"));
+
+                            //System.out.println(parsedPeptide);
+
+
+                            responseJSON.put("group1", ctrlArray);
+                            responseJSON.put("group2", trtArray);
+
+                            responseJSON.put("pv", pv);
+                            responseJSON.put("fc", fc);
+
+                            volcanoJSON.put("Peptide", peptide);
+                            volcanoJSON.put("p_value", pv);
+                            volcanoJSON.put("log2(fold_change)", fc);
+
+                            inputArray.add(responseJSON);
+                            volcanoArray.add(volcanoJSON);
 
                             //System.out.println("loop over control");
-                                for (colIter = 0; colIter < ctrlArray.size(); colIter++) {
-
-                                    JSONObject colIterItem = (JSONObject) ctrlArray.get(colIter);
-                                    for (Object colIterItemKey : colIterItem.keySet()) {
-                                        String colIterItemKeyString = (String) colIterItemKey;
-
-                                        //System.out.println( colIterItemKeyString + " > " + colIterItem.get(colIterItemKeyString));
-
-
-                                        //try {
-                                            Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
-                                            //System.out.println(cellValueDouble);
-
-
-                                            if (normalFlag.equals("yes")) {
-
-                                                cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)));
-
-
-                                            }
-
-                                            list1.add(cellValueDouble);
-                                            if (cellValueDouble != 0.0) lis1Flag = true;
-
-
-                                            responseJSON.put(colIterItemKeyString, cellValueDouble);
-
-                                            if (cellValueDouble.isNaN()) {
-                                                eachRowError = true;
-                                                System.out.println(eachRowError.toString() + "--------------");
-                                            }
-
-//                                        } catch (Exception e) {
-//                                            outputError.put("message", String.format("Error: Value %s is not double.", colIterItemKeyString));
-//                                            //return outputError;
-//                                            eachRowError = true;
+//                            for (colIter = 0; colIter < ctrlArray.size(); colIter++) {
 //
-//                                            System.out.println("error");
-//                                            System.out.println(colIterItemKeyString);
-//                                            System.out.println(colIterItem.get(colIterItemKeyString));
-//                                            System.out.println(eachRowError.toString() + ".........");
-//                                        }
-
-
-                                    }
-
-
-                                }
+//                                JSONObject colIterItem = (JSONObject) ctrlArray.get(colIter);
+//                                for (Object colIterItemKey : colIterItem.keySet()) {
+//                                    String colIterItemKeyString = (String) colIterItemKey;
+//
+//                                    //System.out.println( colIterItemKeyString + " > " + colIterItem.get(colIterItemKeyString));
+//
+//
+//                                    //try {
+//                                    Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
+//                                    //System.out.println(cellValueDouble);
+//
+//
+////                                            if (normalFlag.equals("yes")) {
+////
+////                                                cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)));
+////
+////
+////                                            }
+//
+//                                    list1.add(cellValueDouble);
+//                                    if (cellValueDouble != 0.0) lis1Flag = true;
+//
+//
+//                                    responseJSON.put(colIterItemKeyString, cellValueDouble);
+//
+//                                    if (cellValueDouble.isNaN()) {
+//                                        eachRowError = true;
+//                                        System.out.println(eachRowError.toString() + "--------------");
+//                                    }
+//
+////
+//
+//
+//                                }
+//
+//
+//                            }
                             //System.out.println("loop over treatment");
-                                for (colIter = 0; colIter < trtArray.size(); colIter++) {
-
-                                    JSONObject colIterItem = (JSONObject) trtArray.get(colIter);
-                                    for (Object colIterItemKey : colIterItem.keySet()) {
-                                        String colIterItemKeyString = (String) colIterItemKey;
-
-
-                                        try {
-                                            Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
-
-                                            if (normalFlag.equals("yes")) {
-
-                                                cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)))  ;
-
-
-                                            }
-
-                                            list2.add(cellValueDouble);
-                                            if (cellValueDouble != 0.0) lis2Flag = true;
-
-
-                                            responseJSON.put(colIterItemKeyString, cellValueDouble);
-
-                                            if (cellValueDouble.isNaN()) {
-                                                eachRowError = true;
-                                                System.out.println(eachRowError.toString() + "--------------");
-                                            }
-
-                                        } catch (Exception e) {
-                                            outputError.put("message", String.format("Error: Value %s is not double.", colIterItemKeyString));
-                                            //return outputError;
-
-                                            eachRowError = true;
-                                            System.out.println("error");
-                                            System.out.println(colIterItemKeyString);
-                                            System.out.println(colIterItem.get(colIterItemKeyString));
-                                            System.out.println(eachRowError.toString() + ".........");
-                                        }
-
-
-                                    }
-
-
-                                }
+//                            for (colIter = 0; colIter < trtArray.size(); colIter++) {
+//
+//                                JSONObject colIterItem = (JSONObject) trtArray.get(colIter);
+//                                for (Object colIterItemKey : colIterItem.keySet()) {
+//                                    String colIterItemKeyString = (String) colIterItemKey;
+//
+//
+//                                    try {
+//                                        Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
+////
+////                                                if (normalFlag.equals("yes")) {
+////
+////                                                    cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)));
+////
+////
+////                                                }
+//
+//                                        list2.add(cellValueDouble);
+//                                        if (cellValueDouble != 0.0) lis2Flag = true;
+//
+//
+//                                        responseJSON.put(colIterItemKeyString, cellValueDouble);
+//
+//                                        if (cellValueDouble.isNaN()) {
+//                                            eachRowError = true;
+//                                            System.out.println(eachRowError.toString() + "--------------");
+//                                        }
+//
+//                                    } catch (Exception e) {
+//                                        outputError.put("message", String.format("Error: Value %s is not double.", colIterItemKeyString));
+//                                        //return outputError;
+//
+//                                        eachRowError = true;
+//                                        System.out.println("error");
+//                                        System.out.println(colIterItemKeyString);
+//                                        System.out.println(colIterItem.get(colIterItemKeyString));
+//                                        System.out.println(eachRowError.toString() + ".........");
+//                                    }
+//
+//
+//                                }
+//
+//
+//                            }
 
 
 //                        System.out.println(list1);
-                                System.out.println(eachRowError);
-                                if (!eachRowError) {
-                                    if (lis1Flag && lis2Flag) {
-
-                                        if (list1.size() > 0 && list2.size() > 0) {
-                                            pvAndFc = computePValueAndFoldChange(list1, list2);
-                                            //System.out.println(pvAndFc);
-                                            pv = (Double) pvAndFc.get(0);
-                                            fc = (Double) pvAndFc.get(1);
-
-                                            responseJSON.put("pv", pv);
-                                            responseJSON.put("fc", fc);
-
-                                            volcanoJSON.put("Peptide", peptide);
-                                            volcanoJSON.put("p_value", pv);
-                                            volcanoJSON.put("log2(fold_change)", fc);
-
-                                            inputArray.add(responseJSON);
-                                            volcanoArray.add(volcanoJSON);
-                                        }
-
-                                    } else {
-
-                                        if (list1.size() > 0 && list2.size() > 0) {
-                                            pvAndFc = computePValueAndFoldChange(list1, list2);
-                                            //System.out.println(pvAndFc);
-
-                                            pv = (Double) pvAndFc.get(0);
-                                            fc = (Double) pvAndFc.get(1);
-                                            if (fc.isInfinite()) {
-                                                fc = Math.signum(fc) * 10.0;
-                                            }
-
-                                            responseJSON.put("pv", pv);
-                                            responseJSON.put("fc", fc);
-
-                                            volcanoJSON.put("Peptide", peptide);
-                                            volcanoJSON.put("p_value", pv);
-                                            volcanoJSON.put("log2(fold_change)", fc);
-
-                                            inputArray.add(responseJSON);
-                                            volcanoArray.add(volcanoJSON);
+//                            System.out.println(eachRowError);
+//                            if (!eachRowError) {
+//                                if (lis1Flag && lis2Flag) {
+//
+//                                    if (list1.size() > 0 && list2.size() > 0) {
+//                                        pvAndFc = computePValueAndFoldChange(list1, list2);
+//                                        //System.out.println(pvAndFc);
+//                                        pv = (Double) pvAndFc.get(0);
+//                                        fc = (Double) pvAndFc.get(1);
 
 
-                                        }
+//                                    }
+//
+//                                } else {
+//
+//                                    if (list1.size() > 0 && list2.size() > 0) {
+//                                        pvAndFc = computePValueAndFoldChange(list1, list2);
+//                                        //System.out.println(pvAndFc);
+//
+//                                        pv = (Double) pvAndFc.get(0);
+//                                        fc = (Double) pvAndFc.get(1);
+//                                        if (fc.isInfinite()) {
+//                                            fc = Math.signum(fc) * 10.0;
+//                                        }
+//
+//                                        responseJSON.put("pv", pv);
+//                                        responseJSON.put("fc", fc);
+//
+//                                        volcanoJSON.put("Peptide", peptide);
+//                                        volcanoJSON.put("p_value", pv);
+//                                        volcanoJSON.put("log2(fold_change)", fc);
+//
+//                                        inputArray.add(responseJSON);
+//                                        volcanoArray.add(volcanoJSON);
 
-
-                                    }
-                                    if (!lis1Flag && !lis2Flag) {
-                                        // Since one of the groups are zero
-                                        //message += String.format("Error: control and treatment lists for peptide %s are all zeros. Please delete the row and submit again.",peptide);
-                                        outputError.put("message", String.format("Error: control and treatment lists for peptide %s are all zeros. Please delete the row and submit again.", peptide));
-                                        //return outputError;
-                                    }
-
-
-                                } else {
-
-                                }
-//                            System.out.println(fc);
-//                            System.out.println("-------------");
-//                            System.out.println("-------------");
-//                            System.out.println("-------------");
-//                            pv = 0.0000001;
-//                            fc = 3.0 + 3.0 * Math.random();
-                                // Since one of the groups are zero
-//                            outputError.put("message",String.format("Error: list of control or treatment for peptide %s is all zeros. Please delete the row and submit again.",peptide));
-//                            return outputError;
-
-//                            }
-//                            catch(Exception e)
-//                            {
-//                                System.out.println("there was an error");
+//
+//                                    }
+//
+//
+//                                }
+//                                if (!lis1Flag && !lis2Flag) {
+//                                    // Since one of the groups are zero
+//                                    //message += String.format("Error: control and treatment lists for peptide %s are all zeros. Please delete the row and submit again.",peptide);
+//                                    outputError.put("message", String.format("Error: control and treatment lists for peptide %s are all zeros. Please delete the row and submit again.", peptide));
+//                                    //return outputError;
+//                                }
+//
+//
+//                            } else {
+//
 //                            }
                         }
-
-
-                    //}
-
-
-
 //
-//
-                    }
-
-
-                    else if (fileName.endsWith(".xls") || fileName.endsWith(".xlsx")){ //If we have xls or xlsx
+                    } else if (fileName.endsWith(".xls") || fileName.endsWith(".xlsx")) { //If we have xls or xlsx
 
 
                         workbook = (SXSSFWorkbook) WorkbookFactory.create(convertMultipartToFile(file));
@@ -1367,8 +1430,6 @@ public class RestAPI implements ErrorController {
                                         responseJSON.put("Peptide", cellValue);
                                         responseJSON.put("sequence", motif);
                                         responseJSON.put("modification", parsedPeptide.get("modifications"));
-                                        responseJSON.put("group1", firstGroup);
-                                        responseJSON.put("group2", secondGroup);
                                         colIter += 1;
 
                                     } else {
@@ -1399,6 +1460,9 @@ public class RestAPI implements ErrorController {
                                     }
 
                                 }
+
+                                responseJSON.put("group1", list1);
+                                responseJSON.put("group2", list2);
 
 //                        System.out.println(list1);
 //                        System.out.println(list2 );
@@ -1479,21 +1543,593 @@ public class RestAPI implements ErrorController {
 
             String[] motifArray = motifs.toArray(new String[0]);
             JSONObject motifMatch = searchForPeptides(organism, motifArray);
-            //System.out.println(inputArrayJson);
-            output.put("dataForAllPeptides", motifMatch);
+            if (inputType.equals("maxQuant")) {
+                //System.out.println("reordering motifMatch");
+                JSONObject motifMatchReordered = reorderPeptideMatching(motifMatch, peptideToRazorDictionary);
+                //System.out.println("After reordering motifMatch ================ ");
+                //System.out.println(motifMatchReordered);
+                //System.out.println("==============================");
+                useTrembl = (Boolean) motifMatchReordered.get("useTrembl");
+                JSONObject motifMatchReorderedRes = (JSONObject) motifMatchReordered.get("motifMatchReorderedRes");
+                //System.out.println("motifMatchReordered: "+ motifMatchReorderedRes);
+
+                output.put("dataForAllPeptides", motifMatchReorderedRes);
+                output.put("useTrembl", useTrembl);
+                //System.out.println(inputArrayJson);
+            } else {
+                output.put("dataForAllPeptides", motifMatch);
+                output.put("useTrembl", useTrembl);
+            }
+
+            output.put("discarded", discardedArray);
             output.put("inputArray", inputArray);
             output.put("volcanoArray", volcanoArray);
             output.put("localMotifs", motifs);
+            output.put("discarded", discardedArray);
             output.put("localPeptides", peptides);
 //            output.put("peptidesParsed",peptidesParsed);
             output.put("tag", 200);
             output.put("message", "");
-            System.out.println(output);
+            //System.out.println(output);
             return output;
             //return ResponseEntity.ok(null);
         }
         return new JSONObject();
         //return ResponseEntity.ok(null);
+    }
+
+    public JSONObject reorderPeptideMatching(JSONObject motifMatch, JSONObject peptideToRazorDictionary) {
+        JSONObject motifMatchReordered = new JSONObject();
+        JSONObject motifMatchReorderedfinal = new JSONObject();
+
+        //System.out.println("=============================");
+        //System.out.println("inside reorderPeptideMatching");
+        //System.out.println("motifMatch " + motifMatch);
+        //System.out.println("peptideToRazorDictionary " + peptideToRazorDictionary);
+        Boolean useTrembl = false;
+        for (Object key : motifMatch.keySet()) {
+            //try {
+            //based on you key types
+            String keySter = (String) key;
+            JSONObject keyvalue = (JSONObject) motifMatch.get(keySter);
+            JSONObject res = new JSONObject();
+            res.put("n_match", keyvalue.get("n_match"));
+
+            JSONArray input_matchset = (JSONArray) keyvalue.get("matchset");
+            JSONArray matchset = new JSONArray();
+            String razorProtein = "";
+
+
+            if (peptideToRazorDictionary.containsKey(keySter)) {
+                razorProtein = (String) peptideToRazorDictionary.get(keySter);
+
+            }
+            for (int iter = 0; iter < input_matchset.size(); iter++) {
+                if (((((JSONObject) input_matchset.get(iter)).get("sequence_ac")).equals(razorProtein))) {
+
+                    if(((((JSONObject) input_matchset.get(iter)).get("sequence_db")).equals("tr"))){
+                        useTrembl = true;
+                    }
+                    matchset.add(input_matchset.get(iter));
+
+                }
+            }
+            for (int iter = 0; iter < input_matchset.size(); iter++) {
+                if (!((((JSONObject) input_matchset.get(iter)).get("sequence_ac")).equals(razorProtein))) {
+                    matchset.add(input_matchset.get(iter));
+
+                }
+            }
+
+            res.put("matchset", matchset);
+
+
+            motifMatchReordered.put(keySter, res);
+
+        }
+//        ("useTrembl");
+//        JSONObject motifMatchReorderedRes = (JSONObject) motifMatchReordered.get("motifMatchReorderedRes");
+        motifMatchReorderedfinal.put("motifMatchReorderedRes", motifMatchReordered);
+        motifMatchReorderedfinal.put("useTrembl", useTrembl);
+        //System.out.println("my job is done =====================");
+        //System.out.println("my job is done =====================");
+        //System.out.println(motifMatchReorderedfinal);
+        //System.out.println("my job is done =====================");
+        //System.out.println("my job is done =====================");
+        //System.out.println("my job is done =====================");
+        return motifMatchReorderedfinal;
+
+    }
+
+    //
+//    public double getMedian(ArrayList<Long> sets) {
+//        Collections.sort(sets);
+//        int middle = sets.size() / 2;
+//        middle = middle > 0 && middle % 2 == 0 ? middle - 1 : middle;
+//        return sets.get(middle);
+//    }
+    public double getMedian(ArrayList<Double> sets) {
+        Collections.sort(sets);
+        double median;
+        //System.out.println("in getMedian");
+
+
+        int totalElements = sets.size();
+        if (totalElements % 2 == 0) {
+            double sumOfMiddleElements = (double) (sets.get(totalElements / 2) + sets.get(totalElements / 2 - 1));
+            // calculate average of middle elements
+            median = ((double) sumOfMiddleElements) / 2.0;
+        } else {
+            // get the middle element
+            median = (double) sets.get(sets.size() / 2);
+        }
+        //System.out.println(sets);
+        //System.out.println(median);
+        //System.out.println("================================");
+
+        return median;
+    }
+
+    public JSONObject normalizeAndImputeAndPValAndFc(JSONObject peptideDictionary, JSONObject normalSumJson, String normalFlag, String quantileFlag, String imputeFlag, int ctrlNumber, int trtNumber) {
+        JSONObject normalized = new JSONObject();
+        JSONObject samplePosition = new JSONObject();
+        JSONObject peptidePosition = new JSONObject();
+        JSONObject sampleMedian = new JSONObject();
+        ArrayList pvAndFc = new ArrayList<Double>(2);
+
+        //ArrayList<Long> sets;
+        ArrayList<ArrayList<Double>> matrixImputed
+                = new ArrayList<ArrayList<Double>>();
+
+        ArrayList<ArrayList<Double>> matrixRanking
+                = new ArrayList<ArrayList<Double>>();
+
+        ArrayList<ArrayList<Double>> matrixArrayToCalculateMedian
+                = new ArrayList<ArrayList<Double>>();
+        int iter_sample = 0;
+        int iter_peptide = 0;
+        //System.out.println("normalSumJson  :  " + normalSumJson);
+        //System.out.println("samples are  :  ");
+        for (Object key : normalSumJson.keySet()) {
+            samplePosition.put((String) key, iter_sample);
+            //System.out.print((String) key);
+            //System.out.print(",");
+            matrixImputed.add(new ArrayList<Double>());
+            matrixRanking.add(new ArrayList<Double>());
+            matrixArrayToCalculateMedian.add(new ArrayList<Double>());
+            iter_peptide = 0;
+
+            for (Object keyPeptide : peptideDictionary.keySet()) {
+
+                String keySter = (String) keyPeptide;
+                peptidePosition.put(keySter, iter_peptide);
+
+                matrixImputed.get(iter_sample).add(iter_peptide, Double.valueOf(-1000));
+                matrixRanking.get(iter_sample).add(iter_peptide, Double.valueOf(-1000));
+                iter_peptide += 1;
+
+            }
+            iter_sample += 1;
+
+        }
+        //System.out.println("");
+        //System.out.println("");
+        int sample_number = iter_sample;
+
+        ArrayList averages = new ArrayList<Double>();
+
+
+        //int iter = 0;
+        for (Object key : peptideDictionary.keySet()) {
+
+            averages.add(0.0);
+
+            String keySter = (String) key;
+            //System.out.println("peptide is: " + keySter);
+//            peptidePosition.put(keySter, iter);
+//            iter += 1;
+
+            ArrayList list1 = new ArrayList<Double>();
+            ArrayList list2 = new ArrayList<Double>();
+
+            JSONObject keyvalue = (JSONObject) peptideDictionary.get(keySter);
+
+            JSONArray trtArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("trt");
+
+
+            JSONArray ctrlArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("ctrl");
+
+            //System.out.println("ctrlArray is: " + ctrlArray);
+            //System.out.println("trtArray is: " + trtArray);
+
+            for (int colIter = 0; colIter < ctrlArray.size(); colIter++) {
+
+                JSONObject colIterItem = (JSONObject) ctrlArray.get(colIter);
+                for (Object colIterItemKey : colIterItem.keySet()) {
+                    String colIterItemKeyString = (String) colIterItemKey;
+
+                    //System.out.println( colIterItemKeyString + " > " + colIterItem.get(colIterItemKeyString));
+
+
+                    //try {
+                    Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
+
+                    if (normalFlag.equals("yes")) {
+
+                        cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)));
+
+                    }
+
+                    if (quantileFlag.equals("yes")) {
+
+                        matrixArrayToCalculateMedian.get((int) (samplePosition.get(colIterItemKeyString))).add(0, cellValueDouble);
+
+
+                        matrixImputed.get((int) (samplePosition.get(colIterItemKeyString))).set((int) (peptidePosition.get(keySter)), cellValueDouble);
+                        matrixRanking.get((int) (samplePosition.get(colIterItemKeyString))).set((int) (peptidePosition.get(keySter)), cellValueDouble);
+
+
+                    } else {
+                        list1.add(cellValueDouble);
+                    }
+
+
+                    //matrixArray.get(1).add(0, 366);
+//
+
+
+                }
+
+
+            }
+            //System.out.println("loop over treatment");
+            for (int colIter = 0; colIter < trtArray.size(); colIter++) {
+
+                JSONObject colIterItem = (JSONObject) trtArray.get(colIter);
+                for (Object colIterItemKey : colIterItem.keySet()) {
+                    String colIterItemKeyString = (String) colIterItemKey;
+
+
+                    Double cellValueDouble = Double.parseDouble(String.valueOf(colIterItem.get(colIterItemKeyString)));
+                    if (normalFlag.equals("yes")) {
+
+                        cellValueDouble /= Double.parseDouble(String.valueOf(normalSumJson.get(colIterItemKeyString)));
+
+                    }
+
+                    if (quantileFlag.equals("yes")) {
+
+
+                        matrixArrayToCalculateMedian.get((int) (samplePosition.get(colIterItemKeyString))).add(0, cellValueDouble);
+
+                        matrixImputed.get((int) (samplePosition.get(colIterItemKeyString))).set((int) (peptidePosition.get(keySter)), cellValueDouble);
+                        matrixRanking.get((int) (samplePosition.get(colIterItemKeyString))).set((int) (peptidePosition.get(keySter)), cellValueDouble);
+
+                    } else {
+                        list2.add(cellValueDouble);
+                    }
+                }
+
+            }
+
+            if (quantileFlag.equals("no")) {
+
+                if(imputeFlag.equals("impute_with_mean")){
+
+                    Double avg = getAverage(list1);
+                    for( int itetocomp = list1.size(); itetocomp < ctrlNumber; itetocomp++){
+                        list1.add(avg);
+                    }
+
+                    Double avg2 = getAverage(list2);
+                    for( int itetocomp = list2.size(); itetocomp < trtNumber; itetocomp++){
+                        list2.add(avg2);
+                    }
+
+                }
+
+                if(imputeFlag.equals("impute_with_zero")){
+
+                    //Double avg = getAverage(list1);
+                    for( int itetocomp = list1.size(); itetocomp < ctrlNumber; itetocomp++){
+                        list1.add(0.0);
+                    }
+
+                    //Double avg2 = getAverage(list2);
+                    for( int itetocomp = list2.size(); itetocomp < trtNumber; itetocomp++){
+                        list2.add(0.0);
+                    }
+
+                }
+
+
+                pvAndFc = computePValueAndFoldChange(list1, list2);
+                //System.out.println(pvAndFc);
+
+
+
+                Double pv = (Double) pvAndFc.get(0);
+                Double fc = (Double) pvAndFc.get(1);
+                if (fc.isInfinite()) {
+                    fc = Math.signum(fc) * 10.0;
+                }
+                keyvalue.put("pv", pv);
+                keyvalue.put("fc", fc);
+                normalized.put(keySter, keyvalue);
+            }
+
+        }
+        //System.out.println("after the second first loop -------------------");
+        //System.out.println(matrixImputed);
+        //System.out.println(matrixRanking);
+        //System.out.println("after the second first loop -------------------");
+
+
+        if (quantileFlag.equals("yes")) {
+            //int iter2 = 0;
+            for (Object key : normalSumJson.keySet()) {
+
+                double median = getMedian(matrixArrayToCalculateMedian.get((int) (samplePosition.get((String) key))));
+
+                sampleMedian.put((String) key, median);
+                //iter2 += 1;
+
+            }
+            //System.out.println("sampleMedian");
+            //System.out.println(sampleMedian);
+
+            int iter3 = 0;
+            for (Object key : peptideDictionary.keySet()) {
+
+                String peptideKey = (String) key;
+
+                for (Object skey : samplePosition.keySet()) {
+
+                    String sampleKey = (String) skey;
+                    if (matrixImputed.get((int) (samplePosition.get(sampleKey))).get((int) (peptidePosition.get(peptideKey))) == -1000) {
+                        //System.out.println("found NA for : " + peptideKey + " and " + sampleKey);
+                        matrixImputed.get((int) (samplePosition.get(sampleKey))).set((int) (peptidePosition.get(peptideKey)), (Double) sampleMedian.get(sampleKey));
+                    }
+                }
+            }
+            //System.out.println(matrixImputed);
+            //System.out.println("----------------");
+
+            JSONObject sampleIndex = new JSONObject();
+            JSONObject sampleRepeat = new JSONObject();
+            //JSONObject sampleSorted = new JSONObject();
+            //example = [1,5,4,11,5,5,4]
+            //expected:
+            //nfit =    [1,4,4,5,5,5,11]
+            //indexes = [0,3,1,6,3,3,1]
+
+            //nrepeat = [1,2,0,3,0,0,1]
+            for (Object skey : samplePosition.keySet()) {
+
+                String sampleKey = (String) skey;
+                //sampleRepeat.put(sampleKey, new JSONObject());
+
+
+                ArrayList<Double> nfit = matrixImputed.get((int) (samplePosition.get(sampleKey)));
+
+                ArrayList<Double> nstore = new ArrayList<Double>(nfit); // may need to be new ArrayList(nfit)
+                ArrayList<Integer> nrepeat = new ArrayList<Integer>(Collections.nCopies(nfit.size(), 0));
+                ArrayList<Integer> indexes = new ArrayList<Integer>(Collections.nCopies(nfit.size(), 0));
+
+
+
+                Collections.sort(nfit);
+                //sampleSorted.put(sampleKey,nfit);
+
+                //int[] indexes = new int[nfit.size()];
+
+
+                for (int n = 0; n < nfit.size(); n++) {
+                    indexes.set(n, nfit.indexOf(nstore.get(n)));
+                    Double val = (Double) averages.get(n) + nfit.get(n);
+
+                    averages.set(n,val);
+
+                    int val2 = nrepeat.get(indexes.get(n));
+                    val2 += 1;
+                    nrepeat.set(indexes.get(n),val2);
+
+                }
+
+                sampleIndex.put(sampleKey,indexes);
+                sampleRepeat.put(sampleKey,nrepeat);
+
+                //System.out.println(Arrays.toString(indexes));
+
+            }
+
+
+
+            for (int n = 0; n < averages.size(); n++) {
+                averages.set(n, (Double)averages.get(n) / Double.valueOf(sample_number));
+            }
+            //System.out.println("averages per peptide");
+            //System.out.println(averages);
+            //System.out.println("------------------------");
+            //System.out.println("sampleIndex");
+            //System.out.println(sampleIndex);
+            //System.out.println("------------------------");
+            //System.out.println("sampleRepeat");
+            //System.out.println(sampleRepeat);
+            //System.out.println("------------------------");
+
+            for (Object skey : samplePosition.keySet()) {
+
+                String sampleKey = (String) skey;
+                int samplehere = (int)samplePosition.get(sampleKey);
+                //System.out.println("sample: "+ samplehere);
+
+
+                //int peptideiteratorhere = 0;
+                for (Object keyPeptide : peptideDictionary.keySet()) {
+
+                    String keySter = (String) keyPeptide;
+                    //System.out.println("peptide: "+ keySter);
+                    int peptidehere = (int) (peptidePosition.get(keySter));
+                    //System.out.println("peptidehere: "+ peptidehere);
+                    if(matrixRanking.get(samplehere).get(peptidehere) > -1000){
+
+                        int poshere = (int) ((ArrayList)sampleIndex.get(sampleKey)).get(peptidehere);
+                        //System.out.println("poshere: "+ poshere);
+                        Double valhere = (Double)averages.get(poshere);
+
+                        int repeathere = (int) ((ArrayList)sampleRepeat.get(sampleKey)).get(poshere);
+                        //System.out.println("repeathere: "+ repeathere);
+                        for(int iteratorhere = poshere; iteratorhere < poshere + repeathere - 1; iteratorhere++){
+                            //System.out.println("in the loop iteratorhere: "+ repeathere);
+                            //System.out.println("in the loop averages.get(iteratorhere + 1): "+ averages.get(iteratorhere + 1));
+                            valhere += (Double) averages.get(iteratorhere + 1);
+                        }
+
+                        valhere /= repeathere;
+                        matrixRanking.get((int)samplePosition.get(sampleKey)).set(peptidehere, valhere);
+                    }
+                    System.out.println("======================================");
+                    //peptideiteratorhere += 1;
+
+                }
+            }
+            //System.out.println("matrixRanking");
+            //System.out.println(matrixRanking);
+            //System.out.println("------------------------");
+
+
+            for (Object key : peptideDictionary.keySet()) {
+
+                //averages.add(0.0);
+
+                String keySter = (String) key;
+                int peptidehere = (int) (peptidePosition.get(keySter));
+//            peptidePosition.put(keySter, iter);
+//            iter += 1;
+
+                ArrayList list1 = new ArrayList<Double>();
+                ArrayList list2 = new ArrayList<Double>();
+
+                JSONObject keyvalue = (JSONObject) peptideDictionary.get(keySter);
+
+                JSONArray trtArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("trt");
+
+
+                JSONArray ctrlArray = (JSONArray) ((JSONObject) peptideDictionary.get(keySter)).get("ctrl");
+
+                //System.out.println("peptide is: " + keySter);
+                //System.out.println("ctrlArray is: " + ctrlArray);
+                //System.out.println("trtArray is: " + trtArray);
+
+                for (int colIter = 0; colIter < ctrlArray.size(); colIter++) {
+
+                    JSONObject colIterItem = (JSONObject) ctrlArray.get(colIter);
+                    for (Object colIterItemKey : colIterItem.keySet()) {
+                        String colIterItemKeyString = (String) colIterItemKey;
+
+                        int samplehere = (int) samplePosition.get(colIterItemKeyString);
+                        if(matrixRanking.get(samplehere).get(peptidehere) > -1000){
+
+                            list1.add(matrixRanking.get(samplehere).get(peptidehere));
+
+                        }
+
+
+                    }
+
+
+                }
+
+                for (int colIter = 0; colIter < trtArray.size(); colIter++) {
+
+                    JSONObject colIterItem = (JSONObject) trtArray.get(colIter);
+                    for (Object colIterItemKey : colIterItem.keySet()) {
+                        String colIterItemKeyString = (String) colIterItemKey;
+
+                        int samplehere = (int) samplePosition.get(colIterItemKeyString);
+                        if(matrixRanking.get(samplehere).get(peptidehere) > -1000){
+
+                            list2.add(matrixRanking.get(samplehere).get(peptidehere));
+
+                        }
+
+
+                    }
+
+
+                }
+                //System.out.println("loop over treatment");
+
+                //System.out.println("before imputation");
+                //System.out.println("list1: "+ list1);
+                //System.out.println("list2: "+ list2);
+
+
+
+
+                if (imputeFlag.equals("impute_with_mean")) {
+
+                    Double avg = getAverage(list1);
+                    for (int itetocomp = list1.size(); itetocomp < ctrlNumber; itetocomp++) {
+                        list1.add(avg);
+                    }
+
+                    Double avg2 = getAverage(list2);
+                    for (int itetocomp = list2.size(); itetocomp < trtNumber; itetocomp++) {
+                        list2.add(avg2);
+                    }
+
+                }
+
+                if (imputeFlag.equals("impute_with_zero")) {
+
+                    //Double avg = getAverage(list1);
+                    for (int itetocomp = list1.size(); itetocomp < ctrlNumber; itetocomp++) {
+                        list1.add(0.0);
+                    }
+
+                    //Double avg2 = getAverage(list2);
+                    for (int itetocomp = list2.size(); itetocomp < trtNumber; itetocomp++) {
+                        list2.add(0.0);
+                    }
+
+                }
+
+                //System.out.println("after imputation");
+                //System.out.println("list1: "+ list1);
+                //System.out.println("list2: "+ list2);
+
+
+                pvAndFc = computePValueAndFoldChange(list1, list2);
+                //System.out.println(pvAndFc);
+
+
+                Double pv = (Double) pvAndFc.get(0);
+                Double fc = (Double) pvAndFc.get(1);
+                if (fc.isInfinite()) {
+                    fc = Math.signum(fc) * 10.0;
+                }
+                keyvalue.put("pv", pv);
+                keyvalue.put("fc", fc);
+                normalized.put(keySter, keyvalue);
+            }
+
+        }
+
+        //System.out.println("normalized:  " + normalized);
+        return normalized;
+    }
+
+    public Double getAverage(ArrayList<Double> list){
+        Double avg = 0.0;
+        if(list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                avg += list.get(i);
+            }
+            avg /= list.size();
+        }
+        return avg;
     }
 
     public ArrayList<Double> computePValueAndFoldChange(ArrayList<Double> list1, ArrayList<Double> list2) {
@@ -1523,23 +2159,53 @@ public class RestAPI implements ErrorController {
         mean2 /= list2.size();
         fc = Math.log(mean2 / mean1) / Math.log(2);
         //System.out.println(list1.size();
-        if(list1.size()>1 && list2.size()>1){
+        if (list1.size() > 1 && list2.size() > 1) {
             ttest = tt.homoscedasticTTest(objArray1, objArray2);
-            System.out.println("ttest");
-            System.out.println(ttest);
-            pvAndFc.add(0, ttest);
-        }
-        else{
+            //System.out.println("ttest");
+            //System.out.println(ttest);
+            try{
+                Double.valueOf(ttest);
+
+                if(Double.isNaN(ttest)){
+                    pvAndFc.add(0, 1.0);
+                }else{
+                    pvAndFc.add(0, ttest);
+                    //System.out.println("ttest ====================================" + ttest);
+                    //System.out.println(Double.valueOf(ttest));
+                }
+            }
+            catch (Exception ex){
+                //System.out.println("Not a valid double value");
+                pvAndFc.add(0, 1.0);
+            }
+
+        } else {
 //            ttest = 1.0;
 //            pvAndFc.add(0, ttest);
             pvAndFc.add(0, 1.0);
         }
 
-        System.out.println("fc");
-        System.out.println(fc);
+        try{
+            Double.valueOf(fc);
+            if(Double.isNaN(fc)){
+                pvAndFc.add(0, 0.0);
+            }else{
+                pvAndFc.add(1, fc);
+            }
 
+//            System.out.println("fc ====================================" + fc);
+//            System.out.println(Double.valueOf(fc));
+        }
+        catch (Exception ex){
+            //System.out.println("Not a valid double value");
+            pvAndFc.add(1, 0.0);
 
-        pvAndFc.add(1, fc);
+        }
+//        System.out.println("fc");
+//        System.out.println(fc);
+//
+//
+//        pvAndFc.add(1, fc);
 
         return pvAndFc;
     }
@@ -1876,6 +2542,16 @@ public class RestAPI implements ErrorController {
         return peptideRegexServive.getMotifAndModificationMaxQuantBefore(input);
     }
 
+    @RequestMapping(value = "api/regexMaxQuantBeforeModified/{input:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject getMotifAndModificationFromPeptideMaxQuantBeforeModifiedToGetRidOfInitialModification(@PathVariable String input) {
+        log.info(String.format("Get getMotifAndModification from: %s", input));
+
+        return peptideRegexServive.getMotifAndModificationMaxQuantBeforeModified(input);
+    }
+
+
     @RequestMapping(value = "api/regexMaxQuantAfter/{input:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -2057,7 +2733,6 @@ public class RestAPI implements ErrorController {
     JSONObject generateNetworkFromCSV() throws Exception {
 
         JSONObject network = new JSONObject();
-
 
 
         network = networkFromCSV.computeNetwork();

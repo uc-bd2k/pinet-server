@@ -168,7 +168,7 @@ public class PrideService {
         ModReader modReader = ModReader.getInstance();
         List<PTM> ptmListByMonoDeltaMass = modReader.getPTMListByPatternDescription(description);
         JSONArray ptmArray = new JSONArray();
-        System.out.print(description);
+        System.out.print("description to be found is" + description);
         try {
             for (int i = 0; i < ptmListByMonoDeltaMass.size(); i++)
             {
@@ -201,9 +201,9 @@ public class PrideService {
 //                    }
 
 //                //trimethyl
-                if (42. < (Double)ptmJson.get("averageDeltaMass") && (Double)ptmJson.get("averageDeltaMass")< 42.08){
-                    System.out.print("'" + ptmJson.get("accession") + "':'me3',");
-                }
+                    if (42. < (Double)ptmJson.get("averageDeltaMass") && (Double)ptmJson.get("averageDeltaMass")< 42.08){
+                        System.out.print("'" + ptmJson.get("accession") + "':'me3',");
+                    }
 //                //Myristo
 //                if (ptmJson.get("averageDeltaMass").equals(210.36)){
 //                    System.out.print("(" + ptmJson.get("accession") + "),");

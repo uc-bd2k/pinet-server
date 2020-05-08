@@ -44,7 +44,7 @@ public class UtilsNetwork {
     }
 
     public static UtilsNetwork getInstance() {
-System.out.println(instance);
+//System.out.println(instance);
         return instance;
     }
 
@@ -65,7 +65,7 @@ System.out.println(instance);
         }
     }
 
-//    public JSONObject parseNestedJSONObject(String jsonDataString) throws ParseException {
+    //    public JSONObject parseNestedJSONObject(String jsonDataString) throws ParseException {
 //
 //
 //        JSONParser parser = new JSONParser();

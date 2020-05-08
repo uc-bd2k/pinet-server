@@ -38,10 +38,10 @@ public class UniprotService2 {
 
         try {
             response = UtilsNetwork.getInstance().readUrlXml(uniprotUrl);
-            System.out.println("Response from readXml: " + response);
+            //System.out.println("Response from readXml: " + response);
 
             uniprotMap = UtilsNetwork.loadXMLFromString(response);
-            System.out.println("uniprotMap:" + uniprotMap.toString());
+            //System.out.println("uniprotMap:" + uniprotMap.toString());
         } catch (Exception e) {
 
             String msg =  String.format("Uniprot %s not found even in uniprot database!", protein);

@@ -940,7 +940,7 @@ Please check help tab for complete list of APIs.">
                         <!--<div class="  container-lightGrey splash" >-->
                         <h1 style="  display: flex;
   align-items: center;
-  justify-content: center;padding-top: 10px;font-size: 18px" >piNET Generic Example</h1>
+  justify-content: center;padding-top: 10px;font-size: 18px" >Generic Example</h1>
 
                         <!--</div>-->
                     </div>
@@ -1030,16 +1030,34 @@ https://github.com/uc-bd2k/pinet-server
                                     Submit MaxQuant evidence.txt file in a tab separated format. For more information about formatting please see <a href="http://www.coxdocs.org/doku.php?id=maxquant:table:evidencetable" target="_blank">
 
                                     here
-                                </a>. Please identify the control and treatment sample IDs
-                                    in the following text boxes. The intensity values are assumed to be normalized, but if selected, the intensity values will be normalized based on
-                                    the area under the curve<span
+                                </a>. Please select appropriate query database as MaxQuant may report proteins that are found in <a href="https://www.uniprot.org/help/uniprotkb_sections" target="_blank">TrEMBL</a> database. Please identify the control and treatment sample IDs
+                                    from the Raw.file column of MaxQuant evidence.txt file in the following text boxes. The samples will be grouped into control and treatment
+                                    groups based on input text boxes. If selected, the peptides that are not present in half of the control
+                                    and treatment samples are discarded. The peptides that are found in less than one samples in control and treatment are automatically discarded.
+
+
+
+                                    The intensity values are assumed to be normalized, but if selected, the intensity values will
+                                    be normalized by the total intensity/area under the curve<span
                                         style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                         data-delay='{"show":"0", "hide":"100"}'
                                         data-toggle="tooltip"
                                         title="The intensity values are devided by summation of all of peptide intensities in each sample. Please contact
-                                        piNET team if you have any questions. More normalization methods will be added. ">
-                                    </span>. Then the samples will be grouped into control and treatment
-                                    groups based on input text boxes. For each peptide statistical Student's t-test and log-2 fold change is calculated.
+                                        piNET team if you have any questions. ">
+                                    </span> and can be further renormalized by
+                                    using quantile normalization for inter-sample comparisons.
+
+
+
+
+
+                                    Missing data imputation is performed after data normalization.
+
+                                     Once
+                                    two groups are defined, a differential expression signature can be computed by ranking peptides
+                                    (or proteins) using t-statistics and log-2 fold change.
+
+
                                     <div class="row" >
                                         <div class="col-sm-6 col-md-6 col-lg-6" >
 
@@ -1124,8 +1142,10 @@ https://github.com/uc-bd2k/pinet-server
                             <div class="col-md-5 col-lg-5 col-sm-5">
                                 <div class="onerow">
                                     <div >
-                                        Download
 
+
+                                        <div ng-show="ctrl.uploadFormat == 'generic'">
+                                            Download
                                         <a href="javascript:void(0);"
 
                                            ng-click="downloadCSVExample2()"
@@ -1133,89 +1153,72 @@ https://github.com/uc-bd2k/pinet-server
                                             piNET Generic Input File</a>
 
 
-                                    <span class="boldText "> with acceptable template in csv format
-                                    <span
-                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                            data-delay='{"show":"0", "hide":"100"}'
-                                            data-toggle="tooltip"
-                                            title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
-                                    </span> </span>
-                                    or
+                                            <span class="boldText "> with acceptable template in csv format
+                                                <span
+                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                        data-delay='{"show":"0", "hide":"100"}'
+                                                        data-toggle="tooltip"
+                                                        title="Data set contains at least 5 columns, 1 for 'peptide' and at least 2 controls and at least 2 treatments. Please note that treatment and control samples have '_number' after their names. Please see the example 1 for formatting. ">
+                                                </span>
+                                            </span>
+                                            and try uploading the files.
+                                        </div>
+                                        <div ng-show="ctrl.uploadFormat == 'maxQuant'">
+                                            Download
                                         <a href="javascript:void(0);"
 
                                            ng-click="downloadTSVExample()"
                                            ng-style="{'font-weight': 'bold'}">
                                             MaxQuant Evidence File.txt</a>
 
-                                        <span class="boldText "> in tsv format
-                                            <span
-                                                    style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                                    data-delay='{"show":"0", "hide":"100"}'
-                                                    data-toggle="tooltip"
-                                                    title="Please see the detail in the 'MaxQuant Output' tab.
-                                                      ">
+                                            <span class="boldText "> in tsv format
+                                                <span
+                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                        data-delay='{"show":"0", "hide":"100"}'
+                                                        data-toggle="tooltip"
+                                                        title="Please see the detail in the 'MaxQuant Output' tab.
+                                                          ">
+                                                </span>
                                             </span>
-                                        </span>
+                                            and try uploading the files.
+                                        </div>
 
-                                    and try uploading the files.
 
                                     </div>
 
 
-<br/>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-6 col-lg-6" >
-                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                                            <span style="font-weight: bold">
-                                                Selected Format
-                                                <span
-                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                                        data-delay='{"show":"0", "hide":"100"}'
-                                                        data-toggle="tooltip"
-                                                        title="The selected format will change how the uploaded data in processed. ">
-                                                </span>
-                                            </span>
-                                            <br/>
-                                            <form>
-                                                <div id='type4'>
-                                                    <input type="radio" id="generic" name="r5" value="generic"/>
-                                                    <label for="generic" style="font-weight: normal"><span></span>piNET Generic Format</label>
-                                                    <p>
-                                                        <input type="radio" id="maxQuant" name="r5" value="maxQuant"/>
-                                                        <label for="maxQuant" style="font-weight: normal"><span></span>MaxQuant Evidence File</label>
-                                                    </p>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div  class="col-sm-6 col-md-6 col-lg-6" ng-show="ctrl.uploadFormat == 'maxQuant'">
+                                    <br/>
+                                    <div class="row" ng-show="ctrl.uploadFormat == 'maxQuant'">
 
-                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                                            <span style="font-weight: bold">
-                                                Peptide Format Selection
-                                                <span
-                                                        style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                                        data-delay='{"show":"0", "hide":"100"}'
-                                                        data-toggle="tooltip"
-                                                        title="This selection is provided by user based on the format of maxQuant_evidence.txt file. ">
-                                                </span>
-                                            </span>
-                                            <br/>
-                                            <form>
-                                                <div id='type7'>
-                                                    <input type="radio" id="modBefore" name="r9" value="modBefore"/>
-                                                    <label for="modBefore" style="font-weight: normal"><span></span>Amino Acid before Modification</label>
-                                                    <p>
-                                                        <input type="radio" id="modAfter" name="r9" value="modAfter"/>
-                                                        <label for="modAfter" style="font-weight: normal"><span></span>Amino Acid after Modification</label>
-                                                    </p>
-                                                </div>
-                                            </form>
+                                        <div  class="col-sm-6 col-md-6 col-lg-6" >
+
+                                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                            <!--<span style="font-weight: bold">-->
+                                                <!--Peptide Format Selection-->
+                                                <!--<span-->
+                                                        <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                        <!--data-toggle="tooltip"-->
+                                                        <!--title="This selection is provided by user based on the format of maxQuant_evidence.txt file. ">-->
+                                                <!--</span>-->
+                                            <!--</span>-->
+                                            <!--<br/>-->
+                                            <!--<form>-->
+                                                <!--<div id='type7'>-->
+                                                    <!--<input type="radio" id="modBefore" name="r9" value="modBefore"/>-->
+                                                    <!--<label for="modBefore" style="font-weight: normal"><span></span>Amino Acid before Modification</label>-->
+                                                    <!--<p>-->
+                                                        <!--<input type="radio" id="modAfter" name="r9" value="modAfter"/>-->
+                                                        <!--<label for="modAfter" style="font-weight: normal"><span></span>Amino Acid after Modification</label>-->
+                                                    <!--</p>-->
+                                                <!--</div>-->
+                                            <!--</form>-->
                                             <!--</div>-->
                                             <!--<br/>-->
                                             <!--<div class="col-sm-6 col-md-6 col-lg-6" ng-if="showPart_maxquant">-->
-                                            <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
+                                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
                                             <span style="font-weight: bold">
-                                                Normalization Selection
+                                                Select Normalization
                                                 <span
                                                         style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                                         data-delay='{"show":"0", "hide":"100"}'
@@ -1225,32 +1228,115 @@ https://github.com/uc-bd2k/pinet-server
                                             </span>
                                             <br/>
                                             <!--Do Normalization: <input type="checkbox" id="myCheck"  onclick="myCheckFunction()">-->
+                                            <!--<form>-->
+                                                <!--<div id='type42'>-->
+                                                    <!--<p>-->
+                                                        <!--<input type="radio" id="area" name="r42" value="area"/>-->
+                                                        <!--<label for="area" style="font-weight: normal"><span></span>Impute with Peptide Mean Intensity</label>-->
+                                                    <!--</p>-->
+                                                    <!--<p>-->
+                                                        <!--<input type="radio" id="quantile" name="r42" value="quantile"/>-->
+                                                        <!--<label for="quantile" style="font-weight: normal"><span></span>Impute with Zero</label>-->
+                                                    <!--</p>-->
+                                                    <!--<p>-->
+                                                        <!--<input type="radio" id="no_impute" name="r42" value="no_impute"/>-->
+                                                        <!--<label for="no_impute" style="font-weight: normal"><span></span>No Imputation</label>-->
+                                                    <!--</p>-->
+                                                <!--</div>-->
+                                            <!--</form>-->
 
 
-                                            <form name="myNormalizationForm" >
-                                                <div ng-repeat="gender in normalgenders">
+
+
+                                            <!--<div ng-show="false">-->
+                                                <form name="myNormalizationForm" >
+                                                    <div ng-repeat="gender in normalgenders">
+                                                        <div class="action-checkbox">
+
+                                                            <input id="{{gender}}" type="checkbox" value="{{gender}}" ng-checked="normalSelection.indexOf(gender) > -1" ng-click="toggleNormalSelection(gender)" />
+                                                            <label for="{{gender}}"></label>
+                                                            {{gender}}
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </form>
+
+                                                <span style="font-weight: bold">
+                                                    Discard Less Frequent Peptides
+                                                    <span
+                                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                            data-delay='{"show":"0", "hide":"100"}'
+                                                            data-toggle="tooltip"
+                                                            title="Discard Peptides that are not present in half of the control
+                                        and treatment samples. The peptides that are found in less than one samples in control and treatment are automatically discarded.">
+                                                    </span>
+                                                </span>
+                                            <!--</div>-->
+
+
+                                            <br/>
+                                            <!--Do Normalization: <input type="checkbox" id="myCheck"  onclick="myCheckFunction()">-->
+
+
+                                            <form name="discardForm" >
+                                                <div ng-repeat="discard in discardgenders">
                                                     <div class="action-checkbox">
-                                                        {{gender}}:
-                                                        <input id="{{gender}}" type="checkbox" value="{{gender}}" ng-checked="normalSelection.indexOf(gender) > -1" ng-click="toggleNormalSelection(gender)" />
-                                                        <label for="{{gender}}"></label>
+
+                                                        <input id="{{discard}}" type="checkbox" value="{{discard}}" ng-checked="discardSelection.indexOf(discard) > -1" ng-click="toggleDiscardSelection(discard)" />
+                                                        <label for="{{discard}}"></label>
+                                                        {{discard}}
 
                                                     </div>
                                                 </div>
 
 
                                             </form>
+                                            <!--{{normalSelection}}-->
 
-                                        <!--<form>-->
-                                            <!--<div id='type42'>-->
-                                                <!--<input type="radio" id="generic2" name="r52" value="generic2"/>-->
-                                                <!--<label for="generic2" style="font-weight: normal"><span></span>piNET Generic Format</label>-->
-                                                <!--<p>-->
-                                                    <!--<input type="radio" id="maxQuant2" name="r52" value="maxQuant2"/>-->
-                                                    <!--<label for="maxQuant2" style="font-weight: normal"><span></span>MaxQuant Evidence File</label>-->
-                                                <!--</p>-->
-                                            <!--</div>-->
-                                        <!--</form>-->
+
                                     </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6" >
+                                            <span style="font-weight: bold">
+                                                Select Missing Data Imputation:
+                                                <!--<span-->
+                                                        <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                        <!--data-toggle="tooltip"-->
+                                                        <!--title="The missing data imputation heppens after data normalization. ">-->
+                                                <!--</span>-->
+                                            </span>
+                                            <br/>
+                                            <form>
+                                                <div id='type52'>
+                                                    <p>
+                                                        <input type="radio" id="impute_with_mean" name="r52" value="impute_with_mean"/>
+                                                        <label for="impute_with_mean" style="font-weight: normal"><span></span>Impute with Peptide Mean Intensity</label>
+                                                    </p>
+                                                    <p>
+                                                        <input type="radio" id="impute_with_zero" name="r52" value="impute_with_zero"/>
+                                                        <label for="impute_with_zero" style="font-weight: normal"><span></span>Impute with Zero</label>
+                                                    </p>
+                                                    <p>
+                                                        <input type="radio" id="no_impute" name="r52" value="no_impute"/>
+                                                        <label for="no_impute" style="font-weight: normal"><span></span>No Imputation</label>
+                                                    </p>
+                                                </div>
+                                            </form>
+
+
+
+                                            <!--<form name="myNormalizationForm" >-->
+
+                                                <!--<label>-->
+                                                    <!--<input type="checkbox" id="normalSelection" name="r6" value="maxQuant">-->
+                                                <!--</label><br/>-->
+
+                                                <!--value2 = {{ctrl.uploadNormal}}-->
+                                            <!--</form>-->
+
+                                        </div>
                                     </div>
 
 
@@ -1267,7 +1353,55 @@ https://github.com/uc-bd2k/pinet-server
                                         <!--</div>-->
                                     <!--</div>-->
 
-                                    <br/>
+                                    <!--<br/>-->
+                                    <div  class="col-sm-12 col-md-12 col-lg-12" >
+
+                                        <div ng-show="ctrl.uploadFormat == 'maxQuant'">
+                                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                            <!--<hr/>-->
+
+                                            <span style="font-weight: bold">
+
+                                                    <!--<span-->
+                                                            <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                                            <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                            <!--data-toggle="tooltip"-->
+                                                            <!--title="The selected format will change how the uploaded data in processed. ">-->
+                                                    <!--</span>-->
+                                                Please Select MaxQuant Evidence File For Upload
+                                                </span>
+
+                                        </div>
+                                        <div ng-show="ctrl.uploadFormat == 'generic'">
+                                            <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+
+                                                <!--<hr/>-->
+                                                    <!--Selected Format:-->
+                                                    <!--<span-->
+                                                            <!--style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                                            <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                            <!--data-toggle="tooltip"-->
+                                                            <!--title="The selected format will change how the uploaded data in processed. ">-->
+                                                    <!--</span>-->
+                                            <span style="font-weight: bold">
+                                                Please Select Generic Format File For Upload
+                                                </span>
+
+                                        </div>
+                                    </div>
+
+                                    <!--<br/>-->
+                                    <!--<form>-->
+                                        <!--<div id='type4'>-->
+                                            <!--<input type="radio" id="generic" name="r5" value="generic"/>-->
+                                            <!--<label for="generic" style="font-weight: normal"><span></span>piNET </label>-->
+                                            <!--<p>-->
+                                                <!--<input type="radio" id="maxQuant" name="r5" value="maxQuant"/>-->
+                                                <!--<label for="maxQuant" style="font-weight: normal"><span></span></label>-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</form>-->
+
                                     <input type="file"  file-model="myFile" type="submit"
                                            class="onerow"/>
                                     <button ng-click="uploadFileAndOnSubmit()" class="btn btn-primary onerow">Upload {{ctrl.uploadFormat}} Format File
@@ -1282,7 +1416,7 @@ https://github.com/uc-bd2k/pinet-server
                                     <br/>
                                     <span ng-show="ctrl.uploadWaiting" style="color: steelblue;">
                                 <p>
-                                    &nbsp;Please don't change tabs while waiting for results.
+                                    &nbsp;Please make sure the organism is selected correctly and please don't change tabs while waiting for results.
                                 </p>
                                 <p>
                                     &nbsp;Server queries 500 peptides/sec, please wait.
@@ -1530,7 +1664,7 @@ if __name__ == '__main__':
         <div class="tabPanel-widget">
             <label for="tab-1" tabindex="0"></label>
             <input id="tab-1" type="radio" name="tabs" aria-hidden="true">
-            <h2>Summary</h2>
+            <h2>Peptide tp Protein Mapping</h2>
 
 
             <!--<input type="radio" name="tabset3" id="ex2Id" value="extab2" aria-controls="ex2">-->
@@ -1557,6 +1691,15 @@ if __name__ == '__main__':
                         </p>
                           <p>
                         &nbsp;Found <span style='color:steelblue'>{{ctrl.geneIdListLength}}</span> connected genes.
+                        </p>
+                        <p ng-show="ctrl.uploadFormat == 'maxQuant'">
+                        &nbsp;Discarded <span style='color:steelblue'>{{ctrl.numberOfDiscarded}}</span> peptides <span
+                                style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                data-delay='{"show":"0", "hide":"100"}'
+                                data-toggle="tooltip"
+                                title="The peptides that are found in less than one samples in control and treatment are automatically discarded. Also based on selection, the peptides that are not present in half of the control
+                                    and treatment samples are discarded.">
+                                                </span>.
                         </p>
                     </span>
                 </div>
@@ -1612,13 +1755,15 @@ if __name__ == '__main__':
                                 <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 1'" filter="{ group1: 'text'}"
                                     sortable="'group1'" ng-if="mapping.group1 != 'na' ">
                                     <div class="list-responsive-vertical">
-                                        {{mapping.group1}}
+                                        <span ng-repeat="group in mapping.group1" style="font-size: smaller"> {{group}}</span>
+                                        <!--{{mapping.group1}}-->
                                     </div>
                                 </td>
                                 <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 2'" filter="{ group2: 'text'}"
                                     sortable="'group2'" ng-if="mapping.group2 != 'na' ">
                                     <div class="list-responsive-vertical">
-                                        {{mapping.group2}}
+                                        <span ng-repeat="group in mapping.group2" style="font-size: smaller"> {{group}}</span>
+                                        <!--{{mapping.group2}}-->
                                     </div>
                                 </td>
                                 <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'P Value'" filter="{ pv: 'number'}"
@@ -1627,9 +1772,7 @@ if __name__ == '__main__':
                                         {{mapping.pv}}
                                     </div>
                                 </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'
-
-"
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'"
                                     sortable="'fc'" ng-if="mapping.fc != 'na' " >
                                     <div class="list-responsive-vertical">
                                         {{mapping.fc.toFixed(2)}}
@@ -1698,366 +1841,22 @@ if __name__ == '__main__':
 
                         <!--</div>-->
                     </div>
-                    <div class="well col-md-12 col-sm-12"
-                         style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
 
-                    <span>
-                        <p>
-                            &nbsp;<STRONG>Selected Peptides Based on PValue and Fold Change</STRONG>
-                        </p>
-
-                    </span>
-                    </div>
-                    <div class="well col-md-12 col-sm-12">
-                        <!--<div id="myPie"></div>-->
-                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
-
-                        <table ng-table="ctrl.selectedArrayTable" class="table table-bordered table-striped"
-                               show-filter="true">
-
-                            <tr ng-repeat="mapping in $data">
-
-                                <!--<td ng-repeat="(key, value) in mapping" style="font-weight: 400" title=key filter="{ key: 'text'}"-->
-                                <!--sortable=key  >-->
-                                <!--{{value}}-->
-                                <!--</td>-->
-                                <!--<td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;" title="'Proteins'" filter="{ proteins: 'text'}"-->
-                                <!--ng-if="mapping.proteins != 'NA' ">-->
-                                <!--<div class="list-responsive-vertical">-->
-                                <!--{{mapping.proteins}}-->
-                                <!--</div>-->
-                                <!--</td>-->
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Peptide'" filter="{ Peptide: 'text'}"
-                                    sortable="'Peptide'" ng-if="mapping.Peptide != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.Peptide}}
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Sequence'" filter="{ sequence: 'text'}"
-                                    sortable="'sequence'" ng-if="mapping.sequence != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.sequence}}
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Modifications'"
-                                    ng-if="mapping.modification != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    <span ng-repeat="mod in mapping.modification"> {{mod}}</span>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 1'" filter="{ group1: 'text'}"
-                                    sortable="'group1'" ng-if="mapping.group1 != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.group1}}
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 2'" filter="{ group2: 'text'}"
-                                    sortable="'group2'" ng-if="mapping.group2 != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.group2}}
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'P Value'" filter="{ pv: 'number'}"
-                                    sortable="'pv'" ng-if="mapping.pv != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.pv}}
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'" filter="{ fc: 'number'}"
-                                    sortable="'fc'" ng-if="mapping.fc != 'na' ">
-                                    <div class="list-responsive-vertical">
-                                    {{mapping.fc.toFixed(2)}}
-                                     <span ng-if="mapping.fc == 10.0 || mapping.fc == -10.0" style="color: steelblue"> All samples in either CTRL or TREATMENT are zeros.</span>
-                                    </div>
-                                </td>
-
-
-
-                            </tr>
-                        </table>
-
-                    </div>
 
                 </div>
-                <!--</div>-->
-
-
-                <!--&lt;!&ndash;<div class="form-group col-md-6 col-sm-6 col-sm-offset-0">&ndash;&gt;-->
-                <!--&lt;!&ndash;&lt;!&ndash;<div id="myPie"></div>&ndash;&gt;&ndash;&gt;-->
-                <!--&lt;!&ndash;<div id="subcellularDiv">&lt;!&ndash; Plotly chart will be drawn inside this DIV &ndash;&gt;</div>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</div>-->
-
-
-                <div class="well col-md-12 col-sm-12"
-                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
-
-                    <span>
-                        <p>
-                            &nbsp;<STRONG>SubCellular Locations</STRONG>
-                            <br/>
-                            &nbsp;This information is shown when available..
-                        </p>
-
-                    </span>
-                </div>
-                <div class="well col-md-12 col-sm-12" style="background-color: white">
-
-
-                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
-                    <!--<div class="row">-->
-                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <div id="subcellularDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-
-                    </div>
-                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
-
-                        <table ng-table="ctrl.tableSubCellular" class="table table-bordered table-striped"
-                               show-filter="true">
-
-                            <tr ng-repeat="mapping in $data">
-
-                                <td style="font-weight: 400" title="'Name'" filter="{ name: 'text'}"
-                                    sortable="'name'" ng-if="mapping.name != 'NA' ">
-                                    {{mapping.name}}
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
-                                    title="'Proteins'">
-                                    <div class="list-responsive-vertical">
-                                        <!--{{mapping.proteins}}-->
-                                        <span ng-repeat="prot in mapping.proteins">
-
-                                            <!--<a class="sprite_stumbleupon" href="http://www.uniprot.org/uniprot/{{prot}}" target="_blank" onclick="return windowpop(this.href, 545, 433)"></a>-->
-
-                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
-                                               <!--target="_blank">{{prot}}</a>-->
-
-                                            <a   href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
-
-
-
-                                        </span>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400" title="'Percent'"
-                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
-                                    {{mapping.percent.toFixed(2)}}
-                                </td>
-                                <!--<td title="'Name'" filter="{ name: 'text'}" sortable="'name'">-->
-                                <!--{{user.name}}</td>-->
-                                <!--<td title="'Age'" filter="{ age: 'number'}" sortable="'age'">-->
-                                <!--{{user.age}}</td>-->
-
-                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
-                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
-                                <!--<a class="tabled"-->
-                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
-                                <!--target="_blank">-->
-
-                                <!--{{mapping.SM_LINCS_ID}}-->
-                                <!--</a>-->
-                                <!--</td>-->
-
-
-                            </tr>
-                        </table>
-
-                    </div>
-                    <!--</div>-->
-
-                </div>
-
-                <div class="well col-md-12 col-sm-12"
-                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
-
-                                <span>
-                                    <p>
-                                        &nbsp;<STRONG>Gene Ontology Terms</STRONG>
-                                        <br/>
-                            &nbsp;This information is shown when available..
-                                    </p>
-
-
-                                </span>
-                </div>
-                <div class="well col-md-12 col-sm-12" style="background-color: white">
-                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
-                    <!--<div class="row">-->
-
-                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <div id="goDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-
-                    </div>
-                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
-
-                        <table ng-table="ctrl.tableGO" class="table table-bordered table-striped"
-                               show-filter="true">
-
-                            <tr ng-repeat="mapping in $data">
-
-                                <td style="font-weight: 400" title="'Id'" filter="{ id: 'text'}"
-                                    sortable="'id'" ng-if="mapping.id != 'NA' ">
-                                    <!--<a class="tabled"-->
-                                       <!--ng-href="https://www.ebi.ac.uk/QuickGO/term/{{mapping.id}}"-->
-                                       <!--target="_blank">-->
-
-                                        <!--{{mapping.id}}-->
-                                    <!--</a>-->
-
-
-                                    <a class="tabled"  href="#" ng-click="openIframeModal(mapping.id,'pinetGO')" >{{mapping.id}} </a>
-
-                                </td>
-                                <td style="font-weight: 400" title="'Value'" filter="{ value: 'text'}"
-                                    sortable="'value'" ng-if="mapping.value != 'NA' ">
-                                    {{mapping.value}}
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
-                                    title="'Proteins'">
-                                    <div class="list-responsive-vertical">
-                                        <span ng-repeat="prot in mapping.proteins">
-                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
-                                                                                       <!--target="_blank">{{prot}}</a>-->
-
-
-
-                                    <a   href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
-                                        </span>
-                                    </div>
-                                </td>
-                                <td style="font-weight: 400" title="'Percent'"
-                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
-                                    {{mapping.percent.toFixed(2)}}
-                                </td>
-
-                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
-                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
-                                <!--<a class="tabled"-->
-                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
-                                <!--target="_blank">-->
-
-                                <!--{{mapping.SM_LINCS_ID}}-->
-                                <!--</a>-->
-                                <!--</td>-->
-
-
-                            </tr>
-                        </table>
-
-                    </div>
-                    <!--</div>-->
-
-                </div>
-                <div class="well col-md-12 col-sm-12"
-                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
-
-                                <span>
-                                    <p>
-                                        &nbsp;<STRONG>Reactome Networks</STRONG>
-                                        <br/>
-                            &nbsp;This information is shown when available..
-                                    </p>
-
-
-                                </span>
-                </div>
-                <div class="well col-md-12 col-sm-12" style="background-color: white">
-                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
-                    <!--<div class="row">-->
-                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <div id="reactomeDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-
-                    </div>
-                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
-                        <!--<div id="myPie"></div>-->
-                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
-
-                        <table ng-table="ctrl.tableReactome" class="table table-bordered table-striped"
-                               show-filter="true">
-
-                            <tr ng-repeat="mapping in $data">
-
-                                <td style="font-weight: 400" title="'Id'" filter="{ id: 'text'}"
-                                    sortable="'id'" ng-if="mapping.id != 'NA' ">
-                                    <!--<a class="tabled"-->
-                                       <!--ng-href="https://reactome.org/content/detail/{{mapping.id}}"-->
-                                       <!--target="_blank">-->
-
-                                        <!--{{mapping.id}}-->
-                                    <!--</a>-->
-
-
-                                    <a  class="tabled" href="#" ng-click="openIframeModal(mapping.id,'pinetReactome')" >{{mapping.id}} </a>
-                                </td>
-
-                                <td style="font-weight: 400" title="'Value'" filter="{ value: 'text'}"
-                                    sortable="'value'" ng-if="mapping.value != 'NA' ">
-                                    {{mapping.value}}
-                                </td>
-                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
-                                    title="'Proteins'">
-                                    <div class="list-responsive-vertical">
-                                        <span ng-repeat="prot in mapping.proteins">
-
-                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
-                                               <!--target="_blank">{{prot}}</a>-->
-
-                                            <a  href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
-
-                                        </span>
-                                    </div>
-                                </td>
-
-                                <td style="font-weight: 400" title="'Percent'"
-                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
-                                    {{mapping.percent.toFixed(2)}}
-                                </td>
-
-                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
-                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
-                                <!--<a class="tabled"-->
-                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
-                                <!--target="_blank">-->
-
-                                <!--{{mapping.SM_LINCS_ID}}-->
-                                <!--</a>-->
-                                <!--</td>-->
-
-
-                            </tr>
-                        </table>
-
-                    </div>
-                    <!--</div>-->
-
-                </div>
-                <!--</div>-->
-                <!--<div id="multiplePieChartDiv">&lt;!&ndash; Plotly chart will be drawn inside this DIV &ndash;&gt;</div>-->
-
-
-            </div>
-            <label for="tab-2" tabindex="0"></label>
-            <input id="tab-2" type="radio" name="tabs" aria-hidden="true">
-            <h2>Peptide To Protein Mapping</h2>
-            <div class="container-fluid"
-                 style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
 
                 <div class="well col-sm-12" ng-show="ctrl.showOutput && !waiting && !ctrl.secondPageQuery"
                      style="background-color: transparent; border-color: #999999">
 
-                    <button class="btn btn-primary " ng-click="makeParallelGrid(ctrl.peptideToModificationList, 1);">
-                        Explore
-                        Peptide to
-                        Protein Mapping for Selected Peptides
-                    </button>
+                    <!--<button class="btn btn-primary " ng-click="makeParallelGrid(ctrl.peptideToModificationList, 1);">-->
+                        <!--Explore-->
+                        <!--Peptide to-->
+                        <!--Protein Mapping for Selected Peptides-->
+                    <!--</button>-->
+                    <p style="font-weight: bold">
+                        Aggregate peptide level data in order to assign values to proteins according to one of the three methods below
+
+                    </p>
                     <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
                         <p >The mapping gets updated based on the volcano plot selection.</p>
                     </div>
@@ -2069,7 +1868,7 @@ if __name__ == '__main__':
                             <!--<div class="well col-sm-12">-->
                             <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2" >Peptides2Proteins Mapping (Representative)
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2" >Representative/Leading Proteins
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -2087,7 +1886,7 @@ if __name__ == '__main__':
   color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
                             </div>
 
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1" >Peptides2Proteins Mapping (All)
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi1" >All Matching Proteins
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -2107,7 +1906,7 @@ if __name__ == '__main__':
 
                             <!--</div>-->
                             <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3" >Peptides2Proteins Mapping (Distinct)
+                            <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3" >Unambiguously Matching Proteins
                                 <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                       data-delay='{"show":"0", "hide":"100"}'
                                       data-toggle="popover-hover"
@@ -2168,32 +1967,135 @@ Also the type of peptide to protein mapping may change the graph.">
 
                         </div>
 
+                        <!--<div id="plotlyParallelDiv">&lt;!&ndash; Plotly chart will be drawn inside this DIV &ndash;&gt;</div>-->
+
                         <!--<div>-->
-                            <!--<button class="btn1top" id='download-pngParallel'>-->
+                        <!--<button class="btn1top" id='download-pngParallel'>-->
 
-                                    <!--<span style="color:#1c3448;" class="fa fa-download"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="download as PNG">-->
-                                    <!--</span>-->
-                            <!--</button>-->
+                        <!--<span style="color:#1c3448;" class="fa fa-download"-->
+                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                        <!--data-toggle="tooltip"-->
+                        <!--title="download as PNG">-->
+                        <!--</span>-->
+                        <!--</button>-->
 
-                            <!--<button class="btn2top" id='download-svgParallel'>-->
+                        <!--<button class="btn2top" id='download-svgParallel'>-->
 
-                                    <!--<span style="color:#1c3448;" class="fa fa-cloud-download"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="download as SVG">-->
-                                    <!--</span>-->
-                            <!--</button>-->
+                        <!--<span style="color:#1c3448;" class="fa fa-cloud-download"-->
+                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                        <!--data-toggle="tooltip"-->
+                        <!--title="download as SVG">-->
+                        <!--</span>-->
+                        <!--</button>-->
                         <!--</div>-->
 
                     </div>
                 </div>
 
+                <div ng-show="ctrl.showOutputex1orex2 == 'ex2Id'">
+                    <div class="well col-md-12 col-sm-12"
+                         style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
+
+                    <span>
+                        <p>
+                            &nbsp;<STRONG>Selected Peptides Based on PValue and Fold Change</STRONG>
+                        </p>
+
+                    </span>
+                    </div>
+                    <div class="well col-md-12 col-sm-12">
+                        <!--<div id="myPie"></div>-->
+                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
+
+                        <table ng-table="ctrl.selectedArrayTable" class="table table-bordered table-striped"
+                               show-filter="true">
+
+                            <tr ng-repeat="mapping in $data">
+
+                                <!--<td ng-repeat="(key, value) in mapping" style="font-weight: 400" title=key filter="{ key: 'text'}"-->
+                                <!--sortable=key  >-->
+                                <!--{{value}}-->
+                                <!--</td>-->
+                                <!--<td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;" title="'Proteins'" filter="{ proteins: 'text'}"-->
+                                <!--ng-if="mapping.proteins != 'NA' ">-->
+                                <!--<div class="list-responsive-vertical">-->
+                                <!--{{mapping.proteins}}-->
+                                <!--</div>-->
+                                <!--</td>-->
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Peptide'" filter="{ Peptide: 'text'}"
+                                    sortable="'Peptide'" ng-if="mapping.Peptide != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        {{mapping.Peptide}}
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Sequence'" filter="{ sequence: 'text'}"
+                                    sortable="'sequence'" ng-if="mapping.sequence != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        {{mapping.sequence}}
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Modifications'"
+                                    ng-if="mapping.modification != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        <span ng-repeat="mod in mapping.modification"> {{mod}}</span>
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 1'" filter="{ group1: 'text'}"
+                                    sortable="'group1'" ng-if="mapping.group1 != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        <span ng-repeat="group in mapping.group1" style="font-size: smaller"> {{group}}</span>
+                                        <!--{{mapping.group1}}-->
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Group 2'" filter="{ group2: 'text'}"
+                                    sortable="'group2'" ng-if="mapping.group2 != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        <span ng-repeat="group in mapping.group2" style="font-size: smaller"> {{group}}</span>
+                                        <!--{{mapping.group2}}-->
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'P Value'" filter="{ pv: 'number'}"
+                                    sortable="'pv'" ng-if="mapping.pv != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        {{mapping.pv}}
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:14%;max-width: 1px;" title="'Log2(Fold Change)'" filter="{ fc: 'number'}"
+                                    sortable="'fc'" ng-if="mapping.fc != 'na' ">
+                                    <div class="list-responsive-vertical">
+                                        {{mapping.fc.toFixed(2)}}
+                                        <span ng-if="mapping.fc == 10.0 || mapping.fc == -10.0" style="color: steelblue"> All samples in either CTRL or TREATMENT are zeros.</span>
+                                    </div>
+                                </td>
+
+
+
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <!--</div>-->
+
+
+                <!--&lt;!&ndash;<div class="form-group col-md-6 col-sm-6 col-sm-offset-0">&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<div id="myPie"></div>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;<div id="subcellularDiv">&lt;!&ndash; Plotly chart will be drawn inside this DIV &ndash;&gt;</div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+
+
+
+                <!--</div>-->
+                <!--<div id="multiplePieChartDiv">&lt;!&ndash; Plotly chart will be drawn inside this DIV &ndash;&gt;</div>-->
+
+
             </div>
-            <label for="tab-3" tabindex="0"></label>
-            <input id="tab-3" type="radio" name="tabs" aria-hidden="true">
+
+
+            <label for="tab-2" tabindex="0"></label>
+            <input id="tab-2" type="radio" name="tabs" aria-hidden="true">
             <h2>Results in Tabular Format</h2>
             <div class="container-fluid"
                  style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
@@ -2678,6 +2580,279 @@ Also the type of peptide to protein mapping may change the graph.">
 
                 </div>
             </div>
+
+            <label for="tab-3" tabindex="0"></label>
+            <input id="tab-3" type="radio" name="tabs" aria-hidden="true">
+            <h2>Cellular Summary</h2>
+            <div class="container-fluid"
+                 style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+
+
+                <div class="well col-md-12 col-sm-12"
+                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
+
+                    <span>
+                        <p>
+                            &nbsp;<STRONG>SubCellular Locations</STRONG>
+                            <br/>
+                            &nbsp;This information is shown when available..
+                        </p>
+
+                    </span>
+                </div>
+                <div class="well col-md-12 col-sm-12" style="background-color: white">
+
+
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
+                    <!--<div class="row">-->
+                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <div id="subcellularDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+                    </div>
+                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
+
+                        <table ng-table="ctrl.tableSubCellular" class="table table-bordered table-striped"
+                               show-filter="true">
+
+                            <tr ng-repeat="mapping in $data">
+
+                                <td style="font-weight: 400" title="'Name'" filter="{ name: 'text'}"
+                                    sortable="'name'" ng-if="mapping.name != 'NA' ">
+                                    {{mapping.name}}
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
+                                    title="'Proteins'">
+                                    <div class="list-responsive-vertical">
+                                        <!--{{mapping.proteins}}-->
+                                        <span ng-repeat="prot in mapping.proteins">
+
+                                            <!--<a class="sprite_stumbleupon" href="http://www.uniprot.org/uniprot/{{prot}}" target="_blank" onclick="return windowpop(this.href, 545, 433)"></a>-->
+
+                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
+                                            <!--target="_blank">{{prot}}</a>-->
+
+                                            <a   href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
+
+
+
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400" title="'Percent'"
+                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
+                                    {{mapping.percent.toFixed(2)}}
+                                </td>
+                                <!--<td title="'Name'" filter="{ name: 'text'}" sortable="'name'">-->
+                                <!--{{user.name}}</td>-->
+                                <!--<td title="'Age'" filter="{ age: 'number'}" sortable="'age'">-->
+                                <!--{{user.age}}</td>-->
+
+                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
+                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
+                                <!--<a class="tabled"-->
+                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
+                                <!--target="_blank">-->
+
+                                <!--{{mapping.SM_LINCS_ID}}-->
+                                <!--</a>-->
+                                <!--</td>-->
+
+
+                            </tr>
+                        </table>
+
+                    </div>
+                    <!--</div>-->
+
+                </div>
+
+                <div class="well col-md-12 col-sm-12"
+                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
+
+                                <span>
+                                    <p>
+                                        &nbsp;<STRONG>Gene Ontology Terms</STRONG>
+                                        <br/>
+                            &nbsp;This information is shown when available..
+                                    </p>
+
+
+                                </span>
+                </div>
+                <div class="well col-md-12 col-sm-12" style="background-color: white">
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
+                    <!--<div class="row">-->
+
+                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <div id="goDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+                    </div>
+                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
+
+                        <table ng-table="ctrl.tableGO" class="table table-bordered table-striped"
+                               show-filter="true">
+
+                            <tr ng-repeat="mapping in $data">
+
+                                <td style="font-weight: 400" title="'Id'" filter="{ id: 'text'}"
+                                    sortable="'id'" ng-if="mapping.id != 'NA' ">
+                                    <!--<a class="tabled"-->
+                                    <!--ng-href="https://www.ebi.ac.uk/QuickGO/term/{{mapping.id}}"-->
+                                    <!--target="_blank">-->
+
+                                    <!--{{mapping.id}}-->
+                                    <!--</a>-->
+
+
+                                    <a class="tabled"  href="#" ng-click="openIframeModal(mapping.id,'pinetGO')" >{{mapping.id}} </a>
+
+                                </td>
+                                <td style="font-weight: 400" title="'Value'" filter="{ value: 'text'}"
+                                    sortable="'value'" ng-if="mapping.value != 'NA' ">
+                                    {{mapping.value}}
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
+                                    title="'Proteins'">
+                                    <div class="list-responsive-vertical">
+                                        <span ng-repeat="prot in mapping.proteins">
+                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
+                                            <!--target="_blank">{{prot}}</a>-->
+
+
+
+                                    <a   href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="font-weight: 400" title="'Percent'"
+                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
+                                    {{mapping.percent.toFixed(2)}}
+                                </td>
+
+                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
+                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
+                                <!--<a class="tabled"-->
+                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
+                                <!--target="_blank">-->
+
+                                <!--{{mapping.SM_LINCS_ID}}-->
+                                <!--</a>-->
+                                <!--</td>-->
+
+
+                            </tr>
+                        </table>
+
+                    </div>
+                    <!--</div>-->
+
+                </div>
+                <div class="well col-md-12 col-sm-12"
+                     style="background-color:lightgrey;float:left;padding-bottom: 10px;padding-top: 10px;margin-bottom: 0px;">
+
+                                <span>
+                                    <p>
+                                        &nbsp;<STRONG>Reactome Networks</STRONG>
+                                        <br/>
+                            &nbsp;This information is shown when available..
+                                    </p>
+
+
+                                </span>
+                </div>
+                <div class="well col-md-12 col-sm-12" style="background-color: white">
+                    <!--<div class="container" ng-show="ctrl.showOutput && !waiting">-->
+                    <!--<div class="row">-->
+                    <div class="form-group col-md-5 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <div id="reactomeDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+                    </div>
+                    <div class="form-group col-md-7 col-sm-6 col-sm-offset-0">
+                        <!--<div id="myPie"></div>-->
+                        <!--<h1 class="page-header" style="margin-top: 35px;margin-bottom: 25px; font-size:18px;">Analyzed Perturbations</h1>-->
+
+                        <table ng-table="ctrl.tableReactome" class="table table-bordered table-striped"
+                               show-filter="true">
+
+                            <tr ng-repeat="mapping in $data">
+
+                                <td style="font-weight: 400" title="'Id'" filter="{ id: 'text'}"
+                                    sortable="'id'" ng-if="mapping.id != 'NA' ">
+                                    <!--<a class="tabled"-->
+                                    <!--ng-href="https://reactome.org/content/detail/{{mapping.id}}"-->
+                                    <!--target="_blank">-->
+
+                                    <!--{{mapping.id}}-->
+                                    <!--</a>-->
+
+
+                                    <a  class="tabled" href="#" ng-click="openIframeModal(mapping.id,'pinetReactome')" >{{mapping.id}} </a>
+                                </td>
+
+                                <td style="font-weight: 400" title="'Value'" filter="{ value: 'text'}"
+                                    sortable="'value'" ng-if="mapping.value != 'NA' ">
+                                    {{mapping.value}}
+                                </td>
+                                <td style="font-weight: 400; word-wrap: break-word; width:40%;max-width: 1px;"
+                                    title="'Proteins'">
+                                    <div class="list-responsive-vertical">
+                                        <span ng-repeat="prot in mapping.proteins">
+
+                                            <!--<a ng-href="http://www.uniprot.org/uniprot/{{prot}}"-->
+                                            <!--target="_blank">{{prot}}</a>-->
+
+                                            <a  href="#" ng-click="openIframeModal(prot,'pinetUniprot')" >{{prot}} </a>
+
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td style="font-weight: 400" title="'Percent'"
+                                    sortable="'percent'" ng-if="mapping.percent != 'na' ">
+                                    {{mapping.percent.toFixed(2)}}
+                                </td>
+
+                                <!--<td style="font-weight: 400" title="'LINCS_ID'" filter="{ SM_LINCS_ID: 'text'}"-->
+                                <!--sortable="'SM_LINCS_ID'" ng-if="mapping.SM_LINCS_ID != 'NA' ">-->
+                                <!--<a class="tabled"-->
+                                <!--ng-href="http://lincsportal.ccs.miami.edu/SmallMolecules/view/{{mapping.SM_LINCS_ID}}"-->
+                                <!--target="_blank">-->
+
+                                <!--{{mapping.SM_LINCS_ID}}-->
+                                <!--</a>-->
+                                <!--</td>-->
+
+
+                            </tr>
+                        </table>
+
+                    </div>
+                    <!--</div>-->
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
             <label for="tab-4" tabindex="0"></label>
             <input id="tab-4" type="radio" name="tabs" aria-hidden="true">
             <h2>Protein Line Notation (PLN)</h2>
