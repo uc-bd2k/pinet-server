@@ -152,113 +152,220 @@ border-radius: 5px;">
                         <div class="well col-sm-12">
 
 
-                            <div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px" >
+                            <div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px">
                                 <p style="font-weight: bold;
 bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
 bottom:0;text-align: center;
-vertical-align: middle;" class="onerow">Select Between &nbsp;<div class="btn-group btn-group-justified onerow" role="group" style="padding-bottom: 10px;width: 25%;">
-                                <div type="button" class="btn btn-primary " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Illustrative Example
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+vertical-align: middle;" class="onerow">Select Between
+                                    <span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="tooltip"
-                                          title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                          title="Please select between the provided example or the results of PeptideToProtein Mappings.
+                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
+                                                                               The inputs can be modified manually. "
                                     >
-                                        </span >
-                                    <span  ng-show= "showRegi1"style="
+                                </span>
+                                &nbsp;
+
+
+                                <div class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 25%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi4">
+                                        Illustrative Example
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi4" style="
  vertical-align:middle;line-height: 20px;
   color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
+                                        <span style="
  vertical-align:middle;line-height: 20px;
   color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
 
 
+                                    </div>
                                 </div>
-                            </div>
-                                    &nbsp;<p style="font-weight: bold;
+                                &nbsp;<p style="font-weight: bold;
 bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
 bottom:0;text-align: center;
-vertical-align: middle;" class="onerow">or</p>
+vertical-align: middle;" class="onerow">or</p>&nbsp;
 
-                                <span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;
-bottom:0;text-align: center;
-vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
-                                                                                                data-delay='{"show":"0", "hide":"100"}'
-                                                                                                data-toggle="tooltip"
-                                                                                                title="Please select between the provided example or the results of PeptideToProtein Mappings.
-                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
-                                                                               The inputs can be modified manually. "
-                                >
-                                        </span >
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 1" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi1">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">All Matching Proteins</span>
+
+                                        )
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg2-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi1" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 2" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi2">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">Representative/Leading Proteins</span>
+                                        )
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg3-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi2" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 3" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi3">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">Unambiguously Matching Proteins</span>
+                                        )
+
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg1-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+
+
+
+
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
 
 
 
                                 </p>
 
-                            </div>
-                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;padding-top: 5px;">
-                                <!--<div class="well col-sm-12">-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                <!--<div type="button" class="btn btn-warning "-->
+                                     <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi4">-->
+                                    <!--Representative/Leading Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+                                          <!--data-img="images/avg3-3.png"-->
 
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Representative/Leading Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-                                          data-img="images/avg3-3.png"
-
-                                    >
-                                        </span>
-                                    <span  ng-show= "showRegi4" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
-
-
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">All Matching Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-                                          data-img="images/avg2-3.png"
-
-                                    >
-                                        </span>
-                                    <span  ng-show= "showRegi3" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
+                                    <!--&gt;-->
+                                        <!--</span>-->
+                                    <!--<span ng-show="showRegi4" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
                                 <!--</div>-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Unambiguously Matching Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-
-                                          data-img="images/avg1-3.png" >
-                                        </span>
-                                    <span  ng-show= "showRegi2" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
 
 
+                                <!--<div type="button" class="btn btn-warning "-->
+                                     <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi3">All Matching-->
+                                    <!--Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+                                          <!--data-img="images/avg2-3.png"-->
+
+                                    <!--&gt;-->
+                                        <!--</span>-->
+                                    <!--<span ng-show="showRegi3" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
                                 <!--</div>-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
+                                <!--<div type="button" class="btn btn-warning "-->
+                                     <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Unambiguously-->
+                                    <!--Matching Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+
+                                          <!--data-img="images/avg1-3.png">-->
+                                        <!--</span>-->
+                                    <!--<span ng-show="showRegi2" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+                                <!--</div>-->
 
                             </div>
+                            <!--<div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;padding-top: 5px;">-->
+                            <!--<div class="well col-sm-12">-->
+                            <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
-                            <p ng-show="ctrl.organismForm !== '9606' && ctrl.organismForm !== '10090' && ctrl.organismForm !== '10116'"style="font-weight: bold;
+
+                            <!--</div>-->
+                            <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+
+
+                            <!--</div>-->
+
+                            <p ng-show="ctrl.organismForm !== '9606' && ctrl.organismForm !== '10090' && ctrl.organismForm !== '10116'"
+                               style="font-weight: bold;
 bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
 bottom:0;text-align: center;
-vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By Homo Sapiens May be Limited in This Example.  </p>
+vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By Homo Sapiens May be Limited in This
+                                Example. </p>
 
                             <div class=" form-group col-sm-4" style="padding-left: 0px;">
                                 <div class="horizontal-scroll" style=padding-bottom:10px;">
@@ -324,7 +431,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                         />:
                         <span style='color:Maroon'>
                         <span ng-repeat="nonValid in ctrl.nonValidGenes" class="onerow">{{nonValid}}&nbsp;&nbsp;</span>
-                        <!--{{ctrl.numberOfAllValidGenes}}-->
+                            <!--{{ctrl.numberOfAllValidGenes}}-->
                     </span>
                         <!--<a href="#" title="{{ctrl.nonValidGenes}}">Mouse over to see the non conforming genes with Homo Sapiens genes</a>-->
 
@@ -949,14 +1056,16 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                         <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                             <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                                For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:white;" class="glyphicon glyphicon-question-sign "
-                                                                              data-delay='{"show":"0", "hide":"100"}'
-                                                                              data-toggle="tooltip"
-                                                                              title="For complete list of pathways please visit Enrichr.">
+                                For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:white;"
+                                                                                     class="glyphicon glyphicon-question-sign "
+                                                                                     data-delay='{"show":"0", "hide":"100"}'
+                                                                                     data-toggle="tooltip"
+                                                                                     title="For complete list of pathways please visit Enrichr.">
                                     </span>
                             </h4>
 
-                            http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the
+                            http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent
+                            for the query in the
                             URL, e.g.
                             <br/>
                             <a href="http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
@@ -967,10 +1076,11 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                         <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                             <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                                For Gene-Pathway Association via Enrichr &nbsp;<span style="color:white;" class="glyphicon glyphicon-question-sign "
-                                                                               data-delay='{"show":"0", "hide":"100"}'
-                                                                               data-toggle="tooltip"
-                                                                               title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
+                                For Gene-Pathway Association via Enrichr &nbsp;<span style="color:white;"
+                                                                                     class="glyphicon glyphicon-question-sign "
+                                                                                     data-delay='{"show":"0", "hide":"100"}'
+                                                                                     data-toggle="tooltip"
+                                                                                     title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
                                     </span>
                             </h4>
 
@@ -988,7 +1098,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                 For Protein Accession Id Query:
                             </h4>
 
-                            http://www.pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent
+                            http://www.pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein}
+                            is sent
                             for the query
                             in
                             the URL, e.g.
@@ -1024,12 +1135,14 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
             <!--<hr/>-->
             <div class="well col-sm-12"
                  style="background-color: transparent; border-color: #999999" ng-show="ctrl.showGeneNetwork">
-                <p style="margin-bottom: 20px;">Analysis of <span style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{ctrl.geneTitleText}}</span > &nbsp;<span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
-                                                                                                                                                                                data-delay='{"show":"0", "hide":"100"}'
-                                                                                                                                                                                data-toggle="tooltip"
-                                                                                                                                                                                title="Please see the workflow selection options on the top. "
-                >
-                                        </span ></p>
+                <p style="margin-bottom: 20px;">Analysis of <span
+                        style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{ctrl.geneTitleText}}</span>
+                    &nbsp;<span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
+                                data-delay='{"show":"0", "hide":"100"}'
+                                data-toggle="tooltip"
+                                title="Please see the workflow selection options on the top. "
+                    >
+                                        </span></p>
                 <div class=" tabPanel-widget5">
                     <label for="tab5-1" tabindex="0"></label>
                     <input id="tab5-1" type="radio" name="tabs" aria-hidden="true">
@@ -1304,106 +1417,110 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                             <!--<div class="content">-->
 
 
-                                <div class="tabs">
+                            <div class="tabs">
 
-                                    <input type="radio" id="tab1" name="tab-control" checked>
-                                    <input type="radio" id="tab2" name="tab-control">
-                                    <input type="radio" id="tab3" name="tab-control">
-                                    <input type="radio" id="tab4" name="tab-control">
-                                    <input type="radio" id="tab5" name="tab-control">
-                                    <ul>
-                                        <li title="Pathway"><label for="tab1"
-                                                                   role="button" ><br><span>Pathway</span></label></li>
-                                        <li title="Disease/Drug"><label for="tab2"
-                                                                        role="button" ><br><span>Disease/Drug</span></label>
-                                        </li>
-                                        <li title="Ontology"><label for="tab3"
-                                                                    role="button" ><br><span>Ontology</span></label></li>
+                                <input type="radio" id="tab1" name="tab-control" checked>
+                                <input type="radio" id="tab2" name="tab-control">
+                                <input type="radio" id="tab3" name="tab-control">
+                                <input type="radio" id="tab4" name="tab-control">
+                                <input type="radio" id="tab5" name="tab-control">
+                                <ul>
+                                    <li title="Pathway"><label for="tab1"
+                                                               role="button"><br><span>Pathway</span></label></li>
+                                    <li title="Disease/Drug"><label for="tab2"
+                                                                    role="button"><br><span>Disease/Drug</span></label>
+                                    </li>
+                                    <li title="Ontology"><label for="tab3"
+                                                                role="button"><br><span>Ontology</span></label></li>
 
-                                        <li title="Transcription" ><label for="tab4" role="button" ><br><span>Transcription</span></label>
-                                        </li>
-                                        <li title="Cell Type"><label for="tab5" role="button" ><br><span >Cell Type</span></label>
-                                        </li>
-                                    </ul>
+                                    <li title="Transcription"><label for="tab4"
+                                                                     role="button"><br><span>Transcription</span></label>
+                                    </li>
+                                    <li title="Cell Type"><label for="tab5"
+                                                                 role="button"><br><span>Cell Type</span></label>
+                                    </li>
+                                </ul>
 
-                                    <!--<div class="slider">-->
-                                    <!--<div class="indicator"></div>-->
-                                    <!--</div>-->
-                                    <div class="content">
-                                        <section >
-                                            <h2 >Pathways</h2>
-                                            <select class="select-css"
-                                                    ng-model="selectedEnrichmentPathways"
-                                                    ng-change="changeEnrichmentValue(selectedEnrichmentPathways)"
-                                                    ng-options="x.value for x in enrichmentPathways">
-                                            </select>
-                                            <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
+                                <!--<div class="slider">-->
+                                <!--<div class="indicator"></div>-->
+                                <!--</div>-->
+                                <div class="content">
+                                    <section>
+                                        <h2>Pathways</h2>
+                                        <select class="select-css"
+                                                ng-model="selectedEnrichmentPathways"
+                                                ng-change="changeEnrichmentValue(selectedEnrichmentPathways)"
+                                                ng-options="x.value for x in enrichmentPathways">
+                                        </select>
+                                        <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
-                                        </section>
-                                        <section >
-                                            <h2 >Disease/Drugs</h2>
-                                            <select class="select-css"
-                                                    ng-model="selectedEnrichmentDiseaseDrugs"
-                                                    ng-change="changeEnrichmentValue(selectedEnrichmentDiseaseDrugs)"
-                                                    ng-options="x.value for x in enrichmentDiseaseDrugs">
-                                            </select>
-                                            <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
+                                    </section>
+                                    <section>
+                                        <h2>Disease/Drugs</h2>
+                                        <select class="select-css"
+                                                ng-model="selectedEnrichmentDiseaseDrugs"
+                                                ng-change="changeEnrichmentValue(selectedEnrichmentDiseaseDrugs)"
+                                                ng-options="x.value for x in enrichmentDiseaseDrugs">
+                                        </select>
+                                        <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
-                                        </section>
-                                        <section >
-                                            <h2 >Ontology</h2>
-                                            <select class="select-css"
-                                                    ng-model="selectedEnrichmentOntology"
-                                                    ng-change="changeEnrichmentValue(selectedEnrichmentOntology)"
-                                                    ng-options="x.value for x in enrichmentOntology">
-                                            </select>
-                                            <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
+                                    </section>
+                                    <section>
+                                        <h2>Ontology</h2>
+                                        <select class="select-css"
+                                                ng-model="selectedEnrichmentOntology"
+                                                ng-change="changeEnrichmentValue(selectedEnrichmentOntology)"
+                                                ng-options="x.value for x in enrichmentOntology">
+                                        </select>
+                                        <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
-                                        </section>
-                                        <section >
-                                            <h2 >Transcription</h2>
-                                            <select class="select-css"
-                                                    ng-model="selectedEnrichmentTranscription"
-                                                    ng-change="changeEnrichmentValue(selectedEnrichmentTranscription)"
-                                                    ng-options="x.value for x in enrichmentTranscription">
-                                            </select>
-                                            <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
+                                    </section>
+                                    <section>
+                                        <h2>Transcription</h2>
+                                        <select class="select-css"
+                                                ng-model="selectedEnrichmentTranscription"
+                                                ng-change="changeEnrichmentValue(selectedEnrichmentTranscription)"
+                                                ng-options="x.value for x in enrichmentTranscription">
+                                        </select>
+                                        <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
-                                        </section>
-                                        <section >
-                                            <h2 >Cell Type</h2>
-                                            <select class="select-css"
-                                                    ng-model="selectedEnrichmentCellType"
-                                                    ng-change="changeEnrichmentValue(selectedEnrichmentCellType)"
-                                                    ng-options="x.value for x in enrichmentCellType">
-                                            </select>
-                                            <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
+                                    </section>
+                                    <section>
+                                        <h2>Cell Type</h2>
+                                        <select class="select-css"
+                                                ng-model="selectedEnrichmentCellType"
+                                                ng-change="changeEnrichmentValue(selectedEnrichmentCellType)"
+                                                ng-options="x.value for x in enrichmentCellType">
+                                        </select>
+                                        <span ng-show="!ctrl.showGeneEnrichmentChangeProcessed">
                                         <span class="fa fa-spinner fa-pulse fa-1.5x fa-fw"></span>
                                     </span>
-                                        </section>
-                                    </div>
+                                    </section>
                                 </div>
+                            </div>
 
 
-                                <!--<h2>Pathways</h2>-->
-                                <!--<select-->
-                                <!--ng-model="selectedPathways"-->
-                                <!--ng-change="changedValue(selectedPathways)"-->
-                                <!--ng-options="x.value for x in pathways">-->
-                                <!--</select>-->
+                            <!--<h2>Pathways</h2>-->
+                            <!--<select-->
+                            <!--ng-model="selectedPathways"-->
+                            <!--ng-change="changedValue(selectedPathways)"-->
+                            <!--ng-options="x.value for x in pathways">-->
+                            <!--</select>-->
                             <!--</div>-->
                             <div ng-show="ctrl.showGeneEnrichmentChangeProcessed ">
                                 <hr/>
-                                <p style="margin-bottom: 20px;">Results of <span style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{enrichmentItem}}</span > &nbsp;
+                                <p style="margin-bottom: 20px;">Results of <span
+                                        style="font-weight: bold; color:#9e6f08;text-decoration:underline;">{{enrichmentItem}}</span>
+                                    &nbsp;
                                     <span style="color:#9e6f08;" class="glyphicon glyphicon-question-sign"
-                                     data-delay='{"show":"0", "hide":"100"}'
-                                     data-toggle="tooltip"
-                                     title="Please change the selection to see the reflection "
-                                />
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="tooltip"
+                                          title="Please change the selection to see the reflection "
+                                    />
                                 </p>
 
 
@@ -1602,7 +1719,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
 
                                 </div>
-<br/>
+                                <br/>
                                 <button class="btn btn-primary " ng-click="exportEnrichmentTable()">Download Table
                                 </button>
                                 <div class="well">
@@ -2080,8 +2197,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                             <!--</button>-->
 
 
-
-
                             <!--<div id="chart2"></div>-->
                             <div class="well col-sm-12">
 
@@ -2444,7 +2559,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                     </p>
                                     <div ng-if="ctrl.ilincsCmap.length > 0">
 
-                                        <div class="well col-sm-12" >
+                                        <div class="well col-sm-12">
 
                                             <!--<select-->
                                             <!--ng-model="selectedphosphoPathways"-->
@@ -2466,9 +2581,11 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             <div class=" form-group col-sm-6 ">
                                                 <div style=" text-align: left" ng-show="ctrl.showIlincsGraph1">
                                                     <div style="text-align: center;">
-                                                        <strong>Change Number of Top Concordant and Discordant Signatures:</strong>
+                                                        <strong>Change Number of Top Concordant and Discordant
+                                                            Signatures:</strong>
                                                     </div>
-                                                    <input type="range" id="select_slider4ilincs1" value="50" min="20" max="150" step="10"/>
+                                                    <input type="range" id="select_slider4ilincs1" value="50" min="20"
+                                                           max="150" step="10"/>
                                                     <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                     <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                     <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2487,9 +2604,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                         <div ng-show="ctrl.showIlincsGraph1">
 
 
-
-
-                                            <div class="well col-sm-12" >
+                                            <div class="well col-sm-12">
 
                                                 <!--<select-->
                                                 <!--ng-model="selectedphosphoPathways"-->
@@ -2504,7 +2619,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Width Size:</strong>
                                                         </div>
-                                                        <input type="range" id="width_slider4ilincs1" value="1500" min="900" max="2700" step="100"/>
+                                                        <input type="range" id="width_slider4ilincs1" value="1500"
+                                                               min="900" max="2700" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2524,7 +2640,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Node Size:</strong>
                                                         </div>
-                                                        <input type="range" id="node_slider4ilincs1" value="15" min="5" max="30" step="1"/>
+                                                        <input type="range" id="node_slider4ilincs1" value="15" min="5"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2544,7 +2661,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Font Size:</strong>
                                                         </div>
-                                                        <input type="range" id="font_slider4ilincs1" value="20" min="10" max="30" step="1"/>
+                                                        <input type="range" id="font_slider4ilincs1" value="20" min="10"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2559,19 +2677,22 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                                                 </div>
 
-                                                <div class=" form-group col-sm-3 col-sm-offset-0" style="padding-left: 0px;">
+                                                <div class=" form-group col-sm-3 col-sm-offset-0"
+                                                     style="padding-left: 0px;">
 
                                                     <div style=" text-align: left">
                                                         <div style="text-align: center;">
                                                             <strong>Change Inner Circle Size:</strong>
-                                                            <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                            <span style="color:steelblue;"
+                                                                  class="glyphicon glyphicon-question-sign"
                                                                   data-delay='{"show":"0", "hide":"100"}'
                                                                   data-toggle="tooltip"
                                                                   title="This slider is only active for circular and circos views."
                                                             >
                                                     </span>
                                                         </div>
-                                                        <input type="range" id="circle_slider4ilincs1" value="1100" min="400" max="2000" step="100"/>
+                                                        <input type="range" id="circle_slider4ilincs1" value="1100"
+                                                               min="400" max="2000" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2587,12 +2708,10 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             </div>
 
 
-
-                                            <div class="container-fluid" id="chartIlincs1" style="max-width: 100vw;overflow-x: auto;">
+                                            <div class="container-fluid" id="chartIlincs1"
+                                                 style="max-width: 100vw;overflow-x: auto;">
 
                                                 <div>
-
-
 
 
                                                     <!--<button class="btn1" id='circosView5ilincs1'>-->
@@ -2643,7 +2762,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                   P-value of the concordance or discordance is reflected in the size of nodes.">
                                         </span>
                                                     </button>
-
 
 
                                                 </div>
@@ -2742,12 +2860,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                         </table>
 
 
-
-
-
                                     </div>
-
-
 
 
                                 </div>
@@ -2779,7 +2892,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                     </p>
                                     <div ng-if="ctrl.ilincsKnockdown.length > 0">
 
-                                        <div class="well col-sm-12" >
+                                        <div class="well col-sm-12">
 
                                             <!--<select-->
                                             <!--ng-model="selectedphosphoPathways"-->
@@ -2801,9 +2914,11 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             <div class=" form-group col-sm-6 ">
                                                 <div style=" text-align: left" ng-show="ctrl.showIlincsGraph2">
                                                     <div style="text-align: center;">
-                                                        <strong>Change Number of Top Concordant and Discordant Signatures:</strong>
+                                                        <strong>Change Number of Top Concordant and Discordant
+                                                            Signatures:</strong>
                                                     </div>
-                                                    <input type="range" id="select_slider4ilincs2" value="50" min="20" max="150" step="10"/>
+                                                    <input type="range" id="select_slider4ilincs2" value="50" min="20"
+                                                           max="150" step="10"/>
                                                     <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                     <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                     <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2822,7 +2937,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                         <div ng-show="ctrl.showIlincsGraph2">
 
 
-                                            <div class="well col-sm-12" >
+                                            <div class="well col-sm-12">
 
                                                 <!--<select-->
                                                 <!--ng-model="selectedphosphoPathways"-->
@@ -2837,7 +2952,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Width Size:</strong>
                                                         </div>
-                                                        <input type="range" id="width_slider4ilincs2" value="1500" min="900" max="2700" step="100"/>
+                                                        <input type="range" id="width_slider4ilincs2" value="1500"
+                                                               min="900" max="2700" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2857,7 +2973,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Node Size:</strong>
                                                         </div>
-                                                        <input type="range" id="node_slider4ilincs2" value="15" min="5" max="30" step="1"/>
+                                                        <input type="range" id="node_slider4ilincs2" value="15" min="5"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2877,7 +2994,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Font Size:</strong>
                                                         </div>
-                                                        <input type="range" id="font_slider4ilincs2" value="20" min="10" max="30" step="1"/>
+                                                        <input type="range" id="font_slider4ilincs2" value="20" min="10"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2892,19 +3010,22 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                                                 </div>
 
-                                                <div class=" form-group col-sm-3 col-sm-offset-0" style="padding-left: 0px;">
+                                                <div class=" form-group col-sm-3 col-sm-offset-0"
+                                                     style="padding-left: 0px;">
 
                                                     <div style=" text-align: left">
                                                         <div style="text-align: center;">
                                                             <strong>Change Inner Circle Size:</strong>
-                                                            <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                            <span style="color:steelblue;"
+                                                                  class="glyphicon glyphicon-question-sign"
                                                                   data-delay='{"show":"0", "hide":"100"}'
                                                                   data-toggle="tooltip"
                                                                   title="This slider is only active for circular and circos views."
                                                             >
                                                     </span>
                                                         </div>
-                                                        <input type="range" id="circle_slider4ilincs2" value="1100" min="400" max="2000" step="100"/>
+                                                        <input type="range" id="circle_slider4ilincs2" value="1100"
+                                                               min="400" max="2000" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -2920,12 +3041,10 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             </div>
 
 
-
-                                            <div class="container-fluid" id="chartIlincs2" style="max-width: 100vw;overflow-x: auto;">
+                                            <div class="container-fluid" id="chartIlincs2"
+                                                 style="max-width: 100vw;overflow-x: auto;">
 
                                                 <div>
-
-
 
 
                                                     <!--<button class="btn1" id='circosView5ilincs2'>-->
@@ -2978,7 +3097,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                     </button>
 
 
-
                                                 </div>
 
 
@@ -3004,7 +3122,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                                                 </td>
 
-                                                 <td style="font-weight: 400" title="'knockdownTarget'"
+                                                <td style="font-weight: 400" title="'knockdownTarget'"
                                                     filter="{ treatment: 'text'}"
                                                     sortable="'treatment'">
                                                     {{mapping.treatment}}
@@ -3040,14 +3158,10 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                 </td>
 
 
-
-
-
                                             </tr>
                                         </table>
 
                                     </div>
-
 
 
                                 </div>
@@ -3077,7 +3191,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                     </p>
                                     <div ng-if="ctrl.ilincsPerturbations.length > 0">
 
-                                        <div class="well col-sm-12" >
+                                        <div class="well col-sm-12">
 
                                             <!--<select-->
                                             <!--ng-model="selectedphosphoPathways"-->
@@ -3099,9 +3213,11 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             <div class=" form-group col-sm-6 ">
                                                 <div style=" text-align: left" ng-show="ctrl.showIlincsGraph3">
                                                     <div style="text-align: center;">
-                                                        <strong>Change Number of Top Concordant and Discordant Signatures:</strong>
+                                                        <strong>Change Number of Top Concordant and Discordant
+                                                            Signatures:</strong>
                                                     </div>
-                                                    <input type="range" id="select_slider4ilincs3" value="50" min="20" max="150" step="10"/>
+                                                    <input type="range" id="select_slider4ilincs3" value="50" min="20"
+                                                           max="150" step="10"/>
                                                     <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                     <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                     <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -3120,9 +3236,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                         <div ng-show="ctrl.showIlincsGraph3">
 
 
-
-
-                                            <div class="well col-sm-12" >
+                                            <div class="well col-sm-12">
 
                                                 <!--<select-->
                                                 <!--ng-model="selectedphosphoPathways"-->
@@ -3137,7 +3251,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Width Size:</strong>
                                                         </div>
-                                                        <input type="range" id="width_slider4ilincs3" value="1500" min="900" max="2700" step="100"/>
+                                                        <input type="range" id="width_slider4ilincs3" value="1500"
+                                                               min="900" max="2700" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -3157,7 +3272,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Node Size:</strong>
                                                         </div>
-                                                        <input type="range" id="node_slider4ilincs3" value="15" min="5" max="30" step="1"/>
+                                                        <input type="range" id="node_slider4ilincs3" value="15" min="5"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -3177,7 +3293,8 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                         <div style="text-align: center;">
                                                             <strong>Change Font Size:</strong>
                                                         </div>
-                                                        <input type="range" id="font_slider4ilincs3" value="20" min="10" max="30" step="1"/>
+                                                        <input type="range" id="font_slider4ilincs3" value="20" min="10"
+                                                               max="30" step="1"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -3192,19 +3309,22 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                                                 </div>
 
-                                                <div class=" form-group col-sm-3 col-sm-offset-0" style="padding-left: 0px;">
+                                                <div class=" form-group col-sm-3 col-sm-offset-0"
+                                                     style="padding-left: 0px;">
 
                                                     <div style=" text-align: left">
                                                         <div style="text-align: center;">
                                                             <strong>Change Inner Circle Size:</strong>
-                                                            <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                            <span style="color:steelblue;"
+                                                                  class="glyphicon glyphicon-question-sign"
                                                                   data-delay='{"show":"0", "hide":"100"}'
                                                                   data-toggle="tooltip"
                                                                   title="This slider is only active for circular and circos views."
                                                             >
                                                     </span>
                                                         </div>
-                                                        <input type="range" id="circle_slider4ilincs3" value="1100" min="400" max="2000" step="100"/>
+                                                        <input type="range" id="circle_slider4ilincs3" value="1100"
+                                                               min="400" max="2000" step="100"/>
                                                         <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                                         <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
                                                         <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
@@ -3220,12 +3340,10 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             </div>
 
 
-
-                                            <div class="container-fluid" id="chartIlincs3" style="max-width: 100vw;overflow-x: auto;">
+                                            <div class="container-fluid" id="chartIlincs3"
+                                                 style="max-width: 100vw;overflow-x: auto;">
 
                                                 <div>
-
-
 
 
                                                     <!--<button class="btn1" id='circosView5ilincs3'>-->
@@ -3278,7 +3396,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                     </button>
 
 
-
                                                 </div>
 
 
@@ -3301,8 +3418,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                        target="_blank">
                                                         {{mapping.signatureid}}
                                                     </a>
-
-
 
 
                                                     <!--<a  class="tabled" href="#" ng-click="openIframeModal(mapping.signatureid,'pinetIlincs')" >{{mapping.signatureid}} </a>-->
@@ -3348,18 +3463,11 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                                 </td>
 
 
-
-
                                             </tr>
                                         </table>
 
 
-
-
-
                                     </div>
-
-
 
 
                                 </div>

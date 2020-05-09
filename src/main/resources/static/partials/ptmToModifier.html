@@ -181,106 +181,305 @@
                         <div class="well col-sm-12">
 
 
-                            <div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px" >
+
+                            <div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px">
                                 <p style="font-weight: bold;
 bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
 bottom:0;text-align: center;
-vertical-align: middle;" class="onerow">Select Between &nbsp;<div class="btn-group btn-group-justified onerow" role="group" style="padding-bottom: 10px;width: 25%;">
-                                <div type="button" class="btn btn-primary " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Illustrative Example
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
+vertical-align: middle;" class="onerow">Select Between
+                                    <span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;
+bottom:0;text-align: center;
+vertical-align: middle;" class="glyphicon glyphicon-question-sign"
                                           data-delay='{"show":"0", "hide":"100"}'
                                           data-toggle="tooltip"
-                                          title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                          title="Please select between the provided example or the results of PeptideToProtein Mappings.
+                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
+                                                                               The inputs can be modified manually. "
                                     >
-                                        </span >
-                                    <span  ng-show= "showRegi1"style="
+                                </span>
+                                    &nbsp;
+
+
+                                <div class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 25%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi4">
+                                        Illustrative Example
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi4" style="
  vertical-align:middle;line-height: 20px;
   color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
+                                        <span style="
  vertical-align:middle;line-height: 20px;
   color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
 
 
+                                    </div>
                                 </div>
-                            </div>
                                 &nbsp;<p style="font-weight: bold;
 bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;
 bottom:0;text-align: center;
-vertical-align: middle;" class="onerow">or</p>
+vertical-align: middle;" class="onerow">or</p>&nbsp;
 
-                                <span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;
-bottom:0;text-align: center;
-vertical-align: middle;"  class="glyphicon glyphicon-question-sign"
-                                      data-delay='{"show":"0", "hide":"100"}'
-                                      data-toggle="tooltip"
-                                      title="Please select between the provided example or the results of PeptideToProtein Mappings.
-                                                                               If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.
-                                                                               The inputs can be modified manually. "
-                                >
-                                        </span >
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 1" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi1">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">All Matching Proteins</span>
+
+                                        )
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg2-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi1" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 2" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi2">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">Representative/Leading Proteins</span>
+                                        )
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg3-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi2" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <div ng-show = "ctrl.makeParallelFlag == 3" class="btn-group btn-group-justified onerow" role="group"
+                                     style="padding-bottom: 10px;width: 50%;">
+                                    <div type="button" class="btn btn-warning "
+                                         style="border-radius: 20px;height: 20px; font-size: small" id="regi3">
+                                        Results of Aggregate Peptide Level Data (
+                                        <span style="font-style: italic">Unambiguously Matching Proteins</span>
+                                        )
+
+                                        <span style="color:white;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="popover-hover"
+                                              data-img="images/avg1-3.png"
+
+                                        >
+                                        </span>
+                                        <span ng-show="showRegi3" style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
+                                        <span style="
+ vertical-align:middle;line-height: 20px;
+  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
+
+
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+
+
+
+
+                                <!--===================================================-->
+                                <!--===================================================-->
+                                <!--===================================================-->
+
+
 
                                 </p>
 
-                            </div>
-                            <div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;padding-top: 5px;">
-                                <!--<div class="well col-sm-12">-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                                <!--<div type="button" class="btn btn-warning "-->
+                                <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi4">-->
+                                <!--Representative/Leading Proteins-->
+                                <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                <!--data-toggle="popover-hover"-->
+                                <!--data-img="images/avg3-3.png"-->
 
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Representative/Leading Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-                                          data-img="images/avg3-3.png"
-
-                                    >
-                                        </span>
-                                    <span  ng-show= "showRegi4" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
-
-
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">All Matching Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-                                          data-img="images/avg2-3.png"
-
-                                    >
-                                        </span>
-                                    <span  ng-show= "showRegi3" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
+                                <!--&gt;-->
+                                <!--</span>-->
+                                <!--<span ng-show="showRegi4" style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                <!--<span style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
                                 <!--</div>-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
-                                <div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Unambiguously Matching Proteins
-                                    <span style="color:white;" class="glyphicon glyphicon-question-sign"
-                                          data-delay='{"show":"0", "hide":"100"}'
-                                          data-toggle="popover-hover"
-
-                                          data-img="images/avg1-3.png" >
-                                        </span>
-                                    <span  ng-show= "showRegi2" style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>
-                                    <span  style="
- vertical-align:middle;line-height: 20px;
-  color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>
-                                </div>
 
 
+                                <!--<div type="button" class="btn btn-warning "-->
+                                <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi3">All Matching-->
+                                <!--Proteins-->
+                                <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                <!--data-toggle="popover-hover"-->
+                                <!--data-img="images/avg2-3.png"-->
+
+                                <!--&gt;-->
+                                <!--</span>-->
+                                <!--<span ng-show="showRegi3" style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                <!--<span style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
                                 <!--</div>-->
-                                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
 
+                                <!--<div type="button" class="btn btn-warning "-->
+                                <!--style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Unambiguously-->
+                                <!--Matching Proteins-->
+                                <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                <!--data-toggle="popover-hover"-->
+
+                                <!--data-img="images/avg1-3.png">-->
+                                <!--</span>-->
+                                <!--<span ng-show="showRegi2" style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                <!--<span style="-->
+                                <!--vertical-align:middle;line-height: 20px;-->
+                                <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+                                <!--</div>-->
 
                             </div>
+
+                            <!--<div class=" form-group col-sm-12" style="height: 20px; padding-bottom: 10px" >-->
+                                <!--<p style="font-weight: bold;-->
+<!--bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;-->
+<!--bottom:0;text-align: center;-->
+<!--vertical-align: middle;" class="onerow">Select Between &nbsp;<div class="btn-group btn-group-justified onerow" role="group" style="padding-bottom: 10px;width: 25%;">-->
+                                <!--<div type="button" class="btn btn-primary " style="border-radius: 20px;height: 20px; font-size: small" id="regi1">Illustrative Example-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="tooltip"-->
+                                          <!--title="An example is provided here to show the format of input and the workflow. This format can be used and modified as a prototype for other experiments."-->
+                                    <!--&gt;-->
+                                        <!--</span >-->
+                                    <!--<span  ng-show= "showRegi1"style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span  style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+
+
+                                <!--</div>-->
+                            <!--</div>-->
+                                <!--&nbsp;<p style="font-weight: bold;-->
+<!--bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 10px;text-align:center;-->
+<!--bottom:0;text-align: center;-->
+<!--vertical-align: middle;" class="onerow">or</p>-->
+
+                                <!--<span style="color:black;bottom:5px;height: 20px;padding-bottom: 10px;margin-bottom: 5px;text-align:center;-->
+<!--bottom:0;text-align: center;-->
+<!--vertical-align: middle;"  class="glyphicon glyphicon-question-sign"-->
+                                      <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                      <!--data-toggle="tooltip"-->
+                                      <!--title="Please select between the provided example or the results of PeptideToProtein Mappings.-->
+                                                                               <!--If the results of PeptideToProtein are unavailable, the corresponding selections will be inactive.-->
+                                                                               <!--The inputs can be modified manually. "-->
+                                <!--&gt;-->
+                                        <!--</span >-->
+
+                                <!--</p>-->
+
+                            <!--</div>-->
+                            <!--<div class="btn-group btn-group-justified" role="group" style="display:table;padding-bottom: 10px;padding-top: 5px;">-->
+                                <!--&lt;!&ndash;<div class="well col-sm-12">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class=" form-group col-sm-4" style="padding-left: 0px;">&ndash;&gt;-->
+
+                                <!--<div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi4">Representative/Leading Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+                                          <!--data-img="images/avg3-3.png"-->
+
+                                    <!--&gt;-->
+                                        <!--</span>-->
+                                    <!--<span  ng-show= "showRegi4" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span  style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+                                <!--</div>-->
+
+
+                                <!--<div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi3">All Matching Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+                                          <!--data-img="images/avg2-3.png"-->
+
+                                    <!--&gt;-->
+                                        <!--</span>-->
+                                    <!--<span  ng-show= "showRegi3" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span  style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class=" form-group col-sm-4" style="padding-left: 0px;">&ndash;&gt;-->
+                                <!--<div type="button" class="btn btn-warning " style="border-radius: 20px;height: 20px; font-size: small" id="regi2">Unambiguously Matching Proteins-->
+                                    <!--<span style="color:white;" class="glyphicon glyphicon-question-sign"-->
+                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                          <!--data-toggle="popover-hover"-->
+
+                                          <!--data-img="images/avg1-3.png" >-->
+                                        <!--</span>-->
+                                    <!--<span  ng-show= "showRegi2" style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-check-circle-o fa-2x"/>-->
+                                    <!--<span  style="-->
+ <!--vertical-align:middle;line-height: 20px;-->
+  <!--color:white;position: absolute;right: 5px;" class="fa fa-circle-o fa-2x"/>-->
+                                <!--</div>-->
+
+
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class=" form-group col-sm-4" style="padding-left: 0px;">&ndash;&gt;-->
+
+
+                            <!--</div>-->
 
 
 

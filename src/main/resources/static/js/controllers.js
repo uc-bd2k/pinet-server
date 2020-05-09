@@ -202,6 +202,7 @@ appModule.factory('SharedService', function( $http, $q, $location, NgTableParams
     vars.ptmTitleText = "";
     vars.geneTitleText = "";
     vars.ontologyMappingsTable = [];
+    vars.makeParallelFlag = 2;
     vars.uploadFormat = "generic";
     //vars.uploadFormat = "generic2";
     vars.imputeFormat = "no_impute"
@@ -6025,6 +6026,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.uploadFormat = SharedService.getVar("uploadFormat");
     self.imputeFormat = SharedService.getVar("imputeFormat");
     self.peptideModFormat = SharedService.getVar("peptideModFormat");
+    self.makeParallelFlag = SharedService.getVar("makeParallelFlag");
     console.log(self.uploadFormat);
     console.log(self.peptideModFormat);
 
@@ -10939,7 +10941,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         console.log(self.showOverAllParallelSVG);
 
 
-        $scope.makeParallelGrid(self.peptideToModificationList, 2);
+        $scope.makeParallelGrid(self.peptideToModificationList, self.makeParallelFlag);
 
     };
 
@@ -15384,6 +15386,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 $scope.showRegi1 = true;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
+                self.makeParallelFlag = 1;
+
+                SharedService.setVar("makeParallelFlag", self.makeParallelFlag);
 
 
                 peptideToModificationList.map(function (e) {
@@ -15462,6 +15467,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 $scope.showRegi2 = true;
                 $scope.showRegi3 = false;
 
+                self.makeParallelFlag = 2;
+
+                SharedService.setVar("makeParallelFlag", self.makeParallelFlag);
+
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
 
@@ -15530,6 +15539,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 $scope.showRegi1 = false;
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = true;
+
+                self.makeParallelFlag = 3;
+
+                SharedService.setVar("makeParallelFlag", self.makeParallelFlag);
 
                 peptideToModificationList.map(function (e) {
                     // //console.log(e);
@@ -15601,9 +15614,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
             }
 
-            $scope.showRegi1 = false;
-            $scope.showRegi2 = false;
-            $scope.showRegi3 = true;
+            // $scope.showRegi1 = false;
+            // $scope.showRegi2 = false;
+            // $scope.showRegi3 = true;
 
             parallelNrows = Math.max(parallelUniqueGene.length, parallelUniqueProtein.length, parallelUniquePep.length, parallelUniquePtm.length)
 
@@ -17927,6 +17940,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
     self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
     self.peptideResultsPTMsChanged = SharedService.getVar('peptideResultsPTMsChanged');
+    self.makeParallelFlag = SharedService.getVar("makeParallelFlag");
 
 
 
@@ -18235,41 +18249,78 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
+
+
+
     var startRegiFunc = function(num){
         if(num == 2){
             //$("#regi3").trigger("click");
-            $("#regi4").addClass("active");
+            $("#regi2").addClass("active");
             $scope.showRegi1 = false;
-            $scope.showRegi2 = false;
+            $scope.showRegi2 = true;
             $scope.showRegi3 = false;
-            $scope.showRegi4 = true;
+            $scope.showRegi4 = false;
             self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
             console.log(self.inputMassPtmProteins);
 
 
         }
-        if(num == 1) {
+        if(num == 1){
+            //$("#regi3").trigger("click");
             $("#regi1").addClass("active");
-            $("#regi2").attr('disabled', true);
-            $("#regi3").attr('disabled', true);
-            $("#regi4").attr('disabled', true);
             $scope.showRegi1 = true;
             $scope.showRegi2 = false;
             $scope.showRegi3 = false;
             $scope.showRegi4 = false;
+            self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+            console.log(self.inputMassPtmProteins);
+
+
+        }
+        if(num == 3){
+            //$("#regi3").trigger("click");
+            $("#regi3").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = true;
+            $scope.showRegi4 = false;
+            self.inputMassPtmProteins = self.inputPtmProteinsUnique;
+            console.log(self.inputMassPtmProteins);
+
+
+        }
+        if(num == 4) {
+
+            $("#regi1").attr('disabled', true);
+            $("#regi2").attr('disabled', true);
+            $("#regi3").attr('disabled', true);
+            $("#regi4").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = false;
+            $scope.showRegi4 = true;
             self.inputMassPtmProteins = self.inputPtmProteinsExample;
+            console.log(self.inputMassPtmProteins);
         }
     };
 
     if(self.peptideResultsPTMs){
-        startRegiFunc(2);
+        if(self.makeParallelFlag == 2){
+            startRegiFunc(2);
+        }
+        if(self.makeParallelFlag == 1){
+            startRegiFunc(1);
+        }
+        if(self.makeParallelFlag == 3){
+            startRegiFunc(3);
+        }
+
+
     }
     else{
-        startRegiFunc(1);
+        startRegiFunc(4);
+
     }
-
-
-
 
 
 
@@ -18288,8 +18339,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = false;
-                self.inputMassPtmProteins = self.inputPtmProteinsExample;
+
+                self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
                 self.inputMassPtmProteins += " ";
+                console.log(self.inputMassPtmProteins);
 
             }
 
@@ -18300,8 +18353,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = true;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = false;
-                self.inputMassPtmProteins = self.inputPtmProteinsUnique;
+
+                self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
                 self.inputMassPtmProteins += " ";
+                console.log(self.inputMassPtmProteins);
 
 
             }
@@ -18312,8 +18367,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = true;
                 $scope.showRegi4 = false;
-                self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+
+                self.inputMassPtmProteins = self.inputPtmProteinsUnique;
                 self.inputMassPtmProteins += " ";
+                console.log(self.inputMassPtmProteins);
 
             }
             if(id.includes("regi4") ){
@@ -18323,8 +18380,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = true;
-                self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
+                self.inputMassPtmProteins = self.inputPtmProteinsExample;
                 self.inputMassPtmProteins += " ";
+                console.log(self.inputMassPtmProteins);
 
             }
         };
@@ -18334,6 +18392,110 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     });
+
+
+
+    //
+    // var startRegiFunc = function(num){
+    //
+    //     if(num == 2){
+    //         //$("#regi3").trigger("click");
+    //         $("#regi4").addClass("active");
+    //         $scope.showRegi1 = false;
+    //         $scope.showRegi2 = false;
+    //         $scope.showRegi3 = false;
+    //         $scope.showRegi4 = true;
+    //         self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
+    //         console.log(self.inputMassPtmProteins);
+    //
+    //
+    //     }
+    //     if(num == 1) {
+    //         $("#regi1").addClass("active");
+    //         $("#regi2").attr('disabled', true);
+    //         $("#regi3").attr('disabled', true);
+    //         $("#regi4").attr('disabled', true);
+    //         $scope.showRegi1 = true;
+    //         $scope.showRegi2 = false;
+    //         $scope.showRegi3 = false;
+    //         $scope.showRegi4 = false;
+    //         self.inputMassPtmProteins = self.inputPtmProteinsExample;
+    //     }
+    // };
+    //
+    // if(self.peptideResultsPTMs){
+    //     startRegiFunc(2);
+    // }
+    // else{
+    //     startRegiFunc(1);
+    // }
+
+
+
+
+
+
+    // $(".btn-group > .btn").click(function(){
+    //     $(".btn-group > .btn").removeClass("active");
+    //
+    //     $(this).addClass("active");
+    //     console.log(this);
+    //     console.log(this.id);
+    //
+    //     var changeRegiFunc = function(id){
+    //         if(id.includes("regi1") ){
+    //             console.log("true");
+    //             console.log("regi1");
+    //             $scope.showRegi1 = true;
+    //             $scope.showRegi2 = false;
+    //             $scope.showRegi3 = false;
+    //             $scope.showRegi4 = false;
+    //             self.inputMassPtmProteins = self.inputPtmProteinsExample;
+    //             self.inputMassPtmProteins += " ";
+    //
+    //         }
+    //
+    //         if(id.includes("regi2") ){
+    //             console.log("true");
+    //             console.log("regi2");
+    //             $scope.showRegi1 = false;
+    //             $scope.showRegi2 = true;
+    //             $scope.showRegi3 = false;
+    //             $scope.showRegi4 = false;
+    //             self.inputMassPtmProteins = self.inputPtmProteinsUnique;
+    //             self.inputMassPtmProteins += " ";
+    //
+    //
+    //         }
+    //         if(id.includes("regi3") ){
+    //             console.log("true");
+    //             console.log("regi3");
+    //             $scope.showRegi1 = false;
+    //             $scope.showRegi2 = false;
+    //             $scope.showRegi3 = true;
+    //             $scope.showRegi4 = false;
+    //             self.inputMassPtmProteins = self.inputPtmProteinsAveraged;
+    //             self.inputMassPtmProteins += " ";
+    //
+    //         }
+    //         if(id.includes("regi4") ){
+    //             console.log("true");
+    //             console.log("regi4");
+    //             $scope.showRegi1 = false;
+    //             $scope.showRegi2 = false;
+    //             $scope.showRegi3 = false;
+    //             $scope.showRegi4 = true;
+    //             self.inputMassPtmProteins = self.inputPtmProteinsFirstFound;
+    //             self.inputMassPtmProteins += " ";
+    //
+    //         }
+    //     };
+    //     changeRegiFunc(this.id);
+    //     $scope.$apply();
+    //
+    //
+    //
+    // });
 
 
 
@@ -30040,6 +30202,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.geneTitleText = SharedService.getVar('geneTitleText');
     self.peptideResultsGenes = SharedService.getVar('peptideResultsGenes');
     self.peptideResultsPTMs = SharedService.getVar('peptideResultsPTMs');
+    self.makeParallelFlag = SharedService.getVar("makeParallelFlag");
 
     self.genesFirstFound = SharedService.getVar('genesFirstFound').toString();
     self.genesAveraged = SharedService.getVar('genesAveraged').toString();
@@ -30250,36 +30413,70 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     var startRegiFunc = function(num){
         if(num == 2){
             //$("#regi3").trigger("click");
-            $("#regi4").addClass("active");
+            $("#regi2").addClass("active");
             $scope.showRegi1 = false;
-            $scope.showRegi2 = false;
+            $scope.showRegi2 = true;
             $scope.showRegi3 = false;
-            $scope.showRegi4 = true;
+            $scope.showRegi4 = false;
             self.genes = self.genesFirstFound;
             console.log(self.genes);
 
 
         }
-        if(num == 1) {
+        if(num == 1){
+            //$("#regi3").trigger("click");
             $("#regi1").addClass("active");
-            $("#regi2").attr('disabled', true);
-            $("#regi3").attr('disabled', true);
-            $("#regi4").attr('disabled', true);
             $scope.showRegi1 = true;
             $scope.showRegi2 = false;
             $scope.showRegi3 = false;
             $scope.showRegi4 = false;
+            self.genes = self.genesAveraged;
+            console.log(self.genes);
+
+
+        }
+        if(num == 3){
+            //$("#regi3").trigger("click");
+            $("#regi3").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = true;
+            $scope.showRegi4 = false;
+            self.genes = self.genesUnique;
+            console.log(self.genes);
+
+
+        }
+        if(num == 4) {
+
+            $("#regi1").attr('disabled', true);
+            $("#regi2").attr('disabled', true);
+            $("#regi3").attr('disabled', true);
+            $("#regi4").addClass("active");
+            $scope.showRegi1 = false;
+            $scope.showRegi2 = false;
+            $scope.showRegi3 = false;
+            $scope.showRegi4 = true;
             self.genes = self.genesExample;
             console.log(self.genes);
         }
     };
 
     if(self.peptideResultsGenes){
-        startRegiFunc(2);
+        if(self.makeParallelFlag == 2){
+            startRegiFunc(2);
+        }
+        if(self.makeParallelFlag == 1){
+            startRegiFunc(1);
+        }
+        if(self.makeParallelFlag == 3){
+            startRegiFunc(3);
+        }
+
 
     }
     else{
-        startRegiFunc(1);
+        startRegiFunc(4);
 
     }
 
@@ -30300,7 +30497,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = false;
-                self.genes = self.genesExample;
+
+                self.genes = self.genesAveraged;
                 self.genes += " ";
                 console.log(self.genes);
 
@@ -30313,7 +30511,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = true;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = false;
-                self.genes = self.genesUnique;
+
+                self.genes = self.genesFirstFound;
                 self.genes += " ";
                 console.log(self.genes);
 
@@ -30326,7 +30525,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = true;
                 $scope.showRegi4 = false;
-                self.genes = self.genesAveraged;
+
+                self.genes = self.genesUnique;
                 self.genes += " ";
                 console.log(self.genes);
 
@@ -30338,7 +30538,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 $scope.showRegi2 = false;
                 $scope.showRegi3 = false;
                 $scope.showRegi4 = true;
-                self.genes = self.genesFirstFound;
+                self.genes = self.genesExample;
                 self.genes += " ";
                 console.log(self.genes);
 
