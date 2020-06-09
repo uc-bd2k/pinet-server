@@ -3438,13 +3438,13 @@ public class PhosphoService {
 
             for (Object deepKeyStr : deepPhosResults.keySet()) {
                 //System.out.println("interating in key values in deepPhos");
-                //System.out.println(deepKeyStr.toString());
+                System.out.println(deepKeyStr.toString());
 
                 try{
 
                     //JSONArray deepKeyvalue = (JSONArray) parser.parse(deepPhosResults.get(deepKeyStr.toString()));
                     JSONArray deepKeyvalue = (JSONArray) deepPhosResults.get(deepKeyStr);
-
+                    System.out.println(deepKeyvalue.toString());
                     if (!deepPhos_nodeUnique.containsKey(deepKeyStr)) {
                         newNode = generateNode((String) deepKeyStr, (String) deepKeyStr, "", ppidx, 1, 0.0);//tag 2 is for protein-protein-interaction
                         ppidx = ppidx + 1;

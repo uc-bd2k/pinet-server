@@ -1263,16 +1263,10 @@ https://github.com/uc-bd2k/pinet-server
 
                                                 </form>
 
-                                                <span style="font-weight: bold">
-                                                    Discard Less Frequent Peptides
-                                                    <span
-                                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                                            data-delay='{"show":"0", "hide":"100"}'
-                                                            data-toggle="tooltip"
-                                                            title="Discard Peptides that are not present in half of the control
-                                        and treatment samples. The peptides that are found in less than one samples in control and treatment are automatically discarded.">
-                                                    </span>
-                                                </span>
+                                                <!--<span style="font-weight: bold">-->
+                                                    <!--Discard Less Frequent Peptides-->
+                                                    <!---->
+                                                <!--</span>-->
                                             <!--</div>-->
 
 
@@ -1282,6 +1276,7 @@ https://github.com/uc-bd2k/pinet-server
 
                                             <form name="discardForm" >
                                                 <div ng-repeat="discard in discardgenders">
+
                                                     <div class="action-checkbox">
 
                                                         <input id="{{discard}}" type="checkbox" value="{{discard}}" ng-checked="discardSelection.indexOf(discard) > -1" ng-click="toggleDiscardSelection(discard)" />
@@ -1289,10 +1284,20 @@ https://github.com/uc-bd2k/pinet-server
                                                         {{discard}}
 
                                                     </div>
+                                                    <span
+                                                            style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                                            data-delay='{"show":"0", "hide":"100"}'
+                                                            data-toggle="tooltip"
+                                                            title="Discard Peptides that are not present in half of the control
+                                                            and treatment samples. The peptides that are found in less than one samples in control and treatment are automatically discarded.">
+                                                    </span>
+
+
                                                 </div>
 
 
                                             </form>
+
                                             <!--{{normalSelection}}-->
 
 
@@ -2097,7 +2102,7 @@ if __name__ == '__main__':
 
                     <div class="panel panel-default" ng-show="true">
                         <div class="well well-sm" style="background-color: #c9c9c9">
-                            <h4>Selected Peptides Mapping
+                            <h4>Peptides Mapping
                                 <span
                                         style="color:steelblue;" class="glyphicon glyphicon-question-sign"
                                         data-delay='{"show":"0", "hide":"100"}'

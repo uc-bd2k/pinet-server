@@ -171,7 +171,7 @@ vertical-align: middle;" class="glyphicon glyphicon-question-sign"
 
 
                                 <div class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 25%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi4">
                                         Illustrative Example
@@ -200,13 +200,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 1" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi1">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">All Matching Proteins</span>
-
-                                        )
+                                        Results from PeptidesToProteins tab
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
                                               data-toggle="popover-hover"
@@ -228,12 +225,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 2" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi2">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">Representative/Leading Proteins</span>
-                                        )
+                                        Results from PeptidesToProteins tab
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
                                               data-toggle="popover-hover"
@@ -255,12 +250,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 3" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi3">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">Unambiguously Matching Proteins</span>
-                                        )
+                                        Results from PeptidesToProteins tab
 
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
@@ -1402,7 +1395,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                             <div ng-show="showGeneEnrichmentProcessed">
 
                                 <button class="btn btn-primary "
-                                        ng-click="ctrl.makeEnrichmentGraph(ctrl.enrichmentNetwork, ctrl.geneToAbundanceMap, graphType4enrich, circleSliderValue4enrich, nodeSliderValue4enrich, fontSliderValue4enrich, widthSliderValue4enrich)">
+                                        ng-click="ctrl.makeEnrichmentGraph(graphType4enrich, circleSliderValue4enrich, nodeSliderValue4enrich, fontSliderValue4enrich, widthSliderValue4enrich)">
                                     Show Enrichment View
                                 </button>
                                 <!--<button class="btn btn-primary "-->
@@ -2177,7 +2170,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                             <div ng-show="showKinaseNetworkProcessed">
 
                                 <button class="btn btn-primary "
-                                        ng-click="ctrl.makeKinaseGraph(ctrl.kinaseNetwork, ctrl.geneToAbundanceMap, graphType4kinase, circleSliderValue4kinase, nodeSliderValue4kinase, fontSliderValue4kinase, widthSliderValue4kinase)">
+                                        ng-click="ctrl.makeKinaseGraph(graphType4kinase, circleSliderValue4kinase, nodeSliderValue4kinase, fontSliderValue4kinase, widthSliderValue4kinase)">
                                     Show
                                     Kinase Network View
                                 </button>
@@ -2536,6 +2529,629 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                             <div class="tabPanel-widget2">
                                 <label for="tab-1" tabindex="0"></label>
                                 <input id="tab-1" type="radio" name="tabsPP" aria-hidden="true">
+                                <h2>LINCS chemical perturbagen signatures</h2>
+                                <div class="container-fluid"
+                                     style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+                                    <div class="well col-md-12 col-sm-12"
+                                         style="background-color:lightgrey;float:left;padding-bottom: 10px;">
+
+                                    <span>
+                                        <p>
+                                        &nbsp;Transcriptional signatures of perturbations by small molecules based on <a
+                                                href="https://www.cell.com/cell/pdf/S0092-8674(17)31309-0.pdf"
+                                                target="_blank">L1000</a> assay. the signatures
+                                            consist of differential gene expressions and p-value for L1000 genes measured by L1000 assay.
+                                        </p>
+
+                                    </span>
+                                    </div>
+                                    <p ng-if="ctrl.ilincsPerturbations.length == 0">
+                                        <strong>Found No Concordant/Discordant Signature to Submitted Gene Expression
+                                            Profile.</strong>
+
+                                    </p>
+                                    <div ng-if="ctrl.ilincsPerturbations.length > 0">
+
+                                        <div class="well col-sm-12">
+
+                                            <!--<select-->
+                                            <!--ng-model="selectedphosphoPathways"-->
+                                            <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
+                                            <!--ng-options="x.value for x in phosphoOptions">-->
+                                            <!--</select>-->
+                                            <!--<hr/>-->
+
+
+                                            <div class=" form-group col-sm-4 ">
+                                                <button class="btn btn-primary "
+                                                        ng-click="ctrl.makeIlincsGraph3(selectSliderValue4ilincs3, circleSliderValue4ilincs3, nodeSliderValue4ilincs3, fontSliderValue4ilincs3, widthSliderValue4ilincs3, signature_name_interest)">
+                                                    Show Connectivity View
+                                                </button>
+                                            </div>
+
+                                            <div class=" form-group col-sm-2 ">
+                                            </div>
+                                            <div class=" form-group col-sm-6 ">
+
+                                                <form>
+                                                    Add Optional Name for the Input Data: <input type="text" ng-model="signature_name_interest" ng-change="change_signature_name_interest(signature_name_interest)">
+                                                </form>
+                                                You have entered: <a style="font-weight: bold; color: #1c3448">{{signature_name_interest}}</a>
+
+
+                                                <div style=" text-align: left" ng-show="ctrl.showIlincsGraph3">
+                                                    <hr/>
+                                                    <div style="text-align: center;">
+                                                        <strong>Change Number of Top Concordant and Discordant
+                                                            Signatures:</strong>
+                                                    </div>
+                                                    <input type="range" id="select_slider4ilincs3" value="50" min="20"
+                                                           max="150" step="10"/>
+                                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                    <div style="text-align: center;">
+
+                                                        <span style="color: steelblue">{{selectSliderValue4ilincs3}}</span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="ctrl.showIlincsGraph3">
+
+
+                                            <div class="well col-sm-12">
+
+                                                <!--<select-->
+                                                <!--ng-model="selectedphosphoPathways"-->
+                                                <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
+                                                <!--ng-options="x.value for x in phosphoOptions">-->
+                                                <!--</select>-->
+                                                <!--<hr/>-->
+
+
+                                                <div class=" form-group col-sm-3 ">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Width Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="width_slider4ilincs3" value="1500"
+                                                               min="900" max="2700" step="100"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{widthSliderValue4ilincs3}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Node Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="node_slider4ilincs3" value="15" min="5"
+                                                               max="30" step="1"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{nodeSliderValue4ilincs3}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Font Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="font_slider4ilincs3" value="20" min="10"
+                                                               max="30" step="1"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{fontSliderValue4ilincs3}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0"
+                                                     style="padding-left: 0px;">
+
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Inner Circle Size:</strong>
+                                                            <span style="color:steelblue;"
+                                                                  class="glyphicon glyphicon-question-sign"
+                                                                  data-delay='{"show":"0", "hide":"100"}'
+                                                                  data-toggle="tooltip"
+                                                                  title="This slider is only active for circular and circos views."
+                                                            >
+                                                    </span>
+                                                        </div>
+                                                        <input type="range" id="circle_slider4ilincs3" value="1100"
+                                                               min="400" max="2000" step="100"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{circleSliderValue4ilincs3}}</span>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="container-fluid" id="chartIlincs3"
+                                                 style="max-width: 100vw;overflow-x: auto;">
+
+                                                <div>
+
+
+                                                    <!--<button class="btn1" id='circosView5ilincs3'>-->
+
+                                                    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
+                                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                    <!--data-toggle="tooltip"-->
+                                                    <!--title="Implement circos layout">-->
+                                                    <!--</span>-->
+                                                    <!--</button>-->
+
+
+                                                    <button class="btn1" id='download-png5ilincs3'>
+
+                                                <span style="color:#1c3448;" class="fa fa-download"
+                                                      data-delay='{"show":"0", "hide":"100"}'
+                                                      data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="download as PNG">
+                                                </span>
+                                                    </button>
+
+                                                    <button class="btn2" id='download-svg5ilincs3'>
+
+                                                <span style="color:#1c3448;" class="fa fa-download"
+                                                      data-delay='{"show":"0", "hide":"100"}'
+                                                      data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="download as SVG">
+                                                </span>
+                                                    </button>
+
+                                                    <button class="btn3" id='question5ilincs3'>
+                                                        <!--title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>-->
+                                                        <!--&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;-->
+                                                        <!--<a  href="#"  title="Submit">-->
+                                                        <!--<i class='fa fa-question-circle'></i>-->
+                                                        <!--</a>-->
+                                                        <span style="color:#1c3448;" class="fa fa-question-circle"
+                                                              data-delay='{"show":"0", "hide":"100"}'
+                                                              data-toggle="tooltip"
+                                                              data-placement="right"
+                                                              title="Query Signature is singled out in the left with
+                                                  showing the connection to other signatures.
+                                                Blue and red edges and nodes reflect discordant and concordant signature, respectively.
+                                                 Colors of the nodes show the spectrum of the concordance and discordances, shading from
+                                                  darker to lighter.
+                                                  P-value of the concordance or discordance is reflected in the size of nodes.">
+                                        </span>
+                                                    </button>
+
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <table ng-table="ctrl.ilincsPerturbationsTable"
+                                               class="table table-bordered table-striped"
+                                               show-filter="true">
+
+                                            <tr ng-repeat="mapping in $data">
+
+                                                <td style="font-weight: 400" title="'signatureid'"
+                                                    filter="{ signatureid: 'text'}"
+                                                    sortable="'signatureid'">
+                                                    <a class="tabled"
+                                                       ng-href="http://www.ilincs.org/ilincs/signature/{{mapping.signatureid}}"
+                                                       target="_blank">
+                                                        {{mapping.signatureid}}
+                                                    </a>
+
+
+                                                    <!--<a  class="tabled" href="#" ng-click="openIframeModal(mapping.signatureid,'pinetIlincs')" >{{mapping.signatureid}} </a>-->
+
+
+                                                </td>
+                                                <td style="font-weight: 400" title="'similarity'"
+                                                    filter="{ similarity: 'text'}"
+                                                    sortable="'similarity'">
+                                                    {{mapping.similarity}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'pValue'" filter="{ pValue: 'text'}"
+                                                    sortable="'pValue'">
+                                                    {{mapping.pValue}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'compound'"
+                                                    filter="{ compound: 'text'}"
+                                                    sortable="'compound'">
+                                                    {{mapping.compound}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'lincsPertID'"
+                                                    filter="{ lincsPertID: 'text'}"
+                                                    sortable="'lincsPertID'">
+                                                    {{mapping.lincsPertID}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'cellline'"
+                                                    filter="{ cellline: 'text'}"
+                                                    sortable="'cellline'">
+                                                    {{mapping.cellline}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'concentration'"
+                                                    filter="{ concentration: 'text'}"
+                                                    sortable="'concentration'">
+                                                    {{mapping.concentration}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'time'" filter="{ time: 'text'}"
+                                                    sortable="'time'">
+                                                    {{mapping.time}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'nGenes'" filter="{ nGenes: 'text'}"
+                                                    sortable="'nGenes'">
+                                                    {{mapping.nGenes}}
+                                                </td>
+
+
+                                            </tr>
+                                        </table>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <label for="tab-2" tabindex="0"></label>
+                                <input id="tab-2" type="radio" name="tabsPP" aria-hidden="true">
+                                <h2>LINCS consensus gene (CGS) knockdown signatures</h2>
+                                <div class="container-fluid"
+                                     style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
+
+                                    <div class="well col-md-12 col-sm-12"
+                                         style="background-color:lightgrey;float:left;padding-bottom: 10px;">
+
+                                    <span>
+                                        <p>
+                                        &nbsp;Transcriptional signatures are constructed by further aggregating signatures of individual shRNA perturbations.
+                                            The signatures consist of differential gene expression and associated p-value for 1000 genes measured by <a
+                                                href="https://www.cell.com/cell/pdf/S0092-8674(17)31309-0.pdf"
+                                                target="_blank">L1000</a> assay.
+                                        </p>
+
+                                    </span>
+                                    </div>
+                                    <p ng-if="ctrl.ilincsKnockdown.length == 0">
+                                        <strong>Found No Concordant Signature to Submitted Gene Expression
+                                            Profile.</strong>
+
+                                    </p>
+                                    <div ng-if="ctrl.ilincsKnockdown.length > 0">
+
+                                        <div class="well col-sm-12">
+
+                                            <!--<select-->
+                                            <!--ng-model="selectedphosphoPathways"-->
+                                            <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
+                                            <!--ng-options="x.value for x in phosphoOptions">-->
+                                            <!--</select>-->
+                                            <!--<hr/>-->
+
+
+                                            <div class=" form-group col-sm-4 ">
+                                                <button class="btn btn-primary "
+                                                        ng-click="ctrl.makeIlincsGraph2(selectSliderValue4ilincs2, circleSliderValue4ilincs2, nodeSliderValue4ilincs2, fontSliderValue4ilincs2, widthSliderValue4ilincs2, signature_name_interest)">
+                                                    Show Connectivity View
+                                                </button>
+                                            </div>
+
+                                            <div class=" form-group col-sm-2 ">
+                                            </div>
+                                            <div class=" form-group col-sm-6 ">
+                                                <form>
+                                                    Add Optional Name for the Input Data: <input type="text" ng-model="signature_name_interest" ng-change="change_signature_name_interest(signature_name_interest)">
+                                                </form>
+                                                You have entered: <a style="font-weight: bold; color: #1c3448">{{signature_name_interest}}</a>
+
+                                                <div style=" text-align: left" ng-show="ctrl.showIlincsGraph2">
+                                                    <hr/>
+                                                    <div style="text-align: center;">
+                                                        <strong>Change Number of Top Concordant and Discordant
+                                                            Signatures:</strong>
+                                                    </div>
+                                                    <input type="range" id="select_slider4ilincs2" value="50" min="20"
+                                                           max="150" step="10"/>
+                                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                    <div style="text-align: center;">
+
+                                                        <span style="color: steelblue">{{selectSliderValue4ilincs2}}</span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div ng-show="ctrl.showIlincsGraph2">
+
+
+                                            <div class="well col-sm-12">
+
+                                                <!--<select-->
+                                                <!--ng-model="selectedphosphoPathways"-->
+                                                <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
+                                                <!--ng-options="x.value for x in phosphoOptions">-->
+                                                <!--</select>-->
+                                                <!--<hr/>-->
+
+
+                                                <div class=" form-group col-sm-3 ">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Width Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="width_slider4ilincs2" value="1500"
+                                                               min="900" max="2700" step="100"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{widthSliderValue4ilincs2}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Node Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="node_slider4ilincs2" value="15" min="5"
+                                                               max="30" step="1"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{nodeSliderValue4ilincs2}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Font Size:</strong>
+                                                        </div>
+                                                        <input type="range" id="font_slider4ilincs2" value="20" min="10"
+                                                               max="30" step="1"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{fontSliderValue4ilincs2}}</span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class=" form-group col-sm-3 col-sm-offset-0"
+                                                     style="padding-left: 0px;">
+
+                                                    <div style=" text-align: left">
+                                                        <div style="text-align: center;">
+                                                            <strong>Change Inner Circle Size:</strong>
+                                                            <span style="color:steelblue;"
+                                                                  class="glyphicon glyphicon-question-sign"
+                                                                  data-delay='{"show":"0", "hide":"100"}'
+                                                                  data-toggle="tooltip"
+                                                                  title="This slider is only active for circular and circos views."
+                                                            >
+                                                    </span>
+                                                        </div>
+                                                        <input type="range" id="circle_slider4ilincs2" value="1100"
+                                                               min="400" max="2000" step="100"/>
+                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                        <div style="text-align: center;">
+
+                                                            <span style="color: steelblue">{{circleSliderValue4ilincs2}}</span>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="container-fluid" id="chartIlincs2"
+                                                 style="max-width: 100vw;overflow-x: auto;">
+
+                                                <div>
+
+
+                                                    <!--<button class="btn1" id='circosView5ilincs2'>-->
+
+                                                    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
+                                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                                    <!--data-toggle="tooltip"-->
+                                                    <!--title="Implement circos layout">-->
+                                                    <!--</span>-->
+                                                    <!--</button>-->
+
+
+                                                    <button class="btn1" id='download-png5ilincs2'>
+
+                                                <span style="color:#1c3448;" class="fa fa-download"
+                                                      data-delay='{"show":"0", "hide":"100"}'
+                                                      data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="download as PNG">
+                                                </span>
+                                                    </button>
+
+                                                    <button class="btn2" id='download-svg5ilincs2'>
+
+                                                <span style="color:#1c3448;" class="fa fa-download"
+                                                      data-delay='{"show":"0", "hide":"100"}'
+                                                      data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="download as SVG">
+                                                </span>
+                                                    </button>
+
+                                                    <button class="btn3" id='question5ilincs2'>
+                                                        <!--title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>-->
+                                                        <!--&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;-->
+                                                        <!--<a  href="#"  title="Submit">-->
+                                                        <!--<i class='fa fa-question-circle'></i>-->
+                                                        <!--</a>-->
+                                                        <span style="color:#1c3448;" class="fa fa-question-circle"
+                                                              data-delay='{"show":"0", "hide":"100"}'
+                                                              data-placement="right"
+                                                              data-toggle="tooltip"
+                                                              title="Query Signature is singled out in the left with
+                                                  showing the connection to other signatures.
+                                                Blue and red edges and nodes reflect discordant and concordant signature, respectively.
+                                                 Colors of the nodes show the spectrum of the concordance and discordances, shading from
+                                                  darker to lighter.
+                                                  P-value of the concordance or discordance is reflected in the size of nodes.">
+                                        </span>
+                                                    </button>
+
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <table ng-table="ctrl.ilincsKnockdownTable"
+                                               class="table table-bordered table-striped"
+                                               show-filter="true">
+
+                                            <tr ng-repeat="mapping in $data">
+
+                                                <td style="font-weight: 400" title="'signatureid'"
+                                                    filter="{ signatureid: 'text'}"
+                                                    sortable="'signatureid'">
+                                                    <a class="tabled"
+                                                       ng-href="http://www.ilincs.org/ilincs/signature/{{mapping.signatureid}}"
+                                                       target="_blank">
+                                                        {{mapping.signatureid}}
+                                                    </a>
+
+                                                </td>
+
+                                                <td style="font-weight: 400" title="'knockdownTarget'"
+                                                    filter="{ treatment: 'text'}"
+                                                    sortable="'treatment'">
+                                                    {{mapping.treatment}}
+                                                </td>
+
+                                                <td style="font-weight: 400" title="'similarity'"
+                                                    filter="{ similarity: 'text'}"
+                                                    sortable="'similarity'">
+                                                    {{mapping.similarity}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'pValue'" filter="{ pValue: 'text'}"
+                                                    sortable="'pValue'">
+                                                    {{mapping.pValue}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'perturbagenID'"
+                                                    filter="{ perturbagenID: 'text'}"
+                                                    sortable="'perturbagenID'">
+                                                    {{mapping.perturbagenID}}
+                                                </td>
+
+                                                <td style="font-weight: 400" title="'cellLine'"
+                                                    filter="{ cellline: 'text'}"
+                                                    sortable="'cellline'">
+                                                    {{mapping.cellline}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'time'" filter="{ time: 'text'}"
+                                                    sortable="'time'">
+                                                    {{mapping.time}}
+                                                </td>
+                                                <td style="font-weight: 400" title="'nGenes'" filter="{ nGenes: 'text'}"
+                                                    sortable="'nGenes'">
+                                                    {{mapping.nGenes}}
+                                                </td>
+
+
+                                            </tr>
+                                        </table>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <label for="tab-3" tabindex="0"></label>
+                                <input id="tab-3" type="radio" name="tabsPP" aria-hidden="true">
                                 <h2>Connectivity Map signatures</h2>
                                 <div class="container-fluid"
                                      style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
@@ -2571,7 +3187,7 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
 
                                             <div class=" form-group col-sm-4 ">
                                                 <button class="btn btn-primary "
-                                                        ng-click="ctrl.makeIlincsGraph1(ctrl.ilincsCmap, selectSliderValue4ilincs1, circleSliderValue4ilincs1, nodeSliderValue4ilincs1, fontSliderValue4ilincs1, widthSliderValue4ilincs1)">
+                                                        ng-click="ctrl.makeIlincsGraph1(selectSliderValue4ilincs1, circleSliderValue4ilincs1, nodeSliderValue4ilincs1, fontSliderValue4ilincs1, widthSliderValue4ilincs1, signature_name_interest)">
                                                     Show Connectivity View
                                                 </button>
                                             </div>
@@ -2579,7 +3195,13 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                             <div class=" form-group col-sm-2 ">
                                             </div>
                                             <div class=" form-group col-sm-6 ">
+                                                <form>
+                                                    Add Optional Name for the Input Data: <input type="text" ng-model="signature_name_interest" ng-change="change_signature_name_interest(signature_name_interest)">
+                                                </form>
+                                                You have entered: <a style="font-weight: bold; color: #1c3448">{{signature_name_interest}}</a>
+
                                                 <div style=" text-align: left" ng-show="ctrl.showIlincsGraph1">
+                                                    <hr/>
                                                     <div style="text-align: center;">
                                                         <strong>Change Number of Top Concordant and Discordant
                                                             Signatures:</strong>
@@ -2866,611 +3488,6 @@ vertical-align: middle; color:Maroon" class="onerow">Number of Common Genes By H
                                 </div>
 
 
-                                <label for="tab-2" tabindex="0"></label>
-                                <input id="tab-2" type="radio" name="tabsPP" aria-hidden="true">
-                                <h2>LINCS consensus gene (CGS) knockdown signatures</h2>
-                                <div class="container-fluid"
-                                     style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
-
-                                    <div class="well col-md-12 col-sm-12"
-                                         style="background-color:lightgrey;float:left;padding-bottom: 10px;">
-
-                                    <span>
-                                        <p>
-                                        &nbsp;Transcriptional signatures are constructed by further aggregating signatures of individual shRNA perturbations.
-                                            The signatures consist of differential gene expression and associated p-value for 1000 genes measured by <a
-                                                href="https://www.cell.com/cell/pdf/S0092-8674(17)31309-0.pdf"
-                                                target="_blank">L1000</a> assay.
-                                        </p>
-
-                                    </span>
-                                    </div>
-                                    <p ng-if="ctrl.ilincsKnockdown.length == 0">
-                                        <strong>Found No Concordant Signature to Submitted Gene Expression
-                                            Profile.</strong>
-
-                                    </p>
-                                    <div ng-if="ctrl.ilincsKnockdown.length > 0">
-
-                                        <div class="well col-sm-12">
-
-                                            <!--<select-->
-                                            <!--ng-model="selectedphosphoPathways"-->
-                                            <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
-                                            <!--ng-options="x.value for x in phosphoOptions">-->
-                                            <!--</select>-->
-                                            <!--<hr/>-->
-
-
-                                            <div class=" form-group col-sm-4 ">
-                                                <button class="btn btn-primary "
-                                                        ng-click="ctrl.makeIlincsGraph2(ctrl.ilincsKnockdown, selectSliderValue4ilincs2, circleSliderValue4ilincs2, nodeSliderValue4ilincs2, fontSliderValue4ilincs2, widthSliderValue4ilincs2)">
-                                                    Show Connectivity View
-                                                </button>
-                                            </div>
-
-                                            <div class=" form-group col-sm-2 ">
-                                            </div>
-                                            <div class=" form-group col-sm-6 ">
-                                                <div style=" text-align: left" ng-show="ctrl.showIlincsGraph2">
-                                                    <div style="text-align: center;">
-                                                        <strong>Change Number of Top Concordant and Discordant
-                                                            Signatures:</strong>
-                                                    </div>
-                                                    <input type="range" id="select_slider4ilincs2" value="50" min="20"
-                                                           max="150" step="10"/>
-                                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                    <div style="text-align: center;">
-
-                                                        <span style="color: steelblue">{{selectSliderValue4ilincs2}}</span>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div ng-show="ctrl.showIlincsGraph2">
-
-
-                                            <div class="well col-sm-12">
-
-                                                <!--<select-->
-                                                <!--ng-model="selectedphosphoPathways"-->
-                                                <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
-                                                <!--ng-options="x.value for x in phosphoOptions">-->
-                                                <!--</select>-->
-                                                <!--<hr/>-->
-
-
-                                                <div class=" form-group col-sm-3 ">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Width Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="width_slider4ilincs2" value="1500"
-                                                               min="900" max="2700" step="100"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{widthSliderValue4ilincs2}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Node Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="node_slider4ilincs2" value="15" min="5"
-                                                               max="30" step="1"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{nodeSliderValue4ilincs2}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Font Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="font_slider4ilincs2" value="20" min="10"
-                                                               max="30" step="1"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{fontSliderValue4ilincs2}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0"
-                                                     style="padding-left: 0px;">
-
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Inner Circle Size:</strong>
-                                                            <span style="color:steelblue;"
-                                                                  class="glyphicon glyphicon-question-sign"
-                                                                  data-delay='{"show":"0", "hide":"100"}'
-                                                                  data-toggle="tooltip"
-                                                                  title="This slider is only active for circular and circos views."
-                                                            >
-                                                    </span>
-                                                        </div>
-                                                        <input type="range" id="circle_slider4ilincs2" value="1100"
-                                                               min="400" max="2000" step="100"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{circleSliderValue4ilincs2}}</span>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="container-fluid" id="chartIlincs2"
-                                                 style="max-width: 100vw;overflow-x: auto;">
-
-                                                <div>
-
-
-                                                    <!--<button class="btn1" id='circosView5ilincs2'>-->
-
-                                                    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
-                                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                                    <!--data-toggle="tooltip"-->
-                                                    <!--title="Implement circos layout">-->
-                                                    <!--</span>-->
-                                                    <!--</button>-->
-
-
-                                                    <button class="btn1" id='download-png5ilincs2'>
-
-                                                <span style="color:#1c3448;" class="fa fa-download"
-                                                      data-delay='{"show":"0", "hide":"100"}'
-                                                      data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="download as PNG">
-                                                </span>
-                                                    </button>
-
-                                                    <button class="btn2" id='download-svg5ilincs2'>
-
-                                                <span style="color:#1c3448;" class="fa fa-download"
-                                                      data-delay='{"show":"0", "hide":"100"}'
-                                                      data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="download as SVG">
-                                                </span>
-                                                    </button>
-
-                                                    <button class="btn3" id='question5ilincs2'>
-                                                        <!--title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>-->
-                                                        <!--&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;-->
-                                                        <!--<a  href="#"  title="Submit">-->
-                                                        <!--<i class='fa fa-question-circle'></i>-->
-                                                        <!--</a>-->
-                                                        <span style="color:#1c3448;" class="fa fa-question-circle"
-                                                              data-delay='{"show":"0", "hide":"100"}'
-                                                              data-placement="right"
-                                                              data-toggle="tooltip"
-                                                              title="Query Signature is singled out in the left with
-                                                  showing the connection to other signatures.
-                                                Blue and red edges and nodes reflect discordant and concordant signature, respectively.
-                                                 Colors of the nodes show the spectrum of the concordance and discordances, shading from
-                                                  darker to lighter.
-                                                  P-value of the concordance or discordance is reflected in the size of nodes.">
-                                        </span>
-                                                    </button>
-
-
-                                                </div>
-
-
-                                            </div>
-
-
-                                        </div>
-
-                                        <table ng-table="ctrl.ilincsKnockdownTable"
-                                               class="table table-bordered table-striped"
-                                               show-filter="true">
-
-                                            <tr ng-repeat="mapping in $data">
-
-                                                <td style="font-weight: 400" title="'signatureid'"
-                                                    filter="{ signatureid: 'text'}"
-                                                    sortable="'signatureid'">
-                                                    <a class="tabled"
-                                                       ng-href="http://www.ilincs.org/ilincs/signature/{{mapping.signatureid}}"
-                                                       target="_blank">
-                                                        {{mapping.signatureid}}
-                                                    </a>
-
-                                                </td>
-
-                                                <td style="font-weight: 400" title="'knockdownTarget'"
-                                                    filter="{ treatment: 'text'}"
-                                                    sortable="'treatment'">
-                                                    {{mapping.treatment}}
-                                                </td>
-
-                                                <td style="font-weight: 400" title="'similarity'"
-                                                    filter="{ similarity: 'text'}"
-                                                    sortable="'similarity'">
-                                                    {{mapping.similarity}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'pValue'" filter="{ pValue: 'text'}"
-                                                    sortable="'pValue'">
-                                                    {{mapping.pValue}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'perturbagenID'"
-                                                    filter="{ perturbagenID: 'text'}"
-                                                    sortable="'perturbagenID'">
-                                                    {{mapping.perturbagenID}}
-                                                </td>
-
-                                                <td style="font-weight: 400" title="'cellLine'"
-                                                    filter="{ cellline: 'text'}"
-                                                    sortable="'cellline'">
-                                                    {{mapping.cellline}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'time'" filter="{ time: 'text'}"
-                                                    sortable="'time'">
-                                                    {{mapping.time}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'nGenes'" filter="{ nGenes: 'text'}"
-                                                    sortable="'nGenes'">
-                                                    {{mapping.nGenes}}
-                                                </td>
-
-
-                                            </tr>
-                                        </table>
-
-                                    </div>
-
-
-                                </div>
-
-                                <label for="tab-3" tabindex="0"></label>
-                                <input id="tab-3" type="radio" name="tabsPP" aria-hidden="true">
-                                <h2>LINCS chemical perturbagen signatures</h2>
-                                <div class="container-fluid"
-                                     style=" box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);">
-                                    <div class="well col-md-12 col-sm-12"
-                                         style="background-color:lightgrey;float:left;padding-bottom: 10px;">
-
-                                    <span>
-                                        <p>
-                                        &nbsp;Transcriptional signatures of perturbations by small molecules based on <a
-                                                href="https://www.cell.com/cell/pdf/S0092-8674(17)31309-0.pdf"
-                                                target="_blank">L1000</a> assay. the signatures
-                                            consist of differential gene expressions and p-value for L1000 genes measured by L1000 assay.
-                                        </p>
-
-                                    </span>
-                                    </div>
-                                    <p ng-if="ctrl.ilincsPerturbations.length == 0">
-                                        <strong>Found No Concordant/Discordant Signature to Submitted Gene Expression
-                                            Profile.</strong>
-
-                                    </p>
-                                    <div ng-if="ctrl.ilincsPerturbations.length > 0">
-
-                                        <div class="well col-sm-12">
-
-                                            <!--<select-->
-                                            <!--ng-model="selectedphosphoPathways"-->
-                                            <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
-                                            <!--ng-options="x.value for x in phosphoOptions">-->
-                                            <!--</select>-->
-                                            <!--<hr/>-->
-
-
-                                            <div class=" form-group col-sm-4 ">
-                                                <button class="btn btn-primary "
-                                                        ng-click="ctrl.makeIlincsGraph3(ctrl.ilincsPerturbations, selectSliderValue4ilincs3, circleSliderValue4ilincs3, nodeSliderValue4ilincs3, fontSliderValue4ilincs3, widthSliderValue4ilincs3)">
-                                                    Show Connectivity View
-                                                </button>
-                                            </div>
-
-                                            <div class=" form-group col-sm-2 ">
-                                            </div>
-                                            <div class=" form-group col-sm-6 ">
-                                                <div style=" text-align: left" ng-show="ctrl.showIlincsGraph3">
-                                                    <div style="text-align: center;">
-                                                        <strong>Change Number of Top Concordant and Discordant
-                                                            Signatures:</strong>
-                                                    </div>
-                                                    <input type="range" id="select_slider4ilincs3" value="50" min="20"
-                                                           max="150" step="10"/>
-                                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                    <div style="text-align: center;">
-
-                                                        <span style="color: steelblue">{{selectSliderValue4ilincs3}}</span>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div ng-show="ctrl.showIlincsGraph3">
-
-
-                                            <div class="well col-sm-12">
-
-                                                <!--<select-->
-                                                <!--ng-model="selectedphosphoPathways"-->
-                                                <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
-                                                <!--ng-options="x.value for x in phosphoOptions">-->
-                                                <!--</select>-->
-                                                <!--<hr/>-->
-
-
-                                                <div class=" form-group col-sm-3 ">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Width Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="width_slider4ilincs3" value="1500"
-                                                               min="900" max="2700" step="100"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{widthSliderValue4ilincs3}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Node Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="node_slider4ilincs3" value="15" min="5"
-                                                               max="30" step="1"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{nodeSliderValue4ilincs3}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0">
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Font Size:</strong>
-                                                        </div>
-                                                        <input type="range" id="font_slider4ilincs3" value="20" min="10"
-                                                               max="30" step="1"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{fontSliderValue4ilincs3}}</span>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class=" form-group col-sm-3 col-sm-offset-0"
-                                                     style="padding-left: 0px;">
-
-                                                    <div style=" text-align: left">
-                                                        <div style="text-align: center;">
-                                                            <strong>Change Inner Circle Size:</strong>
-                                                            <span style="color:steelblue;"
-                                                                  class="glyphicon glyphicon-question-sign"
-                                                                  data-delay='{"show":"0", "hide":"100"}'
-                                                                  data-toggle="tooltip"
-                                                                  title="This slider is only active for circular and circos views."
-                                                            >
-                                                    </span>
-                                                        </div>
-                                                        <input type="range" id="circle_slider4ilincs3" value="1100"
-                                                               min="400" max="2000" step="100"/>
-                                                        <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                                        <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                                        <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                                        <div style="text-align: center;">
-
-                                                            <span style="color: steelblue">{{circleSliderValue4ilincs3}}</span>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="container-fluid" id="chartIlincs3"
-                                                 style="max-width: 100vw;overflow-x: auto;">
-
-                                                <div>
-
-
-                                                    <!--<button class="btn1" id='circosView5ilincs3'>-->
-
-                                                    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
-                                                    <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                                    <!--data-toggle="tooltip"-->
-                                                    <!--title="Implement circos layout">-->
-                                                    <!--</span>-->
-                                                    <!--</button>-->
-
-
-                                                    <button class="btn1" id='download-png5ilincs3'>
-
-                                                <span style="color:#1c3448;" class="fa fa-download"
-                                                      data-delay='{"show":"0", "hide":"100"}'
-                                                      data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="download as PNG">
-                                                </span>
-                                                    </button>
-
-                                                    <button class="btn2" id='download-svg5ilincs3'>
-
-                                                <span style="color:#1c3448;" class="fa fa-download"
-                                                      data-delay='{"show":"0", "hide":"100"}'
-                                                      data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="download as SVG">
-                                                </span>
-                                                    </button>
-
-                                                    <button class="btn3" id='question5ilincs3'>
-                                                        <!--title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>-->
-                                                        <!--&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;-->
-                                                        <!--<a  href="#"  title="Submit">-->
-                                                        <!--<i class='fa fa-question-circle'></i>-->
-                                                        <!--</a>-->
-                                                        <span style="color:#1c3448;" class="fa fa-question-circle"
-                                                              data-delay='{"show":"0", "hide":"100"}'
-                                                              data-toggle="tooltip"
-                                                              data-placement="right"
-                                                              title="Query Signature is singled out in the left with
-                                                  showing the connection to other signatures.
-                                                Blue and red edges and nodes reflect discordant and concordant signature, respectively.
-                                                 Colors of the nodes show the spectrum of the concordance and discordances, shading from
-                                                  darker to lighter.
-                                                  P-value of the concordance or discordance is reflected in the size of nodes.">
-                                        </span>
-                                                    </button>
-
-
-                                                </div>
-
-
-                                            </div>
-
-
-                                        </div>
-
-                                        <table ng-table="ctrl.ilincsPerturbationsTable"
-                                               class="table table-bordered table-striped"
-                                               show-filter="true">
-
-                                            <tr ng-repeat="mapping in $data">
-
-                                                <td style="font-weight: 400" title="'signatureid'"
-                                                    filter="{ signatureid: 'text'}"
-                                                    sortable="'signatureid'">
-                                                    <a class="tabled"
-                                                       ng-href="http://www.ilincs.org/ilincs/signature/{{mapping.signatureid}}"
-                                                       target="_blank">
-                                                        {{mapping.signatureid}}
-                                                    </a>
-
-
-                                                    <!--<a  class="tabled" href="#" ng-click="openIframeModal(mapping.signatureid,'pinetIlincs')" >{{mapping.signatureid}} </a>-->
-
-
-                                                </td>
-                                                <td style="font-weight: 400" title="'similarity'"
-                                                    filter="{ similarity: 'text'}"
-                                                    sortable="'similarity'">
-                                                    {{mapping.similarity}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'pValue'" filter="{ pValue: 'text'}"
-                                                    sortable="'pValue'">
-                                                    {{mapping.pValue}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'compound'"
-                                                    filter="{ compound: 'text'}"
-                                                    sortable="'compound'">
-                                                    {{mapping.compound}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'lincsPertID'"
-                                                    filter="{ lincsPertID: 'text'}"
-                                                    sortable="'lincsPertID'">
-                                                    {{mapping.lincsPertID}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'cellline'"
-                                                    filter="{ cellline: 'text'}"
-                                                    sortable="'cellline'">
-                                                    {{mapping.cellline}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'concentration'"
-                                                    filter="{ concentration: 'text'}"
-                                                    sortable="'concentration'">
-                                                    {{mapping.concentration}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'time'" filter="{ time: 'text'}"
-                                                    sortable="'time'">
-                                                    {{mapping.time}}
-                                                </td>
-                                                <td style="font-weight: 400" title="'nGenes'" filter="{ nGenes: 'text'}"
-                                                    sortable="'nGenes'">
-                                                    {{mapping.nGenes}}
-                                                </td>
-
-
-                                            </tr>
-                                        </table>
-
-
-                                    </div>
-
-
-                                </div>
 
 
                             </div>

@@ -201,7 +201,7 @@ vertical-align: middle;" class="glyphicon glyphicon-question-sign"
 
 
                                 <div class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 25%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi4">
                                         Illustrative Example
@@ -230,13 +230,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 1" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi1">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">All Matching Proteins</span>
-
-                                        )
+                                        Results from PeptidesToProteins tab
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
                                               data-toggle="popover-hover"
@@ -258,12 +255,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 2" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi2">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">Representative/Leading Proteins</span>
-                                        )
+                                        Results from PeptidesToProteins tab
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
                                               data-toggle="popover-hover"
@@ -285,12 +280,10 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
                                 <!--===================================================-->
                                 <!--===================================================-->
                                 <div ng-show = "ctrl.makeParallelFlag == 3" class="btn-group btn-group-justified onerow" role="group"
-                                     style="padding-bottom: 10px;width: 50%;">
+                                     style="padding-bottom: 10px;width: 35%;">
                                     <div type="button" class="btn btn-warning "
                                          style="border-radius: 20px;height: 20px; font-size: small" id="regi3">
-                                        Results of Aggregate Peptide Level Data (
-                                        <span style="font-style: italic">Unambiguously Matching Proteins</span>
-                                        )
+                                        Results from PeptidesToProteins tab
 
                                         <span style="color:white;" class="glyphicon glyphicon-question-sign"
                                               data-delay='{"show":"0", "hide":"100"}'
@@ -1470,9 +1463,9 @@ if __name__ == '__main__':
                                 http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
 
                             <p>To get unfiltered kinase-phosphosite predictions based on NetworKIN method for homo sapiens:</p>
-                            <a href="http://eh3.uc.edu/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]"
+                            <a href="http://new.pinet-server.org/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]"
                                target="_blank">
-                                http://eh3.uc.edu/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]
+                                http://new.pinet-server.org/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]
                                 </a>
 
 
@@ -1550,7 +1543,7 @@ if __name__ == '__main__':
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="ctrl.makePtmGraph(ctrl.ptmNetwork, ctrl.ptmProteinToAbundanceMap, graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
+                                        ng-click="ctrl.makePtmGraph(graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
                                     Network of Targeted PTM/Proteins via iPTMnet
                                 </button>
                                 <!--<button class="btn btn-primary "-->
@@ -1586,6 +1579,10 @@ if __name__ == '__main__':
                                             <div style="text-align: center;">
                                                 <strong>Change Width Size:</strong>
                                             </div>
+
+
+
+
                                             <input type="range" id="width_slider4ptm" value="1500" min="900" max="2700" step="100"/>
                                             <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
                                             <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
@@ -1894,7 +1891,7 @@ if __name__ == '__main__':
 
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="ctrl.makeSignorGraph(ctrl.signor_Network, ctrl.ptmProteinToAbundanceMap, graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
+                                        ng-click="ctrl.makeSignorGraph(graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
                                     Show
                                     Network of Targeted PTM/Proteins via SIGNOR
                                 </button>
@@ -2155,11 +2152,11 @@ if __name__ == '__main__':
 
 
                                             <th>PTM/Protein</th>
-                                            <!--<th>validity</th>-->
-                                            <th>PTM</th>
+                                            <!--<th>Dummy</th>-->
+                                            <th>Target</th>
                                             <th>Effect</th>
                                             <th>Mechanism</th>
-                                            <th>Enzyme</th>
+                                            <th>Regulator</th>
                                             <th>Id</th>
                                         </tr>
                                         </thead>
@@ -2170,6 +2167,7 @@ if __name__ == '__main__':
                                             <!--<tr ng-repeat="gene in ctrl.blosum50Table |filter:search | itemsPerPage:10 "  ng-if="gene.symbol != ''" >-->
                                             <!--<tr ng-repeat="gene in ctrl.inputGeneInfo |filter:search | itemsPerPage:10:'genesPagination'" current-page="currentPage" pagination-id="genesPagination" ng-if="gene.symbol != ''">-->
                                             <td>{{gene.PTMProtein}}</td>
+                                            <!--<td>{{gene}}</td>-->
                                             <!--<td>{{gene.valid}}</td>-->
                                             <td>{{gene.target}}</td>
                                             <td>{{gene.effect}}</td>
@@ -2281,7 +2279,7 @@ if __name__ == '__main__':
                             </div>
                             <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
                                 <button class="btn btn-primary "
-                                        ng-click="ctrl.makePhosphoGraph(ctrl.phosphoNetwork, ctrl.ptmProteinToAbundanceMap, graphType4phos, circleSliderValue4phos,nodeSliderValue4phos, fontSliderValue4phos, widthSliderValue4phos )">
+                                        ng-click="ctrl.makePhosphoGraph(graphType4phos, circleSliderValue4phos,nodeSliderValue4phos, fontSliderValue4phos, widthSliderValue4phos )">
                                     Show Kinase Network for
                                     Phosphorylated Genes
                                 </button>
@@ -2618,7 +2616,7 @@ if __name__ == '__main__':
                         <!--<div ng-show="ctrl.showGeneNetwork">-->
 
                         <!--<div class="well">-->
-                        <div class="well well-sm" style="background-color: #c9c9c9">
+                        <div class="well " style="background-color: #c9c9c9">
                             <!--<h4>Pathway Membership-->
 
 
@@ -2628,49 +2626,78 @@ if __name__ == '__main__':
                             <!--</span>-->
 
                             <!--</h4>-->
-                            <div class="bs-callout bs-callout-primary">
-                                <p> <a href="https://academic.oup.com/bioinformatics/article/35/16/2766/5270665" target="_blank">DeepPhos</a>
-                                    is a novel deep learning architecture for phosphorylation site prediction.
-                                    <!--<br/>-->
-                                    <!--Solid lines in the graph represent known relations between-->
-                                    <!--kinases and their target sites (in Known_Kinase_TargetGene),-->
-                                    <!--whereas dashed lines represent predicted relationships using consensus sequences-->
-                                    <!--derived from PhosphoSitePlus. Two different prediction modes can be used, based-->
-                                    <!--on Position Weight Matrices for consensus motifs-->
-                                    <!--(Known+Predicted_Probability_Kinase_TargetGene),-->
-                                    <!--or simply using sequence similarity between known targets and query peptides-->
-                                    <!--(Known+Predicted_Blosum50_Kinase_TargetGene), with the latter providing predictions-->
-                                    <!--even when very few examples of known phosphorylation sites are available.-->
-                                </p>
-                            </div>
+
+                                <div class="bs-callout bs-callout-primary">
+                                    <p> <a href="https://academic.oup.com/bioinformatics/article/35/16/2766/5270665" target="_blank">DeepPhos</a>
+                                        is a novel deep learning architecture for phosphorylation site prediction.
+                                        <!--<br/>-->
+                                        <!--Solid lines in the graph represent known relations between-->
+                                        <!--kinases and their target sites (in Known_Kinase_TargetGene),-->
+                                        <!--whereas dashed lines represent predicted relationships using consensus sequences-->
+                                        <!--derived from PhosphoSitePlus. Two different prediction modes can be used, based-->
+                                        <!--on Position Weight Matrices for consensus motifs-->
+                                        <!--(Known+Predicted_Probability_Kinase_TargetGene),-->
+                                        <!--or simply using sequence similarity between known targets and query peptides-->
+                                        <!--(Known+Predicted_Blosum50_Kinase_TargetGene), with the latter providing predictions-->
+                                        <!--even when very few examples of known phosphorylation sites are available.-->
+                                    </p>
+                                </div>
 
 
-                            <div ng-show="geneDeepPhosError">
-                                <p style="color: steelblue"> Error in obtaining the Kinase-ptmProtein network from DeepPhos, please
-                                    try again later.
-                                </p>
+                                <div ng-show="geneDeepPhosError">
+                                    <p style="color: steelblue"> Error in obtaining the Kinase-ptmProtein network from DeepPhos, please
+                                        try again later.
+                                    </p>
 
 
-                                <!--<button class="btn btn-primary "-->
-                                <!--ng-click="tryEnrichmentGraph()">Try Again-->
-                                <!--</button>-->
-                            </div>
+                                    <!--<button class="btn btn-primary "-->
+                                    <!--ng-click="tryEnrichmentGraph()">Try Again-->
+                                    <!--</button>-->
+                                </div>
 
-                            <div ng-show="ctrl.phosphoError" style="color: red">
-                                <p>
-                                    Error in obtaining the Kinase-Gene networkfrom DeepPhos, please try again later!
-                                </p>
-                            </div>
-                            <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
-                                <button class="btn btn-primary "
-                                        ng-click="ctrl.makeDeepPhosGraph(ctrl.deepPhosNetwork, ctrl.ptmProteinToAbundanceMap, graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep)">
-                                    Show DeepPhos network for
-                                    phosphorylation site prediction
-                                </button>
-                                <!--<button class="btn btn-primary "-->
-                                <!--ng-click="hidePhosphoGraph()">Hide-->
-                                <!--</button>-->
-                            </div>
+                                <div ng-show="ctrl.phosphoError" style="color: red">
+                                    <p>
+                                        Error in obtaining the Kinase-Gene networkfrom DeepPhos, please try again later!
+                                    </p>
+                                </div>
+                                <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                                    <div class=" well container-fluid" >
+
+
+                                        <div style="float:left; width:60%;">
+                                            <button class="btn btn-primary "
+                                                    ng-click="ctrl.makeDeepPhosGraph(graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep, thresholdSlider4deep)">
+                                                Show DeepPhos network for
+                                                phosphorylation site prediction
+                                            </button>
+                                        </div>
+                                        <!--<div class=" form-group col-sm-2 ">-->
+                                        <!--</div>-->
+                                        <div ng-show="ctrl.showDeepPhosGraph" style="float:right; width:40%;">
+
+                                            <div style=" text-align: left">
+                                                <div style="text-align: center;">
+                                                    <strong>Change Probability Threshold:</strong>
+                                                </div>
+                                                <input type="range" id="threshhold_slider4deep" value="0.7" min="0.5" max="1.0" step="0.01"/>
+                                                <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                                <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                                <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                                <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                                <div style="text-align: center;">
+
+                                                    <span style="color: steelblue">{{thresholdSlider4deep}}</span>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<button class="btn btn-primary "-->
+                                    <!--ng-click="hidePhosphoGraph()">Hide-->
+                                    <!--</button>-->
+                                </div>
+
 
                         </div>
 
@@ -2688,12 +2715,12 @@ if __name__ == '__main__':
                                         <!--ng-change="changedPhosphoValue(selectedphosphoPathways)"-->
                                         <!--ng-options="x.value for x in phosphoOptions">-->
                                 <!--</select>-->
-                                <hr/>
+                                <!--<hr/>-->
                                 <!--<button>-->
                                 <!--<a id="download3" href="#">Download SVG-->
                                 <!--</a>-->
                                 <!--</button>-->
-                                <br/>
+                                <!--<br/>-->
 
 
                                 <div class="well col-sm-12" >

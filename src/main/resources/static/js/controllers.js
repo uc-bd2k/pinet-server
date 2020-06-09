@@ -19508,6 +19508,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         //console.log(self.phosphoNetwork);
 
                         self.deepPhosNetwork = self.phosphoNetwork.deepPhosNetwork;
+                        console.log(self.deepPhosNetwork);
                         SharedService.setVar('deepPhosNetwork', self.deepPhosNetwork);
 
                         self.deepPhosTable = self.phosphoNetwork.deepPhosTable;
@@ -19657,7 +19658,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph($scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -19668,7 +19669,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph($scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -19679,7 +19680,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph($scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -19690,7 +19691,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeSignorGraph(self.signor_Network, self.ptmProteinToAbundanceMap, $scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
+        self.makeSignorGraph($scope.graphType4signor, $scope.circleSliderValue4signor, $scope.nodeSliderValue4signor, $scope.fontSliderValue4signor, $scope.widthSliderValue4signor);
 
     });
 
@@ -19703,7 +19704,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showSignorGraphTmp = true;
         self.showSignorGraph = false;
     }
-    self.makeSignorGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeSignorGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log(self.computeWeightForUpdateSignor);
 
 //
@@ -19719,8 +19720,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 //             d3.select("#chart4deep").select("svg").remove();
 
 
+        var network = self.signor_Network;
+        var ptmToAbundance = self.ptmProteinToAbundanceMap;
 
-        if(self.showSignorGraphTmp)
+    if(self.showSignorGraphTmp)
         {
             self.showSignorGraphTmp = false;
             self.showSignorGraph = true;
@@ -22822,13 +22825,25 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     $scope.nodeSliderValue4deep = 15;
     $scope.fontSliderValue4deep = 14;
     $scope.widthSliderValue4deep = 1500;
+    $scope.thresholdSlider4deep = 0.7;
+
+    $(document).on('input', '#threshhold_slider4deep', function() {
+        $('#threshhold_slider4deep').html( $(this).val() );
+        ////console.log($(this).val());
+        $scope.thresholdSlider4deep = $(this).val();
+
+        $scope.$apply();
+        self.makeDeepPhosGraph($scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep, $scope.thresholdSlider4deep);
+
+    });
+
     $(document).on('input', '#circle_slider4deep', function() {
         $('#circle_slider_value4deep').html( $(this).val() );
         ////console.log($(this).val());
         $scope.circleSliderValue4deep = $(this).val();
 
         $scope.$apply();
-        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph($scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep, $scope.thresholdSlider4deep);
 
     });
 
@@ -22839,7 +22854,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph($scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep, $scope.thresholdSlider4deep);
 
     });
 
@@ -22850,7 +22865,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph($scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep, $scope.thresholdSlider4deep);
 
     });
 
@@ -22861,7 +22876,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeDeepPhosGraph(self.deepPhosNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep);
+        self.makeDeepPhosGraph($scope.graphType4deep, $scope.circleSliderValue4deep, $scope.nodeSliderValue4deep, $scope.fontSliderValue4deep, $scope.widthSliderValue4deep, $scope.thresholdSlider4deep);
 
     });
 
@@ -22872,9 +22887,11 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showDeepPhosGraphTmp = true;
         self.showDeepPhosGraph = false;
     }
-    self.makeDeepPhosGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeDeepPhosGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, thresholdSliderValue) {
         // console.log("inside makeDeepPhosGraph");
         // console.log(graphType);
+        var network = self.deepPhosNetwork;
+        var ptmToAbundance = self.ptmProteinToAbundanceMap;
         console.log(self.showDeepPhosGraphTmp);
         console.log(self.showDeepPhosGraph);
         if(self.showDeepPhosGraphTmp)
@@ -22933,7 +22950,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 .range(colorsForAbundance);
 
 
-            function updateDeepPhos(nodes, links, graphType, circleValue, nodeValue, fontValue, widthValue) {
+            function updateDeepPhos(nodes, links, graphType, circleValue, nodeValue, fontValue, widthValue, thresholdValue) {
 
                 console.log("inside updateDeepPhos");
                 circleValue = Math.min(circleValue, widthValue - 300);
@@ -22992,6 +23009,15 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         .size([w, h]);
 
 // evenly spaces nodes along arc
+                    var lineWidth = function(score, thresholdInput){
+                        if (score < thresholdInput){
+                            return 0.0;
+                        }
+                        else{
+                            return score*2;
+                        }
+
+                    }
                     var circleCoord = function (node, index, num_nodes) {
                         var circumference = circle.node().getTotalLength();
                         var pointAtLength = function (l) {
@@ -23037,7 +23063,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         .style("fill", "none")
                         .style("stroke", "#726363")
                         .attr("class", "node-link")
-                        .style("stroke-width", function (d) {return d.score*2; })
+                        .style("stroke-width", function (d) {return lineWidth(d.score, thresholdValue) })
                         .attr("d", function (d) {
                             var dx = d.target.x - d.source.x,
                                 dy = d.target.y - d.source.y,
@@ -23355,6 +23381,16 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                     }
 
+                    var lineWidth = function(score, thresholdInput){
+                        if (score < thresholdInput){
+                            return 0.0;
+                        }
+                        else{
+                            return score*2;
+                        }
+
+                    }
+
                     //var dim = w-80
                     // var circle = svg.append("path")
                     //     .attr("d", "M 40, "+(dim/2+40)+" a "+dim/2+","+dim/2+" 0 1,0 "+dim+",0 a "+dim/2+","+dim/2+" 0 1,0 "+dim*-1+",0")
@@ -23421,7 +23457,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         .style("fill", "none")
                         .style("stroke", "#726363")
                         .attr("class", "node-link")
-                        .style("stroke-width", function (d) {return d.score*2; })
+                        .style("stroke-width", function (d) {return lineWidth(d.score, thresholdValue) })
                         .attr("d", function (d) {
                             var dx = d.target.x - d.source.x,
                                 dy = d.target.y - d.source.y,
@@ -23674,6 +23710,16 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     globalW = w;
 
                     var first_click = false;
+
+                    var lineWidth = function(score, thresholdInput){
+                        if (score < thresholdInput){
+                            return 0.0;
+                        }
+                        else{
+                            return score*2;
+                        }
+
+                    }
 
 
                     svg4deep = d3.select("#chart4deep")
@@ -24024,7 +24070,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         .style("stroke-width", function (d) {
 
 
-                            return d.score*2; })
+                            return lineWidth(d.score, thresholdValue) })
                         //.style("stroke-width", 0.1)
                         .attr("d", function (d) {
 
@@ -24387,12 +24433,22 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
                     //.stop();
 
+                    var lineWidth = function(score, thresholdInput){
+                        if (score < thresholdInput){
+                            return 0.0;
+                        }
+                        else{
+                            return score*2;
+                        }
+
+                    }
+
 
                     var path = svg4deep.append("svg:g").selectAll("path")
                     //.data(links)
                         .data(force.links())
                         .enter().append("svg:path")
-                        .style("stroke-width", function (d) {return d.score*2; })
+                        .style("stroke-width", function (d) {return lineWidth(d.score, thresholdValue) })
                         .style('stroke', "black")
                         //.style("stroke", function (d) {return colScale(d.value); })
                         .attr("class", function (d) {
@@ -25182,12 +25238,15 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             }
             console.log(network);
             console.log(ptmToAbundance);
-            updateDeepPhos(network.nodes, network.edges, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue);
+            updateDeepPhos(network.nodes, network.edges, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, thresholdSliderValue);
 
 
             self.showDeepPhosGraph = true;
         }
     }
+
+
+
 
 
     $scope.graphType4ptm = 1;
@@ -25202,7 +25261,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph($scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#node_slider4ptm', function() {
@@ -25212,7 +25271,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph($scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#font_slider4ptm', function() {
@@ -25222,7 +25281,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph($scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
     });
 
     $(document).on('input', '#width_slider4ptm', function() {
@@ -25232,7 +25291,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePtmGraph(self.ptmNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
+        self.makePtmGraph($scope.graphType4ptm, $scope.circleSliderValue4ptm, $scope.nodeSliderValue4ptm, $scope.fontSliderValue4ptm, $scope.widthSliderValue4ptm);
 
 
     });
@@ -25243,8 +25302,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showPtmGraphTmp = true;
         self.showPtmGraph = false;
     }
-    self.makePtmGraph = function (network, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePtmGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log(self.computeWeightForUpdatePtm);
+        var network = self.ptmNetwork;
+        var ptmToAbundance = self.ptmProteinToAbundanceMap;
         if(self.showPtmGraphTmp)
         {
             self.showPtmGraphTmp = false;
@@ -28042,7 +28103,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4phos = $(this).val();
 
         $scope.$apply();
-        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph($scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -28053,7 +28114,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph($scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -28064,7 +28125,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph($scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -28075,7 +28136,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePhosphoGraph(self.phosphoNetwork, self.ptmProteinToAbundanceMap, $scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
+        self.makePhosphoGraph($scope.graphType4phos, $scope.circleSliderValue4phos, $scope.nodeSliderValue4phos, $scope.fontSliderValue4phos, $scope.widthSliderValue4phos);
 
     });
 
@@ -28085,8 +28146,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showPhosphoGraph = false;
     }
 
-    self.makePhosphoGraph = function (phosphoNetwork, ptmToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePhosphoGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
 
+        var phosphoNetwork = self.phosphoNetwork;
+        var ptmToAbundance = self.ptmProteinToAbundanceMap;
         if(self.showPhosphoGraphTmp){
             self.showPhosphoGraphTmp = false;
             self.showPhosphoGraph = true;
@@ -30183,6 +30246,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.rowSplitPattern = /[,;\n]/;
     self.rowSplitPatternGenes = /[,;\n]/;
     self.cleanFormattedModifications = /\[/;
+    $scope.signature_name_interest = "input_sig";
+    $scope.signature_name_interest_changed = "input_sig";
     self.patt1 = /[A-Z]/g;
     self.patt2 = /[a-z]/g;
     self.patt3 = /\d+/g
@@ -30321,7 +30386,13 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
+    $scope.change_signature_name_interest = function(input) {
+        $scope.signature_name_interest = input;
+        //$scope.$apply();
 
+        console.log($scope.signature_name_interest);
+
+    };
 
     $(document).ready(function () {
 
@@ -31575,7 +31646,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.selectSliderValue4ilincs1 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1($scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1, $scope.signature_name_interest);
 
     });
 
@@ -31585,7 +31656,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4ilincs1 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1($scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1, $scope.signature_name_interest);
 
     });
 
@@ -31596,7 +31667,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1($scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1, $scope.signature_name_interest);
 
     });
 
@@ -31607,7 +31678,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1($scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1, $scope.signature_name_interest);
 
     });
 
@@ -31618,7 +31689,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph1(self.ilincsCmap,  $scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1);
+        self.makeIlincsGraph1($scope.selectSliderValue4ilincs1, $scope.circleSliderValue4ilincs1, $scope.nodeSliderValue4ilincs1, $scope.fontSliderValue4ilincs1, $scope.widthSliderValue4ilincs1, $scope.signature_name_interest);
 
     });
 
@@ -31635,7 +31706,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.selectSliderValue4ilincs2 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2($scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2, $scope.signature_name_interest);
 
     });
 
@@ -31645,7 +31716,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4ilincs2 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2($scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2, $scope.signature_name_interest);
 
     });
 
@@ -31656,7 +31727,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2($scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2, $scope.signature_name_interest);
 
     });
 
@@ -31667,7 +31738,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2($scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2, $scope.signature_name_interest);
 
     });
 
@@ -31678,7 +31749,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeIlincsGraph2(self.ilincsKnockdown,  $scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2);
+        self.makeIlincsGraph2($scope.selectSliderValue4ilincs2, $scope.circleSliderValue4ilincs2, $scope.nodeSliderValue4ilincs2, $scope.fontSliderValue4ilincs2, $scope.widthSliderValue4ilincs2, $scope.signature_name_interest);
 
     });
 
@@ -31695,7 +31766,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.selectSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        console.log($scope.signature_name_interest);
+        self.makeIlincsGraph3($scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3, $scope.signature_name_interest);
 
     });
 
@@ -31705,7 +31777,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        console.log($scope.signature_name_interest);
+        self.makeIlincsGraph3($scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3, $scope.signature_name_interest);
 
     });
 
@@ -31715,8 +31788,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.nodeSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-
-        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        console.log($scope.signature_name_interest);
+        self.makeIlincsGraph3($scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3, $scope.signature_name_interest);
 
     });
 
@@ -31726,8 +31799,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.fontSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-
-        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        console.log($scope.signature_name_interest);
+        self.makeIlincsGraph3($scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3, $scope.signature_name_interest);
 
     });
 
@@ -31737,17 +31810,18 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.widthSliderValue4ilincs3 = $(this).val();
 
         $scope.$apply();
-        console.log(self.ilincsPerturbations);
-
-        self.makeIlincsGraph3(self.ilincsPerturbations,  $scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3);
+        //console.log(self.ilincsPerturbations);
+        console.log($scope.signature_name_interest);
+        self.makeIlincsGraph3($scope.selectSliderValue4ilincs3, $scope.circleSliderValue4ilincs3, $scope.nodeSliderValue4ilincs3, $scope.fontSliderValue4ilincs3, $scope.widthSliderValue4ilincs3, $scope.signature_name_interest);
 
     });
 
 
 
-    self.makeIlincsGraph1 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph1 = function (selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, signature_name_interest) {
         //console.log("in makeEnrichmentGraph");
         //console.log(inputNetwork);
+        var inputNetwork = self.ilincsCmap;
         if(self.showIlincsGraph1Tmp)
         {
             self.showIlincsGraph1Tmp = false;
@@ -31797,6 +31871,8 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             var colorScale = d3.scale.threshold()
                 .domain(domain_data)
                 .range(colorsForAbundance);
+
+
 
 
 
@@ -31864,6 +31940,16 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
                     // This is for grouping nodes
 
+                    var truncateName= function (name){
+                        //console.log(name);
+                        if (name.length > 30){
+                            return name.substr(0, 26) + "...";
+                        }
+                        else{
+                            return name;
+                        }
+                    }
+
 
                     var force = d3.layout.force()
                         .nodes(nodes)
@@ -31901,6 +31987,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                             var num_nodes = input_num_nodes + added_num;
                             var sectionLength = (circumference) / num_nodes;
                             if (String(node["name"]).valueOf() === "input_sig") {
+                                //node["full_name"] = $scope.signature_name_interest;
                                 var position = 0;
                                 // console.log("in ATP");
                                 // console.log(pointAtLength(circumference - position));
@@ -32109,7 +32196,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
                         //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
                         .text(function (d) {
-                            return d.full_name
+                            return truncateName(d.full_name);
                         })
 
                     var drag = force.drag()
@@ -32382,7 +32469,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             var network_edges = [];
             var edge_tag = 1;
 
-            network_nodes.push({"full_name":"input_sig","name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
+            network_nodes.push({"full_name":signature_name_interest,"name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
 
             for (var net_i = 0; net_i < network_len; net_i++) {
                 if(network_sorted[net_i]["similarity"] > 0){
@@ -32447,9 +32534,11 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     }
 
-    self.makeIlincsGraph2 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph2 = function (selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, signature_name_interest) {
         //console.log("in makeEnrichmentGraph");
         //console.log(inputNetwork);
+        var inputNetwork = self.ilincsKnockdown;
+
         if(self.showIlincsGraph2Tmp)
         {
             self.showIlincsGraph2Tmp = false;
@@ -32632,6 +32721,16 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                     }
 
+
+                    var truncateName= function (name){
+                        //console.log(name);
+                        if (name.length > 30){
+                            return name.substr(0, 26) + "...";
+                        }
+                        else{
+                            return name;
+                        }
+                    }
                     var dim = w - (widthValue - circleValue);
                     var circle = svgIlincs2.append("path")
                         .attr("d", "M " + String((widthValue - circleValue) / 2) + ", " + (dim / 2 + (widthValue - circleValue) / 2) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
@@ -32811,7 +32910,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
                         //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
                         .text(function (d) {
-                            return d.full_name
+                            return truncateName(d.full_name)
                         })
 
                     var drag = force.drag()
@@ -33083,7 +33182,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             var network_edges = [];
             var edge_tag = 1;
 
-            network_nodes.push({"full_name":"input_sig","name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
+            network_nodes.push({"full_name":signature_name_interest,"name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
 
             for (var net_i = 0; net_i < network_len; net_i++) {
                 if(network_sorted[net_i]["similarity"] > 0){
@@ -33150,8 +33249,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     }
 
-    self.makeIlincsGraph3 = function (inputNetwork, selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeIlincsGraph3 = function (selectionValue, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, signature_name_interest) {
         //console.log("in makeEnrichmentGraph");
+        var inputNetwork = self.ilincsPerturbations;
+
         console.log(inputNetwork);
         if(self.showIlincsGraph3Tmp)
         {
@@ -33268,6 +33369,16 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     // This is for grouping nodes
+
+                    var truncateName= function (name){
+                        //console.log(name);
+                        if (name.length > 30){
+                            return name.substr(0, 26) + "...";
+                        }
+                        else{
+                            return name;
+                        }
+                    }
 
 
                     var force = d3.layout.force()
@@ -33517,7 +33628,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
                         //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
                         .text(function (d) {
-                            return d.full_name
+                            return truncateName(d.full_name);
                         })
 
                     var drag = force.drag()
@@ -33789,7 +33900,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             var network_edges = [];
             var edge_tag = 1;
 
-            network_nodes.push({"full_name":"input_sig","name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
+            network_nodes.push({"full_name":signature_name_interest,"name":"input_sig","value":10,"similarity":1,"weight":2,"id":0,"idx":0,"group":0});
 
             for (var net_i = 0; net_i < network_len; net_i++) {
                 if(network_sorted[net_i]["similarity"] > 0){
@@ -33855,7 +33966,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         $scope.circleSliderValue4enrich = $(this).val();
 
         $scope.$apply();
-        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph($scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -33866,7 +33977,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph($scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -33877,7 +33988,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph($scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -33888,7 +33999,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeEnrichmentGraph(self.enrichmentNetwork, self.geneToAbundanceMap, $scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
+        self.makeEnrichmentGraph($scope.graphType4enrich, $scope.circleSliderValue4enrich, $scope.nodeSliderValue4enrich, $scope.fontSliderValue4enrich, $scope.widthSliderValue4enrich);
 
     });
 
@@ -33899,8 +34010,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         self.showEnrichmentGraph = false;
     }
 
-    self.makeEnrichmentGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeEnrichmentGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         console.log("in makeEnrichmentGraph");
+        var inputNetwork = self.enrichmentNetwork;
+        var geneToAbundance = self.geneToAbundanceMap;
         console.log(inputNetwork);
         if(self.showEnrichmentGraphTmp)
         {
@@ -35945,7 +36058,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph($scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35956,7 +36069,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph($scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35967,7 +36080,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph($scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35978,7 +36091,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makePathwayGraph(self.network, self.geneToAbundanceMap, $scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
+        self.makePathwayGraph($scope.graphType4pathway, $scope.circleSliderValue4pathway, $scope.nodeSliderValue4pathway, $scope.fontSliderValue4pathway, $scope.widthSliderValue4pathway);
 
     });
 
@@ -35986,9 +36099,11 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
-    self.makePathwayGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makePathwayGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log("in makePathwayGraph");
         //console.log(inputNetwork);
+        var inputNetwork = self.network;
+        var geneToAbundance = self.geneToAbundanceMap;
         if(self.showPathwayGraphTmp)
         {
             self.showPathwayGraph = true;
@@ -38641,7 +38756,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph($scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -38652,7 +38767,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph($scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -38663,7 +38778,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph($scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -38674,7 +38789,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         $scope.$apply();
 
-        self.makeKinaseGraph(self.kinaseNetwork, self.geneToAbundanceMap, $scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
+        self.makeKinaseGraph($scope.graphType4kinase, $scope.circleSliderValue4kinase, $scope.nodeSliderValue4kinase, $scope.fontSliderValue4kinase, $scope.widthSliderValue4kinase);
 
     });
 
@@ -38700,8 +38815,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     //     <polyline fill="none" stroke="black"
     // points="70,80 100,60" marker-end="url(#triangle)"/>
     // </svg>
-    self.makeKinaseGraph = function (inputNetwork, geneToAbundance, graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
+    self.makeKinaseGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
 
+        var inputNetwork = self.kinaseNetwork;
+        var geneToAbundance = self.geneToAbundanceMap;
         if(self.showKinaseGraphTmp){
             self.showKinaseGraphTmp = false;
             self.showKinaseGraph = true;

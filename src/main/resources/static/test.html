@@ -1,176 +1,231 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Spherical Force-Directed Layout</title>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
-    <!--<script src="/js/d3.v3.min.js"></script>-->
-    <!--<script src="/js/dat-gui/build/dat.gui.js"></script> -->
-    <style type="text/css">
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        path.node {
-            stroke-width: 1.5px;
-        }
+<div ng-if="!analyzeWithGenesState">
+    <ol class="breadcrumb" >
+        <li ><a ui-sref="lincs()"><span class="fa fa-home"></span></a></li>
+        <li ng-if="!searched" class="active">Search for signatures</li>
+        <li ng-if="searched"><a ng-click="goHomeSig()">Search for signatures</a></li>
+        <li ng-if="searched" class="active">Search results</li>
+    </ol>
+</div>
+<!-- <h4>Search iLincs signatures</h4> -->
 
-        path.link {
-            stroke: #999;
-            fill-opacity: 0
-        }
-    </style>
-</head>
-<body>
-<script type="text/javascript">
-    var projections = {
-        "Albers": d3.geo.albers(),
-        "Azimuthal Equal Area": d3.geo.azimuthalEqualArea(),
-        "Azimuthal Eqidistant": d3.geo.azimuthalEquidistant(),
-        "Conic Conformal": d3.geo.conicConformal(),
-        "Conic Equal Area": d3.geo.conicEqualArea(),
-        "Conic Equidistant": d3.geo.conicEquidistant(),
-        "Eqirectangular": d3.geo.equirectangular(),
-        "Gnomonic": d3.geo.gnomonic(),
-        "Mercator": d3.geo.mercator(),
-        "Orthographic": d3.geo.orthographic(),
-        "Stereographic": d3.geo.stereographic(),
-        "Transverse Mercator": d3.geo.transverseMercator(),
-    };
-    var config = { "projection": "Orthographic", "clip": true, "friction": .9, "linkStrength": 1, "linkDistance": 20, "charge": 30, "gravity": .1, "theta": .8 };
-    var gui = new dat.GUI();
-    //var projectionChanger = gui.add(config, "projection", ['equalarea', 'equidistant', 'gnomonic', 'orthographic', 'stereographic', 'rectangular']);
-    var projectionChanger = gui.add(config, "projection", Object.keys(projections));
-    //http://stackoverflow.com/a/3417242
-    function wrapIndex(i, i_max) {
-        return ((i % i_max) + i_max) % i_max;
-    }
-    projectionChanger.onChange(function(value) {
-        projection = projections[value]
-                .scale(height/2)
-                .translate([(width/2)-125, height/2])
-                .clipAngle(config["clip"] ? 90 : null)
+<div class="row-fluid" ng-if="!analyzeWithGenesState">
+    <div class="ilincs-page-header" >
+        <h1>Signatures
+            <div class="helpiconsdiv inlineflex pull-right">
+                <!-- modified by Behrouz
+                <div uib-dropdown is-open="statusV.isopen">
+                  <button id="video-dropdown" type="button" class="btn-link" style="font-size: 28px;" uib-dropdown-toggle ng-disabled="disabled">
+                    <i class="fa fa-youtube-play"></i>
+                  </button>
+                  <ul class="dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button" style="margin-top:0px;margin-bottom: 0px;">
+                    <li role="menuitem"><a ng-click="openIframeModal('qBRLabOFvjQ','YouTube')">iLINCS portal overview</a></li>
+                  <li role="menuitem"><a ng-click="openIframeModal('p7ClSwElQn4','YouTube')">Signatures pipeline - Overall workflow</a></li>
+                  <li role="menuitem"><a ng-click="openIframeModal('14inziZYBuA','YouTube')">Signatures pipeline - Landing page</a></li>
+                  </ul>
+                </div>
+                end of modified by Behrouz -->
+                <div uib-dropdown is-open="statusH.isopen">
+                    <button id="help-dropdown" type="button" class="btn-link" style="font-size: 28px;" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="fa fa-question"></i>
+                    </button>
+                    <ul class="dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem"><a href="/help/" target="_blank">iLINCS Help</a></li>
+                        <li role="menuitem"><a href="/help/tutorials/signatures/Search-for-signature" target="_blank">Explore signatures</a></li>
+                        <li role="menuitem"><a href="/help/tutorials/signatures/Find-signatures-with-pharmacological-actions" target="_blank">Pharmacological Actions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </h1>
+    </div>
+</div>
+<!-- -->
+<div ng-if="!analyzeWithGenesState">
+    <ul  class="nav nav-tabs main-tabs">
+        <li ng-class="uploadMode ? 'nonactive':'active'">
+            <a  ui-sref="signatures.search()" ui-sref-opts="{reload:true}">Search</a>
+        </li>
+        <li ng-class="uploadMode ? 'active':'nonactive'">
+            <a ui-sref="signaturesUpload()" ui-sref-opts="{reload:true}">Submit</a>
+        </li>
+        <li class="nonactive"><a ui-sref="maps()" ui-sref-opts="{reload:true}">Maps</a>
+        </li>
+    </ul>
+</div>
 
-        path.projection(projections[value])
-        return
-        if(value == 'rectangular') {
-            path = d3.geo.path().projection(function(coordinates){
-                console.log(coordinates[0], coordinates[1])
-                return [
-                    wrapIndex(coordinates[0], width),
-                    wrapIndex(coordinates[1], height),
-                ];
-            });
-            config['clip'] = false
-        } else {
-            projection.mode(value)
-            path = d3.geo.path().projection(projection)
-        }
+<div class="panel panel-default panel-pills">
+    <div class="panel-body maps-body">
+        <!-- ng-class="{panel-pills: !analyzeWithGenesState}" -->
+        <div class="panel panel-default"  >
+            <div class="panel-heading panel-heading-small">
+                <h2 class="panelIntroText">Find signatures to analyze</h2>
+            </div>
+            <!-- <h4>Select signatures to analyze</h4> -->
+            <div class="panel-body">
+                <!-- <div class="card-body"> -->
+                <!-- <div style="margin: 0 15px ">
+                <div class="ilincs-navigator-response-section-container">
+                  <div class="ilincs-navigator-response-section-heading">
+                    <b>Find Signatures Using Text Search</b>
+                  </div> -->
+                <!-- {{searched}} -->
+                <div class="row">
 
-        force.start()
-    });
+                    <div class="col-sm-6">
+                        <div class="sig-lib-list-top" style="margin-top:10px;padding-left:26px" ng-if="environment='development'">
+                            <a class="title-pointer">
+                                <i ng-if='!chosenAllLib()'   ng-click='chooseLib("All")' class="fa fa-square-o" bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="select all signature libraries"></i>
+                                <i ng-if='chosenAllLib()'  ng-click='chooseLib("none")' class="fa fa-check-square" bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="deselect all signature libraries"></i>
+                            </a>
+                            <strong>Signature Library<span class="pull-right">Number of signatures</span></strong>
+                        </div>
 
-    var clipChanger = gui.add(config, "clip").listen();
-    clipChanger.onChange(function(value) {
-        projection.clipAngle(value ? 90 : null)
-        force.start()
-    });
+                        <ul style="list-style:none; font-weight:bold;padding-top:5px;">
+                            <!-- ng-if="signaturesF.signatureLibrariesReady" -->
+                            <div class="row" ng-repeat="lib in signaturesF.libraryIDs">
+                                <li value="{{lib}}">
+                                    <!-- <a ng-click='chooseLib(lib)' class="title-pointer">
+                                      <i ng-if='!chosenLib(lib)'  class="fa fa-square-o" bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="Add signature library to results"></i>
+                                      <i ng-if='chosenLib(lib)' class="fa fa-check-square"  bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="Remove signature library from results"></i>
+                                    </a> -->
+                                    <a ng-click='chooseLib(lib)' class="title-pointer">
+                                        <i ng-if='!chosenLib(lib)'  class="fa fa-square-o" bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="Add signature library to results"></i>
+                                        <i ng-if='chosenLib(lib)' class="fa fa-check-square"  bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-content="Remove signature library from results"></i>
+                                    </a>
+                                    <a ng-if="!searched" class="pointer" ng-click="onClickCountBadge('',[lib])"  bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-template-url="views/templates/tooltips/popoverLibraryInfo.html"> <span class="black">{{getLibName(lib)}}</span></a>
+                                    <a ng-if="searched" class="pointer" ng-click="chooseLib(lib)" bs-popover data-placement="right" data-container="body" data-delay="100" data-trigger="hover" data-template-url="views/templates/tooltips/popoverLibraryInfo.html"> <span class="black">{{getLibName(lib)}}</span></a>
+                                    <a class="pointer" ng-click="onClickCountBadge('',[lib])"><span class="badge pull-right" bs-popover data-placement="auto left" data-container="body" data-delay="100" data-trigger="hover" data-content="Display all signature for this library">{{signaturesF.signatureLibraries[lib].signatureCount||0}}</span></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <br />
+                        <div class="input-group lincs-search-group">
 
-    var fl = gui.addFolder('Force Layout');
-    fl.open()
+                            <!-- ng-model-options="{ debounce: 250 }"  -->
+                            <input type="text" ng-model="keyword" class="form-control"
+                                   aria-label="..." placeholder="Search for keyword..." my-enter="goSearchGL()" autofocus>
+                            <div class="input-group-btn">
+                                <!-- <button ui-sref='.searchFor({term:keyword})' class="btn btn-primary" value="Search" ng-disabled="keyword.length<2||keyword==undefined">Search</button> -->
+                                <a ng-click='goSearchGL()' class="btn btn-primary" value="Search"  ng-disabled="keyword.length<2||keyword==undefined">Search</a>
+                            </div>
+                        </div>
+                        <!-- <strong>Example keywords : <a href="" ng-click="keyword='sirolimus'">sirolimus</a>, <a href="" ng-click="keyword='MCF7'">MCF7</a>, <a href="" ng-click="keyword='vorinostat'">vorinostat</a>, <a href="" ng-click="keyword='metastasis'">metastasis</a>, <a href="" ng-click="keyword='development'">development</a></strong> -->
+                        <strong>Example keywords :
+                            <span ng-if="!analyzeWithGenesState">
+        <a ui-sref="signatures.searchTerm({term:'sirolimus'})" ui-sref-opts="{reload:true}" ng-click="keyword='sirolimus'">sirolimus</a>,
+        <a ui-sref="signatures.searchTerm({term:'MCF7'})" ui-sref-opts="{reload:true}" ng-click="keyword='MCF7'">MCF7</a>,
+        <a ui-sref="signatures.searchTerm({term:'vorinostat'})" ui-sref-opts="{reload:true}" ng-click="keyword='vorinostat'">vorinostat</a>,
+        <a ui-sref="signatures.searchTerm({term:'MTOR'})" ui-sref-opts="{reload:true}" ng-click="keyword='MTOR'">MTOR</a>,
+        <a ui-sref="signatures.searchTerm({term:'RAF inhibitor'})" ui-sref-opts="{reload:true}" ng-click="keyword='RAF inhibitor'">RAF inhibitor</a>
+      </span>
+                            <span ng-if="analyzeWithGenesState">
+        <a ui-sref="analyzeWithGenes.signatures.searchInLibs({term:'sirolimus'})" ng-click="changeKeyword('sirolimus')">sirolimus</a>,
+        <a ui-sref="analyzeWithGenes.signatures.searchInLibs({term:'MCF7'})" ng-click="changeKeyword('MCF7')">MCF7</a>,
+        <a ui-sref="analyzeWithGenes.signatures.searchInLibs({term:'vorinostat'})" ng-click="changeKeyword('vorinostat')">vorinostat</a>,
+        <a ui-sref="analyzeWithGenes.signatures.searchInLibs({term:'MTOR'})" ng-click="changeKeyword('MTOR')">MTOR</a>,
+        <a ui-sref="analyzeWithGenes.signatures.searchInLibs({term:'RAF inhibitor'})" ng-click="changeKeyword('RAF inhibitor')">RAF inhibitor</a>
+      </span>
+                        </strong>
+                        <!-- <div ng-if="limitedResults" class="alert alert-info alert-mb fade in"><i class="fa fa-exclamation-circle" style="color: #337ab7"></i> If 0 or 1 character is supplied results show only first 1000 signatures out of library</div> -->
 
-    var frictionChanger = fl.add(config, "friction", 0, 1);
-    frictionChanger.onChange(function(value) {
-        force.friction(value)
-        force.start()
-    });
+                        <div ng-if="analyzeWithGenesState">
+                            <center>OR<br/>
+                                <a ui-sref="analyzeWithGenes.signatures.enrichment()" class="btn btn-primary" value="Search" >Find Enriched Signatures</a></center>
+                        </div>
 
-    var linkDistanceChanger = fl.add(config, "linkDistance", 0, 400);
-    linkDistanceChanger.onChange(function(value) {
-        force.linkDistance(value)
-        force.start()
-    });
+                        <div ng-if="!analyzeWithGenesState" >
+                            <br/>
+                            <center>
+                                <strong>OR </strong>
+                            </center>
+                            <br/>
+                            <strong>Find Signatures with : </strong>
 
-    var linkStrengthChanger = fl.add(config, "linkStrength", 0, 1);
-    linkStrengthChanger.onChange(function(value) {
-        force.linkStrength(value)
-        force.start()
-    });
+                            <div   style="position: relative;  margin-top: 105px;">
 
-    var chargeChanger = fl.add(config,"charge", 0, 500);
-    chargeChanger.onChange(function(value) {
-        force.charge(-value)
-        force.start()
-    });
+                                <!-- <div  style="position: absolute;margin-top: -105px; margin-right:-300px"> -->
+                                <!-- <div  style="position: relative;" > -->
+                                <div style="position: absolute;margin-top: -105px; left: 0;">
+                                    <button class="btn btn-primary " ui-sref="signatures.search.moaAction()" style="font-size:12px; position:absolute; left: 0px;">Mechanism of Action</button>
+                                </div>
+                                <div style="position: absolute;margin-top: -105px; right: 0;">
+                                    <strong >... e.g. MTOR inhibitor</strong>
+                                </div>
+                                <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- <div style="position: absolute;margin-top: -95px;">
+                                      <strong>Signature Library<span class="pull-right">Number of signatures</span></strong>
+                                    </div> -->
+                                <!-- ==================== -->
+                                <!-- <div  style="position: absolute;margin-top: -70px;margin-right:100%;height:35px;"> -->
+                                <!-- <div  style="position: relative; "> -->
+                                <div style="position: absolute;margin-top: -70px; left: 0;">
+                                    <button class="btn btn-primary " ui-sref="signatures.search.pharmAction()" style="font-size:12px; position:absolute; left: 0px;">Pharmacological Actions</button>
+                                </div>
+                                <div style="position: absolute;margin-top: -70px; right: 0;">
+                                    <!-- <span class="badge pull-right" bs-popover data-placement="auto left" data-container="body" data-delay="100" data-trigger="hover" data-content="Display all signature for this library">mmmmmmm</span>
+                                 -->
+                                    <strong >... e.g. Anti-Allergic Agents</strong>
+                                </div>
+                                <!-- </div> -->
+                                <!-- </div> -->
 
-    var gravityChanger = fl.add(config,"gravity", 0, 1);
-    gravityChanger.onChange(function(value) {
-        force.gravity(value)
-        force.start()
-    });
+                                <!-- ==================== -->
+                                <!-- <div style="position: absolute;margin-top: -35px;margin-right:100%;height:35px;"> -->
+                                <!-- <div   style="position: relative; "> -->
 
-    var thetaChanger = fl.add(config,"theta", 0, 1);
-    thetaChanger.onChange(function(value) {
-        force.theta(value)
-        force.start()
-    });
+                                <div style="position: absolute;margin-top: -35px; left: 0;">
+                                    <button class="btn btn-primary " ui-sref="signatures.search.knownTargetAction()" style="font-size:12px; ">Known Targets</button>
+                                </div>
+                                <div style="position: absolute;margin-top: -35px; right: 0;">
+                                    <strong >... e.g. TP53</strong>
+                                </div>
+                                <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- ==================== -->
 
-    var width = window.innerWidth,
-            height = window.innerHeight - 5,
-            fill = d3.scale.category20(),
-            nodes = [{x: width/2, y: height/2}],
-            links = [];
+                            </div>
 
-    var projection = projections[config["projection"]]
-            .scale(height/2)
-            .translate([(width/2)-125, height/2])
-            .clipAngle(config["clip"] ? 90 : null)
 
-    var path = d3.geo.path()
-            .projection(projection)
+                        </div>
 
-    var force = d3.layout.force()
-            .linkDistance(config["linkDistance"])
-            .linkStrength(config["linkStrength"])
-            .gravity(config["gravity"])
-            .size([width, height])
-            .charge(-config["charge"]);
 
-    var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .call(d3.behavior.drag()
-                    .origin(function() { var r = projection.rotate(); return {x: 2 * r[0], y: -2 * r[1]}; })
-                    .on("drag", function() { force.start(); var r = [d3.event.x / 2, -d3.event.y / 2, projection.rotate()[2]]; t0 = Date.now(); origin = r; projection.rotate(r); }))
 
-    for(x=0;x<100;x++){
-        source = nodes[~~(Math.random() * nodes.length)]
-        target = {x: source.x + Math.random(), y: source.y + Math.random(), group: Math.random()}
-        links.push({source: source, target: target})
-        nodes.push(target)
-    }
 
-    var link = svg.selectAll("path.link")
-            .data(links)
-            .enter().append("path").attr("class", "link")
 
-    var node = svg.selectAll("path.node")
-            .data(nodes)
-            .enter().append("path").attr("class", "node")
-            .style("fill", function(d) { return fill(d.group); })
-            .style("stroke", function(d) { return d3.rgb(fill(d.group)).darker(); })
-            .call(force.drag);
 
-    force
-            .nodes(nodes)
-            .links(links)
-            .on("tick", tick)
-            .start();
+                    </div>
 
-    function tick() {
-        node.attr("d", function(d) { var p = path({"type":"Feature","geometry":{"type":"Point","coordinates":[d.x, d.y]}}); return p ? p : 'M 0 0' });
-        link.attr("d", function(d) { var p = path({"type":"Feature","geometry":{"type":"LineString","coordinates":[[d.source.x, d.source.y],[d.target.x, d.target.y]]}}); return p ? p : 'M 0 0' });
-    }
-</script>
-</body>
-</html>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- </div> -->
+
+    <!-- <div ui-view="oldSignatures"></div> -->
+
+    <!-- <div ui-view="uploadSignatures"></div> -->
+    <!-- <a href="/GenomicsPortals/bs_iLincsFileUploadSetup.do">Upload Signature</a> -->
+
+
+    <div ui-view></div>
+
+</div>
+
+
+<div ng-if="environment=='development'" class="alert alert-info alert-mb fade in" style="margin: 12px 0;" ng-cloak>
+    <p><i class="glyphicon glyphicon-info-sign" style="color: #337ab7"></i>&nbsp;&nbsp;In order to access iLINCS signatures generated prior to September 2018, please use legacy version: <a href="http://ilincs2018.ilincs.org"><b>ilincs2018.ilincs.org</b></a></p>
+</div>
+<!-- <hr /> -->
+<!-- <div class="alert alert-info alert-mb fade in "
+ tooltip-placement="top" uib-tooltip="In order to Create Signature number of selected properties has to be 2!" tooltip-class="helpTooltips" > -->
+<!-- <div ng-if="showOldSigsLink">
+  <br />
+  <br />
+<center>
+ <a class="btn btn-default" href="/GenomicsPortals/signatures" data-intro="Signatures Pipeline" data-position="right">Access to previous version of generated signatures prior to September 2016</a>
+ </center>
+   <br />
+</div> -->
