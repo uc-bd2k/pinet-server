@@ -305,613 +305,613 @@
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 <div ng-controller="MainCtrl as ctrl">
 
-    <div class="splash fade-in" ng-show="ctrl.showSplash" ng-model="ctrl.showSplash">
-        <h1 class="splash-title fade-in">PiNET</h1>
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 0">
-        <h2 class="splash-title2 fade-in">Annotate Peptides with PiNET.</h2>
-    </div>
+    <!--<div class="splash fade-in" ng-show="ctrl.showSplash" ng-model="ctrl.showSplash">-->
+        <!--<h1 class="splash-title fade-in">PiNET</h1>-->
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 0">-->
+        <!--<h2 class="splash-title2 fade-in">Annotate Peptides with PiNET.</h2>-->
+    <!--</div>-->
 
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 1">
-            <h2 class="splash-title2 fade-in">Annotate PTM/Proteins with PiNET.</h2>
-        </div>
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 2">
-            <h2 class="splash-title2 fade-in">Annotate Genes with PiNET.</h2>
-        </div>
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 1">-->
+            <!--<h2 class="splash-title2 fade-in">Annotate PTM/Proteins with PiNET.</h2>-->
+        <!--</div>-->
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 2">-->
+            <!--<h2 class="splash-title2 fade-in">Annotate Genes with PiNET.</h2>-->
+        <!--</div>-->
 
-        <!--<h2 class="splash-title4 fade-in">Start With</h2>-->
-        <div style="background:transparent;">
-            <div class="splash-title5 fade-in "> Start with:
+        <!--&lt;!&ndash;<h2 class="splash-title4 fade-in">Start With</h2>&ndash;&gt;-->
+        <!--<div style="background:transparent;">-->
+            <!--<div class="splash-title5 fade-in "> Start with:-->
 
-                <!--<span  class="onerow">-->
-
-
-                <div id="breadcrumbNav2" style="margin-top: 20px">
-                    <div id="arrowBar2">
-                        <!-- Notice the lack of #borderTop2 and #borderBottom2 in this example since border is applied entirely to #arrowBar2 instead. -->
-
-                        <!-- The very first crumb has a different "foo" style since this crumb has no arrow tail -->
-                        <!--<a href="#Wonderful">     <span class="AB2rotate color0"><span class="myButton"><span class="AB2text0">Peptides</span></span></span></a>-->
-
-                        <a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=0" href="#"
-                           title="Enter Peptides for Annotation"> <span
-                                class="AB2rotate1 color0"><span class="AB2rotateReset"><span
-                                class="AB2text0">Peptides2Proteins</span></span></span></a>
-
-                        <a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=1" href="#"
-                           title="Enter PTM Proteins for Annotation"> <span
-                                class="AB2rotate2 color1"><span class="AB2rotateReset"><span
-                                class="AB2text1">PTMs2Modifiers</span></span></span></a>
-
-                        <a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=2" href="#"
-                           title="Enter Gene names for Annotation"> <span
-                                class="AB2rotate3 color2"><span class="AB2rotateReset"><span
-                                class="AB2text2">Proteins2Pathways</span></span></span></a>
-
-                        <a href="javascript:void(0);" style="pointer-events: none; cursor: default;"
-                           title="piNET, A Versatile Platform for Downstream Analysis and Visualization of Proteomics Data."> <span
-                                class="AB2rotate4 color3"><span class="AB2rotateReset"><span
-                                class="AB2text3">piNET</span></span></span></a>
+                <!--&lt;!&ndash;<span  class="onerow">&ndash;&gt;-->
 
 
-                        <!--<a href="#Wonderful" >     <span class="AB2rotate1 "><span class="AB2rotateReset"><span class="AB2text1">Peptides</span></span></span></a>-->
+                <!--<div id="breadcrumbNav2" style="margin-top: 20px">-->
+                    <!--<div id="arrowBar2">-->
+                        <!--&lt;!&ndash; Notice the lack of #borderTop2 and #borderBottom2 in this example since border is applied entirely to #arrowBar2 instead. &ndash;&gt;-->
 
-                        <!--<a href="#CSS3">          <span class="AB2rotate2 "><span class="AB2rotateReset"><span class="AB2text1">Proteins</span></span></span></a>-->
-                        <!--<a href="#Accessibility"> <span class="AB2rotate3 "><span class="AB2rotateReset"><span class="AB2text2">Pathways</span></span></span></a>-->
+                        <!--&lt;!&ndash; The very first crumb has a different "foo" style since this crumb has no arrow tail &ndash;&gt;-->
+                        <!--&lt;!&ndash;<a href="#Wonderful">     <span class="AB2rotate color0"><span class="myButton"><span class="AB2text0">Peptides</span></span></span></a>&ndash;&gt;-->
 
-                        <!--<a href="#Breadcrumb">    <span class="AB2rotate4 "><span class="AB2rotateReset"><span class="AB2text3">LINCS</span></span></span></a>-->
+                        <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=0" href="#"-->
+                           <!--title="Enter Peptides for Annotation"> <span-->
+                                <!--class="AB2rotate1 color0"><span class="AB2rotateReset"><span-->
+                                <!--class="AB2text0">Peptides2Proteins</span></span></span></a>-->
 
+                        <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=1" href="#"-->
+                           <!--title="Enter PTM Proteins for Annotation"> <span-->
+                                <!--class="AB2rotate2 color1"><span class="AB2rotateReset"><span-->
+                                <!--class="AB2text1">PTMs2Modifiers</span></span></span></a>-->
 
-                    </div>
-                </div>
+                        <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrProteinsOrGenes=2" href="#"-->
+                           <!--title="Enter Gene names for Annotation"> <span-->
+                                <!--class="AB2rotate3 color2"><span class="AB2rotateReset"><span-->
+                                <!--class="AB2text2">Proteins2Pathways</span></span></span></a>-->
 
-                <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=true"-->
-                <!--style="text-decoration:none;"-->
-                <!--ng-stuniprotrl.peptideOrGenes && {'font-weight': 'bold'}">&nbsp;A set of protein peptides</a>-->
-                <!--/-->
-                <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=false"-->
-                <!--style="text-decoration:none;"-->
-                <!--ng-style="!ctrl.peptideOrGenes && {'font-weight': 'bold'}">A set of genes</a>-->
-                <!--</span>-->
-            </div>
-        </div>
-
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 0" style=" background:transparent;">
-
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-                <div class="splash-title5 fade-in onerow2"> Enter peptides or use the list of
-                </div>
-                <a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Peptides('table')"
-                   ng-style="{'font-weight': 'bold'}">
-                    LINCS P100 peptides</a> or try the list of
-
-                <a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToGCPPeptides('table')"
-                   ng-style="{'font-weight': 'bold'}">
-                    LINCS GCP peptides&nbsp;
-                </a>
-
-                <hr/>
-                <div class="form-group col-sm-4" style="padding-left: 0px;">
-
-                    <!--<span style="float:left">-->
-
-                    <!--<a href="javascript:void(0);" ng-click="ctrl.formatInput=false"-->
-                    <!--style="text-decoration:none;"-->
-                    <!--ng-style="!ctrl.formatInput && {'font-weight': 'bold'}">Mass Difference</a>-->
-                    <!--/-->
-                    <!--<a href="javascript:void(0);" ng-click="ctrl.formatInput=true"-->
-                    <!--style="text-decoration:none;"-->
-                    <!--ng-style="ctrl.formatInput && {'font-weight': 'bold'}">Shorthand Notation</a>-->
-                    <!--</span>-->
-                    <label style="padding-bottom: 10px;">Input Peptides&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="Input peptide PTMs can be either in the shorthand or mass difference notations.">
-                        </span>
-                        <br/>
-                    </label>
+                        <!--<a href="javascript:void(0);" style="pointer-events: none; cursor: default;"-->
+                           <!--title="piNET, A Versatile Platform for Downstream Analysis and Visualization of Proteomics Data."> <span-->
+                                <!--class="AB2rotate4 color3"><span class="AB2rotateReset"><span-->
+                                <!--class="AB2text3">piNET</span></span></span></a>-->
 
 
-                    <div style="padding-top:8px; padding-bottom:10px;">
-                        <!--<div ng-if="!ctrl.formatInput">-->
-                        <textarea class="form-control" style="background:transparent;" rows="5"
-                                  ng-model="ctrl.textArea">
+                        <!--&lt;!&ndash;<a href="#Wonderful" >     <span class="AB2rotate1 "><span class="AB2rotateReset"><span class="AB2text1">Peptides</span></span></span></a>&ndash;&gt;-->
 
-                            </textarea>
-                        <!--</div>-->
+                        <!--&lt;!&ndash;<a href="#CSS3">          <span class="AB2rotate2 "><span class="AB2rotateReset"><span class="AB2text1">Proteins</span></span></span></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a href="#Accessibility"> <span class="AB2rotate3 "><span class="AB2rotateReset"><span class="AB2text2">Pathways</span></span></span></a>&ndash;&gt;-->
 
-                        <!--<div ng-if="ctrl.formatInput">-->
-                        <!--<textarea class="form-control " style="background:transparent;" rows="5"-->
-                        <!--ng-model="ctrl.textArea"></textarea>-->
-                        <!--</div>-->
-                    </div>
-
-                </div>
-
-                <div class="form-group col-sm-3 col-sm-offset-0">
-                    <label style="padding-bottom: 24px;">Motifs&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">
-
-                        </span>
+                        <!--&lt;!&ndash;<a href="#Breadcrumb">    <span class="AB2rotate4 "><span class="AB2rotateReset"><span class="AB2text3">LINCS</span></span></span></a>&ndash;&gt;-->
 
 
-                        <br/>
-                    </label>
-                    <div class=" list-responsive-vertical3" style=" word-wrap:break-word;" id="div3">
-                        <div ng-repeat="motif in ctrl.parsedMotifs track by $index">{{motif}}<br/></div>
-                    </div>
-                </div>
+                    <!--</div>-->
+                <!--</div>-->
 
-                <div class="form-group col-sm-3 col-sm-offset-0">
-                    <label style="padding-bottom: 12px;">Modifications&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">
+                <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=true"&ndash;&gt;-->
+                <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-stuniprotrl.peptideOrGenes && {'font-weight': 'bold'}">&nbsp;A set of protein peptides</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;/&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=false"&ndash;&gt;-->
+                <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-style="!ctrl.peptideOrGenes && {'font-weight': 'bold'}">A set of genes</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</span>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
 
-                    </span>
-                    </label>
-                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div4">
-                        <div ng-repeat="modification in ctrl.parsedModificationsFormatter track by $index">
-                            {{modification}}<br/></div>
-                    </div>
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 0" style=" background:transparent;">-->
 
-                </div>
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+                <!--<div class="splash-title5 fade-in onerow2"> Enter peptides or use the list of-->
+                <!--</div>-->
+                <!--<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Peptides('table')"-->
+                   <!--ng-style="{'font-weight': 'bold'}">-->
+                    <!--LINCS P100 peptides</a> or try the list of-->
 
-                <div class="form-group col-sm-2 col-sm-offset-0" style="position: relative">
-                    <label style="padding-bottom: 10px;">Abundance&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="This is the abundance of peptides separated by space from each peptide, if not inserted, it is assumed to be 'NA'.">
-                        </span>
-                        <br/>
-                    </label>
-                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div2">
-                        <div ng-repeat="abundance in ctrl.peptideAbundance track by $index">
-                            {{abundance | limitTo:6}}
-                            <br/>
-                        </div>
-                    </div>
-                </div>
+                <!--<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToGCPPeptides('table')"-->
+                   <!--ng-style="{'font-weight': 'bold'}">-->
+                    <!--LINCS GCP peptides&nbsp;-->
+                <!--</a>-->
 
+                <!--<hr/>-->
+                <!--<div class="form-group col-sm-4" style="padding-left: 0px;">-->
 
-            </div>
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-                <hr/>
-                <h2 class="splash-title2 fade-in">Notes</h2>
-                <h2 class="splash-title8 fade-in" style="text-align: left">Peptide2Protein workflow can be used to map peptide moieties
-                    with post-translational modifications (PTMs) into proteins using
-                    a fast peptide to protein matching and PTM meta-data harmonization.
-                    Use the options below to select the reference proteome and other parameters.
-                    <br/>
-                    <br/>
-                    While the PTMs2Modifires and Proteins2Pathways tabs can be used as stand-alone modules, using Peptides2Proteins
-                    tab will update the input for further analysis in these two tabs (PTMs2Modifires and Proteins2Pathways) based on the
-                    Peptide to PTM and Protein/Gene mappings.
-                    <br/>
-                    <br/>
-                    The values associated with peptides are arithmetically assigned to mapped proteins, since this mapping is not
-                    always a one-to-one mapping and multiple proteins can share the same peptide or one protein can contain multiple input
-                    peptides. These values can be modified by users in the corresponding tabs as input.
-                    <br/>
-                    <br/>
-                    For interactive submission, please limit the number of peptides to hundreds.
-                    <br/>
-                    <br/>
-                    Please follow the convention in provided examples for the input syntax.
+                    <!--&lt;!&ndash;<span style="float:left">&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.formatInput=false"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-style="!ctrl.formatInput && {'font-weight': 'bold'}">Mass Difference</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;/&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.formatInput=true"&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                    <!--&lt;!&ndash;ng-style="ctrl.formatInput && {'font-weight': 'bold'}">Shorthand Notation</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                    <!--<label style="padding-bottom: 10px;">Input Peptides&nbsp;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="Input peptide PTMs can be either in the shorthand or mass difference notations.">-->
+                        <!--</span>-->
+                        <!--<br/>-->
+                    <!--</label>-->
 
 
-                </h2>
+                    <!--<div style="padding-top:8px; padding-bottom:10px;">-->
+                        <!--&lt;!&ndash;<div ng-if="!ctrl.formatInput">&ndash;&gt;-->
+                        <!--<textarea class="form-control" style="background:transparent;" rows="5"-->
+                                  <!--ng-model="ctrl.textArea">-->
 
-                <div class="bs-callout bs-callout-default" style="text-align: left">
-                    <h4>
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                        <h2 class="splash-title9 fade-in">
-                        For Annotation of a List of Peptides:
-                        </h2>
-                    </h4>
+                            <!--</textarea>-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/peptideToProtein" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/peptideToProtein</a>
-                    <br/>
-                    <br/>
-                    <!--<h4>-->
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <h2 class="splash-title9 fade-in">
-                        For Annotation of a List of Peptides and Insert the Peptides with Values:
-
-                    </h2>
-                    <h2 class="splash-title10 fade-in">
-                        Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D
-
-                    </h2>
-
-                    <!--</h4>-->
-
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/peptideToProtein?list=IYQ%5BpY%5DIQSR%5B%2B42%5D 1.3,%5BaK%5DAYSFCGTVEY(UNIMOD:21)MAP -2.14" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/peptideToProtein?list=IYQ[pY]IQSR[+42] 1.3,[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.14</a>
-                    <!--</h2>-->
-
-                </div>
-            </div>
-            <!--<a ng-click="changeSplashAndGoToPeptide()" class="splash-arrow fade-in" href="#" title="Submit"><img-->
-                    <!--src="images/down-arrow.png"-->
-                    <!--alt=""/></a>-->
-        </div>
-
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 1" style="padding-top: 20px; background:transparent;">
-
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-                <!--<div class="splash-title4 fade-in onerow2"> Enter-->
-                <!--<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=false"-->
-                <!--style="text-decoration:none;"-->
-                <!--ng-style="!ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">Gene Names</a>-->
-                <!--/-->
-                <!--<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=true"-->
-                <!--style="text-decoration:none;"-->
-                <!--ng-style="ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">PTM/Proteins</a>.-->
+                        <!--&lt;!&ndash;<div ng-if="ctrl.formatInput">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<textarea class="form-control " style="background:transparent;" rows="5"&ndash;&gt;-->
+                        <!--&lt;!&ndash;ng-model="ctrl.textArea"></textarea>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
 
                 <!--</div>-->
-                <!--&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;-->
-                <!--&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;-->
-                <!--&lt;!&ndash;Gene Names&nbsp;&ndash;&gt;-->
-                <!--&lt;!&ndash;</a> or&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;-->
-                <!--&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;-->
-                <!--&lt;!&ndash;PTM/Proteins.&nbsp;&ndash;&gt;-->
-                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                <!--<br/>-->
-                <div class="onerow3">
-                    Try The List of
 
-                    <a href="javascript:void(0);" class="onerow3" ng-click="ctrl.changeToP100PTMs('table')"
-                       ng-style="{'font-weight': 'bold'}">
-                        LINCS P100 Associated PTM/Proteins&nbsp;
-                    </a>
-
-                </div>
-
-                <hr/>
-
-
-                <div class=" form-group col-sm-4" style="padding-left: 0px;">
-                    <div class="horizontal-scroll" style=padding-bottom:10px;">
-                        <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
-                        <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>
-                        <label style="padding-bottom: 24px;">Enter PTM/Proteins&nbsp;
-                            <br/>
-                        </label>
-
-
-                        <!--<span style="float:left">-->
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
-                        <!--</span>-->
-                        <div>
-
-
-                                        <textarea class="form-control" rows="5"
-                                                  ng-model="ctrl.inputMassPtmProteins"
-                                                  style="background:transparent;"></textarea>
-                            <!--console.log()-->
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class=" form-group col-sm-3 col-sm-offset-0">
-                    <label style="padding-bottom: 14px;">Proteins&nbsp;
+                <!--<div class="form-group col-sm-3 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 24px;">Motifs&nbsp;-->
                         <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                        <!--data-delay='{"show":"0", "hide":"100"}'-->
-                        <!--data-toggle="tooltip"-->
-                        <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
 
                         <!--</span>-->
 
 
                         <!--<br/>-->
-                    </label>
-                    <!--{{ctrl.parsedPTMProteins}}-->
-                    <div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div11">
-                        <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
-                        <span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins track by $index">
-                        {{parsedPTMProtein}}<br/></span>
-                        <!--<span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins ">-->
-                                <!--{{parsedPTMProtein}}-->
-                                <!--<br/>-->
-                            <!--</span>-->
-                    </div>
-                </div>
+                    <!--</label>-->
+                    <!--<div class=" list-responsive-vertical3" style=" word-wrap:break-word;" id="div3">-->
+                        <!--<div ng-repeat="motif in ctrl.parsedMotifs track by $index">{{motif}}<br/></div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <div class=" form-group col-sm-3 col-sm-offset-0">
-                    <label style="padding-bottom: 24px;">PTM&nbsp;
+                <!--<div class="form-group col-sm-3 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 12px;">Modifications&nbsp;-->
                         <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                        <!--data-delay='{"show":"0", "hide":"100"}'-->
-                        <!--data-toggle="tooltip"-->
-                        <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
 
+                    <!--</span>-->
+                    <!--</label>-->
+                    <!--<div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div4">-->
+                        <!--<div ng-repeat="modification in ctrl.parsedModificationsFormatter track by $index">-->
+                            <!--{{modification}}<br/></div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div class="form-group col-sm-2 col-sm-offset-0" style="position: relative">-->
+                    <!--<label style="padding-bottom: 10px;">Abundance&nbsp;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="This is the abundance of peptides separated by space from each peptide, if not inserted, it is assumed to be 'NA'.">-->
                         <!--</span>-->
-
-                    </label>
-                    <br/>
-                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div12">
-                        <div ng-repeat="parsedPTM in ctrl.parsedPTMs ">
-                                <span ng-repeat="PTM in parsedPTM ">
-                                    {{PTM}}&nbsp;&nbsp;
-                                </span>
-
-                            <!--{{ctrl.parsedPTMs}}-->
-                            <!--<div ng-repeat="parsedPTMItem in parsedPTM ">-->
-                            <!--{{parsedPTMItem}}</div> &nbsp;-->
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class=" form-group col-sm-2 col-sm-offset-0">
-                    <label style="padding-bottom: 10px;">Abundance&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="This is the abundance of PTM/Proteins separated by space from the PTM/Proteins, if not inserted, it is assumed to be 'NA'.">
-                </span>
-                        <br/>
-                    </label>
-                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div12-1">
-                        <div ng-repeat="abundance in ctrl.proteinAbundance track by $index">
-                            {{abundance | limitTo:6}}
-                            <br/>
-                        </div>
-                    </div>
-
-                </div>
+                        <!--<br/>-->
+                    <!--</label>-->
+                    <!--<div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div2">-->
+                        <!--<div ng-repeat="abundance in ctrl.peptideAbundance track by $index">-->
+                            <!--{{abundance | limitTo:6}}-->
+                            <!--<br/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
 
-                <!--<a ng-click="changeSplashAndGoToProtein()" class="splash-arrow fade-in" href="#" title="Submit"><img-->
-                        <!--src="images/down-arrow.png"-->
-                        <!--alt=""/>-->
-                <!--</a>-->
-            </div>
+            <!--</div>-->
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+                <!--<hr/>-->
+                <!--<h2 class="splash-title2 fade-in">Notes</h2>-->
+                <!--<h2 class="splash-title8 fade-in" style="text-align: left">Peptide2Protein workflow can be used to map peptide moieties-->
+                    <!--with post-translational modifications (PTMs) into proteins using-->
+                    <!--a fast peptide to protein matching and PTM meta-data harmonization.-->
+                    <!--Use the options below to select the reference proteome and other parameters.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--While the PTMs2Modifires and Proteins2Pathways tabs can be used as stand-alone modules, using Peptides2Proteins-->
+                    <!--tab will update the input for further analysis in these two tabs (PTMs2Modifires and Proteins2Pathways) based on the-->
+                    <!--Peptide to PTM and Protein/Gene mappings.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--The values associated with peptides are arithmetically assigned to mapped proteins, since this mapping is not-->
+                    <!--always a one-to-one mapping and multiple proteins can share the same peptide or one protein can contain multiple input-->
+                    <!--peptides. These values can be modified by users in the corresponding tabs as input.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--For interactive submission, please limit the number of peptides to hundreds.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--Please follow the convention in provided examples for the input syntax.-->
 
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-                <hr/>
-                <h2 class="splash-title2 fade-in">Notes</h2>
-                <h2 class="splash-title8 fade-in" style="text-align: left">PTMs2Modifiers workflow can be used to map and visualize upstream
-                    modifying enzymes that target post-translational modification (PTM)
-                    sites in query proteins. These PTM sites are mapped automatically
-                    from peptide moieties with PTMs when using the Peptide2Protein workflow.
-                    <br/>
-                    <br/>
-                    For interactive submission, please limit the number of PTM/Proteins to hundreds.
-                    <br/>
-                    <br/>
-                    Please follow the convention in provided examples for the input syntax.
-                </h2>
 
-                <div class="bs-callout bs-callout-default" style="text-align: left">
-                    <h4>
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                        <h2 class="splash-title9 fade-in">
-                            For Annotation of a List of PTM/Proteins:
-                        </h2>
-                    </h4>
+                <!--</h2>-->
 
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/ptmToModifier" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/ptmToModifier</a>
-                    <br/>
-                    <br/>
+                <!--<div class="bs-callout bs-callout-default" style="text-align: left">-->
                     <!--<h4>-->
-                    <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <h2 class="splash-title9 fade-in">
-                        For Annotation of a List of PTM/Proteins and Insert the PTM/Proteins:
-
-                    </h2>
-                    <h2 class="splash-title10 fade-in">
-                        In the following example the list of 'Q9Y463{[Y+80%5D@273} 2.11,Q13627{[Y+80]@321} 3.122,P51812{[S+80]@369} -1.92 is' sent for the query in the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D
-
-                    </h2>
-
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                        <!--<h2 class="splash-title9 fade-in">-->
+                        <!--For Annotation of a List of Peptides:-->
+                        <!--</h2>-->
                     <!--</h4>-->
 
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92</a>
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/peptideToProtein" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/peptideToProtein</a>-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--&lt;!&ndash;<h4>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                    <!--<h2 class="splash-title9 fade-in">-->
+                        <!--For Annotation of a List of Peptides and Insert the Peptides with Values:-->
+
                     <!--</h2>-->
-
-                </div>
-            </div>
-        </div>
-
-
-        <div ng-show="ctrl.peptideOrProteinsOrGenes == 2" style="padding-top: 20px; background:transparent;">
-
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-
-                <div class="onerow3">
-                    Try The List of
-
-                    <a href="javascript:void(0);" class="onerow3" ng-click="ctrl.changeToP100Genes('table')"
-                       ng-style="{'font-weight': 'bold'}">
-                        LINCS P100 Associated Genes&nbsp;
-                    </a>
-
-                </div>
-
-                <hr/>
-
-
-                <div class=" form-group col-sm-4" style="padding-left: 0px;">
-                    <div class="horizontal-scroll" style=padding-bottom:10px;">
-                        <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
-                        <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>
-                        <label style="padding-bottom: 24px;">Enter genes&nbsp;
-                            <br/>
-                        </label>
-
-
-                        <!--<span style="float:left">-->
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
-                        <!--</span>-->
-                        <div>
-
-                                <textarea class="form-control" style="background:transparent;" rows="5"
-                                          ng-model="ctrl.genes"></textarea>
-                            <!--console.log()-->
-                        </div>
-
-                    </div>
-
-
-                    <!--<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>-->
-                    <div style="float:left;">
-                            <span>
-
-                                <p>
-                                &nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are valid genes.
-                                </p>
-                                <span ng-if="ctrl.flagFoundNPCG">
-                                    &nbsp;Not valid genes are:
-                                    <span style='color:blue'>
-                                        <div ng-repeat="nonValid in ctrl.nonValidGenes">{{nonValid}}&nbsp</div>
-                                    </span>
-                                    Gene name identification is case sensitive, Try other names of these genes or copy and paste the gene names again!
-                                </span>
-
-                            </span>
-                    </div>
-                </div>
-
-
-                <div class=" form-group col-sm-2 col-sm-offset-0">
-                    <label style="padding-bottom: 24px;">Gene Symbols&nbsp;
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                        <!--data-delay='{"show":"0", "hide":"100"}'-->
-                        <!--data-toggle="tooltip"-->
-                        <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
-
-                        <!--</span>-->
-
-
-                        <br/>
-                    </label>
-                    <div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div5">
-                        <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
-                        <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.symbol}}<br/></span>
-                    </div>
-                </div>
-
-                <div class=" form-group col-sm-4 col-sm-offset-0">
-                    <label style="padding-bottom: 24px;">Gene Names&nbsp;
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
-                        <!--data-delay='{"show":"0", "hide":"100"}'-->
-                        <!--data-toggle="tooltip"-->
-                        <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
-
-                        <!--</span>-->
-                        <br/>
-                    </label>
-                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div6">
-                        <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.name}}<br/></span>
-                    </div>
-
-                </div>
-
-
-                <div class=" form-group col-sm-2 col-sm-offset-0">
-                    <label style="padding-bottom: 10px;">Abundance&nbsp;
-                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                              data-delay='{"show":"0", "hide":"100"}'
-                              data-toggle="tooltip"
-                              title="This is the abundance of genes separated with space from the gene names, if not inserted, it is assumed to be 'NA'.">
-                </span>
-                        <br/>
-                    </label>
-                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div10-1">
-                        <div ng-repeat="abundance in ctrl.geneAbundance track by $index">
-                            {{abundance| limitTo:6}}
-                            <br/>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!--<a ng-click="changeSplashAndGoToPathway()" class="splash-arrow fade-in" href="#" title="Submit"><img-->
-                        <!--src="images/down-arrow.png"-->
-                        <!--alt=""/>-->
-                <!--</a>-->
-            </div>
-            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
-                <hr/>
-                <h2 class="splash-title2 fade-in">Notes</h2>
-                <h2 class="splash-title8 fade-in" style="text-align: left">Protein2Pathway workflow can be used to analyze and visualize protein
-                    (and thus gene) level data in terms of pathway enrichment analysis,
-                    pathway membership, upstream/downstream kinase network, and concordance
-                    with LINCS signatures.
-                    <br/>
-                    <br/>
-                    For interactive submission, please limit the number of Genes to hundreds.
-                    <br/>
-                    <br/>
-                    Please follow the convention in provided examples for the input syntax.
-                </h2>
-
-                <div class="bs-callout bs-callout-default" style="text-align: left">
-                    <h4>
-                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                        <h2 class="splash-title9 fade-in">
-                            For Annotation of a List of Genes:
-                        </h2>
-                    </h4>
-
-
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/proteinToPathway</a>
-                    <br/>
-                    <br/>
-                    <!--<h4>-->
-                    <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <h2 class="splash-title9 fade-in">
-                        For Annotation of a List of Genes and Insert the Values:
-
-                    </h2>
-                    <h2 class="splash-title10 fade-in">
-                        In the following example the list of OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
-                        0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542 is sent for
-                        the query in the URL.
-
-                    </h2>
                     <!--<h2 class="splash-title10 fade-in">-->
                         <!--Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D-->
 
                     <!--</h2>-->
 
+                    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/peptideToProtein?list=IYQ%5BpY%5DIQSR%5B%2B42%5D 1.3,%5BaK%5DAYSFCGTVEY(UNIMOD:21)MAP -2.14" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/peptideToProtein?list=IYQ[pY]IQSR[+42] 1.3,[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.14</a>-->
+                    <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<a ng-click="changeSplashAndGoToPeptide()" class="splash-arrow fade-in" href="#" title="Submit"><img&ndash;&gt;-->
+                    <!--&lt;!&ndash;src="images/down-arrow.png"&ndash;&gt;-->
+                    <!--&lt;!&ndash;alt=""/></a>&ndash;&gt;-->
+        <!--</div>-->
+
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 1" style="padding-top: 20px; background:transparent;">-->
+
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+                <!--&lt;!&ndash;<div class="splash-title4 fade-in onerow2"> Enter&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=false"&ndash;&gt;-->
+                <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-style="!ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">Gene Names</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;/&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=true"&ndash;&gt;-->
+                <!--&lt;!&ndash;style="text-decoration:none;"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-style="ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">PTM/Proteins</a>.&ndash;&gt;-->
+
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;Gene Names&nbsp;&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</a> or&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;PTM/Proteins.&nbsp;&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+                <!--<div class="onerow3">-->
+                    <!--Try The List of-->
+
+                    <!--<a href="javascript:void(0);" class="onerow3" ng-click="ctrl.changeToP100PTMs('table')"-->
+                       <!--ng-style="{'font-weight': 'bold'}">-->
+                        <!--LINCS P100 Associated PTM/Proteins&nbsp;-->
+                    <!--</a>-->
+
+                <!--</div>-->
+
+                <!--<hr/>-->
+
+
+                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                    <!--<div class="horizontal-scroll" style=padding-bottom:10px;">-->
+                        <!--&lt;!&ndash;<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >&ndash;&gt;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>-->
+                        <!--<label style="padding-bottom: 24px;">Enter PTM/Proteins&nbsp;-->
+                            <!--<br/>-->
+                        <!--</label>-->
+
+
+                        <!--&lt;!&ndash;<span style="float:left">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes&ndash;&gt;-->
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                        <!--<div>-->
+
+
+                                        <!--<textarea class="form-control" rows="5"-->
+                                                  <!--ng-model="ctrl.inputMassPtmProteins"-->
+                                                  <!--style="background:transparent;"></textarea>-->
+                            <!--&lt;!&ndash;console.log()&ndash;&gt;-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+                <!--</div>-->
+
+
+                <!--<div class=" form-group col-sm-3 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 14px;">Proteins&nbsp;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+
+                        <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+                    <!--</label>-->
+                    <!--&lt;!&ndash;{{ctrl.parsedPTMProteins}}&ndash;&gt;-->
+                    <!--<div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div11">-->
+                        <!--&lt;!&ndash;<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>&ndash;&gt;-->
+                        <!--<span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins track by $index">-->
+                        <!--{{parsedPTMProtein}}<br/></span>-->
+                        <!--&lt;!&ndash;<span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins ">&ndash;&gt;-->
+                                <!--&lt;!&ndash;{{parsedPTMProtein}}&ndash;&gt;-->
+                                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class=" form-group col-sm-3 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 24px;">PTM&nbsp;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+                    <!--</label>-->
+                    <!--<br/>-->
+                    <!--<div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div12">-->
+                        <!--<div ng-repeat="parsedPTM in ctrl.parsedPTMs ">-->
+                                <!--<span ng-repeat="PTM in parsedPTM ">-->
+                                    <!--{{PTM}}&nbsp;&nbsp;-->
+                                <!--</span>-->
+
+                            <!--&lt;!&ndash;{{ctrl.parsedPTMs}}&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div ng-repeat="parsedPTMItem in parsedPTM ">&ndash;&gt;-->
+                            <!--&lt;!&ndash;{{parsedPTMItem}}</div> &nbsp;&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--<div class=" form-group col-sm-2 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 10px;">Abundance&nbsp;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="This is the abundance of PTM/Proteins separated by space from the PTM/Proteins, if not inserted, it is assumed to be 'NA'.">-->
+                <!--</span>-->
+                        <!--<br/>-->
+                    <!--</label>-->
+                    <!--<div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div12-1">-->
+                        <!--<div ng-repeat="abundance in ctrl.proteinAbundance track by $index">-->
+                            <!--{{abundance | limitTo:6}}-->
+                            <!--<br/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+
+                <!--&lt;!&ndash;<a ng-click="changeSplashAndGoToProtein()" class="splash-arrow fade-in" href="#" title="Submit"><img&ndash;&gt;-->
+                        <!--&lt;!&ndash;src="images/down-arrow.png"&ndash;&gt;-->
+                        <!--&lt;!&ndash;alt=""/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--</div>-->
+
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+                <!--<hr/>-->
+                <!--<h2 class="splash-title2 fade-in">Notes</h2>-->
+                <!--<h2 class="splash-title8 fade-in" style="text-align: left">PTMs2Modifiers workflow can be used to map and visualize upstream-->
+                    <!--modifying enzymes that target post-translational modification (PTM)-->
+                    <!--sites in query proteins. These PTM sites are mapped automatically-->
+                    <!--from peptide moieties with PTMs when using the Peptide2Protein workflow.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--For interactive submission, please limit the number of PTM/Proteins to hundreds.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--Please follow the convention in provided examples for the input syntax.-->
+                <!--</h2>-->
+
+                <!--<div class="bs-callout bs-callout-default" style="text-align: left">-->
+                    <!--<h4>-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                        <!--<h2 class="splash-title9 fade-in">-->
+                            <!--For Annotation of a List of PTM/Proteins:-->
+                        <!--</h2>-->
                     <!--</h4>-->
 
-                    <!--<h2 >-->
-                    <a href="http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
-                    0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank" class="splash-title7 fade-in">
-                        http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
-                        0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/ptmToModifier" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/ptmToModifier</a>-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--&lt;!&ndash;<h4>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                    <!--<h2 class="splash-title9 fade-in">-->
+                        <!--For Annotation of a List of PTM/Proteins and Insert the PTM/Proteins:-->
+
+                    <!--</h2>-->
+                    <!--<h2 class="splash-title10 fade-in">-->
+                        <!--In the following example the list of 'Q9Y463{[Y+80%5D@273} 2.11,Q13627{[Y+80]@321} 3.122,P51812{[S+80]@369} -1.92 is' sent for the query in the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D-->
+
                     <!--</h2>-->
 
-                </div>
-            </div>
-        </div>
+                    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92</a>-->
+                    <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
-    </div>
+        <!--<div ng-show="ctrl.peptideOrProteinsOrGenes == 2" style="padding-top: 20px; background:transparent;">-->
+
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+
+                <!--<div class="onerow3">-->
+                    <!--Try The List of-->
+
+                    <!--<a href="javascript:void(0);" class="onerow3" ng-click="ctrl.changeToP100Genes('table')"-->
+                       <!--ng-style="{'font-weight': 'bold'}">-->
+                        <!--LINCS P100 Associated Genes&nbsp;-->
+                    <!--</a>-->
+
+                <!--</div>-->
+
+                <!--<hr/>-->
 
 
-    <div ng-show="!ctrl.showSplash " ng-model="ctrl.showSplash">
+                <!--<div class=" form-group col-sm-4" style="padding-left: 0px;">-->
+                    <!--<div class="horizontal-scroll" style=padding-bottom:10px;">-->
+                        <!--&lt;!&ndash;<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >&ndash;&gt;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>-->
+                        <!--<label style="padding-bottom: 24px;">Enter genes&nbsp;-->
+                            <!--<br/>-->
+                        <!--</label>-->
+
+
+                        <!--&lt;!&ndash;<span style="float:left">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes&ndash;&gt;-->
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                        <!--<div>-->
+
+                                <!--<textarea class="form-control" style="background:transparent;" rows="5"-->
+                                          <!--ng-model="ctrl.genes"></textarea>-->
+                            <!--&lt;!&ndash;console.log()&ndash;&gt;-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+                    <!--&lt;!&ndash;<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>&ndash;&gt;-->
+                    <!--<div style="float:left;">-->
+                            <!--<span>-->
+
+                                <!--<p>-->
+                                <!--&nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are valid genes.-->
+                                <!--</p>-->
+                                <!--<span ng-if="ctrl.flagFoundNPCG">-->
+                                    <!--&nbsp;Not valid genes are:-->
+                                    <!--<span style='color:blue'>-->
+                                        <!--<div ng-repeat="nonValid in ctrl.nonValidGenes">{{nonValid}}&nbsp</div>-->
+                                    <!--</span>-->
+                                    <!--Gene name identification is case sensitive, Try other names of these genes or copy and paste the gene names again!-->
+                                <!--</span>-->
+
+                            <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div class=" form-group col-sm-2 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 24px;">Gene Symbols&nbsp;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+
+                        <!--<br/>-->
+                    <!--</label>-->
+                    <!--<div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div5">-->
+                        <!--&lt;!&ndash;<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>&ndash;&gt;-->
+                        <!--<span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.symbol}}<br/></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class=" form-group col-sm-4 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 24px;">Gene Names&nbsp;-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                        <!--<br/>-->
+                    <!--</label>-->
+                    <!--<div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div6">-->
+                        <!--<span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.name}}<br/></span>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+
+                <!--<div class=" form-group col-sm-2 col-sm-offset-0">-->
+                    <!--<label style="padding-bottom: 10px;">Abundance&nbsp;-->
+                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                              <!--data-delay='{"show":"0", "hide":"100"}'-->
+                              <!--data-toggle="tooltip"-->
+                              <!--title="This is the abundance of genes separated with space from the gene names, if not inserted, it is assumed to be 'NA'.">-->
+                <!--</span>-->
+                        <!--<br/>-->
+                    <!--</label>-->
+                    <!--<div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div10-1">-->
+                        <!--<div ng-repeat="abundance in ctrl.geneAbundance track by $index">-->
+                            <!--{{abundance| limitTo:6}}-->
+                            <!--<br/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                <!--&lt;!&ndash;<a ng-click="changeSplashAndGoToPathway()" class="splash-arrow fade-in" href="#" title="Submit"><img&ndash;&gt;-->
+                        <!--&lt;!&ndash;src="images/down-arrow.png"&ndash;&gt;-->
+                        <!--&lt;!&ndash;alt=""/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class=" container-fluid " style="width: 100%; max-width:1000px;">-->
+                <!--<hr/>-->
+                <!--<h2 class="splash-title2 fade-in">Notes</h2>-->
+                <!--<h2 class="splash-title8 fade-in" style="text-align: left">Protein2Pathway workflow can be used to analyze and visualize protein-->
+                    <!--(and thus gene) level data in terms of pathway enrichment analysis,-->
+                    <!--pathway membership, upstream/downstream kinase network, and concordance-->
+                    <!--with LINCS signatures.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--For interactive submission, please limit the number of Genes to hundreds.-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--Please follow the convention in provided examples for the input syntax.-->
+                <!--</h2>-->
+
+                <!--<div class="bs-callout bs-callout-default" style="text-align: left">-->
+                    <!--<h4>-->
+                        <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                        <!--<h2 class="splash-title9 fade-in">-->
+                            <!--For Annotation of a List of Genes:-->
+                        <!--</h2>-->
+                    <!--</h4>-->
+
+
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/proteinToPathway</a>-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+                    <!--&lt;!&ndash;<h4>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+                    <!--<h2 class="splash-title9 fade-in">-->
+                        <!--For Annotation of a List of Genes and Insert the Values:-->
+
+                    <!--</h2>-->
+                    <!--<h2 class="splash-title10 fade-in">-->
+                        <!--In the following example the list of OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3-->
+                        <!--0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542 is sent for-->
+                        <!--the query in the URL.-->
+
+                    <!--</h2>-->
+                    <!--&lt;!&ndash;<h2 class="splash-title10 fade-in">&ndash;&gt;-->
+                        <!--&lt;!&ndash;Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash;<h2 >&ndash;&gt;-->
+                    <!--<a href="http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3-->
+                    <!--0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank" class="splash-title7 fade-in">-->
+                        <!--http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3-->
+                        <!--0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>-->
+                    <!--&lt;!&ndash;</h2>&ndash;&gt;-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+    <!--</div>-->
+
+
+    <!--<div ng-show="!ctrl.showSplash " ng-model="ctrl.showSplash">-->
 
 
         <div class="container">
@@ -987,7 +987,7 @@
         </footer>
 
 
-    </div>
+    <!--</div>-->
     <!--End of container-->
 
 

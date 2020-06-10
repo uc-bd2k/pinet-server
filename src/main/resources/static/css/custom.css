@@ -767,7 +767,7 @@ caption {
 
 .splash {
     background: url('../images/splash-12.jpg') top center;
-    position: fixed;
+    position: relative;
     top: 0;
     right: 0;
     bottom: 0;
@@ -778,6 +778,9 @@ caption {
     background-attachment: fixed;
     text-align: center;
     overflow-y: scroll;
+
+
+
 }
 
 .splash container2{

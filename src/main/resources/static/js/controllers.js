@@ -788,10 +788,944 @@ appModule.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance',functio
 
 appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$timeout', '$routeParams', '$filter', '$q', 'filterFilter', 'SharedService', function ($scope, $http, $location, $window, $timeout, $routeParams, $filter, $q, filterFilter, SharedService) {
     //console.log("--------------- Restarting About! ---------------");
+
+    var self = this;
     SharedService.getSiteVisit().then(function(successResponse){
         $scope.siteVisit = successResponse;
         //console.log($scope.siteVisit);
     });
+
+
+
+    self.modificationPattern = /[^A-Z]/g;
+    self.modificationPatternWithLetter = /[A-Z]\[\+[\d\.]+]/g;
+    self.modificationPatternSecondFormat = /\[[a-z0-9]+[A-Z]+\]/g;
+    // self.modificationPatternForAllPTMs = /[^[\]]+(?=])/g;
+    // self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
+    self.modificationPatternForAllPTMs = /{(.+)}/g;
+    self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
+    self.paranthesesPattern = /[A-Z]\(([^)]+)\)/g;
+    self.rowSplitPattern = /[,;\n]/;
+    self.rowSplitPatternGenes = /[,;\n]/;
+    self.cleanFormattedModifications = /\[/;
+    self.patt1 = /[A-Z]/g;
+    self.patt2 = /[a-z0-9]+/g;
+    self.patt3 = /\d+/g
+    self.patt4 = /[+\d\.]+/g;
+    self.patt5 = /^[0-9]+([,.][0-9]+)?$/g;
+    self.patt6 = /^[\d.]/g;
+
+    self.modificationForGenes = /\b\w*[^\[]\w*\b/g;
+    self.modificationForptmProteins = /\b\w*[\[]\w*\b/g;
+
+    self.modificationMap = {'a': 42.037, 'me': 14.027, 'me2': 28.05, 'me3': 42.046, 'p': 79.966, 'my': 210.198};
+    self.modificationMapReverse = {42.037: 'a', 14.027: 'me', 28.05: 'me2', 42.046: 'me3', 79.966: 'p', 210.198: 'my'};
+
+
+
+    self.textArea = SharedService.getVar('textArea');
+
+
+    self.inputMassPtmProteins = SharedService.getVar('inputPtmProteinsExample');
+
+
+    self.genes = SharedService.getVar('genesExample');
+
+
+
+
+    $scope.$watch(function () {
+        return self.genes
+    }, function (newValue, oldValue) {
+        //console.log("in scope gene!---------------------------------------");
+        //localStorage.setItem("genes", self.genes);
+        console.log("Setting genes -----");
+        self.showGeneSubmit = false;
+        // var localselfGenes = localStorage.getItem("genesForProtein2Pathways");
+        // //console.log(localselfGenes);
+        // $scope.showGeneNetworkProcessed = false;
+        // $scope.showKinaseNetworkProcessed = false;
+        // self.showGeneNetwork = true;
+        //
+        // SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
+        // SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
+        // SharedService.setVar('showKinaseNetworkProcessed', $scope.showKinaseNetworkProcessed);
+        if (self.genes.length > 0) {
+            //console.log(self.genes);
+            self.geneToAbundanceMap = {};
+            self.parsedGenes = self.genes.split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(0);
+
+                            return str2[0];
+                        }
+                        else {
+                            return str2;
+                        }
+                        ;
+                    }
+
+
+                });
+
+
+            // .split(self.rowSplitPatternGenes)
+            // .map(function (e) {
+            //     if (e.indexOf('[') == -1) {
+            //         return e
+            //     }
+            // });
+            self.parsedGenes.clean(undefined);
+            //console.log(self.parsedGenes);
+            self.geneAbundance = self.genes
+                .split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+                        // var str = e.split(/[\s,]+/).join();
+                        // //console.log(str);
+                        // var str2 = str.replace(/[\s,]+/g, ',');
+                        // //console.log(str2);
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(1);
+
+                            return str2[0];
+                        }
+                        else {
+                            return "NA";
+                        };
+                    }
+
+
+                });
+
+            for (var i = 0; i < self.parsedGenes.length; i++) {
+                self.geneToAbundanceMap[self.parsedGenes[i]] = self.geneAbundance[i];
+                //Do something
+            }
+            //console.log("geneToAbundanceMap");
+            //console.log(self.geneToAbundanceMap);
+            //console.log(self.geneAbundance);
+        }
+        console.log(self.parsedGenes);
+        if (self.parsedGenes.length == 0) {
+            self.showGeneNetwork = false;
+            //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
+            //console.log("self.showGeneNetwork = false;");
+        }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        // .filter(function (el) {
+        //     ////console.log(peptide.indexOf(el.modification));
+        //     return (peptide.indexOf(el.modification) > -1);
+        // })
+        // if (self.genes.length > 0) {
+        //     self.parsedPTMProteins = self.genes
+        //         .split(self.rowSplitPatternGenes)
+        //         .map(function (e) {
+        //             if (e.indexOf('[') > -1) {
+        //                 return e
+        //             }
+        //             //return e.toUpperCase().match(self.modificationForptmProteins);;
+        //         });
+        //     self.parsedPTMProteins.clean(undefined);
+        // }
+        // if (self.parsedPTMProteins.length == 0) {
+        //     self.showPhosphoGeneNetwork = false;
+        //     //console.log("self.showPhosphoGeneNetwork = false;");
+        // }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        //console.log(self.parsedGenes);
+        // //console.log(self.parsedPTMProteins);
+        // //console.log(self.showPhosphoGeneNetwork);
+        //console.log(self.showGeneNetwork);
+        //SharedService.setVar('genes', self.genes);
+    });
+
+    var timeout;
+    $scope.$watch(function () {
+        return self.parsedGenes
+    }, function (nV, oV) {
+        //self.showOutputPathway = false;
+        self.flagFoundNPCG = false;
+        self.waitingPathway = true;
+        //self.showOutputPathway = false;
+        //console.log("self.showOutputPathway");
+        //console.log(self.showOutputPathway);
+        //console.log(self.parsedGenes);
+
+        // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
+
+        if (timeout) {
+            $timeout.cancel(timeout);
+        };
+        $timeout(function () {
+            self.genePlaces = [];
+            self.inputGeneInfo = [];
+            self.nonValidGenes = [];
+            // self.network = {};
+            // self.kinaseNetwork = {};
+            self.numberOfAllInputGenes = 0;
+            self.numberOfAllValidGenes = 0;
+            //console.log("self.parsedGenes.length");
+            //console.log(self.parsedGenes.length);
+            var genePartitioned = function splitarray(input, spacing) {
+                var output = [];
+
+                for (var i = 0; i < input.length; i += spacing) {
+                    output[output.length] = input.slice(i, i + spacing);
+                }
+
+                return output;
+            }(self.parsedGenes, self.parsedGenes.length)
+
+            //console.log(genePartitioned);
+            //console.log(genePartitioned.length);
+            // var flag = true;
+            // while (flag){
+            //     var queryGeneList = [];
+            //     self.parsedGenes
+            //
+            // }
+            if (genePartitioned.length > 0) {
+                for (var i = 0; i < genePartitioned.length; i++) {
+                    $http.get("api/pcg/checkgenes/" + genePartitioned[i])
+                        .success(function (genePositions) {
+                            //console.log("genePositions");
+                            //console.log(genePositions);
+                            self.genePlaces = genePositions;
+                            for (var geneIter = 0; geneIter < self.genePlaces.length; geneIter++) {
+                                self.numberOfAllInputGenes = self.numberOfAllInputGenes + 1;
+                                if (self.genePlaces[geneIter] != -1) {
+                                    self.numberOfAllValidGenes = self.numberOfAllValidGenes + 1;
+                                }
+                                else {
+                                    self.flagFoundNPCG = true;
+                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    //console.log("self.nonValidGenes");
+                                    //console.log(self.nonValidGenes);
+                                }
+                            }
+                            // self.genePlaces.forEach(function (e) {
+                            //     self.numberOfAllInputGenes = self.numberOfAllInputGenes + 1;
+                            //     if (e != -1) {
+                            //         self.numberOfAllValidGenes = self.numberOfAllValidGenes + 1;
+                            //     }
+                            //     else
+                            //     {
+                            //         self.nonValidGenes.push(self.parsedGenes[])
+                            //     }
+                            //     ;
+                            // });
+
+                            $http.get("api/pcg/geneinfo/" + self.genePlaces)
+                                .success(function (geneInfos) {
+                                    //console.log(geneInfos);
+                                    for (var geneInfoIter = 0; geneInfoIter < geneInfos.length; geneInfoIter++) {
+                                        self.inputGeneInfo.push(geneInfos[geneInfoIter]);
+                                    }
+                                    //console.log(self.inputGeneInfo);
+                                })
+                                .error(function () {
+                                    //console.log("Error in obtaining gene info from api/pcg/geneinfo/");
+                                });
+                        })
+                        .error(function () {
+                            //console.log("Error in obtaining gene place from api/pcg/checkgenes/");
+                        });
+                }
+            }
+
+        }, 1100);
+
+    });
+
+
+    $scope.$watch(function () {
+        return self.inputMassPtmProteins
+    }, function (newValue, oldValue) {
+
+
+
+
+        console.log(self.inputMassPtmProteins);
+        // //console.log(self.genes);
+        if (self.inputMassPtmProteins.length > 0) {
+            self.ptmProteinToAbundanceMap = {};
+
+            self.proteinAbundance = self.inputMassPtmProteins
+                .split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+                        // var str = e.split(/[\s,]+/).join();
+                        // //console.log(str);
+                        // var str2 = str.replace(/[\s,]+/g, ',');
+                        // //console.log(str2);
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(1);
+
+                            return str2[0];
+                        }
+                        else {
+
+                            return "NA";
+                        };
+
+                    }
+
+
+                });
+
+            ////console.log(self.proteinAbundance);
+
+
+            self.parsedPTMs = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+                    console.log(e.match(self.modificationPatternForAllPTMs));
+                    return e.match(self.modificationPatternForAllPTMs);
+
+                });
+
+
+            self.parsedPTMProteins = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    //console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        console.log(str2[0]);
+                        console.log(str2[0].match(self.modificationPatternForAllPTMs),"");
+                        console.log(str2[0].replace(str2[0].match(self.modificationPatternForAllPTMs),""));
+                        return str2[0].replace(str2[0].match(self.modificationPatternForAllPTMs),"");
+                    }
+                    else{
+                        //console.log(e.replace(e.match(self.modificationPatternForAllPTMs),""));
+                        return e.replace(e.match(self.modificationPatternForAllPTMs),"");
+                    }
+
+                    // if (e.indexOf('[') > -1) {
+                    //     return e
+                    // }
+                    //return e.toUpperCase().match(self.modificationForptmProteins);;
+                });
+            //console.log(self.parsedPTMProteins);
+            self.inputMassPtmProteinsModified = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    //console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        //console.log(str2);
+                        return str2[0];
+                    }
+                    else{
+                        //console.log(e);
+                        return e;
+                    }
+
+                    // if (e.indexOf('[') > -1) {
+                    //     return e
+                    // }
+                    //return e.toUpperCase().match(self.modificationForptmProteins);;
+                });
+
+
+
+            for (var i = 0; i < self.inputMassPtmProteinsModified.length; i++) {
+                self.ptmProteinToAbundanceMap[self.inputMassPtmProteinsModified[i]] = self.proteinAbundance[i];
+                //Do something
+            }
+            //console.log("ptmProteinToAbundanceMap");
+            //console.log(self.ptmProteinToAbundanceMap);
+
+            self.parsedPTMProteins.clean(undefined);
+
+
+        }
+        if (self.parsedPTMProteins.length == 0) {
+            self.showPhosphoGeneNetwork = false;
+            //SharedService.setVar('showPhosphoGeneNetwork', self.showPhosphoGeneNetwork);
+            //console.log("self.showPhosphoGeneNetwork = false;");
+        }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        //Because We need this for api query
+        self.inputMassPtmProteinsModifiedForQuery = self.inputMassPtmProteinsModified.toString();
+        //console.log(self.inputMassPtmProteinsModifiedForQuery);
+        //console.log(self.parsedPTMProteins);
+        //console.log(self.inputMassPtmProteinsModified);
+        //console.log(self.parsedPTMs);
+        //console.log(self.showPhosphoGeneNetwork);
+        //console.log(self.showGeneNetwork);
+        self.showPtmSubmit = true;
+        //SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+
+    });
+
+    self.textArea += " ";
+    console.log(self.textArea);
+
+    self.changeToP100Peptides = function () {
+
+
+        self.textArea = "IYQ[pY]IQSR 0.461099\n\
+TPKD[pS]PGIPPSANAHQLFR 1.24165\n\
+RN[pS]SEASSGDFLDLK 0.39179\n\
+LPLVPE[pS]PRR -0.8135318\n\
+ANA[pS]PQKPLDLK -0.06173748\n\
+LEN[pS]PLGEALR -0.0964323\n\
+AN[pS]FVGTAQYVSPELLTEK 0.097759\n\
+TNPPTQKPP[pS]PPMSGR 0.5880172\n\
+SN[pS]LPHSAVSNAGSK -0.15000027\n\
+VG[pS]LDNVGHLPAGGAVK -2.9564762\n\
+AAPEA[pS]SPPASPLQHLLPGK 0.019645\n\
+S[+122.084]DKPDM[+15.994]AEIEKFDK 0.88214\n\
+S[+122.084]DKPDMAEIEKFDK 0.98000\n\
+SL[pS]LGDKEISR -1.149179\n\
+DLVQPDKPA[pS]PK 0.9362365\n\
+SP[pS]PAHLPDDPKVAEK 0.51082483\n\
+[pS]IQDLTVTGTEPGQVSSR 0.105289\n\
+IH[pS]PIIR 0.7733867\n\
+TF[pS]LTEVR -3.384948\n\
+SLVG[pS]WLK -2.968755\n\
+[pS]PPAPGLQPMR 0.40888\n\
+LA[pS]PELER 0.2169463\n\
+IGPLGL[pS]PK -0.98894\n\
+TP[pS]IQPSLLPHAAPFAK -0.598636\n\
+HA[pS]PILPITEFSDIPR -2.223487\n\
+LIPGPL[pS]PVAR -0.0114377\n\
+LGM[+15.994]L[pS]PEGTC[+57.021]K 0.768389\n\
+LGML[pS]PEGTC[+57.021]K 0.518356\n\
+ISNL[pS]PEEEQGLWK -0.208545\n\
+VSMPDVELNLK[pS]PK -0.1557127\n\
+S[+122.084]DNGELEDKPPAPPVR 1.08313\n\
+KAY[pS]FC[+57.021]GTVEYM[+15.994]APEVVNR -1.064139\n\
+KAY[pS]FC[+57.021]GTVEYMAPEVVNR -3.20086\n\
+ND[pS]WGSFDLR 0.428257\n\
+LEVTEIVKP[pS]PK 0.079337\n\
+YG[pS]PPQRDPNWNGER 0.534751\n\
+QDD[pS]PPRPIIGPALPPGFIK 0.75655\n\
+SF[pS]ADNFIGIQR 0.193549\n\
+VL[pS]PLIIK -0.0414197\n\
+AG[pS]PDVLR 0.813482\n\
+LGPGRPLPTFPTSEC[+57.021]T[pS]DVEPDTR 0.9137382\n\
+LAAPSVSHV[pS]PR -0.050331\n\
+VDDD[pS]LGEFPVTNSR 0.82016\n\
+NEEPVR[pS]PERR -0.07167\n\
+LFIIRG[pS]PQQIDHAK 0.593808\n\
+[pS]IEVENDFLPVEK -1.831307\n\
+TAPTL[pS]PEHWK -0.235422\n\
+VL[pS]PTAAKPSPFEGK 0.523876\n\
+SSDQPLTVPV[pS]PK -1.2870867\n\
+FYETKEESY[pS]PSKDR 0.558409\n\
+SD[pS]PENKYSDSTGHSK 0.498148\n\
+[pS]IPLSIK -1.19459\n\
+RL[pS]QSDEDVIR 0.294727\n\
+AT[pS]PVKSTTSITDAK 0.2966439\n\
+ALG[pS]PTKQLLPC[+57.021]EMAC[+57.021]NEK 0.511634\n\
+YLLGDAPV[pS]PSSQK 0.18404919\n\
+AN[pS]PEKPPEAGAAHKPR 0.63052\n\
+SEVQQPVHPKPL[pS]PDSR 0.31677\n\
+ETPH[pS]PGVEDAPIAK 0.649939\n\
+SQ[pS]PHYFR 0.7690316\n\
+DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
+SPALK[pS]PLQSVVVR -0.33558\n\
+AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
+SF[pT]SQRPVDR 0.54329\n\
+VY[pT]HEVVTLWYR 0.579294\n\
+SS[pT]PLPTISSSAENTR 1.024626\n\
+QI[pT]MEELVR -1.30946\n\
+TQLWASEPG[pT]PPLPTSLPSQNPILK 0.4175439\n\
+ALPQ[pT]PRPR 0.17558\n\
+[pS]PTGPSNSFLANMGGTVAHK 0.51067\n\
+[pS]FAGNLNTYKR 0.6323\n\
+HRP[pS]PPATPPPK 1.479257\n\
+LH[pS]APNLSDLHVVRPK -1.06841\n\
+TLGRRD[pS]SDDWEIPDGQITVGQR 0.28616\n\
+[pS]PPAPGLQPM[+15.994]R 0.4706487\n\
+A[+42.010]TTATM[+15.994]ATSG[pS]AR -0.8267\n\
+RPH[pS]PEKAFSSNPVVR 0.67740\n\
+KPNIFYSGPA[pS]PARPR -0.324736\n\
+QGSGRE[pS]PSLASR 0.69807\n\
+HLP[pS]PPTLDSIITEYLR 0.13999\n\
+S[pT]FHAGQLR -0.5785\n\
+A[+42.010]TTATMATSG[pS]AR -1.60154\n\
+SM[pS]VDLSHIPLKDPLLFK -0.60759\n\
+[pS]LTAHSLLPLAEK -1.1335\n\
+IHVSR[pS]PTRPR 0.410076\n\
+TEFLDLDNSPLSPP[pS]PR 0.401256\n\
+LQ[pS]EPESIR -0.159615\n\
+RLI[pS]PYKK 0.271686\n\
+LLED[pS]EESSEETVSR 0.44265\n\
+RRL[pS]SLR -0.497748\n\
+RL[pS]ESQLSFRR -0.79106\n\
+RL[pS]LPGLLSQVSPR 0.329239\n\
+SPDKPGG[pS]PSASRR 0.131213\n\
+[pS]LTNSHLEKK 0.22196\n\
+LQTPN[pT]FPKR -0.344000\n\
+QI[pT]M[+15.994]EELVR -0.30907";
+
+
+
+
+        //SharedService.setVar('textAreaFormatMD', self.textArea);
+    }
+    self.changeToGCPPeptides = function () {
+        self.textArea = "T[+56]K[+56]QTAR	-0.041875744\n\
+T[+56][meK]QTAR	-0.270535418\n\
+T[+56][me2K]QTAR	0.087099586\n\
+T[+56][me3K]QTAR	0.084202625\n\
+T[+56][aK]QTAR	0.00598567\n\
+K[+112.1]STGGK[+56]APR	0.058669849\n\
+[meK]STGGK[+56]APR	-0.27182245\n\
+[me2K]STGGK[+56]APR	-0.188828568\n\
+[me3K]STGGK[+56]APR	0.010003377\n\
+[aK]STGGK[+56]APR	-0.073966311\n\
+K[+112.1]STGG[aK]APR	0.338447595\n\
+[meK]STGG[aK]APR	-0.06495435\n\
+[me2K]STGG[aK]APR	-0.140408052\n\
+[me3K]STGG[aK]APR	-0.028568836\n\
+[aK]STGG[aK]APR	-0.021538616\n\
+K[+112.1][pS]TGGK[+56]APR	-0.260364406\n\
+[meK][pS]TGGK[+56]APR	-0.242720645\n\
+[me2K][pS]TGGK[+56]APR	0.080991582\n\
+[me3K][pS]TGGK[+56]APR	0.203779469\n\
+K[+112.1][pS]TGG[aK]APR	-0.118385096\n\
+[meK][pS]TGG[aK]APR	-0.057803463\n\
+[me2K][pS]TGG[aK]APR	-0.090454234\n\
+[me3K][pS]TGG[aK]APR	0.696029983\n\
+[aK][pS]TGG[aK]APR	0.49326908\n\
+K[+112.1]QLATK[+56]AAR	-0.064527272\n\
+[aK]QLATK[+56]AAR	-0.035241088\n\
+K[+112.1]QLAT[aK]AAR	-0.301690347\n\
+[aK]QLAT[aK]AAR	0.044519339\n\
+[ubK]QLATK[+56]AAR	-0.481387993\n\
+K[+112.1]QLAT[ubK]AAR	-0.428209673\n\
+K[+112.1]SAPATGGVK[+56]K[+56]PHR	0.056694329\n\
+[meK]SAPATGGVK[+56]K[+56]PHR	-0.147474495\n\
+[meK]SAPATGGV[meK]K[+56]PHR	0.278627613\n\
+[meK]SAPATGGV]me2K]K[+56]PHR	0.071481589\n\
+[meK]SAPATGGV[me3K]K[+56]PHR	-0.127764989\n\
+[me2K]SAPATGGVK[+56]K[+56]PHR	-0.186326202\n\
+[me2K]SAPATGGV[meK]K[+56]PHR	-0.064597033\n\
+[me2K]SAPATGGV[me2K]K[+56]PHR	-0.423770191\n\
+[me2K]SAPATGGV[me3K]K[+56]PHR	-0.070469171\n\
+[me3K]SAPATGGVK[+56]K[+56]PHR	-0.094543918\n\
+[me3K]SAPATGGV[meK]K[+56]PHR	-0.333823023\n\
+[me3K]SAPATGGV[me2K]K[+56]PHR	-0.358445739\n\
+[aK]SAPATGGVK[+56]K[+56]PHR	0.674083892\n\
+[aK]SAPATGGV[meK]K[+56]PHR	-0.194309632\n\
+[aK]SAPATGGV[me2K]K[+56]PHR	0.339613114\n\
+[aK]SAPATGGV[me3K]K[+56]PHR	0.220404071\n\
+K[+112.1]SAPSTGGVK[+56]K[+56]PHR	-0.40551929\n\
+Y[+56]RPGTVALR	-0.010554282\n\
+Y[+56]QK[+56]STELLIR	0.151104493\n\
+E[+56]IAQDFK[+56]TDLR	0.172918492\n\
+E[+56]IAQDF[meK]TDLR	0.156914416\n\
+E[+56]IAQDF[me2K]TDLR	0.183464036\n\
+K[+112.1]SAPATGGV[meK]K[+56]PHR	0.124030959\n\
+K[+112.1]SAPATGGV[me2K]K[+56]PHR	0.154400258\n\
+K[+112.1]SAPATGGV[me3K]K[+56]PHR	0.080582639";
+
+        //SharedService.setVar('textAreaFormatMD', self.textArea);
+    }
+
+    self.changeToP100Genes = function () {
+        self.genes = "DYRK1A 0.461099\n\
+RPS6KA3 1.24165\n\
+HN1 0.39179\n\
+ZC3HC1 -0.81353\n\
+NCOR2 -0.061737\n\
+OCIAD1 -0.09643\n\
+PDPK1 0.097759\n\
+ABI1 0.588017\n\
+WDR20 -0.15000\n\
+MAP4 -2.95647\n\
+FAM129B 0.019645\n\
+TMSB4X 0.88214\n\
+TMSB4X 0.9800\n\
+AP1GBP1 -1.149179\n\
+ZC3H14 0.93623\n\
+LARP5 0.5108248\n\
+MAP3K7 0.105289\n\
+BRD4 0.7733867\n\
+KIF4A -3.384948\n\
+C22orf9 -2.96875\n\
+FOSL2 0.408887\n\
+JUND 0.2169463\n\
+RPL12 -0.98894\n\
+NUP214 -0.59864\n\
+TMPO -2.223487\n\
+BAT2 -0.011437\n\
+FASN 0.768389\n\
+FASN 0.518356\n\
+FAM76B -0.20854\n\
+AHNAK -0.15571\n\
+PAK2 1.08313\n\
+RPS6KA1 -1.064138\n\
+RPS6KA1 -3.20086\n\
+NUFIP2 0.428257\n\
+RBBP6 0.079337\n\
+CASC3 0.53475\n\
+KIAA1704 0.75655\n\
+CCNYL1 0.193549\n\
+RNF169 -0.041419\n\
+ZNF740 0.81348\n\
+DDX54 0.913738\n\
+ATRIP -0.05033\n\
+DPF2 0.82016\n\
+SMARCC1 -0.07167\n\
+KHSRP 0.593808\n\
+SH3KBP1 -1.831307\n\
+C13orf8 -0.235423\n\
+PPP1R10 0.52387\n\
+TPX2 -1.28708\n\
+RSF1 0.558409\n\
+WAC 0.498148\n\
+UBE2O -1.19459\n\
+WDR26 0.29473\n\
+ANLN 0.296644\n\
+NANS 0.51163\n\
+TERF2IP 0.184049\n\
+LRWD1 0.630525\n\
+LIMA1 0.316775\n\
+LIMA1 0.649939\n\
+GPATCH8 0.769031\n\
+MAP3K2 0.2409052\n\
+THRAP3 -0.33558\n\
+BAT2D1 1.081598\n\
+BAT2D1 0.54329\n\
+CDC2 0.57929\n\
+TMPO 1.024626\n\
+PLEC1 -1.3094\n\
+SRRT 0.417544\n\
+SRRM2 0.17558\n\
+RBM17 0.51067\n\
+PFKP 0.632339\n\
+SRRM1 1.47925\n\
+ULK1 -1.06842\n\
+BRAF 0.286164\n\
+FOSL2 0.47064\n\
+EIF4A3 -0.82673\n\
+C17orf85 0.6774\n\
+ATAD2 -0.324736\n\
+ATXN2L 0.69807\n\
+VPRBP 0.13999\n\
+MARK2 -0.578569\n\
+EIF4A3 -1.601547\n\
+UHRF1BP1L -0.6075\n\
+IQGAP3 -1.13349\n\
+ZNF672 0.410076\n\
+NFATC2IP 0.40125\n\
+CLTA -0.1596\n\
+HAT1 0.271686\n\
+DHX16 0.44265\n\
+RPS6 -0.4977\n\
+RBM14 -0.79107\n\
+ALS2 0.329239\n\
+NOC2L 0.131214\n\
+SLC38A1 0.2219\n\
+NOLC1 -0.3440\n\
+PLEC1 -0.309069";
+
+        //SharedService.setVar('genes',self.genes);
+    }
+    self.changeToP100PTMs = function () {
+        self.inputMassPtmProteins = "Q13627{[pY]@321} 0.4611\n\
+P51812{[pS]@369} 1.24165\n\
+Q9UK76{[pS]@87} 0.3918\n\
+Q86WB0{[pS]@321} -0.8135\n\
+Q9Y618{[pS]@956} -0.0617\n\
+Q9NX40{[pS]@108} -0.09643\n\
+O15530{[pS]@241} 0.09776\n\
+Q8IZP0{[pS]@183} 0.5880\n\
+Q8TBZ3{[pS]@434} -0.15000\n\
+P27816{[pS]@1073} -2.95647\n\
+Q96TA1{[pS]@691} 0.01964\n\
+P62328{[S+122]@2}{[M+16]@7} 0.8821\n\
+P62328{[S+122]@2} 0.9800\n\
+Q9UMZ2{[pS]@1075} -1.14918\n\
+Q6PJT7{[pS]@515} 0.93623\n\
+Q92615{[pS]@601} 0.51082\n\
+O43318{[pS]@439} 0.105289\n\
+O60885{[pS]@1117} 0.77338\n\
+O95239{[pS]@801} -3.38494\n\
+Q6ICG6{[pS]@362} -2.96875\n\
+P15408{[pS]@200} 0.40888\n\
+P17535{[pS]@100} 0.216946\n\
+P30050{[pS]@38} -0.988941\n\
+P35658{[pS]@1023} -0.59863\n\
+P42167{[pS]@306} -2.22348\n\
+P48634{[pS]@1219} -0.011437\n\
+P49327{[pS]@207}{[M+16]@205}{[C+57]@212} 0.768389\n\
+P49327{[pS]@207}{[C+57]@212} 0.51835\n\
+Q5HYJ3{[pS]@193} -0.20854\n\
+Q09666{[pS]@3426} -0.15571\n\
+Q13177{[S+122]@2} 1.083130\n\
+Q15418{[pS]@221}{[M+16]@229}{[C+57]@223} -1.0641\n\
+Q15418{[pS]@221}{[C+57]@223} -3.2008\n\
+Q7Z417{[pS]@652} 0.428257\n\
+Q7Z6E9{[pS]@1179} 0.079337\n\
+O15234{[pS]@265} 0.53475\n\
+Q8IXQ4{[pS]@105} 0.75655\n\
+Q8N7R7{[pS]@344} 0.1935\n\
+Q8NCN4{[pS]@403} -0.041419\n\
+Q8NDX6{[pS]@44} 0.81348\n\
+Q8TDD1{[pS]@75}{[C+57]@73} 0.91374\n\
+Q8WXE1{[pS]@224} -0.05033\n\
+Q92785{[pS]@142} 0.82016\n\
+Q92922{[pS]@310} -0.07167\n\
+Q92945{[pS]@480} 0.593808\n\
+Q96B97{[pS]@230} -1.8313\n\
+Q96JM3{[pS]@405} -0.23542\n\
+Q96QC0{[pS]@313} 0.523876\n\
+Q9ULW0{[pS]@738} -1.287086\n\
+Q96T23{[pS]@473} 0.558409\n\
+Q9BTA9{[pS]@64} 0.4981\n\
+Q9C0C9{[pS]@515} -1.19459\n\
+Q9H7D7{[pS]@121} 0.29472\n\
+Q9NQW6{[pS]@295} 0.29664\n\
+Q9NR45{[pS]@275}{[C+57]@283}{[C+57]@287} 0.51163\n\
+Q9NYB0{[pS]@203} 0.184049\n\
+Q9UFC0{[pS]@212} 0.63052\n\
+Q9UHB6{[pS]@362} 0.31677\n\
+Q9UHB6{[pS]@490} 0.64994\n\
+Q9UKJ3{[pS]@1035} 0.769032\n\
+Q9Y2U5{[pS]@163} 0.2409052\n\
+Q9Y2W1{[pS]@253} -0.33558\n\
+Q9Y520{[pT]@2673} 1.081598\n\
+Q9Y520{[pS]@1544} 0.54329\n\
+P06493{[pT]@161} 0.57929\n\
+P42167{[pT]@160} 1.0246259\n\
+Q15149{[pT]@4030} -1.30946\n\
+Q9BXP5{[pT]@544} 0.4175439\n\
+Q9UQ35{[pT]@1492} 0.17558\n\
+Q96I25{[pS]@222} 0.510677\n\
+Q01813{[pS]@386} 0.63234\n\
+Q8IYB3{[pS]@402} 1.479257\n\
+O75385{[pS]@556} -1.06842\n\
+P15056{[pS]@446} 0.286164\n\
+P15408{[pS]@200}{[M+16]@209} 0.4706487\n\
+P38919{[pS]@12}{[M+16]@7}{[A+42.010]@2} -0.826734\n\
+Q53F19{[pS]@500} 0.6774\n\
+Q6PL18{[pS]@327} -0.3247365\n\
+Q8WWM7{[pS]@339} 0.69807\n\
+Q9Y4B6{[pS]@1000} 0.13999\n\
+Q7KZI7{[pT]@596} -0.578569\n\
+P38919{[pS]@12}{[A+42.010]@2} -1.601547\n\
+A0JNW5{[pS]@935} -0.60759\n\
+Q86VI3{[pS]@1424} -1.133499\n\
+Q499Z4{[pS]@189} 0.4100764\n\
+Q8NCF5{[pS]@204} 0.4012565\n\
+P09496{[pS]@105} -0.159615\n\
+O14929{[pS]@361} 0.2716867\n\
+O60231{[pS]@103} 0.442654\n\
+P62753{[pS]@235} -0.497748\n\
+Q96PK6{[pS]@618} -0.791066\n\
+Q96Q42{[pS]@483} 0.3292391\n\
+Q9Y3T9{[pS]@56} 0.131213\n\
+Q9H2H9{[pS]@52} 0.22196\n\
+Q14978{[pT]@610} -0.34400\n\
+Q15149{M+16@4031}{[pT]@4030} -0.30907";
+
+        // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
+
+        //SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
+    }
+
+
+
+
+
+
+    $scope.$watch(function () {
+        return self.textArea
+    }, function (newValue, oldValue) {
+        //$window.sessionStorage.setItem("textAreaForPeptide2Protein", self.textArea);
+        console.log("Setting textArea");
+        //self.textArea = localStorage.getItem("textAreaForPeptide2Protein");
+
+        //SharedService.setVar('textArea', self.textArea);
+        // parse motifs
+        self.parsedMotifs = self.textArea.replace('"','')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    return e.replace(/ *\([^)]*\) */g, "").replace(self.modificationPattern, '')
+                }
+            });
+
+        // parse peptides
+        // self.parsedPeptides = self.textArea.replace('"','')
+        //     .split(self.rowSplitPattern);
+
+        console.log('text area');
+        console.log(self.textArea);
+        self.parsedModifications = self.textArea.replace('"','')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    var modList = [];
+                    //var eMod;
+                    while (eMod = self.paranthesesPattern.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+                    while (eMod = self.modificationPatternWithLetter.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+                    while (eMod = self.modificationPatternSecondFormat.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+
+                    // e.match(self.modificationPatternWithLetter).map(function (eMod) {
+                    //     if (eMod) {
+                    //         modList.push(eMod);
+                    //     }
+                    // })
+                    // e.match(self.modificationPatternSecondFormat).map(function (eMod) {
+                    //     if (eMod) {
+                    //         modList.push(eMod);
+                    //     }
+                    // })
+
+                    // modList.push(e.match(self.modificationPatternWithLetter));
+                    // modList.push(e.match(self.modificationPatternSecondFormat));
+                    // //if (!self.formatInput) {
+                    //     //console.log(e.match(self.modificationPatternWithLetter));
+                    //  //   return e.match(self.modificationPatternWithLetter);
+                    // //} else {
+                    //     //console.log(e.match(self.modificationPatternSecondFormat));
+                    return modList ;
+                    //}
+                }
+            });
+        var tmpTextArea = self.textArea;
+
+        self.parsedPeptides = self.textArea
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    // var str = e.split(/[\s,]+/).join();
+                    // //console.log(str);
+                    // var str2 = str.replace(/[\s,]+/g, ',');
+                    // //console.log(str2);
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    ////console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        ////console.log(str2[0]);
+                        return str2[0];
+                    }
+                    else {
+                        // //console.log(str2);
+                        return str2;
+                    }
+                    ;
+                }
+                //return e.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+                // if (e.length() == 1){
+                //     return e[1];
+                // }
+                // if (!self.formatInput) {
+                //     return e.match(self.modificationPatternWithLetter);
+                // } else {
+                //     return e.match(self.modificationPatternSecondFormat);
+                // }
+
+            });
+
+        // //console.log("self.textArea");
+        // //console.log(self.textArea);
+        self.peptideAbundance = self.textArea
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    // var str = e.split(/[\s,]+/).join();
+                    // //console.log(str);
+                    // var str2 = str.replace(/[\s,]+/g, ',');
+                    // //console.log(str2);
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    ////console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(1);
+
+                        return str2[0];
+                    }
+                    else {
+                        return "NA";
+                    }
+                    ;
+                }
+                //return e.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+                // if (e.length() == 1){
+                //     return e[1];
+                // }
+                // if (!self.formatInput) {
+                //     return e.match(self.modificationPatternWithLetter);
+                // } else {
+                //     return e.match(self.modificationPatternSecondFormat);
+                // }
+
+            });
+
+        ////console.log(self.peptideAbundance);
+        //self.peptideAbundance = tmpTextArea.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+        ////console.log(self.peptideAbundance);
+        // format parsed modifiacations
+        self.parsedModificationsForOntology = self.parsedModifications;
+
+        self.parsedModificationsFormatter = [];
+        self.parsedModificationsFormatter = self.parsedModifications
+            .map(function (e) {
+                if (e != null)
+                    return e.join(" ");
+            });
+
+
+        self.plnFirstHit = [];
+
+        // if (!self.formatInput) {
+        //
+        //     self.textAreaFormatSH = translateMd2Sh(self.textArea);
+        //     SharedService.setVar('textAreaFormatSH', self.textAreaFormatSH);
+        // } else {
+        //
+        //     self.textAreaFormatMD = translateSh2Md(self.textArea);
+        //     SharedService.setVar('textAreaFormatMD', self.textAreaFormatMD);
+        // }
+
+    });
+
+
+
+
+
+
+
+
     self.uploadGraphWaiting = true;
     self.showGEGraph = false;
     $scope.showGEGraph = false;
@@ -821,6 +1755,8 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         $('.AB3text4').attr('disabled', true);
 
     });
+
+    $scope.peptideOrProteinsOrGenes = 0;
     //
     // $(document).ready(function () {
     //     $("body").tooltip({selector: '[data-toggle=tooltip]'});
@@ -19415,20 +20351,20 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showDeepPhosGraph = false;
 
         self.showEnrichmentGraphTmp = false;
-        if($scope.showRegi1){
+        if($scope.showRegi4){
             self.ptmTitleText = "Illustrative Example";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
+        if($scope.showRegi1){
+            self.ptmTitleText = "Results from PeptideToProtein tab Selection";
+            SharedService.setVar('ptmTitleText', self.ptmTitleText);
+        }
         if($scope.showRegi2){
-            self.ptmTitleText = "Unambiguously Matching Proteins";
+            self.ptmTitleText = "Results from PeptideToProtein tab Selection";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
         if($scope.showRegi3){
-            self.ptmTitleText = "All Matching Proteins";
-            SharedService.setVar('ptmTitleText', self.ptmTitleText);
-        }
-        if($scope.showRegi4){
-            self.ptmTitleText = "Representative/Leading Proteins";
+            self.ptmTitleText = "Results from PeptideToProtein tab Selection";
             SharedService.setVar('ptmTitleText', self.ptmTitleText);
         }
 
@@ -30224,14 +31160,14 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
         // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
 
         SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
-        $("#regi1").addClass("active");
+        $("#regi1").removeClass("active");
         $("#regi2").removeClass("active");
         $("#regi3").removeClass("active");
-        $("#regi4").removeClass("active");
-        $scope.showRegi1 = true;
+        $("#regi4").addClass("active");
+        $scope.showRegi1 = false;
         $scope.showRegi2 = false;
         $scope.showRegi3 = false;
-        $scope.showRegi4 = false;
+        $scope.showRegi4 = true;
     }
 
 }]);
@@ -31359,20 +32295,20 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
-        if($scope.showRegi1){
+        if($scope.showRegi4){
             self.geneTitleText = "Illustrative Example";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
+        if($scope.showRegi1){
+            self.geneTitleText = "Results from PeptideToProtein tab Selection";
+            SharedService.setVar('geneTitleText', self.geneTitleText);
+        }
         if($scope.showRegi2){
-            self.geneTitleText = "Unambiguously Matching Proteins";
+            self.geneTitleText = "Results from PeptideToProtein tab Selection";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
         if($scope.showRegi3){
-            self.geneTitleText = "All Matching Proteins";
-            SharedService.setVar('geneTitleText', self.geneTitleText);
-        }
-        if($scope.showRegi4){
-            self.geneTitleText = "Representative/Leading Proteins";
+            self.geneTitleText = "Results from PeptideToProtein tab Selection";
             SharedService.setVar('geneTitleText', self.geneTitleText);
         }
 
@@ -41054,14 +41990,14 @@ NOLC1 -0.3440\n\
 PLEC1 -0.309069";
 
         SharedService.setVar('genesExample',self.genes);
-        $("#regi1").addClass("active");
+        $("#regi1").removeClass("active");
         $("#regi2").removeClass("active");
         $("#regi3").removeClass("active");
-        $("#regi4").removeClass("active");
-        $scope.showRegi1 = true;
+        $("#regi4").addClass("active");
+        $scope.showRegi1 = false;
         $scope.showRegi2 = false;
         $scope.showRegi3 = false;
-        $scope.showRegi4 = false;
+        $scope.showRegi4 = true;
 
 
     }

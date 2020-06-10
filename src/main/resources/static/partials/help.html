@@ -65,7 +65,7 @@
 
 
     <div class="well col-sm-12"
-         style="background-color: transparent; border-color: #999999" >
+         style="background-color: transparent; border-color: #999999">
 
         <div class="tabPanel-widget5">
             <!--=============================================-->
@@ -79,12 +79,13 @@
                 <div class="well well-sm" style="background-color: #c9c9c9">
 
 
-
-
                     <div class="well " style="border-color: black; font-weight: bold">
 
-                        Cite piNET  via <a href="https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkaa436/5848491" target="_blank">
-                        piNET: a versatile web platform for downstream analysis and visualization of proteomics data</a>, <i>Nucleic Acids Research</i>, https://doi.org/10.1093/nar/gkaa436
+                        Cite piNET via <a
+                            href="https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkaa436/5848491"
+                            target="_blank">
+                        piNET: a versatile web platform for downstream analysis and visualization of proteomics data</a>,
+                        <i>Nucleic Acids Research</i>, https://doi.org/10.1093/nar/gkaa436
 
 
                     </div>
@@ -97,7 +98,8 @@
 
 
                     <div class="bs-callout bs-callout-primary ">
-                        <img src="images/pinet-logo2-small.png" style="float: left; background: transparent" height="155" width="150"
+                        <img src="images/pinet-logo2-small.png" style="float: left; background: transparent"
+                             height="155" width="150"
                              hspace="20" vspace="20"/>
                         <h4>
                             PiNET:
@@ -108,19 +110,34 @@
                             those with post-translationally modified sites (PTMs),
                             identified (and quantified) by targeted (SRM type), SWATH (discovery)
                             or related mass spectrometry based techniques. Starting from a set of peptides,
-                            and optional modifications within those peptides, piNET provides mapping into canonical UniProt protein entries, standardized annotation of modifications using PsiMOD and UNIMOD ontologies, and mapping of the sites of PTMs in the full UniProt entries. Validated modifying enzymes, including protein kinases, acetyl or methyl transferases, that are known to target these PTM sites, are mapped using iPTMnet and Signor. For phosphorylation, known kinase - target peptides are also mapped using PhosphoSitePlus, whereas DeepPhos is used to map predicted kinase – target site pairs. These annotations can be visualized using versatile d3 library to provide site specific network and pathways views. The set of proteins (with PTMs mapped) can be further projected onto biological pathways using enrichment analysis and a comprehensive library of biological gene/protein sets through Enrichr, while protein abundance vectors can be compared with LINCS chemical and genetic perturbation signatures through iLINCS.</p>
+                            and optional modifications within those peptides, piNET provides mapping into canonical
+                            UniProt protein entries, standardized annotation of modifications using PsiMOD and UNIMOD
+                            ontologies, and mapping of the sites of PTMs in the full UniProt entries. Validated
+                            modifying enzymes, including protein kinases, acetyl or methyl transferases, that are known
+                            to target these PTM sites, are mapped using iPTMnet and Signor. For phosphorylation, known
+                            kinase - target peptides are also mapped using PhosphoSitePlus, whereas DeepPhos is used to
+                            map predicted kinase – target site pairs. These annotations can be visualized using
+                            versatile d3 library to provide site specific network and pathways views. The set of
+                            proteins (with PTMs mapped) can be further projected onto biological pathways using
+                            enrichment analysis and a comprehensive library of biological gene/protein sets through
+                            Enrichr, while protein abundance vectors can be compared with LINCS chemical and genetic
+                            perturbation signatures through iLINCS.</p>
                     </div>
 
                     <div class="well " style="border-color: black ">
-                        To get help, raise question or report a bug pleas use <a href="https://groups.google.com/forum/#!forum/pinet-server" target="_blank">piNET Google Forum</a>.
+                        To get help, raise question or report a bug pleas use <a
+                            href="https://groups.google.com/forum/#!forum/pinet-server" target="_blank">piNET Google
+                        Forum</a>.
                     </div>
 
                     <div class="well " style="border-color: black ">
-                        piNET is compatible by Mozilla Firefox v.74 and is tested for Mozilla Firefox v.74 and Google Chrome v.80 browsers.
+                        piNET is compatible by Mozilla Firefox v.74 and is tested for Mozilla Firefox v.74 and Google
+                        Chrome v.80 browsers.
 
-                        Google Chrome v.80 can not handle large number of API calls, thus generating errors occasionally. Some functionalities like downloading files or figures or uploading files may not work properly in other browsers.
+                        Google Chrome v.80 can not handle large number of API calls, thus generating errors
+                        occasionally. Some functionalities like downloading files or figures or uploading files may not
+                        work properly in other browsers.
                     </div>
-
 
 
                 </div>
@@ -140,12 +157,660 @@
 
                     <div class="well " style="border-color: black ">
 
-                        Please Select Peptides2Proteins, PTMs2Modifiers and Proteins2Pathways for description of workflows.
+                        Please Select Peptides2Proteins, PTMs2Modifiers and Proteins2Pathways for description of
+                        workflows.
 
                     </div>
 
-                    <iframe scrolling="yes"
-                            src="http://new.pinet-server.org/pinet/splash"  frameborder="0"  name="splash" class="frame-area" ></iframe>
+                    <div  style="background-image: url('images/splash-12.jpg'); position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 360px;
+    z-index: 999;
+    background-size: cover;
+    background-attachment: fixed;
+    text-align: center;
+    overflow-y: scroll;" >
+                        <h1 class="splash-title ">PiNET</h1>
+                        <div ng-show="peptideOrProteinsOrGenes == 0">
+                            <h2 class="splash-title2 ">Annotate Peptides with PiNET.</h2>
+                        </div>
+
+                        <div ng-show="peptideOrProteinsOrGenes == 1">
+                            <h2 class="splash-title2 ">Annotate PTM/Proteins with PiNET.</h2>
+                        </div>
+                        <div ng-show="peptideOrProteinsOrGenes == 2">
+                            <h2 class="splash-title2 ">Annotate Genes with PiNET.</h2>
+                        </div>
+
+                        <!--<h2 class="splash-title4 ">Start With</h2>-->
+                        <div style="background:transparent;">
+                            <div class="splash-title5  "> Start with:
+
+                                <!--<span  class="onerow">-->
+
+
+                                <div id="breadcrumbNav2" style="margin-top: 20px">
+                                    <div id="arrowBar2">
+                                        <!-- Notice the lack of #borderTop2 and #borderBottom2 in this example since border is applied entirely to #arrowBar2 instead. -->
+
+                                        <!-- The very first crumb has a different "foo" style since this crumb has no arrow tail -->
+                                        <!--<a href="#Wonderful">     <span class="AB2rotate color0"><span class="myButton"><span class="AB2text0">Peptides</span></span></span></a>-->
+
+                                        <a href="javascript:void(0);" ng-click="peptideOrProteinsOrGenes=0"
+                                           href="#"
+                                           title="Enter Peptides for Annotation"> <span
+                                                class="AB2rotate1 color0"><span class="AB2rotateReset"><span
+                                                class="AB2text0">Peptides2Proteins</span></span></span></a>
+
+                                        <a href="javascript:void(0);" ng-click="peptideOrProteinsOrGenes=1"
+                                           href="#"
+                                           title="Enter PTM Proteins for Annotation"> <span
+                                                class="AB2rotate2 color1"><span class="AB2rotateReset"><span
+                                                class="AB2text1">PTMs2Modifiers</span></span></span></a>
+
+                                        <a href="javascript:void(0);" ng-click="peptideOrProteinsOrGenes=2"
+                                           href="#"
+                                           title="Enter Gene names for Annotation"> <span
+                                                class="AB2rotate3 color2"><span class="AB2rotateReset"><span
+                                                class="AB2text2">Proteins2Pathways</span></span></span></a>
+
+                                        <a href="javascript:void(0);" style="pointer-events: none; cursor: default;"
+                                           title="piNET, A Versatile Platform for Downstream Analysis and Visualization of Proteomics Data."> <span
+                                                class="AB2rotate4 color3"><span class="AB2rotateReset"><span
+                                                class="AB2text3">piNET</span></span></span></a>
+
+
+                                        <!--<a href="#Wonderful" >     <span class="AB2rotate1 "><span class="AB2rotateReset"><span class="AB2text1">Peptides</span></span></span></a>-->
+
+                                        <!--<a href="#CSS3">          <span class="AB2rotate2 "><span class="AB2rotateReset"><span class="AB2text1">Proteins</span></span></span></a>-->
+                                        <!--<a href="#Accessibility"> <span class="AB2rotate3 "><span class="AB2rotateReset"><span class="AB2text2">Pathways</span></span></span></a>-->
+
+                                        <!--<a href="#Breadcrumb">    <span class="AB2rotate4 "><span class="AB2rotateReset"><span class="AB2text3">LINCS</span></span></span></a>-->
+
+
+                                    </div>
+                                </div>
+
+                                <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=true"-->
+                                <!--style="text-decoration:none;"-->
+                                <!--ng-stuniprotrl.peptideOrGenes && {'font-weight': 'bold'}">&nbsp;A set of protein peptides</a>-->
+                                <!--/-->
+                                <!--<a href="javascript:void(0);" ng-click="ctrl.peptideOrGenes=false"-->
+                                <!--style="text-decoration:none;"-->
+                                <!--ng-style="!ctrl.peptideOrGenes && {'font-weight': 'bold'}">A set of genes</a>-->
+                                <!--</span>-->
+                            </div>
+                        </div>
+
+                        <div ng-show="peptideOrProteinsOrGenes == 0" style=" background:transparent;">
+
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+                                <div class="splash-title5  onerow2"> Enter peptides or use the list of
+                                </div>
+                                <a href="javascript:void(0);" class="onerow2"
+                                   ng-click="ctrl.changeToP100Peptides('table')"
+                                   ng-style="{'font-weight': 'bold'}">
+                                    LINCS P100 peptides</a> or try the list of
+
+                                <a href="javascript:void(0);" class="onerow2"
+                                   ng-click="ctrl.changeToGCPPeptides('table')"
+                                   ng-style="{'font-weight': 'bold'}">
+                                    LINCS GCP peptides&nbsp;
+                                </a>
+
+                                <hr/>
+                                <div class="form-group col-sm-4" style="padding-left: 0px;">
+
+                                    <!--<span style="float:left">-->
+
+                                    <!--<a href="javascript:void(0);" ng-click="ctrl.formatInput=false"-->
+                                    <!--style="text-decoration:none;"-->
+                                    <!--ng-style="!ctrl.formatInput && {'font-weight': 'bold'}">Mass Difference</a>-->
+                                    <!--/-->
+                                    <!--<a href="javascript:void(0);" ng-click="ctrl.formatInput=true"-->
+                                    <!--style="text-decoration:none;"-->
+                                    <!--ng-style="ctrl.formatInput && {'font-weight': 'bold'}">Shorthand Notation</a>-->
+                                    <!--</span>-->
+                                    <label style="padding-bottom: 10px;">Input Peptides&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="Input peptide PTMs can be either in the shorthand or mass difference notations.">
+                        </span>
+                                        <br/>
+                                    </label>
+
+
+                                    <div style="padding-top:8px; padding-bottom:10px;">
+                                        <!--<div ng-if="!ctrl.formatInput">-->
+                                        <textarea class="form-control" style="background:transparent;" rows="5"
+                                                  ng-model="ctrl.textArea">
+
+                            </textarea>
+                                        <!--</div>-->
+
+                                        <!--<div ng-if="ctrl.formatInput">-->
+                                        <!--<textarea class="form-control " style="background:transparent;" rows="5"-->
+                                        <!--ng-model="ctrl.textArea"></textarea>-->
+                                        <!--</div>-->
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group col-sm-3 col-sm-offset-0">
+                                    <label style="padding-bottom: 24px;">Motifs&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">
+
+                        </span>
+
+
+                                        <br/>
+                                    </label>
+                                    <div class=" list-responsive-vertical3" style=" word-wrap:break-word;" id="div3">
+                                        <div ng-repeat="motif in ctrl.parsedMotifs track by $index">{{motif}}<br/></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-sm-offset-0">
+                                    <label style="padding-bottom: 12px;">Modifications&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">
+
+                        </span>
+                                    </label>
+                                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div4">
+                                        <div ng-repeat="modification in ctrl.parsedModificationsFormatter track by $index">
+                                            {{modification}}<br/></div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group col-sm-2 col-sm-offset-0" style="position: relative">
+                                    <label style="padding-bottom: 10px;">Abundance&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="This is the abundance of peptides separated by space from each peptide, if not inserted, it is assumed to be 'NA'.">
+                        </span>
+                                        <br/>
+                                    </label>
+                                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div2">
+                                        <div ng-repeat="abundance in ctrl.peptideAbundance track by $index">
+                                            {{abundance | limitTo:6}}
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+                                <hr/>
+                                <h2 class="splash-title2 ">Notes</h2>
+                                <h2 class="splash-title8 " style="text-align: left">Peptide2Protein workflow can
+                                    be used to map peptide moieties
+                                    with post-translational modifications (PTMs) into proteins using
+                                    a fast peptide to protein matching and PTM meta-data harmonization.
+                                    Use the options below to select the reference proteome and other parameters.
+                                    <br/>
+                                    <br/>
+                                    While the PTMs2Modifires and Proteins2Pathways tabs can be used as stand-alone
+                                    modules, using Peptides2Proteins
+                                    tab will update the input for further analysis in these two tabs (PTMs2Modifires and
+                                    Proteins2Pathways) based on the
+                                    Peptide to PTM and Protein/Gene mappings.
+                                    <br/>
+                                    <br/>
+                                    The values associated with peptides are arithmetically assigned to mapped proteins,
+                                    since this mapping is not
+                                    always a one-to-one mapping and multiple proteins can share the same peptide or one
+                                    protein can contain multiple input
+                                    peptides. These values can be modified by users in the corresponding tabs as input.
+                                    <br/>
+                                    <br/>
+                                    For interactive submission, please limit the number of peptides to hundreds.
+                                    <br/>
+                                    <br/>
+                                    Please follow the convention in provided examples for the input syntax.
+
+
+                                </h2>
+
+                                <div class="bs-callout bs-callout-default" style="text-align: left">
+                                    <h4>
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                        <h2 class="splash-title9 ">
+                                            For Annotation of a List of Peptides:
+                                        </h2>
+                                    </h4>
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/peptideToProtein" target="_blank"
+                                       class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/peptideToProtein</a>
+                                    <br/>
+                                    <br/>
+                                    <!--<h4>-->
+                                    <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                    <h2 class="splash-title9 ">
+                                        For Annotation of a List of Peptides and Insert the Peptides with Values:
+
+                                    </h2>
+                                    <h2 class="splash-title10 ">
+                                        Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D
+
+                                    </h2>
+
+                                    <!--</h4>-->
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/peptideToProtein?list=IYQ%5BpY%5DIQSR%5B%2B42%5D 1.3,%5BaK%5DAYSFCGTVEY(UNIMOD:21)MAP -2.14"
+                                       target="_blank" class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/peptideToProtein?list=IYQ[pY]IQSR[+42]
+                                        1.3,[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.14</a>
+                                    <!--</h2>-->
+
+                                </div>
+                            </div>
+                            <!--<a ng-click="changeSplashAndGoToPeptide()" class="splash-arrow " href="#" title="Submit"><img-->
+                            <!--src="images/down-arrow.png"-->
+                            <!--alt=""/></a>-->
+                        </div>
+
+                        <div ng-show="peptideOrProteinsOrGenes == 1"
+                             style="padding-top: 20px; background:transparent;">
+
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+                                <!--<div class="splash-title4  onerow2"> Enter-->
+                                <!--<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=false"-->
+                                <!--style="text-decoration:none;"-->
+                                <!--ng-style="!ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">Gene Names</a>-->
+                                <!--/-->
+                                <!--<a href="javascript:void(0);" ng-click="ctrl.showGeneInSplash=true"-->
+                                <!--style="text-decoration:none;"-->
+                                <!--ng-style="ctrl.showGeneInSplash && {'font-weight': 'bold'}" class="onerow2">PTM/Proteins</a>.-->
+
+                                <!--</div>-->
+                                <!--&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;-->
+                                <!--&lt;!&ndash;Gene Names&nbsp;&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a> or&ndash;&gt;-->
+                                <!--&lt;!&ndash;<a href="javascript:void(0);" class="onerow2" ng-click="ctrl.changeToP100Genes('table')"&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-style="{'font-weight': 'bold'}">&ndash;&gt;-->
+                                <!--&lt;!&ndash;PTM/Proteins.&nbsp;&ndash;&gt;-->
+                                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                                <!--<br/>-->
+                                <div class="onerow3">
+                                    Try The List of
+
+                                    <a href="javascript:void(0);" class="onerow3"
+                                       ng-click="ctrl.changeToP100PTMs('table')"
+                                       ng-style="{'font-weight': 'bold'}">
+                                        LINCS P100 Associated PTM/Proteins&nbsp;
+                                    </a>
+
+                                </div>
+
+                                <hr/>
+
+
+                                <div class=" form-group col-sm-4" style="padding-left: 0px;">
+                                    <div class="horizontal-scroll" style=padding-bottom:10px;">
+                                        <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>
+                                        <label style="padding-bottom: 24px;">Enter PTM/Proteins&nbsp;
+                                            <br/>
+                                        </label>
+
+
+                                        <!--<span style="float:left">-->
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
+                                        <!--</span>-->
+                                        <div>
+
+
+                                        <textarea class="form-control" rows="5"
+                                                  ng-model="ctrl.inputMassPtmProteins"
+                                                  style="background:transparent;"></textarea>
+                                            <!--console.log()-->
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                    <label style="padding-bottom: 14px;">Proteins&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
+
+                                        <!--</span>-->
+
+
+                                        <!--<br/>-->
+                                    </label>
+                                    <!--{{ctrl.parsedPTMProteins}}-->
+                                    <div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div11">
+                                        <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
+                                        <span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins track by $index">
+                        {{parsedPTMProtein}}<br/></span>
+                                        <!--<span ng-repeat="parsedPTMProtein in ctrl.parsedPTMProteins ">-->
+                                        <!--{{parsedPTMProtein}}-->
+                                        <!--<br/>-->
+                                        <!--</span>-->
+                                    </div>
+                                </div>
+
+                                <div class=" form-group col-sm-3 col-sm-offset-0">
+                                    <label style="padding-bottom: 24px;">PTM&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
+
+                                        <!--</span>-->
+
+                                    </label>
+                                    <br/>
+                                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div12">
+                                        <div ng-repeat="parsedPTM in ctrl.parsedPTMs ">
+                                <span ng-repeat="PTM in parsedPTM ">
+                                    {{PTM}}&nbsp;&nbsp;
+                                </span>
+
+                                            <!--{{ctrl.parsedPTMs}}-->
+                                            <!--<div ng-repeat="parsedPTMItem in parsedPTM ">-->
+                                            <!--{{parsedPTMItem}}</div> &nbsp;-->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class=" form-group col-sm-2 col-sm-offset-0">
+                                    <label style="padding-bottom: 10px;">Abundance&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="This is the abundance of PTM/Proteins separated by space from the PTM/Proteins, if not inserted, it is assumed to be 'NA'.">
+                        </span>
+                                        <br/>
+                                    </label>
+                                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div12-1">
+                                        <div ng-repeat="abundance in ctrl.proteinAbundance track by $index">
+                                            {{abundance | limitTo:6}}
+                                            <br/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!--<a ng-click="changeSplashAndGoToProtein()" class="splash-arrow " href="#" title="Submit"><img-->
+                                <!--src="images/down-arrow.png"-->
+                                <!--alt=""/>-->
+                                <!--</a>-->
+                            </div>
+
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+                                <hr/>
+                                <h2 class="splash-title2 ">Notes</h2>
+                                <h2 class="splash-title8 " style="text-align: left">PTMs2Modifiers workflow can
+                                    be used to map and visualize upstream
+                                    modifying enzymes that target post-translational modification (PTM)
+                                    sites in query proteins. These PTM sites are mapped automatically
+                                    from peptide moieties with PTMs when using the Peptide2Protein workflow.
+                                    <br/>
+                                    <br/>
+                                    For interactive submission, please limit the number of PTM/Proteins to hundreds.
+                                    <br/>
+                                    <br/>
+                                    Please follow the convention in provided examples for the input syntax.
+                                </h2>
+
+                                <div class="bs-callout bs-callout-default" style="text-align: left">
+                                    <h4>
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                        <h2 class="splash-title9 ">
+                                            For Annotation of a List of PTM/Proteins:
+                                        </h2>
+                                    </h4>
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/ptmToModifier" target="_blank"
+                                       class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/ptmToModifier</a>
+                                    <br/>
+                                    <br/>
+                                    <!--<h4>-->
+                                    <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                    <h2 class="splash-title9 ">
+                                        For Annotation of a List of PTM/Proteins and Insert the PTM/Proteins:
+
+                                    </h2>
+                                    <h2 class="splash-title10 ">
+                                        In the following example the list of 'Q9Y463{[Y+80%5D@273}
+                                        2.11,Q13627{[Y+80]@321} 3.122,P51812{[S+80]@369} -1.92 is' sent for the query in
+                                        the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D
+
+                                    </h2>
+
+                                    <!--</h4>-->
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92"
+                                       target="_blank" class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D
+                                        2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92</a>
+                                    <!--</h2>-->
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div ng-show="peptideOrProteinsOrGenes == 2"
+                             style="padding-top: 20px; background:transparent;">
+
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+
+                                <div class="onerow3">
+                                    Try The List of
+
+                                    <a href="javascript:void(0);" class="onerow3"
+                                       ng-click="ctrl.changeToP100Genes('table')"
+                                       ng-style="{'font-weight': 'bold'}">
+                                        LINCS P100 Associated Genes&nbsp;
+                                    </a>
+
+                                </div>
+
+                                <hr/>
+
+
+                                <div class=" form-group col-sm-4" style="padding-left: 0px;">
+                                    <div class="horizontal-scroll" style=padding-bottom:10px;">
+                                        <!--<div class="horizontal-scroll" style="padding-top:8px; padding-bottom:10px;" >-->
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span>
+                                        <label style="padding-bottom: 24px;">Enter genes&nbsp;
+                                            <br/>
+                                        </label>
+
+
+                                        <!--<span style="float:left">-->
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;Enter genes/PTM genes-->
+                                        <!--</span>-->
+                                        <div>
+
+                                <textarea class="form-control" style="background:transparent;" rows="5"
+                                          ng-model="ctrl.genes"></textarea>
+                                            <!--console.log()-->
+                                        </div>
+
+                                    </div>
+
+
+                                    <!--<a class="nav navbar-nav" style="padding-bottom: 12px;" href="/pln/modification.html" target="_blank">Input Format Description</a>-->
+                                    <div style="float:left;">
+                            <span>
+
+                                <p>
+                                &nbsp;<span style='color:blue'>{{ctrl.numberOfAllValidGenes}}</span> out of {{ctrl.numberOfAllInputGenes}} input genes are valid genes.
+                                </p>
+                                <span ng-if="ctrl.flagFoundNPCG">
+                                    &nbsp;Not valid genes are:
+                                    <span style='color:blue'>
+                                        <div ng-repeat="nonValid in ctrl.nonValidGenes">{{nonValid}}&nbsp</div>
+                                    </span>
+                                    Gene name identification is case sensitive, Try other names of these genes or copy and paste the gene names again!
+                                </span>
+
+                            </span>
+                                    </div>
+                                </div>
+
+
+                                <div class=" form-group col-sm-2 col-sm-offset-0">
+                                    <label style="padding-bottom: 24px;">Gene Symbols&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed motifs are used to query ProSite API. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[^A-Z]/g">-->
+
+                                        <!--</span>-->
+
+
+
+                                    </label>
+                                    <div class=" list-responsive-vertical2" style="word-wrap:break-word;" id="div5">
+                                        <!--<div ng-repeat="gene in ctrl.parsedGenes track by $index">{{gene}}<br/></div>-->
+                                        <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.symbol}}<br/></span>
+                                    </div>
+                                </div>
+
+                                <div class=" form-group col-sm-4 col-sm-offset-0">
+                                    <label style="padding-bottom: 24px;">Gene Names&nbsp;
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-question-sign"-->
+                                        <!--data-delay='{"show":"0", "hide":"100"}'-->
+                                        <!--data-toggle="tooltip"-->
+                                        <!--title="Parsed modifications are used to query PSIsty-MOD ontology. They are obtained from entered peptides by parsing them with JavaScript regular expression: /[A-Z]\[\+[\d\.]+]/g">-->
+
+                                        <!--</span>-->
+                                        <br/>
+                                    </label>
+                                    <div class="list-responsive-vertical3" style="word-wrap:break-word;" id="div6">
+                                        <span ng-repeat="item in ctrl.inputGeneInfo track by $index">{{item.name}}<br/></span>
+                                    </div>
+
+                                </div>
+
+
+                                <div class=" form-group col-sm-2 col-sm-offset-0">
+                                    <label style="padding-bottom: 10px;">Abundance&nbsp;
+                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                              data-delay='{"show":"0", "hide":"100"}'
+                                              data-toggle="tooltip"
+                                              title="This is the abundance of genes separated with space from the gene names, if not inserted, it is assumed to be 'NA'.">
+                            </span>
+                                        <br/>
+                                    </label>
+                                    <div class="list-responsive-vertical2" style="word-wrap:break-word;" id="div10-1">
+                                        <div ng-repeat="abundance in ctrl.geneAbundance track by $index">
+                                            {{abundance| limitTo:6}}
+                                            <br/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--<a ng-click="changeSplashAndGoToPathway()" class="splash-arrow " href="#" title="Submit"><img-->
+                                <!--src="images/down-arrow.png"-->
+                                <!--alt=""/>-->
+                                <!--</a>-->
+                            </div>
+                            <div class=" container-fluid " style="width: 100%; max-width:1000px;">
+                                <hr/>
+                                <h2 class="splash-title2 ">Notes</h2>
+                                <h2 class="splash-title8 " style="text-align: left">Protein2Pathway workflow can
+                                    be used to analyze and visualize protein
+                                    (and thus gene) level data in terms of pathway enrichment analysis,
+                                    pathway membership, upstream/downstream kinase network, and concordance
+                                    with LINCS signatures.
+                                    <br/>
+                                    <br/>
+                                    For interactive submission, please limit the number of Genes to hundreds.
+                                    <br/>
+                                    <br/>
+                                    Please follow the convention in provided examples for the input syntax.
+                                </h2>
+
+                                <div class="bs-callout bs-callout-default" style="text-align: left">
+                                    <h4>
+                                        <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                        <h2 class="splash-title9 ">
+                                            For Annotation of a List of Genes:
+                                        </h2>
+                                    </h4>
+
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/proteinToPathway" target="_blank"
+                                       class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/proteinToPathway</a>
+                                    <br/>
+                                    <br/>
+                                    <!--<h4>-->
+                                    <!--<span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                                    <h2 class="splash-title9 ">
+                                        For Annotation of a List of Genes and Insert the Values:
+
+                                    </h2>
+                                    <h2 class="splash-title10 ">
+                                        In the following example the list of OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
+                                        0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542 is sent for
+                                        the query in the URL.
+
+                                    </h2>
+                                    <!--<h2 class="splash-title10 ">-->
+                                    <!--Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D-->
+
+                                    <!--</h2>-->
+
+                                    <!--</h4>-->
+
+                                    <!--<h2 >-->
+                                    <a href="http://www.pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
+                    0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank"
+                                       class="splash-title7 ">
+                                        http://www.pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2
+                                        -1.2,ZC3HC1 3.122,RPS6KA3
+                                        0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>
+                                    <!--</h2>-->
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                    <!--<iframe scrolling="yes"-->
+                            <!--src="http://new.pinet-server.org/pinet/splash" frameborder="0" name="splash"-->
+                            <!--class="frame-area"></iframe>-->
 
 
                 </div>
@@ -223,7 +888,8 @@ if __name__ == '__main__':
                             For Search for a List of Peptides:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the
+                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent
+                        for the query in the
                         the canonivcal protein forms, e.g.
                         <br/>
                         <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"
@@ -231,7 +897,8 @@ if __name__ == '__main__':
                             http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
 
                         <br/>
-                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is sent for the query in
+                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is
+                        sent for the query in
                         the canonivcal+iso protein form, e.g.
                         <br/>
                         <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"
@@ -245,10 +912,12 @@ if __name__ == '__main__':
                             For PTMProtein Query:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for
+                        http://www.pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList}
+                        is sent for
                         the
                         query in the URL, e.g.
-                        , please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate
+                        , please note that + is encoded to %2B in the URL. This returns the phosphorylation
+                        kinase-substrate
                         analysis, results of iPTMnet, kinase-substrate prediction and SIGNOR analysis.
                         <br/>
                         <p>Example with shorthand notation</p>
@@ -269,7 +938,8 @@ if __name__ == '__main__':
                         <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
                             For Protein Modification Query
                         </h4>
-                        Search by Mass and Delta, http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
+                        Search by Mass and Delta,
+                        http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
                         <br/>
                         <a href="http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">
                             http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>
@@ -282,18 +952,21 @@ if __name__ == '__main__':
                         <a href="http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">
                             http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912</a>
                         <br/>
-                        Search by specifications, http://www.pinet-server.org/pinet/api/proteinptmbydescription/{description}
+                        Search by specifications,
+                        http://www.pinet-server.org/pinet/api/proteinptmbydescription/{description}
                         <br/>
                         <a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">
                             http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>
                         <br/>
-                        For regular expression to capture the peptide and acceptable modification formats: http://pinet-server.org/pinet/api/regex/{ptmPeptide}
+                        For regular expression to capture the peptide and acceptable modification formats:
+                        http://pinet-server.org/pinet/api/regex/{ptmPeptide}
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]" target="_blank">
+                        <a href="http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]"
+                           target="_blank">
                             http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
                         <br/>
                         <!--<a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
-                            <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
+                        <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
 
                     </div>
 
@@ -313,29 +986,31 @@ if __name__ == '__main__':
                     </div>
 
                     <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                        <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                            <!--For Enrichment Analysis via Enrichr:-->
-                        <!--</h4>-->
+                    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+                    <!--For Enrichment Analysis via Enrichr:-->
+                    <!--</h4>-->
 
-                        <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
-                        <!--URL, e.g.-->
-                        <!--<br/>-->
-                        <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
-                           <!--target="_blank">-->
-                            <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+                    <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
+                    <!--URL, e.g.-->
+                    <!--<br/>-->
+                    <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+                    <!--target="_blank">-->
+                    <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
 
                     <!--</div>-->
 
                     <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                         <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                            For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign "
-                                                                          data-delay='{"show":"0", "hide":"100"}'
-                                                                          data-toggle="tooltip"
-                                                                          title="For complete list of pathways please visit Enrichr.">
+                            For Gene Enrichment Analysis via Enrichr &nbsp;<span style="color:steelblue;"
+                                                                                 class="glyphicon glyphicon-question-sign "
+                                                                                 data-delay='{"show":"0", "hide":"100"}'
+                                                                                 data-toggle="tooltip"
+                                                                                 title="For complete list of pathways please visit Enrichr.">
                                     </span>
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the
+                        http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for
+                        the query in the
                         URL, e.g.
                         <br/>
                         <a href="http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
@@ -346,10 +1021,11 @@ if __name__ == '__main__':
 
                     <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
                         <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
-                            For Gene-Pathway Association via Enrichr &nbsp;<span style="color:steelblue;" class="glyphicon glyphicon-question-sign "
-                                                                           data-delay='{"show":"0", "hide":"100"}'
-                                                                           data-toggle="tooltip"
-                                                                           title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
+                            For Gene-Pathway Association via Enrichr &nbsp;<span style="color:steelblue;"
+                                                                                 class="glyphicon glyphicon-question-sign "
+                                                                                 data-delay='{"show":"0", "hide":"100"}'
+                                                                                 data-toggle="tooltip"
+                                                                                 title="This is different than enrichment analysis and shows the pathways that each gene is associated with.">
                                     </span>
                         </h4>
 
@@ -367,11 +1043,13 @@ if __name__ == '__main__':
                             For Protein Accession Id Query:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent for the query
+                        http://www.pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is
+                        sent for the query
                         in
                         the URL, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/O15393" target="_blank">
+                        <a href="http://www.pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/O15393"
+                           target="_blank">
                             http://www.pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/O15393</a>
 
 
@@ -402,103 +1080,80 @@ if __name__ == '__main__':
                     <!--<div class="bs-callout bs-callout-default" style="padding-top: 15px;">-->
 
 
+                    <div class="well col-sm-12" style="background-color: #c9c9c9">
+
+                        <div class="onerow">
+                            Try Downloading and Uploading the <a href="javascript:void(0);"
+                                                                 class="onerow"
+                                                                 ng-click="downloadCSVExampleForGraph1()"
+                                                                 ng-style="{'font-weight': 'bold'}">
+                            Example 1</a> with un-ordered nodes and <a href="javascript:void(0);"
+                                                                       class="onerow"
+                                                                       ng-click="downloadCSVExampleForGraph2()"
+                                                                       ng-style="{'font-weight': 'bold'}">
+                            Example 2</a> with ordered nodes, Make sure for new uploads your file has the same columns
+                            with headers.
+
+                        </div>
+                        <hr/>
+
+                        <div class=" form-group col-sm-4" style="padding-left: 0px;">
+                            <form>
+                                Add Optional Name of the Node of Interest: <input type="text" ng-model="interest">
+                            </form>
+                            You have entered: <a style="font-weight: bold; color: #1c3448">{{interest}}</a>
+
+                        </div>
 
 
-                        <div class="well col-sm-12" style="background-color: #c9c9c9">
-
-                            <div class="onerow">
-                                Try Downloading and Uploading the <a href="javascript:void(0);"
-                                                                     class="onerow"
-                                                                     ng-click="downloadCSVExampleForGraph1()"
-                                                                     ng-style="{'font-weight': 'bold'}">
-                                Example 1</a> with un-ordered nodes and <a href="javascript:void(0);"
-                                                                           class="onerow"
-                                                                           ng-click="downloadCSVExampleForGraph2()"
-                                                                           ng-style="{'font-weight': 'bold'}">
-                                Example 2</a> with ordered nodes, Make sure for new uploads your file has the same columns with headers.
-
-                            </div>
-                            <hr/>
-
-                            <div class=" form-group col-sm-4" style="padding-left: 0px;">
-                                <form>
-                                    Add Optional Name of the Node of Interest: <input type="text" ng-model="interest">
-                                </form>
-                                You have entered: <a style="font-weight: bold; color: #1c3448">{{interest}}</a>
-
-                            </div>
+                        <div class=" form-group col-sm-4 col-sm-offset-0">
 
 
-                            <div class=" form-group col-sm-4 col-sm-offset-0">
+                            <input type="file" file-model="myFileCSV" type="submit"
+                                   class="onerow"/>
+                            <button ng-click="uploadFileGraph()" class="btn btn-primary onerow">Upload .CSV File
 
-
-                                    <input type="file"  file-model="myFileCSV" type="submit"
-                                           class="onerow"/>
-                                    <button ng-click="uploadFileGraph()" class="btn btn-primary onerow">Upload .CSV File
-
-                                        <span ng-show="ctrl.uploadGraphWaiting">
+                                <span ng-show="ctrl.uploadGraphWaiting">
                                     <span class="glyphicon glyphicon-refresh glyphicon-spin">
 
                                     </span>
                                     </span>
-                                    </button>
-                                    <br/>
+                            </button>
+                            <br/>
 
-                                    <span ng-if="ctrl.uploadErrorTag == 400" style="color: #464bb4; font-weight: bold">
+                            <span ng-if="ctrl.uploadErrorTag == 400" style="color: #464bb4; font-weight: bold">
 
                                         {{ctrl.uploadErrorText}}
                                     </span>
 
 
-                            </div>
-                            <div class=" form-group col-sm-4 col-sm-offset-0" >
-                                <div class=" pictureCircos " ></div>
-                            </div>
                         </div>
+                        <div class=" form-group col-sm-4 col-sm-offset-0">
+                            <div class=" pictureCircos "></div>
+                        </div>
+                    </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <!--<div style="width: 800px; text-align: left" >-->
-                            <!--<input ng-show="false" type="range" id="h_slider" value="2.0" min="0.0" max="10.0" step="0.1"/>-->
-                            <!--&lt;!&ndash;Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>&ndash;&gt;-->
-                            <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                            <!--&lt;!&ndash;Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                            <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div style="text-align: center;width: 750px">&ndash;&gt;-->
-                                <!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change:</strong>&ndash;&gt;-->
-                                <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
-                                <!--&lt;!&ndash;<span style="color: steelblue">{{ctrl.sliderFoldChangeValue}}</span>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<hr/>&ndash;&gt;-->
-                                <!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Scrolling the Sliders will Change the Selected Peptides&ndash;&gt;-->
-                                <!--&lt;!&ndash;for Analysis in the Next Tabs.</strong>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-                        <!--</div>-->
-
-
+                    <!--<div style="width: 800px; text-align: left" >-->
+                    <!--<input ng-show="false" type="range" id="h_slider" value="2.0" min="0.0" max="10.0" step="0.1"/>-->
+                    <!--&lt;!&ndash;Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div style="text-align: center;width: 750px">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change:</strong>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span style="color: steelblue">{{ctrl.sliderFoldChangeValue}}</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Scrolling the Sliders will Change the Selected Peptides&ndash;&gt;-->
+                    <!--&lt;!&ndash;for Analysis in the Next Tabs.</strong>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
                     <!--</div>-->
 
 
-
-
-
+                    <!--</div>-->
 
 
                     <!--<div ng-show="ctrl.showGEGraph">-->
@@ -506,90 +1161,27 @@ if __name__ == '__main__':
                     <!--<div ng-show="!ctrl.uploadGraphWaiting">-->
 
 
+                    <div class="well col-sm-12" ng-show="showGEGraph">
+                        <div class=" form-group col-sm-3" style="padding-left: 0px;">
 
-                        <div class="well col-sm-12" ng-show="showGEGraph">
-                            <div class=" form-group col-sm-3" style="padding-left: 0px;">
-
-                                <div style=" text-align: left">
-                                    <div style="text-align: center;">
-                                        <strong>Change Inner Circle Size:</strong>
-                                        <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
-                                              data-delay='{"show":"0", "hide":"100"}'
-                                              data-toggle="tooltip"
-                                              title="This slider is not active in bipartite or tripartite views."
-                                        >
+                            <div style=" text-align: left">
+                                <div style="text-align: center;">
+                                    <strong>Change Inner Circle Size:</strong>
+                                    <span style="color:steelblue;" class="glyphicon glyphicon-question-sign"
+                                          data-delay='{"show":"0", "hide":"100"}'
+                                          data-toggle="tooltip"
+                                          title="This slider is not active in bipartite or tripartite views."
+                                    >
                                                 </span>
-                                    </div>
-                                    <input type="range" id="circle_slider" value="1100" min="500" max="2000" step="100"/>
-                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                    <div style="text-align: center;">
-
-                                        <span style="color: steelblue">{{circleSliderValue}}</span>
-
-                                    </div>
-
                                 </div>
-                            </div>
+                                <input type="range" id="circle_slider" value="1100" min="500" max="2000" step="100"/>
+                                <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                <div style="text-align: center;">
 
-
-                            <div class=" form-group col-sm-3 col-sm-offset-0">
-                                <div style=" text-align: left">
-                                    <div style="text-align: center;">
-                                        <strong>Change Width Size:</strong>
-                                    </div>
-                                    <input type="range" id="width_slider" value="1500" min="900" max="2700" step="100"/>
-                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                    <div style="text-align: center;">
-
-                                        <span style="color: steelblue">{{widthSliderValue}}</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class=" form-group col-sm-3 col-sm-offset-0">
-                                <div style=" text-align: left">
-                                    <div style="text-align: center;">
-                                        <strong>Change Node Size:</strong>
-                                    </div>
-                                    <input type="range" id="node_slider" value="15" min="5" max="30" step="1"/>
-                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                    <div style="text-align: center;">
-
-                                        <span style="color: steelblue">{{nodeSliderValue}}</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class=" form-group col-sm-3 col-sm-offset-0">
-                                <div style=" text-align: left">
-                                    <div style="text-align: center;">
-                                        <strong>Change Font Size:</strong>
-                                    </div>
-                                    <input type="range" id="font_slider" value="20" min="10" max="30" step="1"/>
-                                    <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
-                                    <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
-                                    <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
-                                    <div style="text-align: center;">
-
-                                        <span style="color: steelblue">{{fontSliderValue}}</span>
-
-                                    </div>
+                                    <span style="color: steelblue">{{circleSliderValue}}</span>
 
                                 </div>
 
@@ -597,9 +1189,72 @@ if __name__ == '__main__':
                         </div>
 
 
-                    <div class="container" ng-show="showGEGraph" id="chartGE" style="max-width: 100vw;overflow-x: auto;">
+                        <div class=" form-group col-sm-3 col-sm-offset-0">
+                            <div style=" text-align: left">
+                                <div style="text-align: center;">
+                                    <strong>Change Width Size:</strong>
+                                </div>
+                                <input type="range" id="width_slider" value="1500" min="900" max="2700" step="100"/>
+                                <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                <div style="text-align: center;">
 
-                        <div >
+                                    <span style="color: steelblue">{{widthSliderValue}}</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class=" form-group col-sm-3 col-sm-offset-0">
+                            <div style=" text-align: left">
+                                <div style="text-align: center;">
+                                    <strong>Change Node Size:</strong>
+                                </div>
+                                <input type="range" id="node_slider" value="15" min="5" max="30" step="1"/>
+                                <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                <div style="text-align: center;">
+
+                                    <span style="color: steelblue">{{nodeSliderValue}}</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class=" form-group col-sm-3 col-sm-offset-0">
+                            <div style=" text-align: left">
+                                <div style="text-align: center;">
+                                    <strong>Change Font Size:</strong>
+                                </div>
+                                <input type="range" id="font_slider" value="20" min="10" max="30" step="1"/>
+                                <!--Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>-->
+                                <!--Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>-->
+                                <!--Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>-->
+                                <div style="text-align: center;">
+
+                                    <span style="color: steelblue">{{fontSliderValue}}</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="container" ng-show="showGEGraph" id="chartGE"
+                         style="max-width: 100vw;overflow-x: auto;">
+
+                        <div>
                             <button class="btn1" id='forceGE'>
 
                                 <a style="color:#1c3448;" class="fa fa-random"
@@ -678,17 +1333,16 @@ if __name__ == '__main__':
                             <!--</button>-->
 
 
-
                         </div>
 
 
                     </div>
 
 
-                    <div class="bs-callout bs-callout-default" style="padding-top: 15px;" >
+                    <div class="bs-callout bs-callout-default" style="padding-top: 15px;">
 
 
-                        <button class="btn btn-primary onerow" ng-click = "showColors = !showColors">
+                        <button class="btn btn-primary onerow" ng-click="showColors = !showColors">
                             More on Coloring Tags
                         </button>
 
@@ -888,7 +1542,6 @@ if __name__ == '__main__':
                 <div class="well well-sm" style="background-color: #c9c9c9">
 
 
-
                     <div class="well" style="background-color: #c9c9c9">
                         <div class="well " style="border-color: black ">
                             The authors of the following tools and resources are specially acknowledged.
@@ -945,9 +1598,12 @@ if __name__ == '__main__':
                         <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
 
                             <a href="https://signor.uniroma2.it/" target="_blank">
-                                <span style="color:blue">&#10004;</span>SIGNOR</a> SIGNOR, the SIGnaling Network Open Resource,
-                            organizes and stores in a structured format signaling information published in the scientific literature.
-                            The captured information is stored as binary causative relationships between biological entities and can be represented graphically as activity flow.
+                                <span style="color:blue">&#10004;</span>SIGNOR</a> SIGNOR, the SIGnaling Network Open
+                            Resource,
+                            organizes and stores in a structured format signaling information published in the
+                            scientific literature.
+                            The captured information is stored as binary causative relationships between biological
+                            entities and can be represented graphically as activity flow.
                         </div>
 
                         <div class="bs-callout bs-callout-default" style="padding-top: 40px;">
@@ -968,766 +1624,757 @@ if __name__ == '__main__':
         </div>
     </div>
     <!--<ul class="tabs22 clearfix" data-tabgroup="first-tab-group">-->
-        <!--<li><a href="#tab11" class="active">piNET</a></li>-->
-        <!--<li><a href="#tab22">Workflows</a></li>-->
-        <!--<li><a href="#tab33">API</a></li>-->
-        <!--<li><a href="#tab44">Interactive Visualization</a></li>-->
-        <!--<li><a href="#tab55">Acknowledgements</a></li>-->
+    <!--<li><a href="#tab11" class="active">piNET</a></li>-->
+    <!--<li><a href="#tab22">Workflows</a></li>-->
+    <!--<li><a href="#tab33">API</a></li>-->
+    <!--<li><a href="#tab44">Interactive Visualization</a></li>-->
+    <!--<li><a href="#tab55">Acknowledgements</a></li>-->
     <!--</ul>-->
     <!--<section id="first-tab-group" class="tabgroup">-->
-        <!--<div id="tab11">-->
-            <!--&lt;!&ndash;<h2>Heading 1</h2>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
-            <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
+    <!--<div id="tab11">-->
+    <!--&lt;!&ndash;<h2>Heading 1</h2>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
+    <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
 
-            <!--<div class="well " style="border-color: black; font-weight: bold">-->
+    <!--<div class="well " style="border-color: black; font-weight: bold">-->
 
-                <!--To support piNET, sincerely consider citing PiNET (http://pinet-server.org) via <a href="https://www.biorxiv.org/content/10.1101/607432v1" target="_blank">-->
-                <!--piNET: a versatile web platform for downstream analysis and visualization of proteomics data</a>, doi: https://doi.org/10.1101/607432-->
-
-
-            <!--</div>-->
-            <!--<div class="well " style="border-color: black ">-->
-
-                <!--What is PiNET about?-->
-            <!--</div>-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container " style="padding-top: 10px;">&ndash;&gt;-->
+    <!--To support piNET, sincerely consider citing PiNET (http://pinet-server.org) via <a href="https://www.biorxiv.org/content/10.1101/607432v1" target="_blank">-->
+    <!--piNET: a versatile web platform for downstream analysis and visualization of proteomics data</a>, doi: https://doi.org/10.1101/607432-->
 
 
-            <!--<div class="bs-callout bs-callout-primary ">-->
-                <!--<img src="images/pinet-logo2.png" style="float: left; background: transparent" height="155" width="150"-->
-                     <!--hspace="20" vspace="20"/>-->
-                <!--<h4>-->
-                    <!--PiNET:-->
-                <!--</h4>-->
+    <!--</div>-->
+    <!--<div class="well " style="border-color: black ">-->
 
-                <!--<p>piNET is a versatile tool that can be used to annotate, map and analyze a set of peptide moieties-->
-                    <!--(including post-translationally modified peptides) identified by either-->
-                    <!--targeted (SRM type) or SWATH (discovery) proteomic assays, or another-->
-                    <!--related mass spectrometry based protein moieties identification and-->
-                    <!--quantification technique. Starting from a set of peptides, and optional-->
-                    <!--modifications within those peptides, piNET provides mapping into-->
-                    <!--canonical UniProt protein entries, standardized annotation of-->
-                    <!--modifications using PsiMOD ontology, and mapping of the sites of PTMs in-->
-                    <!--the full UniProt entries. piNET further generates Protein Line Notation-->
-                    <!--tokens to represent each peptide moiety with modifications for automated-->
-                    <!--annotation exchange systems. The set of proteins and PTM sites can be-->
-                    <!--further projected onto biological pathways using enrichment analysis and-->
-                    <!--a comprehensive library of biological gene/protein sets through Enrichr.-->
-                    <!--For phosphorylation, PhosphoSitePlus known kinase - target peptides (and-->
-                    <!--extrapolations form known examples to sufficiently similar putative-->
-                    <!--target peptides) are used to provide a site specific network and-->
-                    <!--pathways views. Work is in progress to extend the capabilities to-->
-                    <!--include other PTMs in network projections, and to enable annotation of-->
-                    <!--mouse and rat proteomics data.</p>-->
-            <!--</div>-->
+    <!--What is PiNET about?-->
+    <!--</div>-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="container " style="padding-top: 10px;">&ndash;&gt;-->
 
 
-        <!--</div>-->
-        <!--<div id="tab22">-->
-            <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
-            <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
+    <!--<div class="bs-callout bs-callout-primary ">-->
+    <!--<img src="images/pinet-logo2.png" style="float: left; background: transparent" height="155" width="150"-->
+    <!--hspace="20" vspace="20"/>-->
+    <!--<h4>-->
+    <!--PiNET:-->
+    <!--</h4>-->
 
-            <!--&lt;!&ndash;<h5 class="well col-sm-12" >&ndash;&gt;-->
-            <!--&lt;!&ndash;Researchers interested in the GUI interfaces of PiNET are directed to use the server as:&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</h5>&ndash;&gt;-->
-            <!--&lt;!&ndash;<iframe src="http://localhost:8090/pln/splash"></iframe>&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<iframe src="https://www.w3schools.com"></iframe>&ndash;&gt;-->
-
-            <!--<div class="well " style="border-color: black ">-->
-
-                <!--Please Select Peptides2Proteins, PTMs2Modifiers and Proteins2Pathways for description of workflows.-->
-
-            <!--</div>-->
-
-            <!--<iframe scrolling="yes"-->
-                    <!--src="http://localhost:8090/pln/splash"  frameborder="0"  name="splash" class="frame-area" ></iframe>-->
-
-
-            <!--&lt;!&ndash;<p><a href="https://en.wikipedia.org/wiki/Main_Page"&ndash;&gt;-->
-                  <!--&lt;!&ndash;target="iframe_a">Wikipedia</a></p>&ndash;&gt;-->
-
-
-
-            <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
-                <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;For Annotation of a List of PTM/Proteins:&ndash;&gt;-->
-                <!--&lt;!&ndash;</h4>&ndash;&gt;-->
-                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
-                    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier</a>&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<p>piNET is a versatile tool that can be used to annotate, map and analyze a set of peptide moieties-->
+    <!--(including post-translationally modified peptides) identified by either-->
+    <!--targeted (SRM type) or SWATH (discovery) proteomic assays, or another-->
+    <!--related mass spectrometry based protein moieties identification and-->
+    <!--quantification technique. Starting from a set of peptides, and optional-->
+    <!--modifications within those peptides, piNET provides mapping into-->
+    <!--canonical UniProt protein entries, standardized annotation of-->
+    <!--modifications using PsiMOD ontology, and mapping of the sites of PTMs in-->
+    <!--the full UniProt entries. piNET further generates Protein Line Notation-->
+    <!--tokens to represent each peptide moiety with modifications for automated-->
+    <!--annotation exchange systems. The set of proteins and PTM sites can be-->
+    <!--further projected onto biological pathways using enrichment analysis and-->
+    <!--a comprehensive library of biological gene/protein sets through Enrichr.-->
+    <!--For phosphorylation, PhosphoSitePlus known kinase - target peptides (and-->
+    <!--extrapolations form known examples to sufficiently similar putative-->
+    <!--target peptides) are used to provide a site specific network and-->
+    <!--pathways views. Work is in progress to extend the capabilities to-->
+    <!--include other PTMs in network projections, and to enable annotation of-->
+    <!--mouse and rat proteomics data.</p>-->
+    <!--</div>-->
 
 
-            <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
-                <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;For Annotation of a List of Genes:&ndash;&gt;-->
-                <!--&lt;!&ndash;</h4>&ndash;&gt;-->
-                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
-                    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway</a>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div id="tab22">-->
+    <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
+    <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
 
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<h5 class="well col-sm-12" >&ndash;&gt;-->
+    <!--&lt;!&ndash;Researchers interested in the GUI interfaces of PiNET are directed to use the server as:&ndash;&gt;-->
 
-            <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
-                <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;For Annotation of a List of PTM/Proteins and Insert the PTM/Proteins:&ndash;&gt;-->
-                <!--&lt;!&ndash;</h4>&ndash;&gt;-->
-                <!--&lt;!&ndash;In the following example the list of 'Q9Y463{[Y+80%5D@273} 2.11,Q13627{[Y+80]@321}&ndash;&gt;-->
-                <!--&lt;!&ndash;3.122,P51812{[S+80]@369} -1.92 is' sent for the&ndash;&gt;-->
-                <!--&lt;!&ndash;query in the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D&ndash;&gt;-->
-                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
-<!--&lt;!&ndash;"&ndash;&gt;-->
-                   <!--&lt;!&ndash;target="_blank">&ndash;&gt;-->
-                    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D&ndash;&gt;-->
-                    <!--&lt;!&ndash;2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
+    <!--&lt;!&ndash;</h5>&ndash;&gt;-->
+    <!--&lt;!&ndash;<iframe src="http://localhost:8090/pln/splash"></iframe>&ndash;&gt;-->
 
-                <!--&lt;!&ndash;</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;<iframe src="https://www.w3schools.com"></iframe>&ndash;&gt;-->
 
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<div class="well " style="border-color: black ">-->
 
-            <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
-                <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;For Annotation of a List of Genes and Insert the Genes:&ndash;&gt;-->
-                <!--&lt;!&ndash;</h4>&ndash;&gt;-->
-                <!--&lt;!&ndash;In the following example the list of OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53 is sent for&ndash;&gt;-->
-                <!--&lt;!&ndash;the query in the URL.&ndash;&gt;-->
-                <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
-                    <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank">&ndash;&gt;-->
-                    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
-                    <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>&ndash;&gt;-->
+    <!--Please Select Peptides2Proteins, PTMs2Modifiers and Proteins2Pathways for description of workflows.-->
 
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div id="tab33">-->
-            <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
-            <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
+    <!--</div>-->
 
-            <!--&lt;!&ndash;<h5 class="well col-sm-12" >&ndash;&gt;-->
-            <!--&lt;!&ndash;There are programmatic ways of querying data set and attain the results in a json format:&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</h5>&ndash;&gt;-->
+    <!--<iframe scrolling="yes"-->
+    <!--src="http://localhost:8090/pln/splash"  frameborder="0"  name="splash" class="frame-area" ></iframe>-->
 
 
-            <!--<div class="well " style="border-color: black ">-->
-
-                <!--Example of Embedding pinet APIs in python:-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Search for a List of Peptides:-->
-                <!--</h4>-->
-
-                <!--<blockquote><pre><code>-->
-<!--import requests-->
-<!--PINET_URL_BASE = 'http://pinet-server.org/pinet/api/'-->
-<!--PINET_URL_LINEAGE = '9606'-->
-<!--PEPTIDE_API_EXTENSION_1 = 'peptide/organism/'-->
-<!--PEPTIDE_API_EXTENSION_2 = '/peptides/'-->
-<!--TIMEOUT = 120-->
-<!--RETRIES = 3-->
+    <!--&lt;!&ndash;<p><a href="https://en.wikipedia.org/wiki/Main_Page"&ndash;&gt;-->
+    <!--&lt;!&ndash;target="iframe_a">Wikipedia</a></p>&ndash;&gt;-->
 
 
-<!--def map_peptides(params):-->
+    <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
+    <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+    <!--&lt;!&ndash;For Annotation of a List of PTM/Proteins:&ndash;&gt;-->
+    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier</a>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
+    <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+    <!--&lt;!&ndash;For Annotation of a List of Genes:&ndash;&gt;-->
+    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway</a>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
+    <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+    <!--&lt;!&ndash;For Annotation of a List of PTM/Proteins and Insert the PTM/Proteins:&ndash;&gt;-->
+    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;In the following example the list of 'Q9Y463{[Y+80%5D@273} 2.11,Q13627{[Y+80]@321}&ndash;&gt;-->
+    <!--&lt;!&ndash;3.122,P51812{[S+80]@369} -1.92 is' sent for the&ndash;&gt;-->
+    <!--&lt;!&ndash;query in the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D&ndash;&gt;-->
+    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
+    <!--&lt;!&ndash;"&ndash;&gt;-->
+    <!--&lt;!&ndash;target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D&ndash;&gt;-->
+    <!--&lt;!&ndash;2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</a>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<div class="bs-callout bs-callout-default">&ndash;&gt;-->
+    <!--&lt;!&ndash;<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;&ndash;&gt;-->
+    <!--&lt;!&ndash;For Annotation of a List of Genes and Insert the Genes:&ndash;&gt;-->
+    <!--&lt;!&ndash;</h4>&ndash;&gt;-->
+    <!--&lt;!&ndash;In the following example the list of OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53 is sent for&ndash;&gt;-->
+    <!--&lt;!&ndash;the query in the URL.&ndash;&gt;-->
+    <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
+    <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
+    <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div id="tab33">-->
+    <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
+    <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<h5 class="well col-sm-12" >&ndash;&gt;-->
+    <!--&lt;!&ndash;There are programmatic ways of querying data set and attain the results in a json format:&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</h5>&ndash;&gt;-->
+
+
+    <!--<div class="well " style="border-color: black ">-->
+
+    <!--Example of Embedding pinet APIs in python:-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Search for a List of Peptides:-->
+    <!--</h4>-->
+
+    <!--<blockquote><pre><code>-->
+    <!--import requests-->
+    <!--PINET_URL_BASE = 'http://pinet-server.org/pinet/api/'-->
+    <!--PINET_URL_LINEAGE = '9606'-->
+    <!--PEPTIDE_API_EXTENSION_1 = 'peptide/organism/'-->
+    <!--PEPTIDE_API_EXTENSION_2 = '/peptides/'-->
+    <!--TIMEOUT = 120-->
+    <!--RETRIES = 3-->
+
+
+    <!--def map_peptides(params):-->
     <!--url = PINET_URL_BASE + PEPTIDE_API_EXTENSION_1 + PINET_URL_LINEAGE + PEPTIDE_API_EXTENSION_2 + params-->
 
     <!--peptide_json = {}-->
     <!--try:-->
-        <!--peptide_json = _request(url)-->
+    <!--peptide_json = _request(url)-->
     <!--except:-->
-        <!--print "error in map_peptides"-->
-        <!--return peptide_json-->
+    <!--print "error in map_peptides"-->
+    <!--return peptide_json-->
 
     <!--return peptide_json-->
 
-<!--def _request(url, params=None):-->
+    <!--def _request(url, params=None):-->
     <!--response = requests.get(url)-->
     <!--return response.json()-->
 
-<!--if __name__ == '__main__':-->
+    <!--if __name__ == '__main__':-->
     <!--# Example-->
     <!--# http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
     <!--print map_peptides("KSAPATGGVKKPHR,IYQYIQSR")-->
 
 
-                <!--</code></pre>-->
-                <!--</blockquote>-->
-                <!--&lt;!&ndash;padding-left:5em&ndash;&gt;-->
-
-
-            <!--</div>-->
-
-
-            <!--<div class="well " style="border-color: black ">-->
-
-                <!--There are programmatic ways of querying data set and attain the results in a json format:-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Search for a List of Peptides:-->
-                <!--</h4>-->
-
-                <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the-->
-                <!--the canonivcal protein forms, e.g.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
-                   <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
-
-                <!--<br/>-->
-                <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is sent for the query in-->
-                <!--the canonivcal+iso protein form, e.g.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
-                   <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For PTMProtein Query:-->
-                <!--</h4>-->
-
-                <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for-->
-                <!--the-->
-                <!--query in the URL, e.g.-->
-                <!--, please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate-->
-                <!--analysis, results of iPTMnet and SIGNOR analysis.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}"-->
-                   <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}</a>-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Preotein Modification Query-->
-                <!--</h4>-->
-                <!--Search by Mass and Delta, http://pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>-->
-                <!--<br/>-->
-                <!--Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255</a>-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/proteinptm/MOD:00912</a>-->
-                <!--<br/>-->
-                <!--Search by specifications, http://pinet-server.org/pinet/api/proteinptmbydescription/{description}-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Enrichment Analysis via Enrichr:-->
-                <!--</h4>-->
-
-                <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
-                <!--URL, e.g.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
-                   <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Gene-Pathway Associasion:-->
-                <!--</h4>-->
-
-                <!--http://pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the-->
-                <!--URL, e.g.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
-                   <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
-
-            <!--</div>-->
+    <!--</code></pre>-->
+    <!--</blockquote>-->
+    <!--&lt;!&ndash;padding-left:5em&ndash;&gt;-->
+
+
+    <!--</div>-->
+
+
+    <!--<div class="well " style="border-color: black ">-->
+
+    <!--There are programmatic ways of querying data set and attain the results in a json format:-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Search for a List of Peptides:-->
+    <!--</h4>-->
+
+    <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the-->
+    <!--the canonivcal protein forms, e.g.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
+    <!--target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
+
+    <!--<br/>-->
+    <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is sent for the query in-->
+    <!--the canonivcal+iso protein form, e.g.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
+    <!--target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For PTMProtein Query:-->
+    <!--</h4>-->
+
+    <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for-->
+    <!--the-->
+    <!--query in the URL, e.g.-->
+    <!--, please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate-->
+    <!--analysis, results of iPTMnet and SIGNOR analysis.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}"-->
+    <!--target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Preotein Modification Query-->
+    <!--</h4>-->
+    <!--Search by Mass and Delta, http://pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>-->
+    <!--<br/>-->
+    <!--Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255</a>-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/proteinptm/MOD:00912</a>-->
+    <!--<br/>-->
+    <!--Search by specifications, http://pinet-server.org/pinet/api/proteinptmbydescription/{description}-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Enrichment Analysis via Enrichr:-->
+    <!--</h4>-->
+
+    <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
+    <!--URL, e.g.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+    <!--target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Gene-Pathway Associasion:-->
+    <!--</h4>-->
+
+    <!--http://pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the-->
+    <!--URL, e.g.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+    <!--target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
+    <!--For Protein Accession Id Query:-->
+    <!--</h4>-->
 
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
-                    <!--For Protein Accession Id Query:-->
-                <!--</h4>-->
+    <!--http://pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent for the query-->
+    <!--in-->
+    <!--the URL, e.g.-->
+    <!--<br/>-->
+    <!--<a href="http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627" target="_blank">-->
+    <!--http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627</a>-->
+
 
-                <!--http://pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent for the query-->
-                <!--in-->
-                <!--the URL, e.g.-->
-                <!--<br/>-->
-                <!--<a href="http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627" target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627</a>-->
-
-
-            <!--</div>-->
-
-
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-        <!--</div>-->
-
-
-        <!--<div id="tab44">-->
-            <!--&lt;!&ndash;<h2>Heading 5</h2>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
-            <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
-            <!--<div class="well " style="border-color: black ">-->
-                <!--PiNET Visualization Engine is developed as a stand alone javascript package that generates-->
-                <!--multiple publication ready graphics for network visualization.-->
-
-            <!--</div>-->
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 15px;">-->
-
-                <!--<div class="onerow">-->
-                <!--Try Downloading and Uploading the <a href="javascript:void(0);"-->
-                                 <!--class="onerow"-->
-                                 <!--ng-click="downloadCSVExampleForGraph1()"-->
-                                 <!--ng-style="{'font-weight': 'bold'}">-->
-                <!--Example 1</a> with un-ordered nodes and <a href="javascript:void(0);"-->
-                                                           <!--class="onerow"-->
-                                                           <!--ng-click="downloadCSVExampleForGraph2()"-->
-                                                           <!--ng-style="{'font-weight': 'bold'}">-->
-                    <!--Example 2</a> with ordered nodes, Make sure for new uploads your file has the same columns with headers.-->
-                <!--<br/>-->
-                <!--<form>-->
-                    <!--Add Optional Name of the Node of Interest: <input type="text" ng-model="interest">-->
-                <!--</form>-->
-                    <!--You have entered: <a style="font-weight: bold; color: #1c3448">{{interest}}</a>-->
-                <!--</div>-->
-
-                <!--<div class="onerow">-->
-                    <!--<input type="file"  file-model="myFileCSV" type="submit"-->
-                           <!--class="onerow"/>-->
-                    <!--<button ng-click="uploadFileGraph()" class="btn btn-primary onerow">Upload .CSV File-->
-
-                        <!--<span ng-show="ctrl.uploadGraphWaiting">-->
-                            <!--<span class="glyphicon glyphicon-refresh glyphicon-spin">-->
-
-                            <!--</span>-->
-                        <!--</span>-->
-                    <!--</button>-->
-                    <!--<br/>-->
-
-                    <!--<span ng-if="ctrl.uploadErrorTag == 400" style="color: #464bb4; font-weight: bold">-->
-
-                           <!--{{ctrl.uploadErrorText}}-->
-                    <!--</span>-->
-
-                <!--</div>-->
-
-                <!--<div style="width: 800px; text-align: left">-->
-                    <!--<input type="range" id="h_slider" value="2.0" min="0.0" max="10.0" step="0.1"/>-->
-                    <!--&lt;!&ndash;Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
-                    <!--<div style="text-align: center;width: 750px">-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change:</strong>-->
-                        <!--&nbsp;-->
-                        <!--<span style="color: steelblue">{{ctrl.sliderFoldChangeValue}}</span>-->
-                        <!--<br/>-->
-                        <!--<hr/>-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Scrolling the Sliders will Change the Selected Peptides-->
-                        <!--for Analysis in the Next Tabs.</strong>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-                <!--<div class="container">-->
-                    <!--<h3>Tooltip Example</h3>-->
-                    <!--<a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>-->
-                <!--</div>-->
-
-
-            <!--</div>-->
-
-
-
-
-
-
-
-            <!--&lt;!&ndash;<div ng-show="ctrl.showGEGraph">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div ng-show="ctrl.showGEGraph">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div ng-show="!ctrl.uploadGraphWaiting">&ndash;&gt;-->
-
-
-
-            <!--<div class="container" ng-show="showGEGraph" id="chartGE" style="max-width: 100vw;overflow-x: auto;">-->
-
-                <!--<div >-->
-                    <!--<button class="btn1" id='forceGE'>-->
-
-                                    <!--<a style="color:#1c3448;" class="fa fa-random"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="Implement force layout">-->
-
-                                    <!--</a>-->
-                    <!--</button>-->
-                    <!--<button class="btn2" id='circularViewGE'>-->
-
-                                    <!--<span style="color:#1c3448;" class="fa fa-circle-o"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="Implement circular layout"-->
-                                    <!--&gt;-->
-                                    <!--</span>-->
-                    <!--</button>-->
-                    <!--<button class="btn3" id='parallelViewGE'>-->
-
-                                    <!--<span style="color:#1c3448;" class="fa fa-align-justify"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="Rearrange nodes in columns">-->
-                                    <!--</span>-->
-                    <!--</button>-->
-
-                    <!--<button class="btn6" id='circosViewGE'>-->
-
-                                    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="Implement circos layout">-->
-                                    <!--</span>-->
-                    <!--</button>-->
-
-                    <!--<button class="btn7" id='download-pngGE'>-->
-
-                                    <!--<span style="color:#1c3448;" class="fa fa-download"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="download as PNG">-->
-                                    <!--</span>-->
-                    <!--</button>-->
-
-                    <!--<button class="btn8" id='download-svgGE'>-->
-
-                                    <!--<span style="color:#1c3448;" class="fa fa-cloud-download"-->
-                                          <!--data-delay='{"show":"0", "hide":"100"}'-->
-                                          <!--data-toggle="tooltip"-->
-                                          <!--title="download as SVG">-->
-                                    <!--</span>-->
-                    <!--</button>-->
-
-                    <!--&lt;!&ndash;<button class="btn7" id='question4'>&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;<a  href="#"  title="Submit">&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
-                    <!--&lt;!&ndash;<span style="color:#1c3448;" class="fa fa-question-circle"&ndash;&gt;-->
-                    <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
-                    <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
-                    <!--&lt;!&ndash;title="Query Gene Set is colored based on input abundance values based on the legend,&ndash;&gt;-->
-                    <!--&lt;!&ndash;Red nodes: phosphorylation enzymes(kinases),&ndash;&gt;-->
-                    <!--&lt;!&ndash;Green: acetylation enzymes, Pink: methylation enzymes,&ndash;&gt;-->
-                    <!--&lt;!&ndash;Olive: C-Glycosylation, Navy: Myristoylation,&ndash;&gt;-->
-                    <!--&lt;!&ndash;Purple: N-Glycosylation, Aqua: O-Glycosylation,&ndash;&gt;-->
-                    <!--&lt;!&ndash;Beige: S-Glycosylation, Brown: S-Nitrosylation,&ndash;&gt;-->
-                    <!--&lt;!&ndash;DarkRed: Sumoylation, Orange: Ubiquitination.&ndash;&gt;-->
-                    <!--&lt;!&ndash;Dashed border for input nodes shows no connection, and solid border&ndash;&gt;-->
-                    <!--&lt;!&ndash;reflects at least one connection to a known or unknown enzyme.&ndash;&gt;-->
-                    <!--&lt;!&ndash;Based on the provided table the targeting enzyme might not be known.">&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
-
-
-
-                <!--</div>-->
-
-
-            <!--</div>-->
-
-
-            <!--<div class="bs-callout bs-callout-default" style="padding-top: 15px;" >-->
-
-
-                <!--<button class="btn btn-primary onerow" ng-click = "showColors = !showColors">-->
-                    <!--More on Coloring Tags-->
-                <!--</button>-->
-
-
-                <!--<ul ng-show="showColors" class="ul-color" style="padding-top: 5px;">-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 0</a>-->
-                            <!--<div class="color-box" style="background-color: #696969;"></div>-->
-                            <!--&lt;!&ndash; Replace "#FF850A" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 1</a>-->
-                            <!--<div class="color-box" style="background-color: #006400;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 2</a>-->
-                            <!--<div class="color-box" style="background-color: #00FF00;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 3</a>-->
-                            <!--<div class="color-box" style="background-color: #0000FF;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 4</a>-->
-                            <!--<div class="color-box" style="background-color: #808080;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 5</a>-->
-                            <!--<div class="color-box" style="background-color: #8B4513;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 6</a>-->
-                            <!--<div class="color-box" style="background-color: #FFFFE0;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 7</a>-->
-                            <!--<div class="color-box" style="background-color: #8464c5;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 8</a>-->
-                            <!--<div class="color-box" style="background-color: #00FFFF;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 9</a>-->
-                            <!--<div class="color-box" style="background-color: #FF7F50;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 10</a>-->
-                            <!--<div class="color-box" style="background-color: #FF0000;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 11</a>-->
-                            <!--<div class="color-box" style="background-color: #FF00FF;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 12</a>-->
-                            <!--<div class="color-box" style="background-color: #8FBC8F;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 13</a>-->
-                            <!--<div class="color-box" style="background-color: #A52A2A;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 14</a>-->
-                            <!--<div class="color-box" style="background-color: #FFD700;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 15</a>-->
-                            <!--<div class="color-box" style="background-color: #A0522D;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 16</a>-->
-                            <!--<div class="color-box" style="background-color: #FFFF00;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 17</a>-->
-                            <!--<div class="color-box" style="background-color: #6A5ACD;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 18</a>-->
-                            <!--<div class="color-box" style="background-color: #708090;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 19</a>-->
-                            <!--<div class="color-box" style="background-color: #FF6347;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 20</a>-->
-                            <!--<div class="color-box" style="background-color: #CD5C5C;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 21</a>-->
-                            <!--<div class="color-box" style="background-color: #DB7093;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 22</a>-->
-                            <!--<div class="color-box" style="background-color: #2E8B57;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 23</a>-->
-                            <!--<div class="color-box" style="background-color: #000080;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="input-color">-->
-                            <!--<a style="color: #1e62d0"> id = 24</a>-->
-                            <!--<div class="color-box" style="background-color: #9370DB;"></div>-->
-                            <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
-                        <!--</div>-->
-                    <!--</li>-->
-
-                <!--</ul>-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-        <!--<div id="tab55">-->
-
-
-
-            <!--<div class="well">-->
-                <!--<div class="well " style="border-color: black ">-->
-                    <!--The authors of the following tools and resources are specially acknowledged.-->
-
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                    <!--<a href="https://research.bioinformatics.udel.edu/iptmnet/"-->
-                       <!--target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span>iPTMnet</a> iPTMnet is a bioinformatics resource-->
-                    <!--for integrated understanding of protein post-translational modifications (PTMs)-->
-                    <!--in systems biology context.-->
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                    <!--<a href="https://pir.georgetown.edu/" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span> Protein Information Resource</a>-->
-                    <!--The Protein Information Resource (PIR) is an integrated public bioinformatics-->
-                    <!--resource to support genomic, proteomic and systems biology research and scientific studies-->
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-
-                    <!--<a href="http://amp.pharm.mssm.edu/Enrichr/" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span> Enrichr</a> is sn intuitive web-based gene-->
-                    <!--list-->
-                    <!--enrichment analysis tool with various libraries. Enrichment analysis is a computational-->
-                    <!--method-->
-                    <!--for inferring knowledge about an input gene set by comparing it to annotated gene sets-->
-                    <!--representing prior biological knowledge.-->
-
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-
-                    <!--<a href="http://lincsportal.ccs.miami.edu/dcic-portal/" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span> LINCS DATA PORTAL</a> Provides unified-->
-                    <!--interface for searching all LINCS dataset packages and entities.-->
-
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-
-                    <!--<a href="http://www.phosphosite.org/homeAction.action" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span> PhosphoSitePlus</a> Freely accessible on-line-->
-                    <!--systems-->
-                    <!--biology resource devoted to commonly studied protein post-translational modifications...-->
-
-                <!--</div>-->
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-
-                    <!--<a href="http://www.ilincs.org/ilincs/" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span>iLINCS</a> (Integrative LINCS) is an integrative-->
-                    <!--web platform for analysis of LINCS data and-->
-                    <!--signatures. The portal provides biologists-friendly user interfaces for analyzing-->
-                    <!--transcriptomics and proteomics LINCS datasets...-->
-                <!--</div>-->
-
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-
-                    <!--<a href="https://signor.uniroma2.it/" target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span>SIGNOR</a> SIGNOR, the SIGnaling Network Open Resource,-->
-                    <!--organizes and stores in a structured format signaling information published in the scientific literature.-->
-                    <!--The captured information is stored as binary causative relationships between biological entities and can be represented graphically as activity flow.-->
-                <!--</div>-->
-
-                <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
-                    <!--<a href="https://panoramaweb.org/labkey/wiki/LINCS/Overview%20Information/page.view?name=LINCS%20PCCSE%20Overview"-->
-                       <!--target="_blank">-->
-                        <!--<span style="color:blue">&#10004;</span>Panorama</a> Repository Software for-->
-                    <!--Targeted Proteomics Assays from Skyline.-->
-                <!--</div>-->
-
-            <!--</div>-->
-
-        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+    <!--</div>-->
+
+
+    <!--<div id="tab44">-->
+    <!--&lt;!&ndash;<h2>Heading 5</h2>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="container" style="padding-top: 20px; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);&ndash;&gt;-->
+    <!--&lt;!&ndash;border-radius: 5px;">&ndash;&gt;-->
+    <!--<div class="well " style="border-color: black ">-->
+    <!--PiNET Visualization Engine is developed as a stand alone javascript package that generates-->
+    <!--multiple publication ready graphics for network visualization.-->
+
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 15px;">-->
+
+    <!--<div class="onerow">-->
+    <!--Try Downloading and Uploading the <a href="javascript:void(0);"-->
+    <!--class="onerow"-->
+    <!--ng-click="downloadCSVExampleForGraph1()"-->
+    <!--ng-style="{'font-weight': 'bold'}">-->
+    <!--Example 1</a> with un-ordered nodes and <a href="javascript:void(0);"-->
+    <!--class="onerow"-->
+    <!--ng-click="downloadCSVExampleForGraph2()"-->
+    <!--ng-style="{'font-weight': 'bold'}">-->
+    <!--Example 2</a> with ordered nodes, Make sure for new uploads your file has the same columns with headers.-->
+    <!--<br/>-->
+    <!--<form>-->
+    <!--Add Optional Name of the Node of Interest: <input type="text" ng-model="interest">-->
+    <!--</form>-->
+    <!--You have entered: <a style="font-weight: bold; color: #1c3448">{{interest}}</a>-->
+    <!--</div>-->
+
+    <!--<div class="onerow">-->
+    <!--<input type="file"  file-model="myFileCSV" type="submit"-->
+    <!--class="onerow"/>-->
+    <!--<button ng-click="uploadFileGraph()" class="btn btn-primary onerow">Upload .CSV File-->
+
+    <!--<span ng-show="ctrl.uploadGraphWaiting">-->
+    <!--<span class="glyphicon glyphicon-refresh glyphicon-spin">-->
+
+    <!--</span>-->
+    <!--</span>-->
+    <!--</button>-->
+    <!--<br/>-->
+
+    <!--<span ng-if="ctrl.uploadErrorTag == 400" style="color: #464bb4; font-weight: bold">-->
+
+    <!--{{ctrl.uploadErrorText}}-->
+    <!--</span>-->
+
+    <!--</div>-->
+
+    <!--<div style="width: 800px; text-align: left">-->
+    <!--<input type="range" id="h_slider" value="2.0" min="0.0" max="10.0" step="0.1"/>-->
+    <!--&lt;!&ndash;Fold Change:&nbsp;<span id="h_slider_value">2.0</span><br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{ctrl.sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;Log<sub>2</sub>Fold Change:&nbsp;<span >{{ctrl.sliderLogFoldChangeValue}}</span><br/>&ndash;&gt;-->
+    <!--&lt;!&ndash;Fold Change:&nbsp;<span >{{sliderFoldChangeValue}}</span><br/>&ndash;&gt;-->
+    <!--<div style="text-align: center;width: 750px">-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Log<sub>2</sub>Fold Change:</strong>-->
+    <!--&nbsp;-->
+    <!--<span style="color: steelblue">{{ctrl.sliderFoldChangeValue}}</span>-->
+    <!--<br/>-->
+    <!--<hr/>-->
+    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Scrolling the Sliders will Change the Selected Peptides-->
+    <!--for Analysis in the Next Tabs.</strong>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--<div class="container">-->
+    <!--<h3>Tooltip Example</h3>-->
+    <!--<a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>-->
+    <!--</div>-->
+
+
+    <!--</div>-->
+
+
+    <!--&lt;!&ndash;<div ng-show="ctrl.showGEGraph">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div ng-show="ctrl.showGEGraph">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div ng-show="!ctrl.uploadGraphWaiting">&ndash;&gt;-->
+
+
+    <!--<div class="container" ng-show="showGEGraph" id="chartGE" style="max-width: 100vw;overflow-x: auto;">-->
+
+    <!--<div >-->
+    <!--<button class="btn1" id='forceGE'>-->
+
+    <!--<a style="color:#1c3448;" class="fa fa-random"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="Implement force layout">-->
+
+    <!--</a>-->
+    <!--</button>-->
+    <!--<button class="btn2" id='circularViewGE'>-->
+
+    <!--<span style="color:#1c3448;" class="fa fa-circle-o"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="Implement circular layout"-->
+    <!--&gt;-->
+    <!--</span>-->
+    <!--</button>-->
+    <!--<button class="btn3" id='parallelViewGE'>-->
+
+    <!--<span style="color:#1c3448;" class="fa fa-align-justify"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="Rearrange nodes in columns">-->
+    <!--</span>-->
+    <!--</button>-->
+
+    <!--<button class="btn6" id='circosViewGE'>-->
+
+    <!--<span style="color:#1c3448;" class="fa fa-dot-circle-o"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="Implement circos layout">-->
+    <!--</span>-->
+    <!--</button>-->
+
+    <!--<button class="btn7" id='download-pngGE'>-->
+
+    <!--<span style="color:#1c3448;" class="fa fa-download"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="download as PNG">-->
+    <!--</span>-->
+    <!--</button>-->
+
+    <!--<button class="btn8" id='download-svgGE'>-->
+
+    <!--<span style="color:#1c3448;" class="fa fa-cloud-download"-->
+    <!--data-delay='{"show":"0", "hide":"100"}'-->
+    <!--data-toggle="tooltip"-->
+    <!--title="download as SVG">-->
+    <!--</span>-->
+    <!--</button>-->
+
+    <!--&lt;!&ndash;<button class="btn7" id='question4'>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;title='Grey or colored nodes based on abundance: Query Gene Set, Red nodes: Pathways / Kinases Perturbation, Darker color reflects lower p-value in the enrichment analysis.'>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<a  href="#"  title="Submit">&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<i class='fa fa-question-circle'></i>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<span style="color:#1c3448;" class="fa fa-question-circle"&ndash;&gt;-->
+    <!--&lt;!&ndash;data-delay='{"show":"0", "hide":"100"}'&ndash;&gt;-->
+    <!--&lt;!&ndash;data-toggle="tooltip"&ndash;&gt;-->
+    <!--&lt;!&ndash;title="Query Gene Set is colored based on input abundance values based on the legend,&ndash;&gt;-->
+    <!--&lt;!&ndash;Red nodes: phosphorylation enzymes(kinases),&ndash;&gt;-->
+    <!--&lt;!&ndash;Green: acetylation enzymes, Pink: methylation enzymes,&ndash;&gt;-->
+    <!--&lt;!&ndash;Olive: C-Glycosylation, Navy: Myristoylation,&ndash;&gt;-->
+    <!--&lt;!&ndash;Purple: N-Glycosylation, Aqua: O-Glycosylation,&ndash;&gt;-->
+    <!--&lt;!&ndash;Beige: S-Glycosylation, Brown: S-Nitrosylation,&ndash;&gt;-->
+    <!--&lt;!&ndash;DarkRed: Sumoylation, Orange: Ubiquitination.&ndash;&gt;-->
+    <!--&lt;!&ndash;Dashed border for input nodes shows no connection, and solid border&ndash;&gt;-->
+    <!--&lt;!&ndash;reflects at least one connection to a known or unknown enzyme.&ndash;&gt;-->
+    <!--&lt;!&ndash;Based on the provided table the targeting enzyme might not be known.">&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+
+
+    <!--</div>-->
+
+
+    <!--</div>-->
+
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 15px;" >-->
+
+
+    <!--<button class="btn btn-primary onerow" ng-click = "showColors = !showColors">-->
+    <!--More on Coloring Tags-->
+    <!--</button>-->
+
+
+    <!--<ul ng-show="showColors" class="ul-color" style="padding-top: 5px;">-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 0</a>-->
+    <!--<div class="color-box" style="background-color: #696969;"></div>-->
+    <!--&lt;!&ndash; Replace "#FF850A" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 1</a>-->
+    <!--<div class="color-box" style="background-color: #006400;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 2</a>-->
+    <!--<div class="color-box" style="background-color: #00FF00;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 3</a>-->
+    <!--<div class="color-box" style="background-color: #0000FF;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 4</a>-->
+    <!--<div class="color-box" style="background-color: #808080;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 5</a>-->
+    <!--<div class="color-box" style="background-color: #8B4513;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 6</a>-->
+    <!--<div class="color-box" style="background-color: #FFFFE0;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 7</a>-->
+    <!--<div class="color-box" style="background-color: #8464c5;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 8</a>-->
+    <!--<div class="color-box" style="background-color: #00FFFF;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 9</a>-->
+    <!--<div class="color-box" style="background-color: #FF7F50;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 10</a>-->
+    <!--<div class="color-box" style="background-color: #FF0000;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 11</a>-->
+    <!--<div class="color-box" style="background-color: #FF00FF;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 12</a>-->
+    <!--<div class="color-box" style="background-color: #8FBC8F;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 13</a>-->
+    <!--<div class="color-box" style="background-color: #A52A2A;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 14</a>-->
+    <!--<div class="color-box" style="background-color: #FFD700;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 15</a>-->
+    <!--<div class="color-box" style="background-color: #A0522D;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 16</a>-->
+    <!--<div class="color-box" style="background-color: #FFFF00;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 17</a>-->
+    <!--<div class="color-box" style="background-color: #6A5ACD;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 18</a>-->
+    <!--<div class="color-box" style="background-color: #708090;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 19</a>-->
+    <!--<div class="color-box" style="background-color: #FF6347;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 20</a>-->
+    <!--<div class="color-box" style="background-color: #CD5C5C;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 21</a>-->
+    <!--<div class="color-box" style="background-color: #DB7093;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 22</a>-->
+    <!--<div class="color-box" style="background-color: #2E8B57;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 23</a>-->
+    <!--<div class="color-box" style="background-color: #000080;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<div class="input-color">-->
+    <!--<a style="color: #1e62d0"> id = 24</a>-->
+    <!--<div class="color-box" style="background-color: #9370DB;"></div>-->
+    <!--&lt;!&ndash; Replace "navy" to change the color &ndash;&gt;-->
+    <!--</div>-->
+    <!--</li>-->
+
+    <!--</ul>-->
+    <!--</div>-->
+
+    <!--</div>-->
+
+    <!--<div id="tab55">-->
+
+
+    <!--<div class="well">-->
+    <!--<div class="well " style="border-color: black ">-->
+    <!--The authors of the following tools and resources are specially acknowledged.-->
+
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<a href="https://research.bioinformatics.udel.edu/iptmnet/"-->
+    <!--target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span>iPTMnet</a> iPTMnet is a bioinformatics resource-->
+    <!--for integrated understanding of protein post-translational modifications (PTMs)-->
+    <!--in systems biology context.-->
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<a href="https://pir.georgetown.edu/" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span> Protein Information Resource</a>-->
+    <!--The Protein Information Resource (PIR) is an integrated public bioinformatics-->
+    <!--resource to support genomic, proteomic and systems biology research and scientific studies-->
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+
+    <!--<a href="http://amp.pharm.mssm.edu/Enrichr/" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span> Enrichr</a> is sn intuitive web-based gene-->
+    <!--list-->
+    <!--enrichment analysis tool with various libraries. Enrichment analysis is a computational-->
+    <!--method-->
+    <!--for inferring knowledge about an input gene set by comparing it to annotated gene sets-->
+    <!--representing prior biological knowledge.-->
+
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+
+    <!--<a href="http://lincsportal.ccs.miami.edu/dcic-portal/" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span> LINCS DATA PORTAL</a> Provides unified-->
+    <!--interface for searching all LINCS dataset packages and entities.-->
+
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+
+    <!--<a href="http://www.phosphosite.org/homeAction.action" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span> PhosphoSitePlus</a> Freely accessible on-line-->
+    <!--systems-->
+    <!--biology resource devoted to commonly studied protein post-translational modifications...-->
+
+    <!--</div>-->
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+
+    <!--<a href="http://www.ilincs.org/ilincs/" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span>iLINCS</a> (Integrative LINCS) is an integrative-->
+    <!--web platform for analysis of LINCS data and-->
+    <!--signatures. The portal provides biologists-friendly user interfaces for analyzing-->
+    <!--transcriptomics and proteomics LINCS datasets...-->
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+
+    <!--<a href="https://signor.uniroma2.it/" target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span>SIGNOR</a> SIGNOR, the SIGnaling Network Open Resource,-->
+    <!--organizes and stores in a structured format signaling information published in the scientific literature.-->
+    <!--The captured information is stored as binary causative relationships between biological entities and can be represented graphically as activity flow.-->
+    <!--</div>-->
+
+    <!--<div class="bs-callout bs-callout-default" style="padding-top: 40px;">-->
+    <!--<a href="https://panoramaweb.org/labkey/wiki/LINCS/Overview%20Information/page.view?name=LINCS%20PCCSE%20Overview"-->
+    <!--target="_blank">-->
+    <!--<span style="color:blue">&#10004;</span>Panorama</a> Repository Software for-->
+    <!--Targeted Proteomics Assays from Skyline.-->
+    <!--</div>-->
+
+    <!--</div>-->
+
+    <!--</div>-->
     <!--</section>-->
 </div>
 
