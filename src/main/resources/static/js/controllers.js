@@ -1726,7 +1726,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
 
-    self.uploadGraphWaiting = true;
+    self.uploadGraphWaiting = false;
     self.showGEGraph = false;
     $scope.showGEGraph = false;
     $scope.interest = "ATP";
