@@ -22891,6 +22891,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         // console.log("inside makeDeepPhosGraph");
         // console.log(graphType);
         var network = self.deepPhosNetwork;
+        console.log(network);
         var ptmToAbundance = self.ptmProteinToAbundanceMap;
         console.log(self.showDeepPhosGraphTmp);
         console.log(self.showDeepPhosGraph);
@@ -30856,7 +30857,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     }
     if (typeof self.listOfGenesOrptmProteins !== 'undefined' && self.listOfGenesOrptmProteins.length > 0 )
     {
-        // self.genes = self.listOfGenesOrptmProteins;
+        self.genes = self.listOfGenesOrptmProteins;
     }
 
 

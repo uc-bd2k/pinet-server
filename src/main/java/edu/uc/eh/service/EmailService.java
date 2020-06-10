@@ -34,7 +34,7 @@ public class EmailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
         mailMsg.setFrom("postdoc.ucincinnati@gmail.com");
-        mailMsg.setTo("behrouz.shamsaei@uc.edu");
+        mailMsg.setTo("behrouzshamsaei@gmail.com");
         mailMsg.setSubject("PiNET Contact Email");
         mailMsg.setText(args);
         mailSender.send(mimeMessage);
