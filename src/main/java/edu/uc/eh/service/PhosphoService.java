@@ -1188,6 +1188,8 @@ public class PhosphoService {
             // Compute Network for the indefinite genes based on blosum50
             System.out.println("Compute Network for the indefinite genes based on blosum50");
             System.out.println(phosphoGeneSequenceArray);
+
+            System.out.println("-------------==========================================-------------");
             for (int i = 0; i < phosphoGeneSequenceArray.size(); i++) {
                 //System.out.println("==========================================");
                 //System.out.println("Compute Network for the indefinite genes based on blosum50");
@@ -1362,9 +1364,10 @@ public class PhosphoService {
             }
 
             // Compute Network for the indefinite genes based on probability
+            System.out.println("==========================================");
+            System.out.println("Compute Network for the indefinite genes based on probability");
             for (int i = 0; i < phosphoGeneSequenceArray.size(); i++) {
-                System.out.println("==========================================");
-                System.out.println("Compute Network for the indefinite genes based on probability");
+
                 //log.info("inputgene");
                 //log.info(input[i]);
                 JSONObject phosphoGeneSequenceJson2 = (JSONObject) phosphoGeneSequenceArray.get(i);
@@ -1430,9 +1433,12 @@ public class PhosphoService {
 
 
             // Compute Network for the definite genes
+            System.out.println("==========================================");
+            System.out.println("Compute Network for the definite genes");
+            System.out.println(phosphoGeneSequenceArray);
+            System.out.println("-------------==========================================");
             for (int i = 0; i < phosphoGeneSequenceArray.size(); i++) {
-                log.info("==========================================");
-                log.info("Compute Network for the definite genes");
+
                 JSONObject phosphoGeneSequenceJson2 = (JSONObject) phosphoGeneSequenceArray.get(i);
 //            String phosphoAmino = phosphoGeneSequenceJson2.get("amino").toString();
 //            String phosphoSequence = phosphoGeneSequenceJson2.get("sequence").toString();
@@ -1440,11 +1446,13 @@ public class PhosphoService {
                 inputphosphoProtein = phosphoGeneSequenceJson2.get("phosphoProtein").toString();
                 //inputGene = protList[i];
                 inputphosphoProteinUpper = inputphosphoProtein.toUpperCase();
-                inputGeneUpper = inputGene.toUpperCase();
+                String inputGeneUpperCase = inputGene.toUpperCase();
+                inputGeneUpper = inputGeneUpperCase.split("\\{", 0)[0] +"[" + phosphoGeneSequenceJson2.get("amino").toString() + "+80@" + phosphoGeneSequenceJson2.get("site").toString() +"]";
 
 
 //            log.info("inputgene");
-//            //System.out.println(protList[i]);
+                System.out.println(inputGeneUpper);
+                System.out.println("-------------");
                 gene2KinaseList = new JSONArray();
 
 

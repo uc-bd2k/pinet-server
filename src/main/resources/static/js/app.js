@@ -54,6 +54,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     when('/help', {templateUrl: 'partials/help.html',
         controller: 'AboutCtrl',
         controllerAs: 'ctrl'}).
+    when('/kegg', {templateUrl: 'partials/kegg.html',
+        controller: 'KEGGCtrl',
+        controllerAs: 'ctrl'}).
     when('/splash', {templateUrl: '/',
         controller: 'MainCtrl',
         controllerAs: 'ctrl'}).

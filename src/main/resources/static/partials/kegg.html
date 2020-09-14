@@ -1,0 +1,80 @@
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://rawgit.com/jmvillaveces/biojs-vis-keggviewer/master/dependencies/css/bootstrap-slider.css" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid" style="align-content: center">
+        <div class="container" style="display:table; margin: 0 auto;">
+
+
+            <div id="breadcrumbNav3" style="display:table; margin: 0 auto;">
+
+
+                <div id="arrowBar3" ng-model="ctrl.siteVisit">
+
+                    <a href="javascript:void(0);" ng-click="goToAbout()"> <span
+                            class="AB3rotate1 color0"><span class="AB3rotateReset">
+                                    <span class="AB3text1">
+                                        <!--<span-->
+                                        <!--style="background: url(images/pathway.png); width:200px; height:50px;"/>-->
+                                        Help
+                                </span></span></span></a>
+
+
+                    <a href="javascript:void(0);" ng-click="goToPeptideToProtein();">
+
+                                    <span class="AB3rotate2 color1">
+                                        <span class="AB3rotateReset">
+                                            <span class="AB3text2">
+                                                Peptides2Proteins
+
+                                            </span>
+                                        </span>
+                                    </span>
+                    </a>
+                    <!--ng-click="ctrl.peptideOrGenes=false"-->
+                    <a href="javascript:void(0);" ng-click="goToPtmToModifier();">
+
+                                <span
+                                        class="AB3rotate3 color2"><span class="AB3rotateReset"><span
+                                        class="AB3text3">PTMs2Modifiers
+
+                                </span></span></span></a>
+                    <a href="javascript:void(0);" ng-click="goToProteinToPathway();">
+
+                                    <span
+                                            class="AB3rotate4 color3"><span class="AB3rotateReset"><span
+                                            class="AB3text4">Proteins2Pathways
+
+                                </span></span></span></a>
+
+
+                    <a href="javascript:void(0);" style="pointer-events: none;"> <span
+                            class="AB3rotate5 color4" style="pointer-events: none;"><span
+                            class="AB3text5">{{siteVisit.all}} Submissions
+<br/>
+{{siteVisit.apiall/1000 | number : 1}}K API Calls
+                                </span></span></a>
+
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="fluid" style="padding-top: 80px; margin-bottom: 10px;">
+
+
+    <div class="well col-sm-12"
+         style="background-color: transparent; border-color: #999999">
+
+        <div class="container " style="border-color: black; height: 480px;"id="keggViewer"></div>
+
+    </div>
+</div>

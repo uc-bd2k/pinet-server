@@ -23,6 +23,7 @@
 /*.csv
 /*.xlsx
 .idea
+/*.pptx
 
 # Build Files #
 build/

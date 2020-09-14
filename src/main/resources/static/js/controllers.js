@@ -786,7 +786,7 @@ appModule.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance',functio
 }]);
 
 
-appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$timeout', '$routeParams', '$filter', '$q', 'filterFilter', 'SharedService', function ($scope, $http, $location, $window, $timeout, $routeParams, $filter, $q, filterFilter, SharedService) {
+appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$timeout', '$routeParams', '$filter', '$q', 'filterFilter', 'SharedService',function ($scope, $http, $location, $window, $timeout, $routeParams, $filter, $q, filterFilter, SharedService) {
     //console.log("--------------- Restarting About! ---------------");
 
     var self = this;
@@ -832,6 +832,6163 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
     self.genes = SharedService.getVar('genesExample');
 
 
+//KEGGviewer
+    var expression = {
+        upColor:'red',
+        downColor:'blue',
+        genes: ['hsa:7248', 'hsa:51763', 'hsa:2002', 'hsa:2194'],
+        conditions: [
+            {
+                name: 'condition 1',
+                values: [-1, 0.5, 0.7, -0.3]
+            },
+            {
+                name: 'condition 2',
+                values: [0.5, -0.1, -0.2, 1]
+            },
+            {
+                name: 'condition 3',
+                values: [0, 0.4, -0.2, 0.5]
+            }
+        ]
+    };
+
+// Use heroku proxy
+
+    //import {Greeter} from 'biojs-vis-keggviewer';
+
+    //var biojsviskegg = new Greeter();
+    //var biojsviskegg = require("biojs-vis-keggviewer"); // Keggviewer instance
+    var proxy = function(url){
+        return 'https://cors-anywhere.herokuapp.com/'+url;
+    };
+
+// Init Component
+    biojsviskegg.pathway('hsa04010')
+        .proxy(proxy)
+        .expression(expression)
+        .target(document.getElementById('keggViewer'))
+        .init();
+    //console.log(biojsviskegg.pathway('hsa04010'));
+
+    // biojsviskegg.pathway('hsa04910')
+    //     .proxy(proxy)
+    //     .expression(expression)
+    //     .target(document.getElementById('keggViewer2'))
+    //     .init();
+    // console.log(biojsviskegg.pathway('hsa04910'));
+
+    //KEGGviewer
+
+
+    $scope.$watch(function () {
+        return self.genes
+    }, function (newValue, oldValue) {
+        //console.log("in scope gene!---------------------------------------");
+        //localStorage.setItem("genes", self.genes);
+        console.log("Setting genes -----");
+        self.showGeneSubmit = false;
+        // var localselfGenes = localStorage.getItem("genesForProtein2Pathways");
+        // //console.log(localselfGenes);
+        // $scope.showGeneNetworkProcessed = false;
+        // $scope.showKinaseNetworkProcessed = false;
+        // self.showGeneNetwork = true;
+        //
+        // SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
+        // SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
+        // SharedService.setVar('showKinaseNetworkProcessed', $scope.showKinaseNetworkProcessed);
+        if (self.genes.length > 0) {
+            //console.log(self.genes);
+            self.geneToAbundanceMap = {};
+            self.parsedGenes = self.genes.split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(0);
+
+                            return str2[0];
+                        }
+                        else {
+                            return str2;
+                        }
+                        ;
+                    }
+
+
+                });
+
+
+            // .split(self.rowSplitPatternGenes)
+            // .map(function (e) {
+            //     if (e.indexOf('[') == -1) {
+            //         return e
+            //     }
+            // });
+            self.parsedGenes.clean(undefined);
+            //console.log(self.parsedGenes);
+            self.geneAbundance = self.genes
+                .split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+                        // var str = e.split(/[\s,]+/).join();
+                        // //console.log(str);
+                        // var str2 = str.replace(/[\s,]+/g, ',');
+                        // //console.log(str2);
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(1);
+
+                            return str2[0];
+                        }
+                        else {
+                            return "NA";
+                        };
+                    }
+
+
+                });
+
+            for (var i = 0; i < self.parsedGenes.length; i++) {
+                self.geneToAbundanceMap[self.parsedGenes[i]] = self.geneAbundance[i];
+                //Do something
+            }
+            //console.log("geneToAbundanceMap");
+            //console.log(self.geneToAbundanceMap);
+            //console.log(self.geneAbundance);
+        }
+        console.log(self.parsedGenes);
+        if (self.parsedGenes.length == 0) {
+            self.showGeneNetwork = false;
+            //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
+            //console.log("self.showGeneNetwork = false;");
+        }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        // .filter(function (el) {
+        //     ////console.log(peptide.indexOf(el.modification));
+        //     return (peptide.indexOf(el.modification) > -1);
+        // })
+        // if (self.genes.length > 0) {
+        //     self.parsedPTMProteins = self.genes
+        //         .split(self.rowSplitPatternGenes)
+        //         .map(function (e) {
+        //             if (e.indexOf('[') > -1) {
+        //                 return e
+        //             }
+        //             //return e.toUpperCase().match(self.modificationForptmProteins);;
+        //         });
+        //     self.parsedPTMProteins.clean(undefined);
+        // }
+        // if (self.parsedPTMProteins.length == 0) {
+        //     self.showPhosphoGeneNetwork = false;
+        //     //console.log("self.showPhosphoGeneNetwork = false;");
+        // }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        //console.log(self.parsedGenes);
+        // //console.log(self.parsedPTMProteins);
+        // //console.log(self.showPhosphoGeneNetwork);
+        //console.log(self.showGeneNetwork);
+        //SharedService.setVar('genes', self.genes);
+    });
+
+    var timeout;
+    $scope.$watch(function () {
+        return self.parsedGenes
+    }, function (nV, oV) {
+        //self.showOutputPathway = false;
+        self.flagFoundNPCG = false;
+        self.waitingPathway = true;
+        //self.showOutputPathway = false;
+        //console.log("self.showOutputPathway");
+        //console.log(self.showOutputPathway);
+        //console.log(self.parsedGenes);
+
+        // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
+
+        if (timeout) {
+            $timeout.cancel(timeout);
+        };
+        $timeout(function () {
+            self.genePlaces = [];
+            self.inputGeneInfo = [];
+            self.nonValidGenes = [];
+            // self.network = {};
+            // self.kinaseNetwork = {};
+            self.numberOfAllInputGenes = 0;
+            self.numberOfAllValidGenes = 0;
+            //console.log("self.parsedGenes.length");
+            //console.log(self.parsedGenes.length);
+            var genePartitioned = function splitarray(input, spacing) {
+                var output = [];
+
+                for (var i = 0; i < input.length; i += spacing) {
+                    output[output.length] = input.slice(i, i + spacing);
+                }
+
+                return output;
+            }(self.parsedGenes, self.parsedGenes.length)
+
+            //console.log(genePartitioned);
+            //console.log(genePartitioned.length);
+            // var flag = true;
+            // while (flag){
+            //     var queryGeneList = [];
+            //     self.parsedGenes
+            //
+            // }
+            if (genePartitioned.length > 0) {
+                for (var i = 0; i < genePartitioned.length; i++) {
+                    $http.get("api/pcg/checkgenes/" + genePartitioned[i])
+                        .success(function (genePositions) {
+                            //console.log("genePositions");
+                            //console.log(genePositions);
+                            self.genePlaces = genePositions;
+                            for (var geneIter = 0; geneIter < self.genePlaces.length; geneIter++) {
+                                self.numberOfAllInputGenes = self.numberOfAllInputGenes + 1;
+                                if (self.genePlaces[geneIter] != -1) {
+                                    self.numberOfAllValidGenes = self.numberOfAllValidGenes + 1;
+                                }
+                                else {
+                                    self.flagFoundNPCG = true;
+                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    //console.log("self.nonValidGenes");
+                                    //console.log(self.nonValidGenes);
+                                }
+                            }
+                            // self.genePlaces.forEach(function (e) {
+                            //     self.numberOfAllInputGenes = self.numberOfAllInputGenes + 1;
+                            //     if (e != -1) {
+                            //         self.numberOfAllValidGenes = self.numberOfAllValidGenes + 1;
+                            //     }
+                            //     else
+                            //     {
+                            //         self.nonValidGenes.push(self.parsedGenes[])
+                            //     }
+                            //     ;
+                            // });
+
+                            $http.get("api/pcg/geneinfo/" + self.genePlaces)
+                                .success(function (geneInfos) {
+                                    //console.log(geneInfos);
+                                    for (var geneInfoIter = 0; geneInfoIter < geneInfos.length; geneInfoIter++) {
+                                        self.inputGeneInfo.push(geneInfos[geneInfoIter]);
+                                    }
+                                    //console.log(self.inputGeneInfo);
+                                })
+                                .error(function () {
+                                    //console.log("Error in obtaining gene info from api/pcg/geneinfo/");
+                                });
+                        })
+                        .error(function () {
+                            //console.log("Error in obtaining gene place from api/pcg/checkgenes/");
+                        });
+                }
+            }
+
+        }, 1100);
+
+    });
+
+
+    $scope.$watch(function () {
+        return self.inputMassPtmProteins
+    }, function (newValue, oldValue) {
+
+
+
+
+        console.log(self.inputMassPtmProteins);
+        // //console.log(self.genes);
+        if (self.inputMassPtmProteins.length > 0) {
+            self.ptmProteinToAbundanceMap = {};
+
+            self.proteinAbundance = self.inputMassPtmProteins
+                .split(self.rowSplitPattern)
+                .map(function (e) {
+                    if (e) {
+                        // var str = e.split(/[\s,]+/).join();
+                        // //console.log(str);
+                        // var str2 = str.replace(/[\s,]+/g, ',');
+                        // //console.log(str2);
+                        var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                        ////console.log(str2);
+                        if (str2.indexOf(',') > -1) {
+                            str2 = str2.split(',').slice(1);
+
+                            return str2[0];
+                        }
+                        else {
+
+                            return "NA";
+                        };
+
+                    }
+
+
+                });
+
+            ////console.log(self.proteinAbundance);
+
+
+            self.parsedPTMs = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+                    console.log(e.match(self.modificationPatternForAllPTMs));
+                    return e.match(self.modificationPatternForAllPTMs);
+
+                });
+
+
+            self.parsedPTMProteins = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    //console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        console.log(str2[0]);
+                        console.log(str2[0].match(self.modificationPatternForAllPTMs),"");
+                        console.log(str2[0].replace(str2[0].match(self.modificationPatternForAllPTMs),""));
+                        return str2[0].replace(str2[0].match(self.modificationPatternForAllPTMs),"");
+                    }
+                    else{
+                        //console.log(e.replace(e.match(self.modificationPatternForAllPTMs),""));
+                        return e.replace(e.match(self.modificationPatternForAllPTMs),"");
+                    }
+
+                    // if (e.indexOf('[') > -1) {
+                    //     return e
+                    // }
+                    //return e.toUpperCase().match(self.modificationForptmProteins);;
+                });
+            //console.log(self.parsedPTMProteins);
+            self.inputMassPtmProteinsModified = self.inputMassPtmProteins
+                .split(self.rowSplitPatternGenes)
+                .map(function (e) {
+
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    //console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        //console.log(str2);
+                        return str2[0];
+                    }
+                    else{
+                        //console.log(e);
+                        return e;
+                    }
+
+                    // if (e.indexOf('[') > -1) {
+                    //     return e
+                    // }
+                    //return e.toUpperCase().match(self.modificationForptmProteins);;
+                });
+
+
+
+            for (var i = 0; i < self.inputMassPtmProteinsModified.length; i++) {
+                self.ptmProteinToAbundanceMap[self.inputMassPtmProteinsModified[i]] = self.proteinAbundance[i];
+                //Do something
+            }
+            //console.log("ptmProteinToAbundanceMap");
+            //console.log(self.ptmProteinToAbundanceMap);
+
+            self.parsedPTMProteins.clean(undefined);
+
+
+        }
+        if (self.parsedPTMProteins.length == 0) {
+            self.showPhosphoGeneNetwork = false;
+            //SharedService.setVar('showPhosphoGeneNetwork', self.showPhosphoGeneNetwork);
+            //console.log("self.showPhosphoGeneNetwork = false;");
+        }
+        // .filter(function (el) {
+        //         return (el !== null);
+        //     });
+        //Because We need this for api query
+        self.inputMassPtmProteinsModifiedForQuery = self.inputMassPtmProteinsModified.toString();
+        //console.log(self.inputMassPtmProteinsModifiedForQuery);
+        //console.log(self.parsedPTMProteins);
+        //console.log(self.inputMassPtmProteinsModified);
+        //console.log(self.parsedPTMs);
+        //console.log(self.showPhosphoGeneNetwork);
+        //console.log(self.showGeneNetwork);
+        self.showPtmSubmit = true;
+        //SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
+
+    });
+
+    self.textArea += " ";
+    console.log(self.textArea);
+
+    self.changeToP100Peptides = function () {
+
+
+        self.textArea = "IYQ[pY]IQSR 0.461099\n\
+TPKD[pS]PGIPPSANAHQLFR 1.24165\n\
+RN[pS]SEASSGDFLDLK 0.39179\n\
+LPLVPE[pS]PRR -0.8135318\n\
+ANA[pS]PQKPLDLK -0.06173748\n\
+LEN[pS]PLGEALR -0.0964323\n\
+AN[pS]FVGTAQYVSPELLTEK 0.097759\n\
+TNPPTQKPP[pS]PPMSGR 0.5880172\n\
+SN[pS]LPHSAVSNAGSK -0.15000027\n\
+VG[pS]LDNVGHLPAGGAVK -2.9564762\n\
+AAPEA[pS]SPPASPLQHLLPGK 0.019645\n\
+S[+122.084]DKPDM[+15.994]AEIEKFDK 0.88214\n\
+S[+122.084]DKPDMAEIEKFDK 0.98000\n\
+SL[pS]LGDKEISR -1.149179\n\
+DLVQPDKPA[pS]PK 0.9362365\n\
+SP[pS]PAHLPDDPKVAEK 0.51082483\n\
+[pS]IQDLTVTGTEPGQVSSR 0.105289\n\
+IH[pS]PIIR 0.7733867\n\
+TF[pS]LTEVR -3.384948\n\
+SLVG[pS]WLK -2.968755\n\
+[pS]PPAPGLQPMR 0.40888\n\
+LA[pS]PELER 0.2169463\n\
+IGPLGL[pS]PK -0.98894\n\
+TP[pS]IQPSLLPHAAPFAK -0.598636\n\
+HA[pS]PILPITEFSDIPR -2.223487\n\
+LIPGPL[pS]PVAR -0.0114377\n\
+LGM[+15.994]L[pS]PEGTC[+57.021]K 0.768389\n\
+LGML[pS]PEGTC[+57.021]K 0.518356\n\
+ISNL[pS]PEEEQGLWK -0.208545\n\
+VSMPDVELNLK[pS]PK -0.1557127\n\
+S[+122.084]DNGELEDKPPAPPVR 1.08313\n\
+KAY[pS]FC[+57.021]GTVEYM[+15.994]APEVVNR -1.064139\n\
+KAY[pS]FC[+57.021]GTVEYMAPEVVNR -3.20086\n\
+ND[pS]WGSFDLR 0.428257\n\
+LEVTEIVKP[pS]PK 0.079337\n\
+YG[pS]PPQRDPNWNGER 0.534751\n\
+QDD[pS]PPRPIIGPALPPGFIK 0.75655\n\
+SF[pS]ADNFIGIQR 0.193549\n\
+VL[pS]PLIIK -0.0414197\n\
+AG[pS]PDVLR 0.813482\n\
+LGPGRPLPTFPTSEC[+57.021]T[pS]DVEPDTR 0.9137382\n\
+LAAPSVSHV[pS]PR -0.050331\n\
+VDDD[pS]LGEFPVTNSR 0.82016\n\
+NEEPVR[pS]PERR -0.07167\n\
+LFIIRG[pS]PQQIDHAK 0.593808\n\
+[pS]IEVENDFLPVEK -1.831307\n\
+TAPTL[pS]PEHWK -0.235422\n\
+VL[pS]PTAAKPSPFEGK 0.523876\n\
+SSDQPLTVPV[pS]PK -1.2870867\n\
+FYETKEESY[pS]PSKDR 0.558409\n\
+SD[pS]PENKYSDSTGHSK 0.498148\n\
+[pS]IPLSIK -1.19459\n\
+RL[pS]QSDEDVIR 0.294727\n\
+AT[pS]PVKSTTSITDAK 0.2966439\n\
+ALG[pS]PTKQLLPC[+57.021]EMAC[+57.021]NEK 0.511634\n\
+YLLGDAPV[pS]PSSQK 0.18404919\n\
+AN[pS]PEKPPEAGAAHKPR 0.63052\n\
+SEVQQPVHPKPL[pS]PDSR 0.31677\n\
+ETPH[pS]PGVEDAPIAK 0.649939\n\
+SQ[pS]PHYFR 0.7690316\n\
+DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
+SPALK[pS]PLQSVVVR -0.33558\n\
+AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
+SF[pT]SQRPVDR 0.54329\n\
+VY[pT]HEVVTLWYR 0.579294\n\
+SS[pT]PLPTISSSAENTR 1.024626\n\
+QI[pT]MEELVR -1.30946\n\
+TQLWASEPG[pT]PPLPTSLPSQNPILK 0.4175439\n\
+ALPQ[pT]PRPR 0.17558\n\
+[pS]PTGPSNSFLANMGGTVAHK 0.51067\n\
+[pS]FAGNLNTYKR 0.6323\n\
+HRP[pS]PPATPPPK 1.479257\n\
+LH[pS]APNLSDLHVVRPK -1.06841\n\
+TLGRRD[pS]SDDWEIPDGQITVGQR 0.28616\n\
+[pS]PPAPGLQPM[+15.994]R 0.4706487\n\
+A[+42.010]TTATM[+15.994]ATSG[pS]AR -0.8267\n\
+RPH[pS]PEKAFSSNPVVR 0.67740\n\
+KPNIFYSGPA[pS]PARPR -0.324736\n\
+QGSGRE[pS]PSLASR 0.69807\n\
+HLP[pS]PPTLDSIITEYLR 0.13999\n\
+S[pT]FHAGQLR -0.5785\n\
+A[+42.010]TTATMATSG[pS]AR -1.60154\n\
+SM[pS]VDLSHIPLKDPLLFK -0.60759\n\
+[pS]LTAHSLLPLAEK -1.1335\n\
+IHVSR[pS]PTRPR 0.410076\n\
+TEFLDLDNSPLSPP[pS]PR 0.401256\n\
+LQ[pS]EPESIR -0.159615\n\
+RLI[pS]PYKK 0.271686\n\
+LLED[pS]EESSEETVSR 0.44265\n\
+RRL[pS]SLR -0.497748\n\
+RL[pS]ESQLSFRR -0.79106\n\
+RL[pS]LPGLLSQVSPR 0.329239\n\
+SPDKPGG[pS]PSASRR 0.131213\n\
+[pS]LTNSHLEKK 0.22196\n\
+LQTPN[pT]FPKR -0.344000\n\
+QI[pT]M[+15.994]EELVR -0.30907";
+
+
+
+
+        //SharedService.setVar('textAreaFormatMD', self.textArea);
+    }
+    self.changeToGCPPeptides = function () {
+        self.textArea = "T[+56]K[+56]QTAR	-0.041875744\n\
+T[+56][meK]QTAR	-0.270535418\n\
+T[+56][me2K]QTAR	0.087099586\n\
+T[+56][me3K]QTAR	0.084202625\n\
+T[+56][aK]QTAR	0.00598567\n\
+K[+112.1]STGGK[+56]APR	0.058669849\n\
+[meK]STGGK[+56]APR	-0.27182245\n\
+[me2K]STGGK[+56]APR	-0.188828568\n\
+[me3K]STGGK[+56]APR	0.010003377\n\
+[aK]STGGK[+56]APR	-0.073966311\n\
+K[+112.1]STGG[aK]APR	0.338447595\n\
+[meK]STGG[aK]APR	-0.06495435\n\
+[me2K]STGG[aK]APR	-0.140408052\n\
+[me3K]STGG[aK]APR	-0.028568836\n\
+[aK]STGG[aK]APR	-0.021538616\n\
+K[+112.1][pS]TGGK[+56]APR	-0.260364406\n\
+[meK][pS]TGGK[+56]APR	-0.242720645\n\
+[me2K][pS]TGGK[+56]APR	0.080991582\n\
+[me3K][pS]TGGK[+56]APR	0.203779469\n\
+K[+112.1][pS]TGG[aK]APR	-0.118385096\n\
+[meK][pS]TGG[aK]APR	-0.057803463\n\
+[me2K][pS]TGG[aK]APR	-0.090454234\n\
+[me3K][pS]TGG[aK]APR	0.696029983\n\
+[aK][pS]TGG[aK]APR	0.49326908\n\
+K[+112.1]QLATK[+56]AAR	-0.064527272\n\
+[aK]QLATK[+56]AAR	-0.035241088\n\
+K[+112.1]QLAT[aK]AAR	-0.301690347\n\
+[aK]QLAT[aK]AAR	0.044519339\n\
+[ubK]QLATK[+56]AAR	-0.481387993\n\
+K[+112.1]QLAT[ubK]AAR	-0.428209673\n\
+K[+112.1]SAPATGGVK[+56]K[+56]PHR	0.056694329\n\
+[meK]SAPATGGVK[+56]K[+56]PHR	-0.147474495\n\
+[meK]SAPATGGV[meK]K[+56]PHR	0.278627613\n\
+[meK]SAPATGGV]me2K]K[+56]PHR	0.071481589\n\
+[meK]SAPATGGV[me3K]K[+56]PHR	-0.127764989\n\
+[me2K]SAPATGGVK[+56]K[+56]PHR	-0.186326202\n\
+[me2K]SAPATGGV[meK]K[+56]PHR	-0.064597033\n\
+[me2K]SAPATGGV[me2K]K[+56]PHR	-0.423770191\n\
+[me2K]SAPATGGV[me3K]K[+56]PHR	-0.070469171\n\
+[me3K]SAPATGGVK[+56]K[+56]PHR	-0.094543918\n\
+[me3K]SAPATGGV[meK]K[+56]PHR	-0.333823023\n\
+[me3K]SAPATGGV[me2K]K[+56]PHR	-0.358445739\n\
+[aK]SAPATGGVK[+56]K[+56]PHR	0.674083892\n\
+[aK]SAPATGGV[meK]K[+56]PHR	-0.194309632\n\
+[aK]SAPATGGV[me2K]K[+56]PHR	0.339613114\n\
+[aK]SAPATGGV[me3K]K[+56]PHR	0.220404071\n\
+K[+112.1]SAPSTGGVK[+56]K[+56]PHR	-0.40551929\n\
+Y[+56]RPGTVALR	-0.010554282\n\
+Y[+56]QK[+56]STELLIR	0.151104493\n\
+E[+56]IAQDFK[+56]TDLR	0.172918492\n\
+E[+56]IAQDF[meK]TDLR	0.156914416\n\
+E[+56]IAQDF[me2K]TDLR	0.183464036\n\
+K[+112.1]SAPATGGV[meK]K[+56]PHR	0.124030959\n\
+K[+112.1]SAPATGGV[me2K]K[+56]PHR	0.154400258\n\
+K[+112.1]SAPATGGV[me3K]K[+56]PHR	0.080582639";
+
+        //SharedService.setVar('textAreaFormatMD', self.textArea);
+    }
+
+    self.changeToP100Genes = function () {
+        self.genes = "DYRK1A 0.461099\n\
+RPS6KA3 1.24165\n\
+HN1 0.39179\n\
+ZC3HC1 -0.81353\n\
+NCOR2 -0.061737\n\
+OCIAD1 -0.09643\n\
+PDPK1 0.097759\n\
+ABI1 0.588017\n\
+WDR20 -0.15000\n\
+MAP4 -2.95647\n\
+FAM129B 0.019645\n\
+TMSB4X 0.88214\n\
+TMSB4X 0.9800\n\
+AP1GBP1 -1.149179\n\
+ZC3H14 0.93623\n\
+LARP5 0.5108248\n\
+MAP3K7 0.105289\n\
+BRD4 0.7733867\n\
+KIF4A -3.384948\n\
+C22orf9 -2.96875\n\
+FOSL2 0.408887\n\
+JUND 0.2169463\n\
+RPL12 -0.98894\n\
+NUP214 -0.59864\n\
+TMPO -2.223487\n\
+BAT2 -0.011437\n\
+FASN 0.768389\n\
+FASN 0.518356\n\
+FAM76B -0.20854\n\
+AHNAK -0.15571\n\
+PAK2 1.08313\n\
+RPS6KA1 -1.064138\n\
+RPS6KA1 -3.20086\n\
+NUFIP2 0.428257\n\
+RBBP6 0.079337\n\
+CASC3 0.53475\n\
+KIAA1704 0.75655\n\
+CCNYL1 0.193549\n\
+RNF169 -0.041419\n\
+ZNF740 0.81348\n\
+DDX54 0.913738\n\
+ATRIP -0.05033\n\
+DPF2 0.82016\n\
+SMARCC1 -0.07167\n\
+KHSRP 0.593808\n\
+SH3KBP1 -1.831307\n\
+C13orf8 -0.235423\n\
+PPP1R10 0.52387\n\
+TPX2 -1.28708\n\
+RSF1 0.558409\n\
+WAC 0.498148\n\
+UBE2O -1.19459\n\
+WDR26 0.29473\n\
+ANLN 0.296644\n\
+NANS 0.51163\n\
+TERF2IP 0.184049\n\
+LRWD1 0.630525\n\
+LIMA1 0.316775\n\
+LIMA1 0.649939\n\
+GPATCH8 0.769031\n\
+MAP3K2 0.2409052\n\
+THRAP3 -0.33558\n\
+BAT2D1 1.081598\n\
+BAT2D1 0.54329\n\
+CDC2 0.57929\n\
+TMPO 1.024626\n\
+PLEC1 -1.3094\n\
+SRRT 0.417544\n\
+SRRM2 0.17558\n\
+RBM17 0.51067\n\
+PFKP 0.632339\n\
+SRRM1 1.47925\n\
+ULK1 -1.06842\n\
+BRAF 0.286164\n\
+FOSL2 0.47064\n\
+EIF4A3 -0.82673\n\
+C17orf85 0.6774\n\
+ATAD2 -0.324736\n\
+ATXN2L 0.69807\n\
+VPRBP 0.13999\n\
+MARK2 -0.578569\n\
+EIF4A3 -1.601547\n\
+UHRF1BP1L -0.6075\n\
+IQGAP3 -1.13349\n\
+ZNF672 0.410076\n\
+NFATC2IP 0.40125\n\
+CLTA -0.1596\n\
+HAT1 0.271686\n\
+DHX16 0.44265\n\
+RPS6 -0.4977\n\
+RBM14 -0.79107\n\
+ALS2 0.329239\n\
+NOC2L 0.131214\n\
+SLC38A1 0.2219\n\
+NOLC1 -0.3440\n\
+PLEC1 -0.309069";
+
+        //SharedService.setVar('genes',self.genes);
+    }
+    self.changeToP100PTMs = function () {
+        self.inputMassPtmProteins = "Q13627{[pY]@321} 0.4611\n\
+P51812{[pS]@369} 1.24165\n\
+Q9UK76{[pS]@87} 0.3918\n\
+Q86WB0{[pS]@321} -0.8135\n\
+Q9Y618{[pS]@956} -0.0617\n\
+Q9NX40{[pS]@108} -0.09643\n\
+O15530{[pS]@241} 0.09776\n\
+Q8IZP0{[pS]@183} 0.5880\n\
+Q8TBZ3{[pS]@434} -0.15000\n\
+P27816{[pS]@1073} -2.95647\n\
+Q96TA1{[pS]@691} 0.01964\n\
+P62328{[S+122]@2}{[M+16]@7} 0.8821\n\
+P62328{[S+122]@2} 0.9800\n\
+Q9UMZ2{[pS]@1075} -1.14918\n\
+Q6PJT7{[pS]@515} 0.93623\n\
+Q92615{[pS]@601} 0.51082\n\
+O43318{[pS]@439} 0.105289\n\
+O60885{[pS]@1117} 0.77338\n\
+O95239{[pS]@801} -3.38494\n\
+Q6ICG6{[pS]@362} -2.96875\n\
+P15408{[pS]@200} 0.40888\n\
+P17535{[pS]@100} 0.216946\n\
+P30050{[pS]@38} -0.988941\n\
+P35658{[pS]@1023} -0.59863\n\
+P42167{[pS]@306} -2.22348\n\
+P48634{[pS]@1219} -0.011437\n\
+P49327{[pS]@207}{[M+16]@205}{[C+57]@212} 0.768389\n\
+P49327{[pS]@207}{[C+57]@212} 0.51835\n\
+Q5HYJ3{[pS]@193} -0.20854\n\
+Q09666{[pS]@3426} -0.15571\n\
+Q13177{[S+122]@2} 1.083130\n\
+Q15418{[pS]@221}{[M+16]@229}{[C+57]@223} -1.0641\n\
+Q15418{[pS]@221}{[C+57]@223} -3.2008\n\
+Q7Z417{[pS]@652} 0.428257\n\
+Q7Z6E9{[pS]@1179} 0.079337\n\
+O15234{[pS]@265} 0.53475\n\
+Q8IXQ4{[pS]@105} 0.75655\n\
+Q8N7R7{[pS]@344} 0.1935\n\
+Q8NCN4{[pS]@403} -0.041419\n\
+Q8NDX6{[pS]@44} 0.81348\n\
+Q8TDD1{[pS]@75}{[C+57]@73} 0.91374\n\
+Q8WXE1{[pS]@224} -0.05033\n\
+Q92785{[pS]@142} 0.82016\n\
+Q92922{[pS]@310} -0.07167\n\
+Q92945{[pS]@480} 0.593808\n\
+Q96B97{[pS]@230} -1.8313\n\
+Q96JM3{[pS]@405} -0.23542\n\
+Q96QC0{[pS]@313} 0.523876\n\
+Q9ULW0{[pS]@738} -1.287086\n\
+Q96T23{[pS]@473} 0.558409\n\
+Q9BTA9{[pS]@64} 0.4981\n\
+Q9C0C9{[pS]@515} -1.19459\n\
+Q9H7D7{[pS]@121} 0.29472\n\
+Q9NQW6{[pS]@295} 0.29664\n\
+Q9NR45{[pS]@275}{[C+57]@283}{[C+57]@287} 0.51163\n\
+Q9NYB0{[pS]@203} 0.184049\n\
+Q9UFC0{[pS]@212} 0.63052\n\
+Q9UHB6{[pS]@362} 0.31677\n\
+Q9UHB6{[pS]@490} 0.64994\n\
+Q9UKJ3{[pS]@1035} 0.769032\n\
+Q9Y2U5{[pS]@163} 0.2409052\n\
+Q9Y2W1{[pS]@253} -0.33558\n\
+Q9Y520{[pT]@2673} 1.081598\n\
+Q9Y520{[pS]@1544} 0.54329\n\
+P06493{[pT]@161} 0.57929\n\
+P42167{[pT]@160} 1.0246259\n\
+Q15149{[pT]@4030} -1.30946\n\
+Q9BXP5{[pT]@544} 0.4175439\n\
+Q9UQ35{[pT]@1492} 0.17558\n\
+Q96I25{[pS]@222} 0.510677\n\
+Q01813{[pS]@386} 0.63234\n\
+Q8IYB3{[pS]@402} 1.479257\n\
+O75385{[pS]@556} -1.06842\n\
+P15056{[pS]@446} 0.286164\n\
+P15408{[pS]@200}{[M+16]@209} 0.4706487\n\
+P38919{[pS]@12}{[M+16]@7}{[A+42.010]@2} -0.826734\n\
+Q53F19{[pS]@500} 0.6774\n\
+Q6PL18{[pS]@327} -0.3247365\n\
+Q8WWM7{[pS]@339} 0.69807\n\
+Q9Y4B6{[pS]@1000} 0.13999\n\
+Q7KZI7{[pT]@596} -0.578569\n\
+P38919{[pS]@12}{[A+42.010]@2} -1.601547\n\
+A0JNW5{[pS]@935} -0.60759\n\
+Q86VI3{[pS]@1424} -1.133499\n\
+Q499Z4{[pS]@189} 0.4100764\n\
+Q8NCF5{[pS]@204} 0.4012565\n\
+P09496{[pS]@105} -0.159615\n\
+O14929{[pS]@361} 0.2716867\n\
+O60231{[pS]@103} 0.442654\n\
+P62753{[pS]@235} -0.497748\n\
+Q96PK6{[pS]@618} -0.791066\n\
+Q96Q42{[pS]@483} 0.3292391\n\
+Q9Y3T9{[pS]@56} 0.131213\n\
+Q9H2H9{[pS]@52} 0.22196\n\
+Q14978{[pT]@610} -0.34400\n\
+Q15149{M+16@4031}{[pT]@4030} -0.30907";
+
+        // "Q9Y463[Y+79.966@273],Q13627[Y+79.966@321],P51812[pS@369],Q9UK76[pS@87],Q86WB0[pS@321],Q9Y618[pS@956],A0JNW5[pS@935],Q9NX40[pS@108],Q6A1A2[pS@214],O15530[pS@241],Q8IZP0[pS@183],Q8TBZ3[pS@434],P27816[pS@1073],Q96I25[pS@222],Q86VI3[pS@1424],Q96TA1[pS@691],P62328[S+122@2],P62328[S+122@2][M+16@7],P09496[pS@105],Q9UMZ2[pS@1075],Q6PJT7[pS@515],Q01813[pS@386],Q92615[pS@601],O14929[pS@361],O43318[pS@439],Q8IYB3[pS@402],O60885[pS@1117],O75385[pS@556],O95239[pS@801],Q6ICG6[pS@362],O60231[pS@103],P15056[pS@446],P15408[pS@200],P15408[pS@200][M+16@209],P05412[pS@73],P17535[pS@100],P30050[pS@38],P35658[pS@1023],P38919[pS@12][A+42@2],P38919[pS@12][M+16@7][A+42@2],P42167[pS@306],P48634[pS@1219],P49327[pS@207][C+57@212],P49327[pS@207][M+16@205][C+57@212],Q5HYJ3[pS@193],P62753[pS@235],Q09666[pS@3426],Q13177[S+122@2],P51812[pS@227][C+57@229],Q15418[pS@221][C+57@223],Q9UK32[pS@232][C+57@234],P51812[pS@227][M+16@235][C+57@229],Q15418[pS@221][M+16@229][C+57@223],Q9UK32[pS@232][M+16@240][C+57@234],Q499Z4[pS@189],Q53F19[pS@500],Q6PL18[pS@327],Q7Z417[pS@652],Q7Z6E9[pS@1179],O15234[pS@265],Q8IXQ4[pS@105],Q8N7R7[pS@344],Q8NCF5[pS@204],Q8NCN4[pS@403],Q8NDX6[pS@44],Q8TDD1[pS@75][C+57@73],Q8WWM7[pS@339],Q8WXE1[pS@224],Q92785[pS@142],Q92922[pS@310],Q92945[pS@480],Q96B97[pS@230],Q96JM3[pS@405],Q96PK6[pS@618],Q96Q42[pS@483],Q96QC0[pS@313],Q9ULW0[pS@738],Q96T23[pS@473],Q9BTA9[pS@64],Q92560[pS@460],Q9C0C9[pS@515],Q9H7D7[pS@121],Q9NQW6[pS@295],Q9NR45[pS@275][C+57@283],Q9NYB0[pS@203],Q9UFC0[pS@212],Q9UHB6[pS@362],Q9UHB6[pS@490],Q9UKJ3[pS@1035],Q9BXP5[pT@544],Q9Y2U5[pS@163],Q9Y2W1[pS@253],Q9Y3T9[pS@56],Q9Y4B6[pS@1000],Q9Y520[pT@2673],Q7KZI7[pT@596],Q9H2H9[pS@52],Q9Y520[pS@1544],P06493[pT@161],P42167[pT@160],P42166[pT@160],Q14978[pT@610],Q15149[pT@4030],Q15149[M+16@4031][pT@4030],Q9UQ35[pT@1492]";
+
+        //SharedService.setVar('inputPtmProteinsExample',self.inputMassPtmProteins);
+    }
+
+
+
+
+
+
+    $scope.$watch(function () {
+        return self.textArea
+    }, function (newValue, oldValue) {
+        //$window.sessionStorage.setItem("textAreaForPeptide2Protein", self.textArea);
+        console.log("Setting textArea");
+        //self.textArea = localStorage.getItem("textAreaForPeptide2Protein");
+
+        //SharedService.setVar('textArea', self.textArea);
+        // parse motifs
+        self.parsedMotifs = self.textArea.replace('"','')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    return e.replace(/ *\([^)]*\) */g, "").replace(self.modificationPattern, '')
+                }
+            });
+
+        // parse peptides
+        // self.parsedPeptides = self.textArea.replace('"','')
+        //     .split(self.rowSplitPattern);
+
+        console.log('text area');
+        console.log(self.textArea);
+        self.parsedModifications = self.textArea.replace('"','')
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    var modList = [];
+                    //var eMod;
+                    while (eMod = self.paranthesesPattern.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+                    while (eMod = self.modificationPatternWithLetter.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+                    while (eMod = self.modificationPatternSecondFormat.exec(e))
+                    {
+                        modList.push(eMod[0]);
+                    };
+
+                    // e.match(self.modificationPatternWithLetter).map(function (eMod) {
+                    //     if (eMod) {
+                    //         modList.push(eMod);
+                    //     }
+                    // })
+                    // e.match(self.modificationPatternSecondFormat).map(function (eMod) {
+                    //     if (eMod) {
+                    //         modList.push(eMod);
+                    //     }
+                    // })
+
+                    // modList.push(e.match(self.modificationPatternWithLetter));
+                    // modList.push(e.match(self.modificationPatternSecondFormat));
+                    // //if (!self.formatInput) {
+                    //     //console.log(e.match(self.modificationPatternWithLetter));
+                    //  //   return e.match(self.modificationPatternWithLetter);
+                    // //} else {
+                    //     //console.log(e.match(self.modificationPatternSecondFormat));
+                    return modList ;
+                    //}
+                }
+            });
+        var tmpTextArea = self.textArea;
+
+        self.parsedPeptides = self.textArea
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    // var str = e.split(/[\s,]+/).join();
+                    // //console.log(str);
+                    // var str2 = str.replace(/[\s,]+/g, ',');
+                    // //console.log(str2);
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    ////console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(0);
+                        ////console.log(str2[0]);
+                        return str2[0];
+                    }
+                    else {
+                        // //console.log(str2);
+                        return str2;
+                    }
+                    ;
+                }
+                //return e.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+                // if (e.length() == 1){
+                //     return e[1];
+                // }
+                // if (!self.formatInput) {
+                //     return e.match(self.modificationPatternWithLetter);
+                // } else {
+                //     return e.match(self.modificationPatternSecondFormat);
+                // }
+
+            });
+
+        // //console.log("self.textArea");
+        // //console.log(self.textArea);
+        self.peptideAbundance = self.textArea
+            .split(self.rowSplitPattern)
+            .map(function (e) {
+                if (e) {
+                    // var str = e.split(/[\s,]+/).join();
+                    // //console.log(str);
+                    // var str2 = str.replace(/[\s,]+/g, ',');
+                    // //console.log(str2);
+                    var str2 = e.replace(/,/g, '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+                    ////console.log(str2);
+                    if (str2.indexOf(',') > -1) {
+                        str2 = str2.split(',').slice(1);
+
+                        return str2[0];
+                    }
+                    else {
+                        return "NA";
+                    }
+                    ;
+                }
+                //return e.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+                // if (e.length() == 1){
+                //     return e[1];
+                // }
+                // if (!self.formatInput) {
+                //     return e.match(self.modificationPatternWithLetter);
+                // } else {
+                //     return e.match(self.modificationPatternSecondFormat);
+                // }
+
+            });
+
+        ////console.log(self.peptideAbundance);
+        //self.peptideAbundance = tmpTextArea.replace(/,/g , '').replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/[\s,]+/g, ',');
+
+        ////console.log(self.peptideAbundance);
+        // format parsed modifiacations
+        self.parsedModificationsForOntology = self.parsedModifications;
+
+        self.parsedModificationsFormatter = [];
+        self.parsedModificationsFormatter = self.parsedModifications
+            .map(function (e) {
+                if (e != null)
+                    return e.join(" ");
+            });
+
+
+        self.plnFirstHit = [];
+
+        // if (!self.formatInput) {
+        //
+        //     self.textAreaFormatSH = translateMd2Sh(self.textArea);
+        //     SharedService.setVar('textAreaFormatSH', self.textAreaFormatSH);
+        // } else {
+        //
+        //     self.textAreaFormatMD = translateSh2Md(self.textArea);
+        //     SharedService.setVar('textAreaFormatMD', self.textAreaFormatMD);
+        // }
+
+    });
+
+
+
+
+
+
+
+
+    self.uploadGraphWaiting = false;
+    self.showGEGraph = false;
+    $scope.showGEGraph = false;
+    $scope.interest = "ATP";
+    $scope.showColors = false;
+    self.helpTab = SharedService.getVar("helpTab");
+    //SharedService.setVar('showModal', false);
+    $('input[name=tabs][id=' + self.helpTab + ']').prop('checked',true);
+    $("input[name='tabs']").click(function () {
+        self.helpTab = this.id;
+        SharedService.setVar("helpTab", self.helpTab);
+
+    });
+
+    $(document).ready(function () {
+
+        $('.AB3rotate1').addClass('active');
+        $('.AB3text1').addClass('active');
+
+        $('.AB3rotate2').attr('disabled', true);
+        $('.AB3text2').attr('disabled', true);
+
+        $('.AB3rotate3').attr('disabled', true);
+        $('.AB3text3').attr('disabled', true);
+
+        $('.AB3rotate4').attr('disabled', true);
+        $('.AB3text4').attr('disabled', true);
+
+    });
+
+    $scope.peptideOrProteinsOrGenes = 0;
+    //
+    // $(document).ready(function () {
+    //     $("body").tooltip({selector: '[data-toggle=tooltip]'});
+    // });
+    // $(document).ready(function () {
+    //     $('[data-toggle="tooltip"]').tooltip({
+    //         trigger: 'hover'
+    //     });
+    // });
+    // $(function () {
+    //     $('[data-toggle="tooltip"]').tooltip()
+    // })
+    // $(document).ready(function () {
+    //     $('[data-toggle="tooltip"]').tooltip({
+    //         trigger: 'hover'
+    //     });
+    // });
+    // $scope.tabClass = function (tab) {
+    //     if ($scope.selectedTab == tab) {
+    //         self.activeSite = $scope.selectedTab.link;
+    //         return "active";
+    //
+    //     } else {
+    //         return "";
+    //     }
+    // }
+    // $(document).ready(function () {
+    //     $("body").tooltip({selector: '[data-toggle=tooltip]'});
+    // });
+
+    //This is to activate tooltip otherwise it is not working on some occasions
+    $(document).ready(function () {
+        $("body").tooltip({selector: '[data-toggle=tooltip]'});
+    });
+
+
+    $scope.graphType = 0;
+    $scope.circleSliderValue = 1100;
+    $scope.nodeSliderValue = 15;
+    $scope.fontSliderValue = 20;
+    $scope.widthSliderValue = 1500;
+    $(document).on('input', '#circle_slider', function() {
+        $('#circle_slider_value').html( $(this).val() );
+        ////console.log($(this).val());
+        $scope.circleSliderValue = $(this).val();
+
+        $scope.$apply();
+
+        $scope.uploadFileGraph();
+    });
+
+    $(document).on('input', '#node_slider', function() {
+        $('#node_slider_value').html( $(this).val() );
+        ////console.log($(this).val());
+        $scope.nodeSliderValue = $(this).val();
+
+        $scope.$apply();
+
+        $scope.uploadFileGraph();
+    });
+
+    $(document).on('input', '#font_slider', function() {
+        $('#font_slider_value').html( $(this).val() );
+        ////console.log($(this).val());
+        $scope.fontSliderValue = $(this).val();
+
+        $scope.$apply();
+
+        $scope.uploadFileGraph();
+    });
+
+    $(document).on('input', '#width_slider', function() {
+        $('#width_slider_value').html( $(this).val() );
+        ////console.log($(this).val());
+        $scope.widthSliderValue = $(this).val();
+
+        $scope.$apply();
+
+        $scope.uploadFileGraph();
+    });
+
+
+    $scope.uploadFileGraph = function(){
+
+        self.uploadGraphWaiting = true;
+        //self.showGEGraph = false;
+        var file = $scope.myFileCSV;
+        var fd = new FormData();
+        self.uploadWaiting = true;
+        self.showOutput = false;
+        fd.append('file', file);
+        var fileName = String(file.name).slice(0, -4).concat(String($scope.interest));
+        console.log(fileName);
+
+        //We can send anything in name parameter,
+//it is hard coded to abc as it is irrelavant in this case.
+        var uploadUrl = "api/uploadCSV";
+
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+            .success(function(response){
+                console.log(response);
+                var pNetwork = response;
+                var ptmToAbundance = {};
+                for (var iterNetNode = 0; iterNetNode < pNetwork.nodes.length; iterNetNode++)
+                {
+                    //pNetwork.nodes[iterNetNode]["weight"] = 0;
+                    var iterNetNodeKey = pNetwork.nodes[iterNetNode]["name"];
+                    ptmToAbundance[iterNetNodeKey] = "NA";
+                    // if (iterNetNodeKey in ptmToAbundance)
+                    // {
+                    //     //console.log(iterNetNodeKey);
+                    //     if (ptmToAbundance[iterNetNodeKey] == "NA")
+                    //     {
+                    //         pNetwork.nodes[iterNetNode]["value"] = 0.0;
+                    //     }
+                    //     else {
+                    //         pNetwork.nodes[iterNetNode]["value"] = ptmToAbundance[iterNetNodeKey];
+                    //     }
+                    // }
+                }
+
+
+
+                $scope.makeGEGraph(response, ptmToAbundance, fileName, $scope.fontSliderValue, $scope.widthSliderValue, $scope.circleSliderValue, $scope.nodeSliderValue, $scope.graphType);
+                self.uploadGraphWaiting = false;
+                self.showGEGraph = true;
+            })
+            .error(function(response){
+                self.uploadGraphWaiting = false;
+                self.showGEGraph = true;
+            });
+    }
+
+
+
+    $scope.makeGEGraph = function (network, ptmToAbundance, fileName, fontSize, widthSize, circleSize, nodeSize, graphType) {
+        //console.log(self.computeWeightForUpdatePtm);
+
+        self.showGEGraph = true;
+        d3.select("#chartGE").select("svg").remove();
+        if (typeof svgGE === 'undefined') {
+            var svgGE = d3.selectAll("#chartGE").append("svg");
+        }
+        //var svg4 = d3.selectAll("#chart4").append("svg");
+
+
+        var force;
+        var colNodeScaleSeparate = d3.scale.ordinal()
+            .range(["#987024", "#ed0909", "#0af702", "#d506d8"])
+            //.range(["#987024", "#982482", "#0af702"])
+            .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+//#f9a3f5
+        // var colNodeScaleSeparate = d3.scale.ordinal()
+        //     .range(["#767776", "#f91104", "#0af702"])
+        //     .domain([0,1,2]);
+
+        // var colNodeScale = d3.scale.linear().range(["#987024", "#ed0909"]);
+        // var colScale = d3.scale.linear().range(["#987024", "#ed0909"]);
+
+        var colScale = d3.scale.ordinal()
+            .range(["#987024", "#ed0909", "#0af702", "#d506d8"])
+            //.range(["#987024", "#982482", "#0af702"])
+            .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+        var colNodeScale = d3.scale.ordinal()
+            .range(["#987024", "#ed0909", "#0af702", "#d506d8"])
+            //.range(["#987024", "#982482", "#0af702"])
+            .domain([1, 2, 3, 4]);
+        var edgeWeightScale = d3.scale.linear().range([1, 3]);
+        var xScale = d3.scale.linear().range([nodeSize/3.0, nodeSize]);
+        var scoreScale = d3.scale.linear().range([1.0, 3.0]).domain([0.0, 1.0]);
+        var textPlacePlusMinus = d3.scale.ordinal()
+            .range([18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18])
+            .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+        var textPlaceStartEnd = d3.scale.ordinal().range(["end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end", "end"])
+            .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+
+        var colorsForAbundance = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+        var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+        var colorScale = d3.scale.threshold()
+            .domain(domain_data)
+            .range(colorsForAbundance);
+
+
+        function updateGE(nodes, links, fontSize, widthSize, circleSize, nodeSize) {
+
+            circleSize = Math.min(circleSize, widthSize - 300);
+            //
+            //var svg;
+
+
+            // $('force1').click();
+            //document.getElementById('force1').click();
+
+            // //console.log(circularLayout);
+
+
+
+            // self.computeWeightForupdatePtm = false;
+            // SharedService.setVar('computeWeightForupdatePtm', self.computeWeightForupdatePtm);
+
+
+
+
+            // Set-up the export button
+            // d3.select('#download-png').on('click', function() {
+            //
+            // })
+            function circularViewGE() {
+                svgGE.remove();
+
+                xScale.domain(d3.extent(nodes, function (d) {
+                    return d.weight;
+                }));
+                scoreScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                colNodeScale.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                colScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                var margin = 75,
+                    w = widthSize - 2 * margin,
+                    h = w,
+                    radius = w / 2,
+                    strokeWidth = 4,
+                    hyp2 = Math.pow(radius, 2),
+                    nodeBaseRad = 5;
+
+
+                globalH = h;
+                globalHPlus50 = h + 50;
+                globalW = w;
+
+
+                svgGE = d3.select("#chartGE")
+                    .append("svg")
+                    .attr("style", "outline: thin solid yellow;")
+                    .attr("width", w)
+                    .attr("height", globalHPlus50);
+                svgGE.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "white");
+
+
+                // This is for grouping nodes
+
+
+                var force = d3.layout.force()
+                    .nodes(nodes)
+                    .links(links)
+                    .size([w, h]);
+
+// evenly spaces nodes along arc
+                var circleCoord = function (node, index, input_num_nodes, has_focus) {
+                    //console.log("in circleCoord");
+
+                    // console.log(node["name"]);
+                    // console.log(index);
+                    // String(node["name"]).valueOf() ==
+                    var circumference = circle.node().getTotalLength();
+                    var pointAtLength = function (l) {
+                        return circle.node().getPointAtLength(l)
+                    };
+
+
+                    if (has_focus){
+                        var added_num = parseInt(input_num_nodes/4);
+                        if (added_num%2 == 1){
+                            added_num += 1;
+                        }
+                        var num_nodes = input_num_nodes + added_num;
+                        var sectionLength = (circumference) / num_nodes;
+                        if (String(node["name"]).valueOf() === $scope.interest){
+                            var position = 0;
+                            // console.log("in ATP");
+                            // console.log(pointAtLength(circumference - position));
+                            // console.log(position);
+                        }
+                        else {
+
+
+                            var position = sectionLength * (index + added_num/2) + sectionLength / 2;
+                        }
+                    }
+                    else{
+                        var num_nodes = input_num_nodes;
+                        var sectionLength = (circumference) / num_nodes;
+                        var position = sectionLength * (index) + sectionLength / 2;
+
+                    }
+
+                    //console.log(pointAtLength(circumference - position));
+                    return pointAtLength(circumference - position)
+                }
+
+                var is_connected = function (d, opacity) {
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source === d || o.target === d ? 1 : opacity;
+                    });
+                }
+
+                var is_connected_on_click = function (d, opacity) {
+                    //console.log(d);
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source.group === d.group || o.target.group === d.group ? 1 : opacity;
+                    });
+                }
+                // var dim = w - 900
+                // var circle = svgGE.append("path")
+                //     .attr("d", "M 450, " + (dim / 2 + 450) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                //     .style("fill", "white");
+
+                var dim = w - (widthSize - circleSize)
+                var circle = svgGE.append("path")
+                    .attr("d", "M " + String((widthSize - circleSize)/2) + ", " + (dim / 2 + (widthSize - circleSize)/2) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                    .style("fill", "white");
+
+                force.start();
+                var has_focus = false;
+                nodes.forEach(function (n, i) {
+                    if (String(n["name"]).valueOf() == $scope.interest){
+                        //if (String(n["name"]).valueOf() === $scope.interest) {
+                        has_focus = true;
+                    }
+
+                })
+                nodes.forEach(function (n, i) {
+                    var coord = circleCoord(n, i, nodes.length, has_focus)
+                    n.x = coord.x
+                    n.y = coord.y
+                });
+
+
+                // use this one for straight line links...
+                // var lines = svg.selectAll("line.node-link")
+                //     .data(links).enter().append("line")
+                //     .attr("class", "node-link")
+                //     .attr("x1", function(d) { return d.source.x; })
+                //     .attr("y1", function(d) { return d.source.y; })
+                //     .attr("x2", function(d) { return d.target.x; })
+                //     .attr("y2", function(d) { return d.target.y; });
+
+                var lines = svgGE.selectAll("path.node-link")
+                    .data(links).enter().append("path")
+                    .style("fill", "none")
+                    .style("stroke", function (d) {
+
+                        if (d.tag == 0) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 1) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.tag == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.tag == 4) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.tag == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.tag == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.tag == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.tag == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.tag == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.tag == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.tag == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.tag == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.tag == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.tag == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.tag == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.tag == 18) {
+                            return("#708090");
+                        }
+                        else if (d.tag == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.tag == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.tag == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.tag == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.tag == 23) {
+                            return("#000080");
+                        }
+                        else if (d.tag == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.tag == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.tag == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.tag == 28) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.tag == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.tag == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.tag == 32) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.tag == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.tag == 35) {
+                            return("#800000");
+                        }
+                        else if (d.tag == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.tag == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.tag == 38) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.tag == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.tag == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.tag == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.tag == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.tag == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.tag == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.tag == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.tag == 47) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.tag == 49) {
+                            return("#FFA500");
+                        }
+                        else{
+                            return("#000000");
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+                    //.style("stroke", "#726363")
+                    .attr("class", "node-link")
+                    .style("stroke-width", function (d) {return scoreScale(d.weight); })
+                    .attr("d", function (d) {
+
+                        //
+                        // var dx = d.target.x - d.source.x,
+                        //     dy = d.target.y - d.source.y,
+                        //     dr = Math.sqrt(dx * dx + dy * dy),
+                        //     a1 = dx,
+                        //     a2 = dy,
+                        //     b1 = w/2 - d.source.x,
+                        //     b2 = h/2 - d.source.y,
+                        //
+                        //     drx = dr/1.5,
+                        //     dry = dr/1.5,
+                        //     xRotation = 0, // degrees
+                        //     largeArc = 0, // 1 or 0
+                        //
+                        //     sweep = 1, // 1 or 0
+                        //     x2 = d.target.x,
+                        //     y2 = d.target.y;
+                        // if( (a1*b2 - a2*b1) > 0)
+                        // {
+                        //     sweep = 0
+                        // }
+                        // else
+                        // {sweep = 1}
+                        //
+                        //
+                        // return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+                        //
+                        //
+
+
+
+
+
+
+
+
+
+
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy);
+                        return "M" +
+                            d.source.x + "," +
+                            d.source.y + "," +
+                            d.target.x + "," +
+                            d.target.y;
+
+                    });
+
+
+                var gnodes = svgGE.selectAll('g.gnode')
+                    .data(nodes).enter().append('g')
+                    .attr("transform", function (d) {
+                        return "translate(" + d.x + "," + d.y + ")"
+                    })
+                    .classed('gnode', true);
+
+
+                // node.append("circle")
+                //     .attr("r", function (d) { return xScale(d.weight); })
+                //     .style("fill", function(d) { return colNodeScale(d.group); });
+
+                var node = gnodes.append("circle")
+                    .attr("r", function (d) {
+                        return xScale(d.weight);
+                    })
+                    .style("fill", function (d) {
+
+                        if (d.group == 0) {
+                            return("#696969");
+                        }
+                        else if (d.group == 1) {
+                            return("#006400");
+                        }
+                        else if (d.group == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.group == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.group == 4) {
+                            return("#808080");
+                        }
+                        else if (d.group == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.group == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.group == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.group == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.group == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.group == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.group == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.group == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.group == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.group == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.group == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.group == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.group == 18) {
+                            return("#708090");
+                        }
+                        else if (d.group == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.group == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.group == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.group == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.group == 23) {
+                            return("#000080");
+                        }
+                        else if (d.group == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.group == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.group == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.group == 28) {
+                            return("#696969");
+                        }
+                        else if (d.group == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.group == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.group == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.group == 32) {
+                            return("#006400");
+                        }
+                        else if (d.group == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.group == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.group == 35) {
+                            return("#800000");
+                        }
+                        else if (d.group == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.group == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.group == 38) {
+                            return("#808080");
+                        }
+                        else if (d.group == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.group == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.group == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.group == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.group == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.group == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.group == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.group == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.group == 47) {
+                            return("#696969");
+                        }
+                        else if (d.group == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.group == 49) {
+                            return("#FFA500");
+                        }
+
+                        else if (d.group == 117) {
+                            return ("#FFD600FF");
+                        }
+                        else if (d.group == 64) {
+                            return ("#FF7600FF");
+                        }
+                        else if (d.group == 85) {
+                            return ("#FFFF9CFF");
+                        }
+                        else if (d.group == 95) {
+                            return ("#FF3000FF");
+                        }
+                        else if (d.group == 123) {
+                            return ("#FFFF0BFF");
+                        }
+                        else if (d.group == 88) {
+                            return ("#FFFFF1FF");
+                        }
+                        else if (d.group == 73) {
+                            return ("#FFC800FF");
+                        }
+                        else if (d.group == 118) {
+                            return ("#FFDD00FF");
+                        }
+                        else if (d.group == 129) {
+                            return ("#FFFF8AFF");
+                        }
+                        else if (d.group == 54) {
+                            return ("#FF1B00FF");
+                        }
+                        else if (d.group == 122) {
+                            return ("#FFF800FF");
+                        }
+                        else if (d.group == 130) {
+                            return ("#FFFF9FFF");
+                        }
+                        else if (d.group == 99) {
+                            return ("#FF5300FF");
+                        }
+                        else if (d.group == 98) {
+                            return ("#FF4C00FF");
+                        }
+                        else if (d.group == 56) {
+                            return ("#FF2E00FF");
+                        }
+                        else if (d.group == 89) {
+                            return ("#FF0700FF");
+                        }
+                        else if (d.group == 110) {
+                            return ("#FF9F00FF");
+                        }
+                        else if (d.group == 101) {
+                            return ("#FF6000FF");
+                        }
+                        else if (d.group == 93) {
+                            return ("#FF2200FF");
+                        }
+                        else if (d.group == 53) {
+                            return ("#FF1200FF");
+                        }
+                        else if (d.group == 108) {
+                            return ("#FF9100FF");
+                        }
+                        else if (d.group == 69) {
+                            return ("#FFA400FF");
+                        }
+                        else if (d.group == 75) {
+                            return ("#FFDB00FF");
+                        }
+                        else if (d.group == 76) {
+                            return ("#FFE400FF");
+                        }
+                        else if (d.group == 119) {
+                            return ("#FFE300FF");
+                        }
+                        else if (d.group == 134) {
+                            return ("#FFFFF4FF");
+                        }
+                        else if (d.group == 62) {
+                            return ("#FF6400FF");
+                        }
+                        else if (d.group == 127) {
+                            return ("#FFFF60FF");
+                        }
+                        else if (d.group == 121) {
+                            return ("#FFF100FF");
+                        }
+                        else if (d.group == 109) {
+                            return ("#FF9800FF");
+                        }
+                        else if (d.group == 116) {
+                            return ("#FFCF00FF");
+                        }
+                        else if (d.group == 124) {
+                            return ("#FFFF20FF");
+                        }
+                        else if (d.group == 131) {
+                            return ("#FFFFB5FF");
+                        }
+                        else if (d.group == 90) {
+                            return ("#FF0E00FF");
+                        }
+                        else if (d.group == 114) {
+                            return ("#FFBA00FF");
+                        }
+                        else if (d.group == 72) {
+                            return ("#FFBF00FF");
+                        }
+                        else if (d.group == 52) {
+                            return ("#FF0900FF");
+                        }
+                        else if (d.group == 63) {
+                            return ("#FF6D00FF");
+                        }
+                        else if (d.group == 79) {
+                            return ("#FFFF00FF");
+                        }
+                        else if (d.group == 80) {
+                            return ("#FFFF0EFF");
+                        }
+                        else if (d.group == 78) {
+                            return ("#FFF600FF");
+                        }
+                        else if (d.group == 107) {
+                            return ("#FF8A00FF");
+                        }
+                        else if (d.group == 87) {
+                            return ("#FFFFD4FF");
+                        }
+                        else if (d.group == 59) {
+                            return ("#FF4900FF");
+                        }
+                        else if (d.group == 55) {
+                            return ("#FF2400FF");
+                        }
+                        else if (d.group == 106) {
+                            return ("#FF8300FF");
+                        }
+                        else if (d.group == 113) {
+                            return ("#FFB300FF");
+                        }
+                        else if (d.group == 51) {
+                            return ("#FF0000FF");
+                        }
+                        else if (d.group == 74) {
+                            return ("#FFD100FF");
+                        }
+                        else if (d.group == 82) {
+                            return ("#FFFF47FF");
+                        }
+                        else if (d.group == 104) {
+                            return ("#FF7500FF");
+                        }
+                        else if (d.group == 66) {
+                            return ("#FF8900FF");
+                        }
+                        else if (d.group == 133) {
+                            return ("#FFFFDFFF");
+                        }
+                        else if (d.group == 86) {
+                            return ("#FFFFB8FF");
+                        }
+                        else if (d.group == 65) {
+                            return ("#FF8000FF");
+                        }
+                        else if (d.group == 132) {
+                            return ("#FFFFCAFF");
+                        }
+                        else if (d.group == 58) {
+                            return ("#FF4000FF");
+                        }
+                        else if (d.group == 105) {
+                            return ("#FF7C00FF");
+                        }
+                        else if (d.group == 102) {
+                            return ("#FF6700FF");
+                        }
+                        else if (d.group == 96) {
+                            return ("#FF3E00FF");
+                        }
+                        else if (d.group == 125) {
+                            return ("#FFFF35FF");
+                        }
+                        else if (d.group == 81) {
+                            return ("#FFFF2BFF");
+                        }
+                        else if (d.group == 83) {
+                            return ("#FFFF63FF");
+                        }
+                        else if (d.group == 120) {
+                            return ("#FFEA00FF");
+                        }
+                        else if (d.group == 71) {
+                            return ("#FFB600FF");
+                        }
+                        else if (d.group == 67) {
+                            return ("#FF9200FF");
+                        }
+                        else if (d.group == 97) {
+                            return ("#FF4500FF");
+                        }
+                        else if (d.group == 112) {
+                            return ("#FFAC00FF");
+                        }
+                        else if (d.group == 61) {
+                            return ("#FF5B00FF");
+                        }
+                        else if (d.group == 91) {
+                            return ("#FF1500FF");
+                        }
+                        else if (d.group == 115) {
+                            return ("#FFC100FF");
+                        }
+                        else if (d.group == 103) {
+                            return ("#FF6E00FF");
+                        }
+                        else if (d.group == 70) {
+                            return ("#FFAD00FF");
+                        }
+                        else if (d.group == 84) {
+                            return ("#FFFF80FF");
+                        }
+                        else if (d.group == 126) {
+                            return ("#FFFF4AFF");
+                        }
+                        else if (d.group == 100) {
+                            return ("#FF5A00FF");
+                        }
+                        else if (d.group == 77) {
+                            return ("#FFED00FF");
+                        }
+                        else if (d.group == 68) {
+                            return ("#FF9B00FF");
+                        }
+                        else if (d.group == 57) {
+                            return ("#FF3700FF");
+                        }
+                        else if (d.group == 92) {
+                            return ("#FF1C00FF");
+                        }
+                        else if (d.group == 60) {
+                            return ("#FF5200FF");
+                        }
+                        else if (d.group == 111) {
+                            return ("#FFA500FF");
+                        }
+                        else if (d.group == 94) {
+                            return ("#FF2900FF");
+                        }
+                        else if (d.group == 128) {
+                                return ("#FFFF75FF");
+                            }
+
+                            else{
+                                return("#000000");
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+
+                    // .style("fill", function (d) {
+                    //     return colNodeScale(d.group);
+                    // })
+                    .style("stroke", "#333")
+                    .style("stroke-width", "2px")
+                    .style("stroke-dasharray",
+                        function (d) {
+                            if (d.connected == "No") {
+                                ////console.log("not connected");
+                                return (5, 5);
+
+                            }
+                            else if(d.connected == "Yes") {
+                                ////console.log("connected");
+                                return (3, 0);
+                            }
+                        })
+
+                    //.attr("class", "node")
+                    .on("mouseenter", function (d) {
+                        is_connected(d, 0.1)
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+                    })
+                    .on("mouseleave", function (d) {
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        //is_connected(d, 1);
+                    })
+                    .on("click", function(d){
+
+                        //if(!first_click) {
+                        is_connected_on_click(d, 0.1);
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+
+                    })
+                    .call(force.drag);
+
+                var labels = gnodes.append("text")
+                    .attr("dx", 4)
+                    .attr("dy", 4)
+                    .style("font", String(fontSize) + "px Arial")
+                    .attr("text-anchor", function (d) {
+                        return d.x < w / 2 ? "end" : "start";
+                    })
+                    .attr("transform", function (d) {
+                        return d.x < w / 2 ? "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(-20)" : "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(20)";
+                    })
+                    //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
+                    //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
+                    .text(function (d) {
+                        return d.full_name
+                    })
+
+                var drag = force.drag()
+                    .on("dragstart", dragstart);
+                //.on("dragstart", dragstartAll);
+
+
+                //For not moving after drag
+                function dragstart(d) {
+                    d3.select(this).classed("fixed", d.fixed = true);
+
+                    for (i = 0; i < nodes.length; i++) {
+                        nodes[i].fixed = true;
+                    }
+                }
+
+
+                var svgText = svgGE.append("text");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+
+                //Added from here for coloring the legend
+                max_data = 1000;
+                min_data = -1000;
+                if (1 == 0) {
+
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+
+
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
+
+
+                    var legend2 = svgGE.selectAll(".legend")
+
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+
+                            return d;
+                        });
+
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(globalW / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
+
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svgGE.selectAll(".legend").data().length - 1) {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", "11px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
+
+                    legend2.exit().remove();
+                }
+
+
+            };
+            d3.select('#circularViewGE').on('click', function () {
+                circularViewGE();
+                $scope.graphType = 1;
+            });
+
+            function circosViewGE(){
+                svgGE.remove();
+
+                xScale.domain(d3.extent(nodes, function (d) {
+                    return d.weight;
+                }));
+                scoreScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                colNodeScale.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                colScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                var margin = 75,
+                    w = widthSize - 2 * margin,
+                    h = w,
+                    radius = w / 2,
+                    strokeWidth = 4,
+                    hyp2 = Math.pow(radius, 2),
+                    nodeBaseRad = 5;
+
+
+                globalH = h;
+                globalHPlus50 = h + 50;
+                globalW = w;
+
+                var first_click = false;
+
+
+                svgGE = d3.select("#chartGE")
+                    .append("svg")
+                    .attr("style", "outline: thin solid yellow;")
+                    .attr("width", w)
+                    .attr("height", globalHPlus50);
+                svgGE.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "white");
+
+
+                // This is for grouping nodes
+
+
+                var force = d3.layout.force()
+                    .nodes(nodes)
+                    .links(links)
+                    .size([w, h]);
+
+// evenly spaces nodes along arc
+                var circleCoord = function (node, index, input_num_nodes, has_focus) {
+                    //console.log("in circleCoord");
+
+                    // console.log(node["name"]);
+                    // console.log(index);
+                    // String(node["name"]).valueOf() ==
+                    var circumference = circle.node().getTotalLength();
+                    var pointAtLength = function (l) {
+                        return circle.node().getPointAtLength(l)
+                    };
+
+
+                    if (has_focus){
+                        var added_num = parseInt(input_num_nodes/4);
+                        if (added_num%2 == 1){
+                            added_num += 1;
+                        }
+                        var num_nodes = input_num_nodes + added_num;
+                        var sectionLength = (circumference) / num_nodes;
+                        if (String(node["name"]).valueOf() === $scope.interest){
+                            var position = 0;
+                            // console.log("in ATP");
+                            // console.log(pointAtLength(circumference - position));
+                            // console.log(position);
+                        }
+                        else {
+
+
+                            var position = sectionLength * (index + added_num/2) + sectionLength / 2;
+                        }
+                    }
+                    else{
+                        var num_nodes = input_num_nodes;
+                        var sectionLength = (circumference) / num_nodes;
+                        var position = sectionLength * (index) + sectionLength / 2;
+
+                    }
+
+                    //console.log(pointAtLength(circumference - position));
+                    return pointAtLength(circumference - position)
+                }
+
+                var is_connected = function (d, opacity) {
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source === d || o.target === d ? 1 : opacity;
+                    });
+                }
+
+
+
+                // lines.transition().style("stroke-opacity", function (o) {
+                //     if (o.source === d || o.target === d){
+                //         return 1;
+                //     }
+                //
+                // });
+
+                var is_connected_on_click = function (d, opacity) {
+                    //console.log(d);
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source.group === d.group || o.target.group === d.group ? 1 : opacity;
+                    });
+                }
+
+                // var dim = w - 400
+                // var circle = svgGE.append("path")
+                //     .attr("d", "M 200, " + (dim / 2 + 200) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                //     .style("fill", "white");
+
+                var dim = w - (widthSize - circleSize)
+                var circle = svgGE.append("path")
+                    .attr("d", "M " + String((widthSize - circleSize)/2) + ", " + (dim / 2 + (widthSize - circleSize)/2) + " a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim + ",0 a " + dim / 2 + "," + dim / 2 + " 0 1,0 " + dim * -1 + ",0")
+                    .style("fill", "white");
+
+                force.start();
+                var has_focus = false;
+                nodes.forEach(function (n, i) {
+                    if (String(n["name"]).valueOf() == $scope.interest){
+                        //if (String(n["name"]).valueOf() === $scope.interest) {
+                        has_focus = true;
+                    }
+
+                })
+
+                console.log(has_focus);
+                nodes.forEach(function (n, i) {
+                    var coord = circleCoord(n, i, nodes.length, has_focus)
+                    // console.log("calculating coor");
+                    // console.log(coord);
+                    // console.log(coord.x);
+                    // console.log(coord.y);
+                    n.x = coord.x
+                    n.y = coord.y
+                });
+
+
+                // use this one for straight line links...
+                // var lines = svg.selectAll("line.node-link")
+                //     .data(links).enter().append("line")
+                //     .attr("class", "node-link")
+                //     .attr("x1", function(d) { return d.source.x; })
+                //     .attr("y1", function(d) { return d.source.y; })
+                //     .attr("x2", function(d) { return d.target.x; })
+                //     .attr("y2", function(d) { return d.target.y; });
+
+                var lines = svgGE.selectAll("path.node-link")
+                    .data(links).enter().append("path")
+                    .style("fill", "none")
+                    .style("stroke", function (d) {
+
+
+                        if (d.tag == 0) {
+                            return("#696969");
+                        }
+
+                        else if (d.tag == 1) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.tag == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.tag == 4) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.tag == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.tag == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.tag == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.tag == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.tag == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.tag == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.tag == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.tag == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.tag == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.tag == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.tag == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.tag == 18) {
+                            return("#708090");
+                        }
+                        else if (d.tag == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.tag == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.tag == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.tag == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.tag == 23) {
+                            return("#000080");
+                        }
+                        else if (d.tag == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.tag == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.tag == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.tag == 28) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.tag == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.tag == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.tag == 32) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.tag == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.tag == 35) {
+                            return("#800000");
+                        }
+                        else if (d.tag == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.tag == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.tag == 38) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.tag == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.tag == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.tag == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.tag == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.tag == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.tag == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.tag == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.tag == 47) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.tag == 49) {
+                            return("#FFA500");
+                        }
+                        else{
+                            return("#000000");
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+
+
+
+                    //.style("stroke", "#726363")
+                    .attr("class", "node-link")
+                    .style("stroke-width", function (d) {return scoreScale(d.weight); })
+                    //.style("stroke-width", 0.1)
+                    .attr("d", function (d) {
+
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy),
+                            a1 = dx,
+                            a2 = dy,
+                            c1 = w/2 - d.source.x,
+                            c2 = h/2 - d.source.y,
+                            d1 = w/2 - d.target.x,
+                            d2 = h/2 - d.target.y,
+
+                            drx = dr/1.5,
+                            dry = dr/1.5,
+                            xRotation = 0, // degrees
+                            largeArc = 0, // 1 or 0
+
+                            sweep = 1, // 1 or 0
+                            x2 = d.target.x,
+                            y2 = d.target.y;
+
+
+                        // if( (a1*c2 - a2*c1) > 0)
+                        // {
+                        //     sweep = 0
+                        // }
+                        // else
+                        // {sweep = 1}
+                        if( (c1*d2 - c2*d1) > 0)
+                        {
+                            sweep = 0
+                        }
+                        else
+                        {sweep = 1}
+
+
+                        return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+
+
+                        //return "M" + d.source.x + "," + d.source.y + ","+ d.target.x + "," + d.target.y;
+                        //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                    });
+
+
+
+
+
+
+                //     var dx = d.target.x - d.source.x,
+                //         dy = d.target.y - d.source.y,
+                //         dr = Math.sqrt(dx * dx + dy * dy);
+                //     return "M" +
+                //         d.source.x + "," +
+                //         d.source.y + "," +
+                //         d.target.x + "," +
+                //         d.target.y;
+                //
+                // });
+
+
+                var gnodes = svgGE.selectAll('g.gnode')
+                    .data(nodes).enter().append('g')
+                    .attr("transform", function (d) {
+                        return "translate(" + d.x + "," + d.y + ")"
+                    })
+                    .classed('gnode', true);
+
+
+                // node.append("circle")
+                //     .attr("r", function (d) { return xScale(d.weight); })
+                //     .style("fill", function(d) { return colNodeScale(d.group); });
+
+//                 function click() {
+//                     d3.select(this).select("text").transition()
+//                         .duration(750)
+//                         .attr("x", 22)
+//                         .style("stroke", "lightsteelblue")
+//                         .style("stroke-width", ".5px")
+//                         .style("font", "20px sans-serif");
+//                     d3.select(this).select("circle").transition()
+//                         .duration(750)
+//                         .attr("r", 16);
+//                 }
+//
+// // action to take on mouse double click
+//                 function dblclick() {
+//                     d3.select(this).select("circle").transition()
+//                         .duration(750)
+//                         .attr("r", 6);
+//                     d3.select(this).select("text").transition()
+//                         .duration(750)
+//                         .attr("x", 12)
+//                         .style("stroke", "none")
+//                         .style("fill", "black")
+//                         .style("stroke", "none")
+//                         .style("font", "10px sans-serif");
+//                 }
+
+
+
+                var node = gnodes.append("circle")
+                    .attr("r", function (d) {
+                        return xScale(d.weight);
+                    })
+                    .style("fill", function (d) {
+
+
+                        if (d.group == 0) {
+                            return("#696969");
+                        }
+                        else if (d.group == 1) {
+                            return("#006400");
+                        }
+                        else if (d.group == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.group == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.group == 4) {
+                            return("#808080");
+                        }
+                        else if (d.group == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.group == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.group == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.group == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.group == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.group == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.group == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.group == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.group == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.group == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.group == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.group == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.group == 18) {
+                            return("#708090");
+                        }
+                        else if (d.group == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.group == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.group == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.group == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.group == 23) {
+                            return("#000080");
+                        }
+                        else if (d.group == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.group == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.group == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.group == 28) {
+                            return("#696969");
+                        }
+                        else if (d.group == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.group == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.group == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.group == 32) {
+                            return("#006400");
+                        }
+                        else if (d.group == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.group == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.group == 35) {
+                            return("#800000");
+                        }
+                        else if (d.group == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.group == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.group == 38) {
+                            return("#808080");
+                        }
+                        else if (d.group == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.group == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.group == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.group == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.group == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.group == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.group == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.group == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.group == 47) {
+                            return("#696969");
+                        }
+                        else if (d.group == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.group == 49) {
+                            return("#FFA500");
+                        }
+                        else if (d.group == 117) {
+                            return ("#FFD600FF");
+                        }
+                        else if (d.group == 64) {
+                            return ("#FF7600FF");
+                        }
+                        else if (d.group == 85) {
+                            return ("#FFFF9CFF");
+                        }
+                        else if (d.group == 95) {
+                            return ("#FF3000FF");
+                        }
+                        else if (d.group == 123) {
+                            return ("#FFFF0BFF");
+                        }
+                        else if (d.group == 88) {
+                            return ("#FFFFF1FF");
+                        }
+                        else if (d.group == 73) {
+                            return ("#FFC800FF");
+                        }
+                        else if (d.group == 118) {
+                            return ("#FFDD00FF");
+                        }
+                        else if (d.group == 129) {
+                            return ("#FFFF8AFF");
+                        }
+                        else if (d.group == 54) {
+                            return ("#FF1B00FF");
+                        }
+                        else if (d.group == 122) {
+                            return ("#FFF800FF");
+                        }
+                        else if (d.group == 130) {
+                            return ("#FFFF9FFF");
+                        }
+                        else if (d.group == 99) {
+                            return ("#FF5300FF");
+                        }
+                        else if (d.group == 98) {
+                            return ("#FF4C00FF");
+                        }
+                        else if (d.group == 56) {
+                            return ("#FF2E00FF");
+                        }
+                        else if (d.group == 89) {
+                            return ("#FF0700FF");
+                        }
+                        else if (d.group == 110) {
+                            return ("#FF9F00FF");
+                        }
+                        else if (d.group == 101) {
+                            return ("#FF6000FF");
+                        }
+                        else if (d.group == 93) {
+                            return ("#FF2200FF");
+                        }
+                        else if (d.group == 53) {
+                            return ("#FF1200FF");
+                        }
+                        else if (d.group == 108) {
+                            return ("#FF9100FF");
+                        }
+                        else if (d.group == 69) {
+                            return ("#FFA400FF");
+                        }
+                        else if (d.group == 75) {
+                            return ("#FFDB00FF");
+                        }
+                        else if (d.group == 76) {
+                            return ("#FFE400FF");
+                        }
+                        else if (d.group == 119) {
+                            return ("#FFE300FF");
+                        }
+                        else if (d.group == 134) {
+                            return ("#FFFFF4FF");
+                        }
+                        else if (d.group == 62) {
+                            return ("#FF6400FF");
+                        }
+                        else if (d.group == 127) {
+                            return ("#FFFF60FF");
+                        }
+                        else if (d.group == 121) {
+                            return ("#FFF100FF");
+                        }
+                        else if (d.group == 109) {
+                            return ("#FF9800FF");
+                        }
+                        else if (d.group == 116) {
+                            return ("#FFCF00FF");
+                        }
+                        else if (d.group == 124) {
+                            return ("#FFFF20FF");
+                        }
+                        else if (d.group == 131) {
+                            return ("#FFFFB5FF");
+                        }
+                        else if (d.group == 90) {
+                            return ("#FF0E00FF");
+                        }
+                        else if (d.group == 114) {
+                            return ("#FFBA00FF");
+                        }
+                        else if (d.group == 72) {
+                            return ("#FFBF00FF");
+                        }
+                        else if (d.group == 52) {
+                            return ("#FF0900FF");
+                        }
+                        else if (d.group == 63) {
+                            return ("#FF6D00FF");
+                        }
+                        else if (d.group == 79) {
+                            return ("#FFFF00FF");
+                        }
+                        else if (d.group == 80) {
+                            return ("#FFFF0EFF");
+                        }
+                        else if (d.group == 78) {
+                            return ("#FFF600FF");
+                        }
+                        else if (d.group == 107) {
+                            return ("#FF8A00FF");
+                        }
+                        else if (d.group == 87) {
+                            return ("#FFFFD4FF");
+                        }
+                        else if (d.group == 59) {
+                            return ("#FF4900FF");
+                        }
+                        else if (d.group == 55) {
+                            return ("#FF2400FF");
+                        }
+                        else if (d.group == 106) {
+                            return ("#FF8300FF");
+                        }
+                        else if (d.group == 113) {
+                            return ("#FFB300FF");
+                        }
+                        else if (d.group == 51) {
+                            return ("#FF0000FF");
+                        }
+                        else if (d.group == 74) {
+                            return ("#FFD100FF");
+                        }
+                        else if (d.group == 82) {
+                            return ("#FFFF47FF");
+                        }
+                        else if (d.group == 104) {
+                            return ("#FF7500FF");
+                        }
+                        else if (d.group == 66) {
+                            return ("#FF8900FF");
+                        }
+                        else if (d.group == 133) {
+                            return ("#FFFFDFFF");
+                        }
+                        else if (d.group == 86) {
+                            return ("#FFFFB8FF");
+                        }
+                        else if (d.group == 65) {
+                            return ("#FF8000FF");
+                        }
+                        else if (d.group == 132) {
+                            return ("#FFFFCAFF");
+                        }
+                        else if (d.group == 58) {
+                            return ("#FF4000FF");
+                        }
+                        else if (d.group == 105) {
+                            return ("#FF7C00FF");
+                        }
+                        else if (d.group == 102) {
+                            return ("#FF6700FF");
+                        }
+                        else if (d.group == 96) {
+                            return ("#FF3E00FF");
+                        }
+                        else if (d.group == 125) {
+                            return ("#FFFF35FF");
+                        }
+                        else if (d.group == 81) {
+                            return ("#FFFF2BFF");
+                        }
+                        else if (d.group == 83) {
+                            return ("#FFFF63FF");
+                        }
+                        else if (d.group == 120) {
+                            return ("#FFEA00FF");
+                        }
+                        else if (d.group == 71) {
+                            return ("#FFB600FF");
+                        }
+                        else if (d.group == 67) {
+                            return ("#FF9200FF");
+                        }
+                        else if (d.group == 97) {
+                            return ("#FF4500FF");
+                        }
+                        else if (d.group == 112) {
+                            return ("#FFAC00FF");
+                        }
+                        else if (d.group == 61) {
+                            return ("#FF5B00FF");
+                        }
+                        else if (d.group == 91) {
+                            return ("#FF1500FF");
+                        }
+                        else if (d.group == 115) {
+                            return ("#FFC100FF");
+                        }
+                        else if (d.group == 103) {
+                            return ("#FF6E00FF");
+                        }
+                        else if (d.group == 70) {
+                            return ("#FFAD00FF");
+                        }
+                        else if (d.group == 84) {
+                            return ("#FFFF80FF");
+                        }
+                        else if (d.group == 126) {
+                            return ("#FFFF4AFF");
+                        }
+                        else if (d.group == 100) {
+                            return ("#FF5A00FF");
+                        }
+                        else if (d.group == 77) {
+                            return ("#FFED00FF");
+                        }
+                        else if (d.group == 68) {
+                            return ("#FF9B00FF");
+                        }
+                        else if (d.group == 57) {
+                            return ("#FF3700FF");
+                        }
+                        else if (d.group == 92) {
+                            return ("#FF1C00FF");
+                        }
+                        else if (d.group == 60) {
+                            return ("#FF5200FF");
+                        }
+                        else if (d.group == 111) {
+                            return ("#FFA500FF");
+                        }
+                        else if (d.group == 94) {
+                            return ("#FF2900FF");
+                        }
+                        else if (d.group == 128) {
+                                return ("#FFFF75FF");
+                            }
+
+                            else{
+                                return("#000000");
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+                    // .style("fill", function (d) {
+                    //     return colNodeScale(d.group);
+                    // })
+                    .style("stroke", "#333")
+                    .style("stroke-width", "2px")
+                    .style("stroke-dasharray",
+                        function (d) {
+                            if (d.connected == "No") {
+                                ////console.log("not connected");
+                                return (5, 5);
+
+                            }
+                            else if(d.connected == "Yes") {
+                                ////console.log("connected");
+                                return (3, 0);
+                            }
+                        })
+
+                    //.attr("class", "node")
+                    .on("mouseenter", function (d) {
+                        is_connected(d, 0.1)
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+                    })
+                    // .on("mouseleave", function (d) {
+                    //     node.transition().duration(100).attr("r", function (d) {
+                    //         return xScale(d.weight);
+                    //     })
+                    //     //is_connected(d, 1);
+                    // })
+                    .on("click", function(d){
+
+                        //if(!first_click) {
+                        is_connected_on_click(d, 0.1);
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+
+                    })
+
+                    .call(force.drag);
+
+                var labels = gnodes.append("text")
+                    .attr("dx", 4)
+                    .attr("dy", 4)
+                    .style("font", String(fontSize) + "px Arial")
+                    .attr("text-anchor", function (d) {
+                        return d.x < w / 2 ? "end" : "start";
+                    })
+                    .attr("transform", function (d) {
+                        return d.x < w / 2 ? "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(-20)" : "rotate(" + Math.atan((d.y - w / 2) / (d.x - w / 2)) * 180 / Math.PI + ")translate(20)";
+                    })
+                    //.attr("transform", function(d) { return  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")"})
+                    //.attr("transform", function(d) { return (d.x-w/2)/(d.y-w/2) < 0 ?  "rotate(" +Math.atan((d.y-w/2)/(d.x-w/2))*180/Math.PI+ ")" : "rotate(180)"; })
+                    .text(function (d) {
+                        return d.full_name
+                    })
+
+                var drag = force.drag()
+                    .on("dragstart", dragstart);
+                //.on("dragstart", dragstartAll);
+
+
+                //For not moving after drag
+                function dragstart(d) {
+                    d3.select(this).classed("fixed", d.fixed = true);
+
+                    for (i = 0; i < nodes.length; i++) {
+                        nodes[i].fixed = true;
+                    }
+                }
+
+
+                var svgText = svgGE.append("text");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+
+                //Added from here for coloring the legend
+                max_data = 1000;
+                min_data = -1000;
+
+                if (1 == 0) {
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+
+
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
+
+
+                    var legend2 = svgGE.selectAll(".legend")
+
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+
+                            return d;
+                        });
+
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(globalW / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
+
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svgGE.selectAll(".legend").data().length - 1) {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", "11px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
+
+                    legend2.exit().remove();
+                }
+
+
+            };
+
+            d3.select('#circosViewGE').on('click', function (){
+                circosViewGE();
+                $scope.graphType = 0;
+            });
+
+
+
+            function parallelViewGE() {
+                svgGE.remove();
+
+                //xPosition.domain(d3.extent(nodes, function (d) { return d.text; }));
+                xScale.domain(d3.extent(nodes, function (d) {
+                    return d.weight;
+                }));
+                colNodeScale.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                colScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                textPlacePlusMinus.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                textPlaceStartEnd.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                scoreScale.domain(d3.extent(links, function (d) {
+                    return d.score;
+                }));
+
+                var groupId = {};
+                var groupIds = [];
+                var maxId = 0;
+                var maxGroupNum = 0;
+                for (var i = 0; i < nodes.length; i++) {
+                    var item = nodes[i];
+
+                    if (!groupId[item.group]) {
+                        groupId[item.group] = [];
+                        groupIds.push(item.group);
+                    }
+
+                    groupId[item.group].push({name: item.name});
+                    // //console.log(item.group);
+                    // //console.log(groupId[item.group]);
+                    // if (maxId < item.group) {
+                    //     maxId = item.group;
+                    // }
+                }
+                //console.log(maxId);
+                var nodeListIter = {};
+                for (var key in groupId) {
+                    if (groupId.hasOwnProperty(key)) {
+                        nodeListIter[key] = 0;
+                        maxId += 1;
+                        console.log(groupId[key]);
+                        console.log(groupId[key].length);
+                        if (maxGroupNum < groupId[key].length) {
+                            maxGroupNum = groupId[key].length;
+                        }
+                    }
+                }
+                console.log(groupIds);
+                groupIds.sort();
+                console.log(groupIds);
+
+                console.log(maxId);
+                console.log(maxGroupNum);
+
+                var parallelH = Math.max(maxGroupNum * 25, 500);
+                //var parallelH = Math.max(n1 * 12, n2 * 12);
+
+                var margin = 75,
+                    w = widthSize - 2 * margin,
+                    h = parallelH,
+                    radius = w / 2,
+                    strokeWidth = 4,
+                    hyp2 = Math.pow(radius, 2),
+                    nodeBaseRad = 5;
+
+                globalH = h;
+                globalHPlus50 = h + 50;
+                globalW = w;
+
+
+                svgGE = d3.select("#chartGE")
+                    .append("svg")
+                    .attr("style", "outline: thin solid yellow;")
+                    .attr("width", w)
+                    .attr("height", globalHPlus50);
+
+                svgGE.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "white");
+
+
+                var force = d3.layout.force()
+                    .nodes(nodes)
+                    .links(links)
+                    .size([w, h]);
+
+
+                var parallelCoordx = function (group, maxId) {
+
+
+                    return group * w/(maxId + 1)+ w/(maxId + 1);
+
+                }
+
+                var parallelCoordy = function (index, num_nodes) {
+                    var dist = h / (num_nodes + 1);
+
+                    return (index + 1) * dist;
+                }
+
+                var is_connected = function (d, opacity) {
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source === d || o.target === d ? 1 : opacity;
+                    });
+                }
+
+                var is_connected_on_click = function (d, opacity) {
+                    //console.log(d);
+                    lines.transition().style("stroke-opacity", function (o) {
+                        return o.source.group === d.group || o.target.group === d.group ? 1 : opacity;
+                    });
+                }
+                //var dim = w-80
+                // var circle = svg.append("path")
+                //     .attr("d", "M 40, "+(dim/2+40)+" a "+dim/2+","+dim/2+" 0 1,0 "+dim+",0 a "+dim/2+","+dim/2+" 0 1,0 "+dim*-1+",0")
+                //     .style("fill", "#f5f5f5");
+
+                force.start();
+
+
+                // //console.log(nodes.length);
+
+
+
+
+
+
+
+                nodes.forEach(function (n, i) {
+                    var groupOrder = groupIds.indexOf(n.group);
+                    n.x = parallelCoordx(groupOrder, maxId);
+                    n.y = parallelCoordy(nodeListIter[n.group], groupId[n.group].length);
+                    nodeListIter[n.group] += 1;
+
+                });
+
+
+                // use this one for straight line links...
+                // var lines = svg.selectAll("line.node-link")
+                //   .data(links).enter().append("line")
+                //     .attr("class", "node-link")
+                //   .attr("x1", function(d) { return d.source.x; })
+                //   .attr("y1", function(d) { return d.source.y; })
+                //   .attr("x2", function(d) { return d.target.x; })
+                //   .attr("y2", function(d) { return d.target.y; });
+
+                var lines = svgGE.selectAll("path.node-link")
+                    .data(links).enter().append("path")
+                    .style("fill", "none")
+                    .style("stroke", function (d) {
+
+                        if (d.tag == 0) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 1) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.tag == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.tag == 4) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.tag == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.tag == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.tag == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.tag == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.tag == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.tag == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.tag == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.tag == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.tag == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.tag == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.tag == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.tag == 18) {
+                            return("#708090");
+                        }
+                        else if (d.tag == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.tag == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.tag == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.tag == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.tag == 23) {
+                            return("#000080");
+                        }
+                        else if (d.tag == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.tag == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.tag == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.tag == 28) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.tag == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.tag == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.tag == 32) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.tag == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.tag == 35) {
+                            return("#800000");
+                        }
+                        else if (d.tag == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.tag == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.tag == 38) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.tag == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.tag == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.tag == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.tag == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.tag == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.tag == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.tag == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.tag == 47) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.tag == 49) {
+                            return("#FFA500");
+                        }
+                        else{
+                            return("#000000");
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+                    //.style("stroke", "#726363")
+                    .attr("class", "node-link")
+                    .style("stroke-width", function (d) {return d.score/2; })
+                    .attr("d", function (d) {
+
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+                            dr = Math.sqrt(dx * dx + dy * dy),
+                            a1 = dx,
+                            a2 = dy,
+                            c1 = w/2 - d.source.x,
+                            c2 = h/2 - d.source.y,
+                            d1 = w/2 - d.target.x,
+                            d2 = h/2 - d.target.y,
+
+                            drx = dr/1.5,
+                            dry = dr/1.5,
+                            xRotation = 0, // degrees
+                            largeArc = 0, // 1 or 0
+
+                            sweep = 1, // 1 or 0
+                            x2 = d.target.x,
+                            y2 = d.target.y;
+
+
+                        // if( (a1*c2 - a2*c1) > 0)
+                        // {
+                        //     sweep = 0
+                        // }
+                        // else
+                        // {sweep = 1}
+                        if( (c1*d2 - c2*d1) > 0)
+                        {
+                            sweep = 0
+                        }
+                        else
+                        {sweep = 1}
+
+
+                        return "M" + d.source.x + "," + d.source.y + "A" + drx + "," + dry + " " + xRotation + "," + largeArc + "," + sweep + " " + x2 + "," + y2;
+
+
+                        //return "M" + d.source.x + "," + d.source.y + ","+ d.target.x + "," + d.target.y;
+                        //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                    });
+                // .attr("d", function (d) {
+                //     var dx = d.target.x - d.source.x,
+                //         dy = d.target.y - d.source.y,
+                //         dr = Math.sqrt(dx * dx + dy * dy);
+                //     return "M" +
+                //         d.source.x + "," +
+                //         d.source.y + "," +
+                //         d.target.x + "," +
+                //         d.target.y;
+                // });
+
+
+                // nodes.weight = lines.filter(function(l) {
+                //     return l.source.index == d.index || l.target.index == d.index
+                // }).size();
+
+                // var lines = svg.selectAll("path.node-link")
+                //     .data(links).enter().append("path")
+                //     .style("fill", "none")
+                //     .style("stroke", "black")
+                //     .attr("class", "node-link")
+                //     .attr("d", function(d) {
+                //         var dx = d.target.x - d.source.x,
+                //             dy = d.target.y - d.source.y,
+                //             dr = Math.sqrt(dx * dx + dy * dy);
+                //         return "M" +
+                //             d.source.x + "," +
+                //             d.source.y + "A" +
+                //             dr + "," + dr + " 0 0,1 " +
+                //             d.target.x + "," +
+                //             d.target.y;
+                //     });
+
+                var gnodes = svgGE.selectAll('g.gnode')
+                    .data(nodes).enter().append('g')
+                    .attr("transform", function (d) {
+                        return "translate(" + d.x + "," + d.y + ")"
+                    })
+                    .classed('gnode', true);
+
+                // gnodes.forEach(function (n, i) {
+                //     n.weight = lines.filter(function (l) {
+                //         return l.source.idx == n.idx || l.target.idx == n.idx
+                //     }).size();
+                //
+                // });
+                var node = gnodes.append("circle")
+                //.attr("r", function(d) {
+                // d.sizes = lines.filter(function(l) {
+                //     return l.source.index == d.index || l.target.index == d.index
+                // }).size();
+                // var minRadius = 5;
+                // return minRadius + (d.sizes * 2);
+                //     return colorScale(d.weight);
+                // })
+                    .attr("r", function (d) {
+                        return xScale(d.weight);
+                    })
+                    .style("fill", function (d) {
+
+                        if (d.group == 0) {
+                            return("#696969");
+                        }
+                        else if (d.group == 1) {
+                            return("#006400");
+                        }
+                        else if (d.group == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.group == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.group == 4) {
+                            return("#808080");
+                        }
+                        else if (d.group == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.group == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.group == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.group == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.group == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.group == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.group == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.group == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.group == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.group == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.group == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.group == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.group == 18) {
+                            return("#708090");
+                        }
+                        else if (d.group == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.group == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.group == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.group == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.group == 23) {
+                            return("#000080");
+                        }
+                        else if (d.group == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.group == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.group == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.group == 28) {
+                            return("#696969");
+                        }
+                        else if (d.group == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.group == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.group == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.group == 32) {
+                            return("#006400");
+                        }
+                        else if (d.group == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.group == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.group == 35) {
+                            return("#800000");
+                        }
+                        else if (d.group == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.group == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.group == 38) {
+                            return("#808080");
+                        }
+                        else if (d.group == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.group == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.group == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.group == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.group == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.group == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.group == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.group == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.group == 47) {
+                            return("#696969");
+                        }
+                        else if (d.group == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.group == 49) {
+                            return("#FFA500");
+                        }
+                        else{
+                            return("#000000");
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+
+                    // .style("fill", function (d) {
+                    //     return colNodeScale(d.group);
+                    // })
+                    .style("stroke", "#333")
+                    .style("stroke-width", "2px")
+                    .style("stroke-dasharray",
+                        function (d) {
+                            if (d.connected == "No") {
+                                ////console.log("not connected");
+                                return (5, 5);
+
+                            }
+                            else if(d.connected == "Yes") {
+                                ////console.log("connected");
+                                return (3, 0);
+                            }
+                        })
+                    //.attr("class", "node")
+                    .on("mouseenter", function (d) {
+                        is_connected(d, 0.1)
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+                    })
+                    // .on("mouseleave", function (d) {
+                    //     node.transition().duration(100).attr("r", function (d) {
+                    //         return xScale(d.weight);
+                    //     })
+                    //     is_connected(d, 1);
+                    // })
+                    .on("click", function(d){
+
+                        //if(!first_click) {
+                        is_connected_on_click(d, 0.1);
+                        node.transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight);
+                        })
+                        d3.select(this).transition().duration(100).attr("r", function (d) {
+                            return xScale(d.weight + 3);
+                        })
+
+                    })
+                    .call(force.drag);
+                // var bbox = textElement.getBBox();
+                // var width = bbox.width;
+                // var height = bbox.height;
+                var labels = gnodes.append("text")
+                    .style("font", String(fontSize) + "px Arial")
+                    .attr("dx", function (d) {
+                        return -18;
+                    })
+                    .attr("dy", 4)
+                    .attr("text-anchor", function (d) {
+                        return "end";
+                    })
+                    .text(function (d) {
+                        return d.full_name
+                    })
+
+                var svgText = svgGE.append("text");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                if(1 == 0) {
+                    //Added from here for coloring the legend
+                    max_data = 1000;
+                    min_data = -1000;
+
+
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+
+
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
+
+
+                    var legend2 = svgGE.selectAll(".legend")
+
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+
+                            return d;
+                        });
+
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(globalW / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
+
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svgGE.selectAll(".legend").data().length - 1) {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", "11px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
+                    legend2.exit().remove();
+                }
+                //legend2.exit().remove();
+
+                //till here for coloring the legend
+
+            };
+
+
+
+            d3.select('#parallelViewGE').on('click', function () {
+                parallelViewGE();
+                $scope.graphType = 2;
+            });
+
+
+            function defaultSVGGE() {
+
+
+                svgGE.remove();
+
+                xScale.domain(d3.extent(nodes, function (d) {
+                    return d.weight;
+                }));
+                colNodeScale.domain(d3.extent(nodes, function (d) {
+                    return d.group;
+                }));
+                // colorScale.domain(d3.extent(nodes, function (d) {
+                //     return d.value;
+                // }));
+                colScale.domain(d3.extent(links, function (d) {
+                    return d.weight;
+                }));
+                scoreScale.domain(d3.extent(links, function (d) {
+                    return d.score;
+                }));
+                var margin = 75,
+                    w = widthSize - 2 * margin,
+                    h = w,
+                    radius = w / 2,
+                    strokeWidth = 4,
+                    hyp2 = Math.pow(radius, 2),
+                    nodeBaseRad = 5;
+
+//These variables are global variables
+                globalH = h;
+                globalHPlus50 = h + 50;
+                globalW = w;
+
+                svgGE = d3.select("#chartGE")
+                    .append("svg")
+                    .attr("style", "outline: thin solid yellow;")
+                    .attr("width", w)
+                    .attr("height", globalHPlus50);
+                svgGE.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "white");
+
+
+                var force = d3.layout.force()
+                    .nodes(nodes)
+                    .links(links)
+                    .size([w, h])
+                    .linkDistance(350)
+                    .charge(-2000)
+                    //.linkStrength(0.9)
+                    //.friction(0.9)
+                    //.chargeDistance(300)
+                    .gravity(0.15)
+                    //.theta(0.8)
+                    //.alpha(0.1)
+                    .on("tick", tick)
+                    .start();
+
+                // for (var i = n*n; i > 0; --i) force.tick();
+                // force.stop();
+
+                //.stop();
+
+
+                var path = svgGE.append("svg:g").selectAll("path")
+                //.data(links)
+                    .data(force.links())
+                    .enter().append("svg:path")
+                    .style("stroke-width", function (d) {return d.score/2; })
+
+                    .style("stroke", function (d) {
+
+
+                        if (d.tag == 0) {
+                            return("#696969");
+                        }
+
+                        else if (d.tag == 1) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.tag == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.tag == 4) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.tag == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.tag == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.tag == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.tag == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.tag == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.tag == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.tag == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.tag == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.tag == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.tag == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.tag == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.tag == 18) {
+                            return("#708090");
+                        }
+                        else if (d.tag == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.tag == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.tag == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.tag == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.tag == 23) {
+                            return("#000080");
+                        }
+                        else if (d.tag == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.tag == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.tag == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.tag == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.tag == 28) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.tag == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.tag == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.tag == 32) {
+                            return("#006400");
+                        }
+                        else if (d.tag == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.tag == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.tag == 35) {
+                            return("#800000");
+                        }
+                        else if (d.tag == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.tag == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.tag == 38) {
+                            return("#808080");
+                        }
+                        else if (d.tag == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.tag == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.tag == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.tag == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.tag == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.tag == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.tag == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.tag == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.tag == 47) {
+                            return("#696969");
+                        }
+                        else if (d.tag == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.tag == 49) {
+                            return("#FFA500");
+                        }
+                        else{
+                            return("#000000");
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+
+                    //.style('stroke', "black")
+                    //.style("stroke", function (d) {return colScale(d.value); })
+                    .attr("class", function (d) {
+                        return "link ";
+                    });
+
+
+                var node = svgGE.append("svg:g").selectAll("g.node")
+                    .data(force.nodes())
+                    .enter().append("svg:g")
+                    // .style("stroke-width", 3)
+                    // .style('stroke', "black")
+                    //.attr("class", "node")
+                    .call(force.drag);
+
+                // nodes.forEach(function(v) {
+                //     var nd;
+                //     var cx = v.coord[0];
+                //     var cy = v.coord[1];
+                //
+                //     switch (v.group) {
+                //         case 1:
+                //             nd = svg.append("circle");
+                //             break;
+                //         case 2:
+                //             nd = svg.append("rect");
+                //             break;
+                //     }
+                // });
+
+
+                var colorsForAbundance = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+                var colorScale = d3.scale.threshold()
+                    .domain(domain_data)
+                    .range(colorsForAbundance);
+
+
+                node.append("circle")
+                    .attr("r", function (d) {
+                        return xScale(d.weight);
+                    })
+                    .style("fill", function (d) {
+
+                        if (d.group == 0) {
+                            return("#696969");
+                        }
+                        else if (d.group == 1) {
+                            return("#006400");
+                        }
+                        else if (d.group == 2) {
+                            return("#00FF00");
+                        }
+                        else if (d.group == 3) {
+                            return("#0000FF");
+                        }
+                        else if (d.group == 4) {
+                            return("#808080");
+                        }
+                        else if (d.group == 5) {
+                            return("#8B4513");
+                        }
+                        else if (d.group == 6) {
+                            return("#FFFFE0");
+                        }
+                        else if (d.group == 7) {
+                            return("#8464c5");
+                        }
+                        else if (d.group == 8) {
+                            return("#00FFFF");
+                        }
+                        else if (d.group == 9) {
+                            return("#FF7F50");
+                        }
+                        else if (d.group == 10) {
+                            return("#FF0000");
+                        }
+                        else if (d.group == 11) {
+                            return("#FF00FF");
+                        }
+                        else if (d.group == 12) {
+                            return("#8FBC8F");
+                        }
+                        else if (d.group == 13) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 14) {
+                            return("#FFD700");
+                        }
+                        else if (d.group == 15) {
+                            return("#A0522D");
+                        }
+                        else if (d.group == 16) {
+                            return("#FFFF00");
+                        }
+                        else if (d.group == 17) {
+                            return("#6A5ACD");
+                        }
+                        else if (d.group == 18) {
+                            return("#708090");
+                        }
+                        else if (d.group == 19) {
+                            return("#FF6347");
+                        }
+                        else if (d.group == 20) {
+                            return("#CD5C5C");
+                        }
+                        else if (d.group == 21) {
+                            return("#DB7093");
+                        }
+                        else if (d.group == 22) {
+                            return("#2E8B57");
+                        }
+                        else if (d.group == 23) {
+                            return("#000080");
+                        }
+                        else if (d.group == 24) {
+                            return("#9370DB");
+                        }
+                        else if (d.group == 25) {
+                            return("#A52A2A");
+                        }
+                        else if (d.group == 26) {
+                            return("#FDF5E6");
+                        }
+                        else if (d.group == 27) {
+                            return("#7B68EE");
+                        }
+                        else if (d.group == 28) {
+                            return("#696969");
+                        }
+                        else if (d.group == 29) {
+                            return("#FF4500");
+                        }
+                        else if (d.group == 30) {
+                            return("#DC143C");
+                        }
+                        else if (d.group == 31) {
+                            return("#FF69B4");
+                        }
+                        else if (d.group == 32) {
+                            return("#006400");
+                        }
+                        else if (d.group == 33) {
+                            return("#87CEEB");
+                        }
+                        else if (d.group == 34) {
+                            return("#EE82EE");
+                        }
+                        else if (d.group == 35) {
+                            return("#800000");
+                        }
+                        else if (d.group == 36) {
+                            return("#FAEBD7");
+                        }
+                        else if (d.group == 37) {
+                            return("#4B0082");
+                        }
+                        else if (d.group == 38) {
+                            return("#808080");
+                        }
+                        else if (d.group == 39) {
+                            return("#FF8C00");
+                        }
+                        else if (d.group == 40) {
+                            return("#FA8072");
+                        }
+                        else if (d.group == 41) {
+                            return("#FFC0CB");
+                        }
+                        else if (d.group == 42) {
+                            return("#9ACD32");
+                        }
+                        else if (d.group == 43) {
+                            return("#4682B4");
+                        }
+                        else if (d.group == 44) {
+                            return("#DDA0DD");
+                        }
+                        else if (d.group == 45) {
+                            return("#CD853F");
+                        }
+                        else if (d.group == 46) {
+                            return("#FFE4E1");
+                        }
+                        else if (d.group == 47) {
+                            return("#696969");
+                        }
+                        else if (d.group == 48) {
+                            return("#A9A9A9");
+                        }
+                        else if (d.group == 49) {
+                            return("#FFA500");
+                        }
+
+                        else if (d.group == 117) {
+                            return ("#FFD600FF");
+                        }
+                        else if (d.group == 64) {
+                            return ("#FF7600FF");
+                        }
+                        else if (d.group == 85) {
+                            return ("#FFFF9CFF");
+                        }
+                        else if (d.group == 95) {
+                            return ("#FF3000FF");
+                        }
+                        else if (d.group == 123) {
+                            return ("#FFFF0BFF");
+                        }
+                        else if (d.group == 88) {
+                            return ("#FFFFF1FF");
+                        }
+                        else if (d.group == 73) {
+                            return ("#FFC800FF");
+                        }
+                        else if (d.group == 118) {
+                            return ("#FFDD00FF");
+                        }
+                        else if (d.group == 129) {
+                            return ("#FFFF8AFF");
+                        }
+                        else if (d.group == 54) {
+                            return ("#FF1B00FF");
+                        }
+                        else if (d.group == 122) {
+                            return ("#FFF800FF");
+                        }
+                        else if (d.group == 130) {
+                            return ("#FFFF9FFF");
+                        }
+                        else if (d.group == 99) {
+                            return ("#FF5300FF");
+                        }
+                        else if (d.group == 98) {
+                            return ("#FF4C00FF");
+                        }
+                        else if (d.group == 56) {
+                            return ("#FF2E00FF");
+                        }
+                        else if (d.group == 89) {
+                            return ("#FF0700FF");
+                        }
+                        else if (d.group == 110) {
+                            return ("#FF9F00FF");
+                        }
+                        else if (d.group == 101) {
+                            return ("#FF6000FF");
+                        }
+                        else if (d.group == 93) {
+                            return ("#FF2200FF");
+                        }
+                        else if (d.group == 53) {
+                            return ("#FF1200FF");
+                        }
+                        else if (d.group == 108) {
+                            return ("#FF9100FF");
+                        }
+                        else if (d.group == 69) {
+                            return ("#FFA400FF");
+                        }
+                        else if (d.group == 75) {
+                            return ("#FFDB00FF");
+                        }
+                        else if (d.group == 76) {
+                            return ("#FFE400FF");
+                        }
+                        else if (d.group == 119) {
+                            return ("#FFE300FF");
+                        }
+                        else if (d.group == 134) {
+                            return ("#FFFFF4FF");
+                        }
+                        else if (d.group == 62) {
+                            return ("#FF6400FF");
+                        }
+                        else if (d.group == 127) {
+                            return ("#FFFF60FF");
+                        }
+                        else if (d.group == 121) {
+                            return ("#FFF100FF");
+                        }
+                        else if (d.group == 109) {
+                            return ("#FF9800FF");
+                        }
+                        else if (d.group == 116) {
+                            return ("#FFCF00FF");
+                        }
+                        else if (d.group == 124) {
+                            return ("#FFFF20FF");
+                        }
+                        else if (d.group == 131) {
+                            return ("#FFFFB5FF");
+                        }
+                        else if (d.group == 90) {
+                            return ("#FF0E00FF");
+                        }
+                        else if (d.group == 114) {
+                            return ("#FFBA00FF");
+                        }
+                        else if (d.group == 72) {
+                            return ("#FFBF00FF");
+                        }
+                        else if (d.group == 52) {
+                            return ("#FF0900FF");
+                        }
+                        else if (d.group == 63) {
+                            return ("#FF6D00FF");
+                        }
+                        else if (d.group == 79) {
+                            return ("#FFFF00FF");
+                        }
+                        else if (d.group == 80) {
+                            return ("#FFFF0EFF");
+                        }
+                        else if (d.group == 78) {
+                            return ("#FFF600FF");
+                        }
+                        else if (d.group == 107) {
+                            return ("#FF8A00FF");
+                        }
+                        else if (d.group == 87) {
+                            return ("#FFFFD4FF");
+                        }
+                        else if (d.group == 59) {
+                            return ("#FF4900FF");
+                        }
+                        else if (d.group == 55) {
+                            return ("#FF2400FF");
+                        }
+                        else if (d.group == 106) {
+                            return ("#FF8300FF");
+                        }
+                        else if (d.group == 113) {
+                            return ("#FFB300FF");
+                        }
+                        else if (d.group == 51) {
+                            return ("#FF0000FF");
+                        }
+                        else if (d.group == 74) {
+                            return ("#FFD100FF");
+                        }
+                        else if (d.group == 82) {
+                            return ("#FFFF47FF");
+                        }
+                        else if (d.group == 104) {
+                            return ("#FF7500FF");
+                        }
+                        else if (d.group == 66) {
+                            return ("#FF8900FF");
+                        }
+                        else if (d.group == 133) {
+                            return ("#FFFFDFFF");
+                        }
+                        else if (d.group == 86) {
+                            return ("#FFFFB8FF");
+                        }
+                        else if (d.group == 65) {
+                            return ("#FF8000FF");
+                        }
+                        else if (d.group == 132) {
+                            return ("#FFFFCAFF");
+                        }
+                        else if (d.group == 58) {
+                            return ("#FF4000FF");
+                        }
+                        else if (d.group == 105) {
+                            return ("#FF7C00FF");
+                        }
+                        else if (d.group == 102) {
+                            return ("#FF6700FF");
+                        }
+                        else if (d.group == 96) {
+                            return ("#FF3E00FF");
+                        }
+                        else if (d.group == 125) {
+                            return ("#FFFF35FF");
+                        }
+                        else if (d.group == 81) {
+                            return ("#FFFF2BFF");
+                        }
+                        else if (d.group == 83) {
+                            return ("#FFFF63FF");
+                        }
+                        else if (d.group == 120) {
+                            return ("#FFEA00FF");
+                        }
+                        else if (d.group == 71) {
+                            return ("#FFB600FF");
+                        }
+                        else if (d.group == 67) {
+                            return ("#FF9200FF");
+                        }
+                        else if (d.group == 97) {
+                            return ("#FF4500FF");
+                        }
+                        else if (d.group == 112) {
+                            return ("#FFAC00FF");
+                        }
+                        else if (d.group == 61) {
+                            return ("#FF5B00FF");
+                        }
+                        else if (d.group == 91) {
+                            return ("#FF1500FF");
+                        }
+                        else if (d.group == 115) {
+                            return ("#FFC100FF");
+                        }
+                        else if (d.group == 103) {
+                            return ("#FF6E00FF");
+                        }
+                        else if (d.group == 70) {
+                            return ("#FFAD00FF");
+                        }
+                        else if (d.group == 84) {
+                            return ("#FFFF80FF");
+                        }
+                        else if (d.group == 126) {
+                            return ("#FFFF4AFF");
+                        }
+                        else if (d.group == 100) {
+                            return ("#FF5A00FF");
+                        }
+                        else if (d.group == 77) {
+                            return ("#FFED00FF");
+                        }
+                        else if (d.group == 68) {
+                            return ("#FF9B00FF");
+                        }
+                        else if (d.group == 57) {
+                            return ("#FF3700FF");
+                        }
+                        else if (d.group == 92) {
+                            return ("#FF1C00FF");
+                        }
+                        else if (d.group == 60) {
+                            return ("#FF5200FF");
+                        }
+                        else if (d.group == 111) {
+                            return ("#FFA500FF");
+                        }
+                        else if (d.group == 94) {
+                            return ("#FF2900FF");
+                        }
+                        else if (d.group == 128) {
+                                return ("#FFFF75FF");
+                            }
+                            else{
+                                return("#000000");
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // if (d.group == 0) {
+                        //     return colorScale(d.value);
+                        // }
+                        // else {
+                        //
+                        //     if (d.group == 1) {
+                        //         return("#ed0909");
+                        //     }
+                        //     if (d.group == 2) {
+                        //         return("#0af702");
+                        //     }
+                        //     if (d.group == 3) {
+                        //         return("#FF00FF");
+                        //     }
+                        //     if (d.group == 4) {
+                        //         return("#808000");
+                        //     }
+                        //     if (d.group == 5) {
+                        //         return("#000080");
+                        //     }
+                        //     if (d.group == 6) {
+                        //         return("#800080");
+                        //     }
+                        //     if (d.group == 7) {
+                        //         return("#00ffff");
+                        //     }
+                        //     if (d.group == 8) {
+                        //         return("#F5F5DC");
+                        //     }
+                        //     if (d.group == 9) {
+                        //         return("#A52A2A");
+                        //     }
+                        //     if (d.group == 10) {
+                        //         return("#8B0000");
+                        //     }
+                        //     if (d.group == 11) {
+                        //         return("#FF8C00");
+                        //     }
+                        //
+                        // }
+
+                    })
+
+                    // .style("fill", function (d) {
+                    //     return colNodeScale(d.group);
+                    // })
+                    .style("stroke", "#333")
+                    .style("stroke-dasharray",
+                        function (d) {
+                            if (d.connected == "No") {
+                                ////console.log("not connected");
+                                return (5, 5);
+
+                            }
+                            else if(d.connected == "Yes") {
+                                ////console.log("connected");
+                                return (3, 0);
+                            }
+                        })
+                    .style("stroke-width", "2px");
+                //.on("dblclick", dblclick);
+
+
+
+                // node.append("circle")
+                //     .attr("r", function (d) {
+                //         return xScale(d.weight);
+                //     })
+                //     .style("fill", function (d) {
+                //         if (d.group == 1) {
+                //             return colorScale(d.value);
+                //         }
+                //         else {
+                //             return colNodeScale(d.group);
+                //         }
+                //         //return colNodeScale(d.group);
+                //     })
+                //     .style("stroke", "#333")
+                //     .style("stroke-width", "2px");
+
+
+
+                function openLink() {
+                    return function (d) {
+                        var url = "";
+                        if (d.slug != "") {
+                            url = d.slug
+                        } //else if(d.type == 2) {
+                        //url = "clients/" + d.slug
+                        //} else if(d.type == 3) {
+                        //url = "agencies/" + d.slug
+                        //}
+                        window.open("//" + url)
+                    }
+                };
+                node.append("svg:image")
+                //****************************************
+                //.attr("class", function(d){ return d.name })
+                //****************************************
+                //.attr("xlink:href", function(d){ return d.img_hrefD})
+                    .attr("x", "-36px")
+                    .attr("y", "-36px")
+                    .attr("width", "70px")
+                    .attr("height", "70px")
+                //.on("dblclick", openLink());
+
+                // .on("mouseover", function (d) { if(d.entity == "company")
+                // {
+                //     d3.select(this).attr("width", "90px")
+                //         .attr("x", "-46px")
+                //         .attr("y", "-36.5px")
+                //         .attr("xlink:href", function(d){ return d.img_hrefL});
+                // }
+                // })
+                // .on("mouseout", function (d) { if(d.entity == "company")
+                // {
+                //     d3.select(this).attr("width", "70px")
+                //         .attr("x", "-36px")
+                //         .attr("y", "-36px")
+                //         .attr("xlink:href", function(d){ return d.img_hrefD});
+                // }
+                // });
+
+
+                //.text(function(d) { return d.name })
+                node.append("svg:text")
+                //****************************************
+                    .attr("class", function (d) {
+                        return d.full_name
+                    })
+                    //****************************************
+                    .attr("x", 16)
+                    .attr("y", ".31em")
+                    //.attr("class", "shadow")
+                    //.style("font-size","10px")
+                    // .attr("dx", 0)
+                    // .attr("dy", ".35em")
+                    //.style("font-size","12px")
+                    //****************************************
+                    //text.shadow {
+                    .style("stroke", "#fff")
+                    .style("stroke-width", "4px")
+                    //}
+                    //.attr("class", "shadow")
+                    .style("font", String(fontSize) + "px Arial")
+                    //****************************************
+                    //.attr("text-anchor", "middle")
+                    //****************************************
+                    .text(function (d) {
+                        return d.full_name
+                    });
+                //****************************************
+
+
+                //This one is for the actual text
+                node.append("svg:text")
+                //****************************************
+                    .attr("class", function (d) {
+                        return d.full_name
+                    })
+                    //****************************************
+                    .attr("x", 16)
+                    .attr("y", ".31em")
+                    //.attr("class", "shadow")
+                    //.style("font-size","10px")
+                    // .attr("dx", 0)
+                    // .attr("dy", ".35em")
+                    //.style("font-size","12px")
+                    //****************************************
+                    .style("font", String(fontSize) + "px Arial")
+                    //****************************************
+                    //.attr("text-anchor", "middle")
+                    //****************************************
+                    .text(function (d) {
+                        return d.full_name
+                    });
+                //****************************************
+
+
+                node.on("mouseover", function (d) {
+                    // d3.select(this).select("text")
+                    //     .transition()
+                    //     .duration(300)
+                    //     .text(function (d) {
+                    //         return d.full_name;
+                    //     })
+                    // //.style("font-size", "15px")
+                    // .style("font", "14px Times New Roman");
+                    //
+                    // d3.select(this).select("text")
+                    //     .transition()
+                    //     .duration(300)
+                    //     .text(function (d) {
+                    //         return d.full_name;
+                    //     })
+                    //     //.style("font-size", "15px")
+                    //     //.attr("class", "shadow")
+                    //     .style("font", "14px Times New Roman");
+                    // d3.select(this).select("text")
+                    //     .transition()
+                    //     .duration(300)
+                    //     .text(function (d) {
+                    //         return d.full_name;
+                    //     })
+                    //
+                    //     .style("fill",'black')
+                    //     .style("font", "14px Times New Roman");
+
+                    //d3.selectAll("text").remove();
+                    //d3.select(this).style("stroke-width", 6);
+
+                    //d3.select(this).select("text").style("stroke", "blue");
+
+                    var nodeNeighbors = links.filter(function (link) {
+                        // Filter the list of links to only those links that have our target
+                        // node as a source or target
+                        return link.source.index === d.index || link.target.index === d.index;
+                    })
+                        .map(function (link) {
+                            // Map the list of links to a simple array of the neighboring indices - this is
+                            // technically not required but makes the code below simpler because we can use
+                            // indexOf instead of iterating and searching ourselves.
+                            return link.source.index === d.index ? link.target.index : link.source.index;
+                        });
+
+                    d3.selectAll('circle').filter(function (node) {
+                        // I filter the selection of all circles to only those that hold a node with an
+                        // index in my listg of neighbors
+                        return nodeNeighbors.indexOf(node.index) > -1;
+                    })
+                        .style('stroke', 'blue');
+
+                    //d3.selectAll('text').filter(d).style('fill', 'blue');
+                    //****************************
+                    // d3.selectAll('text').filter(function(node) {
+                    //     // I filter the selection of all circles to only those that hold a node with an
+                    //     // index in my listg of neighbors
+                    //     return nodeNeighbors.indexOf(node.index) > -1;
+                    // }).style('fill', 'blue')
+                    //     //.style("font-size", "16px")
+                    //     //.style("font-weight", "bold");
+                    // //****************************
+                    path.style('stroke', function (l) {
+                        if (d === l.source || d === l.target)
+                            return "blue";
+                        else
+                            return "grey";
+                    })
+
+                    path.style('stroke-width', function (l) {
+                        if (d === l.source || d === l.target)
+                            return 2;
+                        else
+                            return 1;
+                    })
+
+                })
+                    .on("mouseout", function (d) {
+                        d3.select(this).select("text")
+                            .transition()
+                            .duration(300)
+                            .text(function (d) {
+
+                                return d.full_name;
+                            });
+                        // d3.select(this).select("text")
+                        //     //*******************************
+                        //     .style("font", "14px Times New Roman")
+                        //     //*******************************
+                        //     .style("font-size", "14px")
+                        //     .style("fill",'black')
+                        //     .style("font-weight", "normal");
+
+                        // d3.select(this).select("text")
+                        // //*******************************
+                        //     .style("font", "14px Times New Roman")
+                        //     //*******************************
+                        //     .style("font-size", "14px")
+                        //     .style("fill",'black')
+                        //     .style("font-weight", "normal");
+                        //d3.select(this).style("stroke", "black");
+                        //d3.select(this).style("stroke-width", 1);
+                        //d3.select(this).style("stroke", "#333");
+                        path.style('stroke', "grey");
+                        path.style('stroke-width', 1);
+                        //circle.style('stroke', "grey");
+                        //node.style("stroke-width", 3);
+                        //node.style("stroke", "#333");
+                        //d3.selectAll('text').style('fill', 'black')
+                        // d3.selectAll('text').style('fill', 'black')
+                        //     .style("font-weight", "normal");
+                        //d3.selectAll("text").style("font-weight", "normal");
+                        node.selectAll("circle").style("stroke-width", 3)
+                            .style('stroke', "black");
+                        //.style("font-size", "12px");
+                        //}
+                    });
+
+
+                function pythag(r, b, coord) {
+                    r += nodeBaseRad;
+
+                    // force use of b coord that exists in circle to avoid sqrt(x<0)
+                    b = Math.min(w - r - strokeWidth, Math.max(r + strokeWidth, b));
+
+                    var b2 = Math.pow((b - radius), 2),
+                        a = Math.sqrt(hyp2 - b2);
+
+                    function openLink() {
+                        return function (d) {
+                            var url = "";
+                            if (d.slug != "") {
+                                url = d.slug
+                            } //else if(d.type == 2) {
+                            //url = "clients/" + d.slug
+                            //} else if(d.type == 3) {
+                            //url = "agencies/" + d.slug
+                            //}
+                            window.open("//" + url)
+                        }
+                    }
+
+                    // radius - sqrt(hyp^2 - b^2) < coord < sqrt(hyp^2 - b^2) + radius
+                    coord = Math.max(radius - a + r + strokeWidth,
+                        Math.min(a + radius - r - strokeWidth, coord));
+
+                    return coord;
+                }
+
+                function tick(e) {
+                    path.attr("d", function (d) {
+                        var dx = d.target.x - d.source.x,
+                            dy = d.target.y - d.source.y,
+
+                            dr = Math.sqrt(dx * dx + dy * dy);
+                        ////console.log(d.source.x);
+                        // //console.log(d.target.x);
+                        return "M" + d.source.x + "," + d.source.y + "," + d.target.x + "," + d.target.y;
+                        //return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                    });
+
+                    node.attr('x', function (d) {
+                        return d.x = pythag(Math.random() * 12, d.y, d.x);
+                    })
+                        .attr('y', function (d) {
+                            return d.y = pythag(Math.random() * 12, d.x, d.y);
+                        })
+                        .attr("transform", function (d) {
+                            return "translate(" + d.x + "," + d.y + ")"
+                        });
+
+                    //d3.select(this).classed("fixed", d.fixed = true);
+                    // circle.attr("transform", function(d) {
+                    //     return "translate(" + d.x + "," + d.y + ")";
+                    // });
+                    //************************************
+                    // text.attr("transform", function(d) {
+                    //     return "translate(" + d.x + "," + d.y + ")";
+                    // });
+                    //************************************
+                }
+
+                //For not moving after drag
+                var drag = force.drag()
+                    .on("dragstart", dragstart);
+                //.on("dragstart", dragstartAll);
+
+                //For not moving after drag
+                function dblclick(d) {
+                    d3.select(this).classed("fixed", d.fixed = false);
+
+                }
+
+                //For not moving after drag
+                function dragstart(d) {
+                    d3.select(this).classed("fixed", d.fixed = true);
+
+                    for (i = 0; i < nodes.length; i++) {
+                        nodes[i].fixed = true;
+                    }
+                }
+
+
+                var svgText = svgGE.append("text");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+
+                //Added from here for coloring the legend
+                if(1 == 0) {
+                    max_data = 1000;
+                    min_data = -1000;
+
+
+                    var colors = ["#00A6FF", "#1097E0", "#2885B7", "#35799E", "#4C7991", "#6D828D", "#8C8C8C", "#8E8E5C", "#92923C", "#A5A52E", "#BDBD24", "#DDDD15", "#FFFF00"];
+                    var domain_data = [-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 1000];
+
+
+                    var colorScale2 = d3.scale.threshold()
+                        .domain(domain_data)
+                        .range(colors);
+
+
+                    var legend2 = svgGE.selectAll(".legend")
+
+                    //.data([min_data, min_data + (max_data - min_data) / 7, min_data + 2 * (max_data - min_data) / 7, min_data + 3 * (max_data - min_data) / 7, min_data + 4 * (max_data - min_data) / 7, min_data + 5 * (max_data - min_data) / 7, min_data + 6 * (max_data - min_data) / 7], function (d) {
+                        .data([-2.0, -1.6, -1.2, -0.8, -0.4, -0.01, 0.01, 0.4, 0.8, 1.2, 1.6, 2.0, 10.0], function (d) {
+
+                            return d;
+                        });
+
+                    // //console.log("colorScale.quantiles()");
+                    // //console.log(colorScale.quantiles());
+                    legend2.enter().append("g")
+                        .attr("class", "legend");
+                    var gridSize = Math.floor(globalW / 40);
+                    var legendElementWidth = gridSize * 2;
+                    legend2.append("rect")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40)
+                        .attr("width", legendElementWidth)
+                        .attr("height", gridSize / 2)
+                        .style("fill", function (d, i) {
+                            return colors[i];
+                        });
+
+                    legend2.append("text")
+                    //.attr("class", "mono")
+                        .text(function (d, i) {
+                            if (i == 0) {
+                                return " a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            else if (i == svgGE.selectAll(".legend").data().length - 1) {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a ";
+                            }
+                            else {
+
+                                return parseFloat(Math.round((svgGE.selectAll(".legend").data()[i - 1]) * 100) / 100).toFixed(1) + " ≤ a < " + parseFloat(Math.round(d * 100) / 100).toFixed(1);
+                            }
+                            //return  parseFloat(Math.round(d * 100) / 100).toFixed(2) + "≥ a";
+                        })
+                        .style("font", "11px Times New Roman")
+                        .attr("x", function (d, i) {
+                            return legendElementWidth * i;
+                        })
+                        .attr("y", globalHPlus50 - 40 + gridSize);
+
+                    legend2.exit().remove();
+                }
+
+                //legend2.exit().remove();
+
+                //till here for coloring the legend
+
+
+                // For legend
+                // var colNodeScaleSeparateInfo = d3.scale.ordinal()
+                //     .range(["#767776", "#f91104"])
+                //     .domain(["Query Gene Set", "Pathways / Kinases Perturbation"]);
+                //
+                //
+                // var legend = svg.selectAll(".legend")
+                //     .data(colNodeScaleSeparateInfo.domain())
+                //     .enter().append("g")
+                //     .attr("class", "legend")
+                //     .attr("transform", function (d, i) {
+                //         return "translate(0," + (i) * 25 + ")";
+                //     });
+                //
+                // legend.append("rect")
+                //     .attr("x", w - 25)
+                //     .attr("width", 25)
+                //     .attr("height", 25)
+                //     .style("fill", colNodeScaleSeparateInfo);
+                //
+                // legend.append("text")
+                //     .attr("x", w - 35)
+                //     .attr("y", 12.5)
+                //     .attr("dy", ".35em")
+                //     .style("text-anchor", "end")
+                //     .text(function (d) {
+                //         return d;
+                //     });
+                //
+                //
+                // d3.select("#download").on("click", function () {
+                //     d3.select(this)
+                //         .attr("href", 'data:application/octet-stream;base64,' + btoa(d3.select("#chart").html()))
+                //         .attr("download", "pathway_network.svg")
+                // })
+
+            };
+
+            //defaultSVGPtm();
+            //SharedService.setVar('svg', svg);
+
+            d3.select('#forceGE').on('click', function () {
+                defaultSVGGE();
+                $scope.graphType = 3;
+
+            });
+
+            if (graphType == 0){
+                circosViewGE();
+            } else if (graphType == 1){
+                circularViewGE();
+            } else if (graphType == 2){
+                parallelViewGE();
+            } else if (graphType == 3){
+                defaultSVGGE();
+            }
+
+
+
+            // d3.select("#GE").on("click", function() {
+            //     d3.select(this)
+            //         .attr("href", 'data:application/octet-stream;base64,' + btoa(d3.select("#line").html()))
+            //         .attr("download", "viz.svg")
+            // })
+            d3.select("#download-svgGE").on("click", function ()  {
+                var name = fileName.concat('.svg');
+                var svgEl = svgGE.node();
+                svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                var svgData = svgEl.outerHTML;
+                var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+                var svgBlob = new Blob([preface, svgData], {type:"image/svg+xml;charset=utf-8"});
+                var svgUrl = URL.createObjectURL(svgBlob);
+                var downloadLink = document.createElement("a");
+                downloadLink.href = svgUrl;
+                downloadLink.download = name;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            })
+
+            // d3.select("#download-svgGE").on("click", function () {
+            //     console.log("#download-svgGE")
+            //     d3.select(this)
+            //         .attr("href", 'data:application/octet-stream;base64,' + btoa(d3.select("#chartGE")))
+            //         .attr("download", "pathway_network.svg")
+            // })
+
+            d3.select('#download-pngGE').on('click', function () {
+                var svgString = getSVGString(svgGE.node());
+
+
+                svgString2Image(svgString, 4 * globalW, 4 * globalHPlus50, 'png', save); // passes Blob and filesize String to the callback
+
+                function save(dataBlob, filesize) {
+                    saveAs(dataBlob, fileName.concat('.png')); // FileSaver.js function
+                }
+            });
+            d3.select('#saveButton').on('click', function () {
+                var svgString = getSVGString(svg4.node());
+
+                svgString2Image(svgString, 4 * globalW, 4 * globalHPlus50, 'png', save); // passes Blob and filesize String to the callback
+
+                function save(dataBlob, filesize) {
+                    saveAs(dataBlob, fileName.concat('.png')); // FileSaver.js function
+                }
+            });
+
+// Below are the functions that handle actual exporting:
+// getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )
+            function getSVGString(svgNode) {
+                svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+                var cssStyleText = getCSSStyles(svgNode);
+                appendCSS(cssStyleText, svgNode);
+
+                var serializer = new XMLSerializer();
+                var svgString = serializer.serializeToString(svgNode);
+                svgString = svgString.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace
+                svgString = svgString.replace(/NS\d+:href/g, 'xlink:href'); // Safari NS namespace fix
+
+                return svgString;
+
+                function getCSSStyles(parentElement) {
+                    var selectorTextArr = [];
+
+                    // Add Parent element Id and Classes to the list
+                    selectorTextArr.push('#' + parentElement.id);
+                    for (var c = 0; c < parentElement.classList.length; c++)
+                        if (!contains('.' + parentElement.classList[c], selectorTextArr))
+                            selectorTextArr.push('.' + parentElement.classList[c]);
+
+                    // Add Children element Ids and Classes to the list
+                    var nodes = parentElement.getElementsByTagName("*");
+                    for (var i = 0; i < nodes.length; i++) {
+                        var id = nodes[i].id;
+                        if (!contains('#' + id, selectorTextArr))
+                            selectorTextArr.push('#' + id);
+
+                        var classes = nodes[i].classList;
+                        for (var c = 0; c < classes.length; c++)
+                            if (!contains('.' + classes[c], selectorTextArr))
+                                selectorTextArr.push('.' + classes[c]);
+                    }
+
+                    // Extract CSS Rules
+                    var extractedCSSText = "";
+                    for (var i = 0; i < document.styleSheets.length; i++) {
+                        var s = document.styleSheets[i];
+
+                        try {
+                            if (!s.cssRules) continue;
+                        } catch (e) {
+                            if (e.name !== 'SecurityError') throw e; // for Firefox
+                            continue;
+                        }
+
+                        var cssRules = s.cssRules;
+                        for (var r = 0; r < cssRules.length; r++) {
+                            if (contains(cssRules[r].selectorText, selectorTextArr))
+                                extractedCSSText += cssRules[r].cssText;
+                        }
+                    }
+
+
+                    return extractedCSSText;
+
+                    function contains(str, arr) {
+                        return arr.indexOf(str) === -1 ? false : true;
+                    }
+
+                }
+
+                function appendCSS(cssText, element) {
+                    var styleElement = document.createElement("style");
+                    styleElement.setAttribute("type", "text/css");
+                    styleElement.innerHTML = cssText;
+                    var refNode = element.hasChildNodes() ? element.children[0] : null;
+                    element.insertBefore(styleElement, refNode);
+                }
+            }
+
+
+            function svgString2Image(svgString, width, height, format, callback) {
+                var format = format ? format : 'png';
+
+                var imgsrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString))); // Convert SVG string to data URL
+
+                var canvas = document.createElement("canvas");
+                var context = canvas.getContext("2d");
+
+                canvas.width = width;
+                canvas.height = height;
+
+                var image = new Image();
+                image.onload = function () {
+                    context.clearRect(0, 0, width, height);
+                    context.drawImage(image, 0, 0, width, height);
+
+                    canvas.toBlob(function (blob) {
+                        var filesize = Math.round(blob.length / 1024) + ' KB';
+                        if (callback) callback(blob, filesize);
+                    });
+
+
+                };
+
+                image.src = imgsrc;
+            }
+
+
+
+            self.showGEGraph = true;
+            $scope.showGEGraph = true;
+
+
+        }
+
+
+        // //console.log(network.parallel);
+        // //console.log(network.circular);
+        // update(network.nodes, network.edges, network.parallel, network.circular);
+        //console.log(network.nodes);
+        //console.log(ptmToAbundance);
+        for (var iterNetNode = 0; iterNetNode < network.nodes.length; iterNetNode++)
+        {
+            var iterNetNodeKey = network.nodes[iterNetNode]["name"];
+            if (iterNetNodeKey in ptmToAbundance)
+            {
+                //console.log(iterNetNodeKey);
+                if (ptmToAbundance[iterNetNodeKey] == "NA")
+                {
+                    network.nodes[iterNetNode]["value"] = 0.0;
+                }
+                else {
+                    network.nodes[iterNetNode]["value"] = ptmToAbundance[iterNetNodeKey];
+                }
+            }
+        }
+        //console.log(self.computeWeightForupdatePtm);
+        // if(self.computeWeightForUpdateGE) {
+        //console.log("---  inside computeWeightForUpdatePtm");
+        for (var iterNetNode = 0; iterNetNode < network.edges.length; iterNetNode++) {
+            //var iterNetNodeKey = network.nodes[iterNetNode]["name"];
+            var idx1 = network.edges[iterNetNode]["source"];
+            var idx2 = network.edges[iterNetNode]["target"];
+            network.nodes[idx1]["weight"] += 1;
+            network.nodes[idx2]["weight"] += 1;
+
+        }
+        self.computeWeightForUpdateGE = false;
+        SharedService.setVar('computeWeightForUpdateGE',self.computeWeightForUpdateGE);
+        // }
+        //console.log(network);
+        updateGE(network.nodes, network.edges, fontSize, widthSize, circleSize, nodeSize);
+        console.log("self.showGEGraph");
+        console.log($scope.showGEGraph);
+
+
+        self.showGEGraph = true;
+    }
+
+    function convertToCSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
+    function exportCSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = this.convertToCSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    function convertToTSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += '\t'
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
+    function convertToCSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
+    function exportTSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = convertToTSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.txt' || 'export.txt';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    function exportCSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = convertToCSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    $scope.downloadCSVExampleForGraph1 = function(){
+        //var headers = {
+        //     model: 'Phone Model'.replace(/,/g, ''), // remove commas to avoid errors
+        //     chargers: "Chargers",
+        //     cases: "Cases",
+        //     earphones: "Earphones"
+        // };
+
+        //var itemsNotFormatted = [
+        //     {
+        //         model: 'Samsung S7',
+        //         chargers: '55',
+        //         cases: '56',
+        //         earphones: '57',
+        //         scratched: '2'
+        //     },
+        //     {
+        //         model: 'Pixel XL',
+        //         chargers: '77',
+        //         cases: '78',
+        //         earphones: '79',
+        //         scratched: '4'
+        //     },
+        //     {
+        //         model: 'iPhone 7',
+        //         chargers: '88',
+        //         cases: '89',
+        //         earphones: '90',
+        //         scratched: '6'
+        //     }
+        // ];
+
+
+
+        d3.csv('./example/graph_illustration.csv', function (data) {
+
+            console.log(data);
+            var itemsFormatted = [];
+            var headers = {
+                Category1: 'Category1'.replace(/,/g, ''), // remove commas to avoid errors
+                Category2: "Category2",
+                Relation: "Relation",
+                Category1Id: "Category1Id",
+                Category2Id: "Category2Id",
+                EdgeId: "EdgeId"
+            };
+            var itemsNotFormatted = data;
+            itemsNotFormatted.forEach( function(item){
+                itemsFormatted.push({
+                    Category1: item.Category1.replace(/,/g, ''), // remove commas to avoid errors,
+                    Category2: item.Category2.replace(/,/g, ''),
+                    Relation: item.Relation.replace(/,/g, ''),
+                    Category1Id: item.Category1Id.replace(/,/g, ''),
+                    Category2Id: item.Category2Id.replace(/,/g, ''),
+                    EdgeId: item.EdgeId.replace(/,/g, '')
+
+                });
+            });
+
+            var fileTitle = 'pinet_graph_illustration'; // or 'my-unique-title'
+
+            exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+
+        })
+        // format the data
+
+    }
+
+
+    $scope.downloadCSVExampleForGraph2 = function(){
+        //var headers = {
+        //     model: 'Phone Model'.replace(/,/g, ''), // remove commas to avoid errors
+        //     chargers: "Chargers",
+        //     cases: "Cases",
+        //     earphones: "Earphones"
+        // };
+
+        //var itemsNotFormatted = [
+        //     {
+        //         model: 'Samsung S7',
+        //         chargers: '55',
+        //         cases: '56',
+        //         earphones: '57',
+        //         scratched: '2'
+        //     },
+        //     {
+        //         model: 'Pixel XL',
+        //         chargers: '77',
+        //         cases: '78',
+        //         earphones: '79',
+        //         scratched: '4'
+        //     },
+        //     {
+        //         model: 'iPhone 7',
+        //         chargers: '88',
+        //         cases: '89',
+        //         earphones: '90',
+        //         scratched: '6'
+        //     }
+        // ];
+
+
+
+        d3.csv('./example/out-klts_abbrevs_09_10_2019-10.csv', function (data) {
+
+            console.log(data);
+            var itemsFormatted = [];
+            var headers = {
+                Category1: 'Category1'.replace(/,/g, ''), // remove commas to avoid errors
+                Category2: "Category2",
+                Relation: "Relation",
+                Category1Id: "Category1Id",
+                Category2Id: "Category2Id",
+                EdgeId: "EdgeId"
+            };
+            var itemsNotFormatted = data;
+            itemsNotFormatted.forEach( function(item){
+                itemsFormatted.push({
+                    Category1: item.Category1.replace(/,/g, ''), // remove commas to avoid errors,
+                    Category2: item.Category2.replace(/,/g, ''),
+                    Relation: item.Relation.replace(/,/g, ''),
+                    Category1Id: item.Category1Id.replace(/,/g, ''),
+                    Category2Id: item.Category2Id.replace(/,/g, ''),
+                    EdgeId: item.EdgeId.replace(/,/g, '')
+
+                });
+            });
+
+            var fileTitle = 'pinet_graph_illustration_node_ordered'; // or 'my-unique-title'
+
+            exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+
+        })
+        // format the data
+
+    }
+
+    //console.log("$scope.siteVisit");
+    //console.log($scope.siteVisit);
+
+
+
+    //console.log("========= change URL =============");
+    //console.log($location.url());
+    //console.log("self.showSplash");
+    //console.log(self.showSplash);
+    //console.log($location.url());
+
+    $scope.$on('$locationChangeStart', function(event) {
+        // call your method here
+
+        if($location.url().contains('ptmToModifier') || $location.url().contains('peptideToProtein') || $location.url().contains('proteinToPathway') || $location.url().contains('help') || $location.url().contains('upload') || $location.url().contains('modification')) {
+            self.showSplash = false;
+            SharedService.setVar('showSplash', false);
+            //console.log($location.url());
+            //console.log($location.url());
+            //console.log("self.showSplash");
+            //console.log(self.showSplash);
+            //console.log($location.url());
+            self.firstVisit = false;
+            SharedService.setVar('firstVisit', false);
+
+            //$scope.$apply();
+        }
+        else
+        {
+            //console.log($location.url());
+            if (self.firstVisit == false) {
+                self.showSplash = false;
+                SharedService.setVar('showSplash', false);
+                $location.url("/peptideToProtein");
+                self.url = $location.url();
+                //console.log($location.url());
+            }
+            //console.log("self.showSplash");
+            //console.log(self.showSplash);
+            //console.log("self.firstVisit");
+            //console.log(self.firstVisit);
+            //$scope.$apply();
+        }
+    });
+
+
+
+    //self.proteinForm = "";//"" for canonical, "{+iso" for canonical+isoform
+    //console.log(self.organismForm);
+    //console.log(self.proteinForm);
+
+//This is for navigation tabs
+    $scope.tabs = SharedService.getVar('tabs');
+
+
+    // $scope.selectedTab = $scope.tabs[0];
+    $scope.setSelectedTab = function (tab) {
+        $scope.selectedTab = tab;
+        //console.log($scope.selectedTab.link);
+        //console.log($scope.selectedTab.label);
+        self.activeSite = $scope.selectedTab.link;
+
+        //console.log("url");
+        $location.url(self.activeSite);
+        self.url = $location.url();
+        //console.log(self.url);
+
+    }
+
+
+
+    $('.tabgroup > div').hide();
+    $('.tabgroup > div:first-of-type').show();
+    $('.tabs22 a').click(function(e){
+        e.preventDefault();
+        var $this = $(this),
+            tabgroup = '#'+$this.parents('.tabs22').data('tabgroup'),
+            others = $this.closest('li').siblings().children('a'),
+            target = $this.attr('href');
+        others.removeClass('active');
+        $this.addClass('active');
+        $(tabgroup).children('div').hide();
+        $(target).show();
+
+    })
+
+    // //console.log($scope.selectedTab.link);
+    // //console.log($scope.selectedTab.label);
+
+
+    // $(document).ready(function () {
+    //     $('[data-toggle="tooltip"]').tooltip({
+    //         trigger: 'hover'
+    //     });
+    // });
+    // $scope.tabClass = function (tab) {
+    //     if ($scope.selectedTab == tab) {
+    //         self.activeSite = $scope.selectedTab.link;
+    //         return "active";
+    //
+    //     } else {
+    //         return "";
+    //     }
+    // }
+    //
+    //
+    //
+    // $(document).ready(function () {
+    //
+    //
+    //     var numItems = $('li.fancyTab').length;
+    //
+    //
+    //     if (numItems == 12) {
+    //         $("li.fancyTab").width('8.3%');
+    //     }
+    //     if (numItems == 11) {
+    //         $("li.fancyTab").width('9%');
+    //     }
+    //     if (numItems == 10) {
+    //         $("li.fancyTab").width('10%');
+    //     }
+    //     if (numItems == 9) {
+    //         $("li.fancyTab").width('11.1%');
+    //     }
+    //     if (numItems == 8) {
+    //         $("li.fancyTab").width('12.5%');
+    //     }
+    //     if (numItems == 7) {
+    //         $("li.fancyTab").width('14.2%');
+    //     }
+    //     if (numItems == 6) {
+    //         $("li.fancyTab").width('16.666666666666667%');
+    //     }
+    //     if (numItems == 5) {
+    //         $("li.fancyTab").width('20%');
+    //     }
+    //     if (numItems == 4) {
+    //         $("li.fancyTab").width('25%');
+    //     }
+    //     if (numItems == 3) {
+    //         $("li.fancyTab").width('33.3%');
+    //     }
+    //     if (numItems == 2) {
+    //         $("li.fancyTab").width('50%');
+    //     }
+    //
+    //
+    // });
+    //
+    // $(window).load(function () {
+    //
+    //     $('.fancyTabs').each(function () {
+    //
+    //         var highestBox = 0;
+    //         $('.fancyTab a', this).each(function () {
+    //
+    //             if ($(this).height() > highestBox)
+    //                 highestBox = $(this).height();
+    //         });
+    //
+    //         $('.fancyTab a', this).height(highestBox);
+    //
+    //     });
+    // });
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+}]);
+
+appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$timeout', '$routeParams', '$filter', '$q', 'filterFilter', 'SharedService',function ($scope, $http, $location, $window, $timeout, $routeParams, $filter, $q, filterFilter, SharedService) {
+    //console.log("--------------- Restarting About! ---------------");
+
+    var self = this;
+    SharedService.getSiteVisit().then(function(successResponse){
+        $scope.siteVisit = successResponse;
+        //console.log($scope.siteVisit);
+    });
+
+
+
+    self.modificationPattern = /[^A-Z]/g;
+    self.modificationPatternWithLetter = /[A-Z]\[\+[\d\.]+]/g;
+    self.modificationPatternSecondFormat = /\[[a-z0-9]+[A-Z]+\]/g;
+    // self.modificationPatternForAllPTMs = /[^[\]]+(?=])/g;
+    // self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
+    self.modificationPatternForAllPTMs = /{(.+)}/g;
+    self.modificationPatternForAllProteins = /(?:^|])([^[\]]+)/g;
+    self.paranthesesPattern = /[A-Z]\(([^)]+)\)/g;
+    self.rowSplitPattern = /[,;\n]/;
+    self.rowSplitPatternGenes = /[,;\n]/;
+    self.cleanFormattedModifications = /\[/;
+    self.patt1 = /[A-Z]/g;
+    self.patt2 = /[a-z0-9]+/g;
+    self.patt3 = /\d+/g
+    self.patt4 = /[+\d\.]+/g;
+    self.patt5 = /^[0-9]+([,.][0-9]+)?$/g;
+    self.patt6 = /^[\d.]/g;
+
+    self.modificationForGenes = /\b\w*[^\[]\w*\b/g;
+    self.modificationForptmProteins = /\b\w*[\[]\w*\b/g;
+
+    self.modificationMap = {'a': 42.037, 'me': 14.027, 'me2': 28.05, 'me3': 42.046, 'p': 79.966, 'my': 210.198};
+    self.modificationMapReverse = {42.037: 'a', 14.027: 'me', 28.05: 'me2', 42.046: 'me3', 79.966: 'p', 210.198: 'my'};
+
+
+
+    self.textArea = SharedService.getVar('textArea');
+
+
+    self.inputMassPtmProteins = SharedService.getVar('inputPtmProteinsExample');
+
+
+    self.genes = SharedService.getVar('genesExample');
+
+
+//KEGGviewer
+//     var expression = {
+//         upColor:'red',
+//         downColor:'blue',
+//         genes: ['hsa:7248', 'hsa:51763', 'hsa:2002', 'hsa:2194'],
+//         conditions: [
+//             {
+//                 name: 'condition 1',
+//                 values: [-1, 0.5, 0.7, -0.3]
+//             },
+//             {
+//                 name: 'condition 2',
+//                 values: [0.5, -0.1, -0.2, 1]
+//             },
+//             {
+//                 name: 'condition 3',
+//                 values: [0, 0.4, -0.2, 0.5]
+//             }
+//         ]
+//     };
+//
+// // Use heroku proxy
+//
+//     //import {Greeter} from 'biojs-vis-keggviewer';
+//
+//     //var biojsviskegg = new Greeter();
+//     //var biojsviskegg = require("biojs-vis-keggviewer"); // Keggviewer instance
+//     var proxy = function(url){
+//         return 'https://cors-anywhere.herokuapp.com/'+url;
+//     };
+//
+// // Init Component
+//     biojsviskegg.pathway('hsa04010')
+//         .proxy(proxy)
+//         .expression(expression)
+//         .target(document.getElementById('keggViewer'))
+//         .init();
+    //console.log(biojsviskegg.pathway('hsa04010'));
+
+    // biojsviskegg.pathway('hsa04910')
+    //     .proxy(proxy)
+    //     .expression(expression)
+    //     .target(document.getElementById('keggViewer2'))
+    //     .init();
+    // console.log(biojsviskegg.pathway('hsa04910'));
+
+    //KEGGviewer
 
 
     $scope.$watch(function () {

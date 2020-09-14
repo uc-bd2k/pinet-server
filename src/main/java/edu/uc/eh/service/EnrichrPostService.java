@@ -30,7 +30,7 @@ public class EnrichrPostService {
     {
         PythonInterpreter pi = new PythonInterpreter();
 
-        pi.set("ENRICHR_URL", new PyString("http://amp.pharm.mssm.edu/Enrichr/addList"));
+        pi.set("ENRICHR_URL", new PyString("http://maayanlab.cloud/Enrichr/addList/addList"));
 
         pi.set("genes_str" , new PyList());
         PyList genes_str = new PyList();

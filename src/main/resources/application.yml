@@ -25,12 +25,14 @@ urls:
 
   harmonizomeGene: http://amp.pharm.mssm.edu/Harmonizome//api/1.0/gene/%s
   harmonizomeProtein: http://amp.pharm.mssm.edu/Harmonizome//api/1.0/uniprot/%s
-  enrichrAddList: http://amp.pharm.mssm.edu/Enrichr/addList
-  enrichrViewList: http://amp.pharm.mssm.edu/Enrichr/view?userListId=%s
-  enrichrResult: http://amp.pharm.mssm.edu/Enrichr/enrich?userListId=%s&backgroundType=%s
-  enrichrGeneInfo: http://amp.pharm.mssm.edu/Enrichr/genemap?json=true&setup=true&gene=%s
-  enrichrNetwork: http://amp.pharm.mssm.edu/Enrichr/enrich?userListId=%s&backgroundType=%s
-  enrichrGetListId: http://amp.pharm.mssm.edu/Enrichr/addList
+
+  enrichrAddList: https://maayanlab.cloud/Enrichr/addList
+  enrichrViewList: https://maayanlab.cloud/Enrichr/view?userListId=%s
+  enrichrResult: https://maayanlab.cloud/Enrichr/enrich?userListId=%s&backgroundType=%s
+  enrichrGeneInfo: https://maayanlab.cloud/Enrichr/genemap?json=true&setup=true&gene=%s
+  enrichrNetwork: https://maayanlab.cloud/Enrichr/enrich?userListId=%s&backgroundType=%s
+  enrichrGetListId: https://maayanlab.cloud/Enrichr/addList
+
   ilincsSignatureUrl: http://www.ilincs.org/api/SignatureUploads/uploadToiLINCS
   ilincsSignatureMetaUpload: http://www.ilincs.org/api/SignatureMeta/upload
   ilincsGetSignatureUrl: http://www.ilincs.org/api/ilincsR/findConcordances
