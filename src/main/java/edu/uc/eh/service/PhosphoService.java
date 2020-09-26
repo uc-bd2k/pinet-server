@@ -427,8 +427,8 @@ public class PhosphoService {
 
                 inutArray.add(protList[i]);
 
-//                //System.out.println("input Uniprot");
-//                //System.out.println(protList[i]);
+                System.out.println("input Uniprot");
+                System.out.println(protList[i]);
 
                 inside = "";
                 //geneString = "";
@@ -451,12 +451,12 @@ public class PhosphoService {
                 //log.info("here1");
                 aminoSiteArray = new JSONArray();
                 while (insideMatcher.find()) {
-                    ////System.out.println("here1");
-                    ////System.out.println(insideMatcher.group(1));
+                    System.out.println("here1");
+                    System.out.println(insideMatcher.group(1));
                     String insideMatcherString = (String) insideMatcher.group(1).replace("[", "").replace("]", "");
                     String[] splitted = insideMatcherString.split("@");
                     siteString = splitted[1];
-                    ////System.out.println(insideMatcherString);
+                    System.out.println(insideMatcherString);
 
                     Matcher matcherLower = ifHasLowerCase.matcher(splitted[1]);
 //                lowerResult = matcherLower.matches();
@@ -489,9 +489,9 @@ public class PhosphoService {
 
                         }
                     }
-//                    //System.out.println(aminoString);
-//                    //System.out.println(siteString);
-//                    //System.out.println(ptmString);
+                    System.out.println(aminoString);
+                    System.out.println(siteString);
+                    System.out.println(ptmString);
 
 
                     aminoSiteJson = new JSONObject();
@@ -978,7 +978,7 @@ public class PhosphoService {
                             Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm"));
 
 
-                            if (Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 79.981 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79.96) {
+                            if ((Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 79.981 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79.96) || Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) == 80.00) {
                                 JSONObject phosphoGeneSequenceJson = new JSONObject();
                                 //String[] proteinAndOrganism = { uniprot_id, organismForQueryUniprot };
                                 ////System.out.println(uniprot_id);
@@ -1012,7 +1012,7 @@ public class PhosphoService {
                                 phosphoGeneSequenceArray.add(phosphoGeneSequenceJson);
                             }
                             //for iptmnet
-                            if (Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 79.981 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79.96) {
+                            if ((Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) < 79.981 && Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) > 79.96) || Double.parseDouble((String) proteinToPhosphoAminoItem.get("ptm")) == 80.00)  {
                                 JSONObject ptmItemJson = new JSONObject();
 
                                 ptmItemJson.put("phosphoSite", uniprot_id + "[ph" + proteinToPhosphoAminoItem.get("amino") + "@" + proteinToPhosphoAminoItem.get("site") + "]");
