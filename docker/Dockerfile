@@ -2,7 +2,7 @@ FROM python:3.6
 
 ARG CACHE_DATE=not_a_date
 
-RUN git clone https://github.com/behrouzsh/deepPhosAPI.git
+RUN git clone https://github.com/Mario-Medvedovic/deepPhosAPI.git
 RUN git clone https://github.com/uc-bd2k/pinet-server.git
 
 RUN pip3 install virtualenv
