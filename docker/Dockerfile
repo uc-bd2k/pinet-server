@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y gradle
 RUN cd /pinet-server && gradle clean build -x test
 
 RUN cd /deepPhosAPI && virtualenv -p python3 env
-RUN cd /deepPhosAPI && \
-   . env/bin/activate && \
-   pip3 install -r requirements.txt && \
-   pip3 install sklearn
-
-COPY run.sh .
-RUN chmod a+x run.sh
-EXPOSE 5000
-EXPOSE 8090
-CMD ./run.sh
+# RUN cd /deepPhosAPI && \
+#    . env/bin/activate && \
+#    pip3 install -r requirements.txt && \
+#    pip3 install sklearn
+# 
+# COPY run.sh .
+# RUN chmod a+x run.sh
+# EXPOSE 5000
+# EXPOSE 8090
+# CMD ./run.sh
