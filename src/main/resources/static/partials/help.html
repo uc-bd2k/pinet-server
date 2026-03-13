@@ -864,7 +864,7 @@ def map_peptides(params):
     try:
         peptide_json = _request(url)
     except:
-        print "error in map_peptides"
+        print("error in map_peptides")
         return peptide_json
 
     return peptide_json
@@ -876,7 +876,7 @@ def _request(url, params=None):
 if __name__ == '__main__':
     # Example
     # http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR
-    print map_peptides("KSAPATGGVKKPHR,IYQYIQSR")
+    print(map_peptides("KSAPATGGVKKPHR,IYQYIQSR"))
 
 
                 </code></pre>

@@ -1409,7 +1409,7 @@ def map_ptms(params):
     try:
         ptm_json = _request(url)
     except:
-        print "error in mapping ptmProteins"
+        print("error in mapping ptmProteins")
         return ptm_json
 
     return ptm_json
@@ -1424,8 +1424,8 @@ if __name__ == '__main__':
     results = map_ptms("Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}")
 
     for item in results:
-        print item
-        print results[item]
+        print(item)
+        print(results[item])
         print("---")
 
 
