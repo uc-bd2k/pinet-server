@@ -50,8 +50,8 @@ dependencies {
     compile files('libs/httpmime-4.5.3.jar')
     compile files('libs/jna-4.1.0.jar')
     compile files('libs/jna-platform-4.1.0.jar')
-    compile files('libs/log4j-api-2.8.2.jar')
-    compile files('libs/log4j-core-2.8.2.jar')
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.17.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.2'
     compile files('libs/lucene-analyzers-common-4.6.0.jar')
     compile files('libs/lucene-core-4.6.0.jar')
     compile files('libs/lucene-queryparser-4.6.0.jar')
@@ -143,5 +143,4 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
 }
-
 
