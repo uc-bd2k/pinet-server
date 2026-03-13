@@ -1,0 +1,3 @@
+[submodule "deepPhosAPI"]
+	path = deepPhosAPI
+	url = https://github.com/Mario-Medvedovic/deepPhosAPI.git
