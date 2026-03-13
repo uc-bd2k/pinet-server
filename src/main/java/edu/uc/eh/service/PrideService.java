@@ -67,7 +67,7 @@ public class PrideService {
             ptmJson = (JSONObject) parser.parse(predictionString);
 
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
             ptmJson.put("accession","");
             ptmJson.put("name","");
@@ -98,7 +98,7 @@ public class PrideService {
             ptmArray = (JSONArray) parser.parse(predictionString);
 
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
 
             return new JSONArray();
@@ -126,7 +126,7 @@ public class PrideService {
             JSONParser parser = new JSONParser();
             ptmArray = (JSONArray) parser.parse(predictionString);
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
 
             return new JSONArray();
@@ -148,7 +148,7 @@ public class PrideService {
             PTM ptm = modReader.getPTMbyAccession(mod);
             ptmJson = toJSON(ptm);
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
             ptmJson.put("accession","");
             ptmJson.put("name","");
@@ -158,18 +158,18 @@ public class PrideService {
             ptmJson.put("formula","");
             ptmJson.put("cvLabel","");
             ptmJson.put("shortName","");
-            return new JSONObject();
+            return ptmJson;
 
         }
         return ptmJson;
 
     }
     public JSONArray findPTMByDescription(String description) throws Exception {
-        ModReader modReader = ModReader.getInstance();
-        List<PTM> ptmListByMonoDeltaMass = modReader.getPTMListByPatternDescription(description);
         JSONArray ptmArray = new JSONArray();
         System.out.print("description to be found is" + description);
         try {
+            ModReader modReader = ModReader.getInstance();
+            List<PTM> ptmListByMonoDeltaMass = modReader.getPTMListByPatternDescription(description);
             for (int i = 0; i < ptmListByMonoDeltaMass.size(); i++)
             {
                 PTM ptm = (PTM)ptmListByMonoDeltaMass.get(i);
@@ -211,7 +211,7 @@ public class PrideService {
                 }
             }
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
 
             return new JSONArray();
@@ -226,10 +226,10 @@ public class PrideService {
     }
 
     public JSONArray findPTMByMassAndDelta(Double mass, Double delta) throws Exception {
-        ModReader modReader = ModReader.getInstance();
-        List<PTM> ptmListByMonoDeltaMass = modReader.getPTMListByMonoDeltaMass(mass, delta);
         JSONArray ptmArray = new JSONArray();
         try {
+            ModReader modReader = ModReader.getInstance();
+            List<PTM> ptmListByMonoDeltaMass = modReader.getPTMListByMonoDeltaMass(mass, delta);
             for (int i = 0; i < ptmListByMonoDeltaMass.size(); i++)
             {
                 PTM ptm = (PTM)ptmListByMonoDeltaMass.get(i);
@@ -239,7 +239,7 @@ public class PrideService {
                 }
             }
         }
-        catch (Exception e){
+        catch (Throwable e){
             System.out.println(e);
 
             return new JSONArray();

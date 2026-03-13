@@ -2428,7 +2428,7 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByIDAPI(mod);
+        return prideService.findPTMByID(mod);
     }
 
 
@@ -2460,7 +2460,7 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
-        return prideService.findPTMByDescriptionAPI(description);
+        return prideService.findPTMByDescription(description);
     }
 
     @RequestMapping(value = "api/proteinptmbydescriptionpride/{description}", method = RequestMethod.GET)
@@ -2492,7 +2492,7 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByMassAndDeltaAPI(mass, delta);
+        return prideService.findPTMByMassAndDelta(mass, delta);
     }
 
     @RequestMapping(value = "api/proteinptmbymasspride/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
