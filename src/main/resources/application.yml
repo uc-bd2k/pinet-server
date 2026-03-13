@@ -33,9 +33,9 @@ urls:
   enrichrNetwork: https://maayanlab.cloud/Enrichr/enrich?userListId=%s&backgroundType=%s
   enrichrGetListId: https://maayanlab.cloud/Enrichr/addList
 
-  ilincsSignatureUrl: http://www.ilincs.org/api/SignatureUploads/uploadToiLINCS
-  ilincsSignatureMetaUpload: http://www.ilincs.org/api/SignatureMeta/upload
-  ilincsGetSignatureUrl: http://www.ilincs.org/api/ilincsR/findConcordances
+  ilincsSignatureUrl: https://www.ilincs.org/api/SignatureUploads/uploadToiLINCS
+  ilincsSignatureMetaUpload: https://www.ilincs.org/api/SignatureMeta/upload
+  ilincsGetSignatureUrl: https://www.ilincs.org/api/ilincsR/findConcordances
   deepPhosUrl: http://localhost:5000/api/predict/organism/%s/%s
 
   findPTMByIDAPIUrl: http://new.pinet-server.org/pinet/api/proteinptm/%s

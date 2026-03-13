@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.File;
 
 /**
  * Created by shamsabz on 9/20/17.
@@ -33,12 +33,11 @@ public class PeptideSearchService {
 
 
     public JSONObject getTable(String organism,String[] peptides) {
-
-        String response;
-        //System.out.println(Arrays.toString(peptides));
         JSONObject peptideJson = new JSONObject();
-        //String xmlResponse;
-        //peptide[0] is the peptide, peptide[1] is the organism
+        File indexFile = PeptideMatchCMD.getIndexFile(organism);
+        if (!indexFile.isDirectory()) {
+            throw new IllegalStateException("Peptide index not found: " + indexFile.getPath());
+        }
 
         ArrayList<Fasta> queries = new ArrayList<Fasta>();
         for (int i = 0; i < peptides.length; i++) {

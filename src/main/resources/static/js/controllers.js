@@ -472,7 +472,7 @@ CCNL2	0.61115";
     vars.list_of_positive_negative_peps = [];
     vars.peptideToAbundance = {};
     vars.peptideToNumberOfProteins = {};
-    vars.ilincsSignatureUrl = "http://www.ilincs.org/ilincs/";
+    vars.ilincsSignatureUrl = "https://www.ilincs.org/ilincs/";
     //vars.showModal = true;
 
 
@@ -671,7 +671,7 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/QuickGO/term/"+linkID);
                     break;
                 case "pinetIlincs":
-                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ilincs.org/ilincs/signature/"+linkID);
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ilincs.org/ilincs/signature/"+linkID);
                     break;
 
 
@@ -15794,6 +15794,17 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //console.log("in scope gene!---------------------------------------");
         //localStorage.setItem("genes", self.genes);
         //console.log("Setting genes -----");
+        var genesInput = "";
+        if (typeof self.genes === 'string') {
+            genesInput = self.genes;
+        } else if (Array.isArray(self.genes)) {
+            genesInput = self.genes.join("\n");
+        } else if (self.genes === undefined || self.genes === null) {
+            genesInput = "";
+        } else {
+            genesInput = self.genes.toString();
+        }
+        self.genes = genesInput;
         self.showGeneSubmit = false;
         // var localselfGenes = localStorage.getItem("genesForProtein2Pathways");
         // //console.log(localselfGenes);
@@ -15804,10 +15815,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         // SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
         // SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
         // SharedService.setVar('showKinaseNetworkProcessed', $scope.showKinaseNetworkProcessed);
-        if (self.genes.length > 0) {
+        if (genesInput.length > 0) {
             //console.log(self.genes);
             self.geneToAbundanceMap = {};
-            self.parsedGenes = self.genes.split(self.rowSplitPattern)
+            self.parsedGenes = genesInput.split(self.rowSplitPattern)
                 .map(function (e) {
                     if (e) {
 
@@ -15836,7 +15847,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             // });
             self.parsedGenes.clean(undefined);
             //console.log(self.parsedGenes);
-            self.geneAbundance = self.genes
+            self.geneAbundance = genesInput
                 .split(self.rowSplitPattern)
                 .map(function (e) {
                     if (e) {
@@ -16408,6 +16419,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                                 return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
                                                             });
                                                             ////console.log(sorted_data);
+                                                            if (!sorted_data.length) {
+                                                                return;
+                                                            }
                                                             var closest_sorted = sorted_data[0];
                                                             ////console.log(closest_sorted);
                                                             var result = {};
@@ -20965,6 +20979,9 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                 return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
                                             });
                                             ////console.log(sorted_data);
+                                            if (!sorted_data.length) {
+                                                return;
+                                            }
                                             var closest_sorted = sorted_data[0];
                                             ////console.log(closest_sorted);
                                             var result = {};

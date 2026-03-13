@@ -1,0 +1,27 @@
+FROM --platform=linux/amd64 python:3.7-bullseye
+
+ENV PIP_DEFAULT_TIMEOUT=300
+ENV PATH="/opt/deepphos-env/bin:${PATH}"
+
+RUN apt-get update \
+    && apt-get install -y openjdk-11-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY deepPhosAPI/requirements.txt /tmp/deepphos-requirements.txt
+RUN python -m venv /opt/deepphos-env \
+    && . /opt/deepphos-env/bin/activate \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install -r /tmp/deepphos-requirements.txt
+
+COPY deepPhosAPI /app/deepPhosAPI
+COPY build/libs/pln-0.0.1.jar /app/pln.jar
+COPY docker/run-local.sh /usr/local/bin/run-pinet
+COPY docker/frontend_proxy.py /usr/local/bin/frontend-proxy.py
+
+RUN chmod +x /usr/local/bin/run-pinet /usr/local/bin/frontend-proxy.py
+
+EXPOSE 5000 8090
+
+CMD ["/usr/local/bin/run-pinet"]

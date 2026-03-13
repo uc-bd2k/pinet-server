@@ -140,6 +140,31 @@ public class RestAPI implements ErrorController {
 
     private final static String ERROR_PATH = "/error";
 
+    @RequestMapping(
+            value = {
+                    "/peptideToProtein",
+                    "/peptideToProtein/**",
+                    "/ptmToModifier",
+                    "/ptmToModifier/**",
+                    "/proteinToPathway",
+                    "/proteinToPathway/**",
+                    "/enrichment",
+                    "/help",
+                    "/kegg",
+                    "/upload",
+                    "/uploadStatus",
+                    "/modification",
+                    "/contact",
+                    "/ptm",
+                    "/splash"
+            },
+            method = RequestMethod.GET,
+            produces = "text/html"
+    )
+    public String spaForward() {
+        return "forward:/";
+    }
+
     /**
      * Controller for the Error Controller
      * @param errorAttributes
@@ -2757,6 +2782,13 @@ public class RestAPI implements ErrorController {
         return peptideWithValueService.getTable(organism, peptideswithvalues);
     }
 
+    @RequestMapping(value = {"api/peptidewithvalue/organism/{organism}/peptides", "api/peptidewithvalue/organism/{organism}/peptides/"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<JSONObject> searchForPeptidesAndValuesEmpty(@PathVariable String organism) {
+        return badRequest("No peptide/value pairs provided");
+    }
+
     @RequestMapping(value = "api/peptide/organism/{organism}/peptides/{peptides}", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -2768,7 +2800,26 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return peptideSearchService.getTable(organism, peptides);
+        try {
+            return peptideSearchService.getTable(organism, peptides);
+        } catch (IllegalStateException e) {
+            JSONObject error = new JSONObject();
+            error.put("error", e.getMessage());
+            return error;
+        }
+    }
+
+    @RequestMapping(value = {"api/peptide/organism/{organism}/peptides", "api/peptide/organism/{organism}/peptides/"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<JSONObject> searchForPeptidesEmpty(@PathVariable String organism) {
+        return badRequest("No peptides provided");
+    }
+
+    private ResponseEntity<JSONObject> badRequest(String message) {
+        JSONObject error = new JSONObject();
+        error.put("error", message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @RequestMapping(value = "api/pir/{peptideAndOrganism}", method = RequestMethod.GET)
