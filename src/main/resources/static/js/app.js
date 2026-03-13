@@ -6,6 +6,49 @@
 var app = angular.module('plnApplication', ['ngRoute','ngTagsInput','ngTable', 'plnModule', 'ui.bootstrap']);
 //var app = angular.module('plnApplication', ['plnModule','ngRoute']);
 
+app.config(['$provide', function($provide) {
+    function addLegacyHttpMethods(promise) {
+        if (!promise || promise.success) {
+            return promise;
+        }
+
+        promise.success = function(callback) {
+            promise.then(function(response) {
+                callback(response.data, response.status, response.headers, response.config, response.statusText);
+            });
+            return promise;
+        };
+
+        promise.error = function(callback) {
+            promise.catch(function(response) {
+                callback(response.data, response.status, response.headers, response.config, response.statusText);
+            });
+            return promise;
+        };
+
+        return promise;
+    }
+
+    $provide.decorator('$http', ['$delegate', function($delegate) {
+        function httpWrapper() {
+            return addLegacyHttpMethods($delegate.apply(null, arguments));
+        }
+
+        angular.forEach($delegate, function(value, key) {
+            if (angular.isFunction(value)) {
+                httpWrapper[key] = function() {
+                    return addLegacyHttpMethods(value.apply($delegate, arguments));
+                };
+                return;
+            }
+
+            httpWrapper[key] = value;
+        });
+
+        return httpWrapper;
+    }]);
+}]);
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
     //when('/network-view', {templateUrl: 'partials/assay-view.html',   controller: 'MainCtrl' }).
