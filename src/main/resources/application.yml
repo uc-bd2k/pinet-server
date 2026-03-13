@@ -5,7 +5,8 @@
 
 
 server:
-  contextPath: /pln
+  servlet:
+    context-path: /pln
   port: 8090
   max-http-header-size: 50000000
   tomcat:

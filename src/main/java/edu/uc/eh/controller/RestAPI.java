@@ -15,14 +15,14 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -196,17 +196,6 @@ public class RestAPI implements ErrorController {
         return new ResponseEntity<Map<String, Object>>(body, status);
     }
 
-    /**
-     * Returns the path of the error page.
-     *
-     * @return the error path
-     */
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
-
-
     private boolean getTraceParameter(HttpServletRequest request) {
         String parameter = request.getParameter("trace");
         if (parameter == null) {
@@ -217,9 +206,10 @@ public class RestAPI implements ErrorController {
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request,
                                                    boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
-        return this.errorAttributes.getErrorAttributes(requestAttributes,
-                includeStackTrace);
+        ErrorAttributeOptions options = includeStackTrace
+                ? ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE)
+                : ErrorAttributeOptions.defaults();
+        return this.errorAttributes.getErrorAttributes(new ServletWebRequest(request), options);
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

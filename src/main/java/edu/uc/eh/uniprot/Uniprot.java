@@ -1,6 +1,5 @@
 package edu.uc.eh.uniprot;
 
-import org.hibernate.validator.constraints.Length;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -8,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Uniprot {
 
     private Integer id;
     private String family;
-    @Length(max=3000)
+    @Size(max=3000)
     private String sequence;
     private String subcellular_location;
     private String accession;
@@ -510,4 +510,3 @@ public class Uniprot {
         this.hgnc = hgnc;
     }
 }
-

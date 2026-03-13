@@ -1,24 +1,13 @@
 package edu.uc.eh;
-
-
-import org.apache.catalina.Context;
-import org.apache.catalina.valves.ValveBase;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.apache.catalina.startup.Tomcat;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 //import edu.uc.eh.uniprot.UniprotRepositoryH2;
-
-import javax.servlet.ServletException;
-import java.io.IOException;
 
 
 @SpringBootApplication
@@ -51,41 +40,14 @@ public class Application {
 //        logger.info("All users -> {}", repository.findAll());
 //    }
     @Bean
-    public EmbeddedServletContainerFactory tomcatEmbedded() {
-        return new TomcatEmbeddedServletContainerFactory() {
-            @Override
-            protected void postProcessContext(Context context) {
-                // Keep large upload behavior unchanged.
-                super.postProcessContext(context);
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatCustomizer() {
+        return factory -> factory.addConnectorCustomizers(connector -> {
+            // Legacy PiNET URLs include raw PTM delimiters like []{} in path segments.
+            connector.setProperty("relaxedPathChars", "[]{}");
+            connector.setProperty("relaxedQueryChars", "[]{}");
+            if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>) {
+                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
             }
-
-            @Override
-            protected TomcatEmbeddedServletContainer getTomcatEmbeddedServletContainer(Tomcat tomcat) {
-                tomcat.getHost().getPipeline().addValve(new ValveBase() {
-                    @Override
-                    public void invoke(Request request, Response response) throws IOException, ServletException {
-                        String requestUri = request.getRequestURI();
-
-                        if (requestUri != null && (requestUri.equals("/pinet/api") || requestUri.startsWith("/pinet/api/"))) {
-                            String target = "/pln" + requestUri.substring("/pinet".length());
-                            if (request.getQueryString() != null && !request.getQueryString().isEmpty()) {
-                                target += "?" + request.getQueryString();
-                            }
-                            response.sendRedirect(target);
-                            return;
-                        }
-
-                        getNext().invoke(request, response);
-                    }
-                });
-
-                tomcat.getConnector();
-                if (tomcat.getConnector().getProtocolHandler() instanceof AbstractHttp11Protocol<?>) {
-                    ((AbstractHttp11Protocol<?>) tomcat.getConnector().getProtocolHandler()).setMaxSwallowSize(-1);
-                }
-
-                return super.getTomcatEmbeddedServletContainer(tomcat);
-            }
-        };
+        });
     }
 }
