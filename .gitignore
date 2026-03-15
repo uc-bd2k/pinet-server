@@ -30,6 +30,7 @@ build/
 .gradle
 .DS_Store
 .idea/
+src/main/resources/static/node_modules/
 
 # Irrelevant
 pyhton/

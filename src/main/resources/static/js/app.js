@@ -49,6 +49,44 @@ app.config(['$provide', function($provide) {
     }]);
 }]);
 
+app.run(['$rootScope', function($rootScope) {
+    function sanitizeListeners(scope, eventName, seen) {
+        if (!scope || !scope.$$listeners) {
+            return;
+        }
+
+        if (scope.$$listeners[eventName]) {
+            scope.$$listeners[eventName] = scope.$$listeners[eventName].filter(function(listener) {
+                return typeof listener === 'function';
+            });
+        }
+
+        if (seen) {
+            return;
+        }
+
+        for (var child = scope.$$childHead; child; child = child.$$nextSibling) {
+            sanitizeListeners(child, eventName, false);
+        }
+    }
+
+    var scopeProto = Object.getPrototypeOf($rootScope);
+    var originalBroadcast = scopeProto.$broadcast;
+    var originalEmit = scopeProto.$emit;
+
+    scopeProto.$broadcast = function(eventName) {
+        sanitizeListeners(this, eventName, false);
+        return originalBroadcast.apply(this, arguments);
+    };
+
+    scopeProto.$emit = function(eventName) {
+        for (var scope = this; scope; scope = scope.$parent) {
+            sanitizeListeners(scope, eventName, true);
+        }
+        return originalEmit.apply(this, arguments);
+    };
+}]);
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
     //when('/network-view', {templateUrl: 'partials/assay-view.html',   controller: 'MainCtrl' }).

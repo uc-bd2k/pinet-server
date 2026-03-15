@@ -1015,7 +1015,12 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
         if (timeout) {
             $timeout.cancel(timeout);
         };
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        var genesSnapshotKey = genesSnapshot.join(',');
         $timeout(function () {
+            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
+                return;
+            }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -1033,7 +1038,7 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -1057,7 +1062,7 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -1092,7 +1097,7 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
             }
 
-        }, 1100);
+        }, 3000);
 
     });
 
@@ -1780,7 +1785,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
     $scope.showColors = false;
     self.helpTab = SharedService.getVar("helpTab");
     //SharedService.setVar('showModal', false);
-    $('input[name=tabs][id=' + self.helpTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.helpTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.helpTab = this.id;
         SharedService.setVar("helpTab", self.helpTab);
@@ -7125,7 +7130,12 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         if (timeout) {
             $timeout.cancel(timeout);
         };
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        var genesSnapshotKey = genesSnapshot.join(',');
         $timeout(function () {
+            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
+                return;
+            }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -7143,7 +7153,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -7167,7 +7177,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -7202,7 +7212,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                 }
             }
 
-        }, 1100);
+        }, 3000);
 
     });
 
@@ -7890,7 +7900,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
     $scope.showColors = false;
     self.helpTab = SharedService.getVar("helpTab");
     //SharedService.setVar('showModal', false);
-    $('input[name=tabs][id=' + self.helpTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.helpTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.helpTab = this.id;
         SharedService.setVar("helpTab", self.helpTab);
@@ -13160,7 +13170,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     });
 
 
-    $('input[name=tabset3][id=' + self.ex1orex2 + ']').prop('checked', true);
+    $('input[name="tabset3"][id="' + self.ex1orex2 + '"]').prop('checked', true);
     $("input[name='tabset3']").click(function () {
         self.ex1orex2 = this.id;
         console.log(self.ex1orex2);
@@ -13314,7 +13324,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.resultTab = SharedService.getVar("resultTab");
 
 
-    $('input[name=tabs][id=' + self.resultTab + ']').prop('checked', true);
+    $('input[name="tabs"][id="' + self.resultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.resultTab = this.id;
 
@@ -15932,7 +15942,12 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         if (timeout) {
             $timeout.cancel(timeout);
         };
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        var genesSnapshotKey = genesSnapshot.join(',');
         $timeout(function () {
+            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
+                return;
+            }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -15950,7 +15965,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -15974,7 +15989,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -16009,7 +16024,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
             }
 
-        }, 1100);
+        }, 3000);
 
     });
 
@@ -19986,13 +20001,19 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     }
     console.log(self.peptideModFormat);
     console.log(self.uploadFormat);
-    $('input[name=r1][value=' + self.organismForm + ']').prop('checked',true);
-    $('input[name=r2][value=' + self.proteinForm + ']').prop('checked',true);
-    $('input[name=r3][value=' + self.proteinDb + ']').prop('checked',true);
-    $('input[name=r4][value=' + self.peptideNormalizeFlag + ']').prop('checked',true);
-    $('input[name=r5][value=' + self.uploadFormat + ']').prop('checked',true);
-    $('input[name=r52][value=' + self.imputeFormat + ']').prop('checked',true);
-    $('input[name=r9][value=' + self.peptideModFormat + ']').prop('checked',true);
+    function setRadioChecked(name, value) {
+        $('input[name="' + name + '"]').filter(function () {
+            return $(this).val() === String(value);
+        }).prop('checked', true);
+    }
+
+    setRadioChecked('r1', self.organismForm);
+    setRadioChecked('r2', self.proteinForm);
+    setRadioChecked('r3', self.proteinDb);
+    setRadioChecked('r4', self.peptideNormalizeFlag);
+    setRadioChecked('r5', self.uploadFormat);
+    setRadioChecked('r52', self.imputeFormat);
+    setRadioChecked('r9', self.peptideModFormat);
 
 
     //This is for radio button for index.html
@@ -25634,7 +25655,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         content: function () { return '<img src="' + $(this).data('img') + '" />'; }
     });
 
-    $('input[name=tabset2p][id=' + self.ex1orex2Protein + ']').prop('checked', true);
+    $('input[name="tabset2p"][id="' + self.ex1orex2Protein + '"]').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
         self.ex1orex2Protein = this.id;
         console.log(self.ex1orex2Protein);
@@ -25748,7 +25769,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
-    $('input[name=tabs][id=' + self.ptmResultTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.ptmResultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.ptmResultTab = this.id;
         SharedService.setVar("ptmResultTab", self.ptmResultTab);
@@ -25778,9 +25799,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
     //self.organismFormProteinToPathway = SharedService.getVar('organismFormProteinToPathway');
 
-    $('input[name=r3][value=' + self.organismForm + ']').prop('checked',true);
+    $('input[name="r3"][value="' + self.organismForm + '"]').prop('checked', true);
 
-    $('input[name=tabset][id=' + self.ptmToModifierPtmOrGene + ']').prop('checked',true);
+    $('input[name="tabset"][id="' + self.ptmToModifierPtmOrGene + '"]').prop('checked', true);
 
     if (!$("input[name='tabset']").is(":checked")) {
         //console.log("checked no");
@@ -26393,7 +26414,12 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         if (timeout) {
             $timeout.cancel(timeout);
         };
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        var genesSnapshotKey = genesSnapshot.join(',');
         $timeout(function () {
+            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
+                return;
+            }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -26411,7 +26437,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -26436,7 +26462,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -26474,7 +26500,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 }
             }
 
-        }, 1100);
+        }, 3000);
 
     });
 
@@ -37562,7 +37588,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
-    $('input[name=tabset2p][id=' + self.ex1orex2Pathway + ']').prop('checked', true);
+    $('input[name="tabset2p"][id="' + self.ex1orex2Pathway + '"]').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
         self.ex1orex2Pathway = this.id;
         console.log(self.ex1orex2Pathway);
@@ -37572,7 +37598,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     });
 
-    $('input[name=tabsPP][id=' + self.signatureTab + ']').prop('checked',true);
+    $('input[name="tabsPP"][id="' + self.signatureTab + '"]').prop('checked', true);
     $("input[name='tabsPP']").click(function () {
         self.signatureTab = this.id;
         SharedService.setVar("signatureTab", self.signatureTab);
@@ -37583,7 +37609,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.proteinToPathwayResultTab = SharedService.getVar("proteinToPathwayResultTab");
     //self.resultTab = SharedService.getVar("resultTab");
 
-    $('input[name=tabs][id=' + self.proteinToPathwayResultTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.proteinToPathwayResultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.proteinToPathwayResultTab = this.id;
         SharedService.setVar("proteinToPathwayResultTab", self.proteinToPathwayResultTab);
@@ -37980,9 +38006,9 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     //self.organismFormProteinToPathway = SharedService.getVar('organismFormProteinToPathway');
 
-    $('input[name=r3][value=' + self.organismForm + ']').prop('checked',true);
+    $('input[name="r3"][value="' + self.organismForm + '"]').prop('checked', true);
 
-    $('input[name=tabset][id=' + self.ptmToModifierPtmOrGene + ']').prop('checked',true);
+    $('input[name="tabset"][id="' + self.ptmToModifierPtmOrGene + '"]').prop('checked', true);
 
     if (!$("input[name='tabset']").is(":checked")) {
         //console.log("checked no");
@@ -38331,7 +38357,12 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
         if (timeout) {
             $timeout.cancel(timeout);
         };
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        var genesSnapshotKey = genesSnapshot.join(',');
         $timeout(function () {
+            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
+                return;
+            }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -38349,7 +38380,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -38374,7 +38405,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -38418,7 +38449,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 }
             }
 
-        }, 1100);
+        }, 3000);
 
     });
 
