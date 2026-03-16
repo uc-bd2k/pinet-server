@@ -16430,6 +16430,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             if (modificationType  === undefined) {
                                             }
                                             else {
+                                                storeOntologyResult(buildShorthandOntologyFallback());
                                                 $http.get("api/proteinptmbydescription/" + modificationType)
                                                     .success(function (res_data) {
                                                         if (res_data === undefined) {
@@ -21015,6 +21016,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                         }
                                     };
 
+                                    storeOntologyResult(buildShorthandOntologyFallback());
                                     $http.get("api/proteinptmbydescription/" + modificationType)
                                         .success(function (res_data) {
                                             // console.log("api/proteinptmbydescription/" + modificationType);
