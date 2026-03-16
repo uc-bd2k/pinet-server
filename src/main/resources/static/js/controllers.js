@@ -16404,6 +16404,29 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                         // console.log(originalMAss);
                                         // console.log(elMass);
                                         (function (modificationType, modificationAmino, originalModFromInput) {
+                                            var buildShorthandOntologyFallback = function () {
+                                                if (modificationType !== 'phospho') {
+                                                    return null;
+                                                }
+
+                                                return {
+                                                    mass: originalMAss,
+                                                    input: el,
+                                                    identifier: '',
+                                                    diffavg: originalMAss,
+                                                    description: 'phospho',
+                                                    formula: '',
+                                                    similar: []
+                                                };
+                                            };
+
+                                            var storeOntologyResult = function (result) {
+                                                if (result && self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                                    self.ontologyMappingsUnique.push(el);
+                                                    self.ontologyMappings.push(result);
+                                                }
+                                            };
+
                                             if (modificationType  === undefined) {
                                             }
                                             else {
@@ -16435,6 +16458,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                             });
                                                             ////console.log(sorted_data);
                                                             if (!sorted_data.length) {
+                                                                storeOntologyResult(buildShorthandOntologyFallback());
                                                                 return;
                                                             }
                                                             var closest_sorted = sorted_data[0];
@@ -16467,12 +16491,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                             result.similar = similarToPTM;
                                                             ////console.log(result);
 
-                                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                                self.ontologyMappingsUnique.push(el);
-                                                                self.ontologyMappings.push(result);
-                                                                //console.log(result);
-
-                                                            }
+                                                            storeOntologyResult(result);
                                                         }
                                                         //self.ontologyMappings.push(result);
 
@@ -16504,10 +16523,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                         // result.description = "Error!";
                                                         // result.similar = "";
                                                         //self.ontologyMappings.push(result);
-                                                        if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                            self.ontologyMappingsUnique.push(el);
-                                                            self.ontologyMappings.push(result);
-                                                        }
+                                                        storeOntologyResult(buildShorthandOntologyFallback() || result);
 
                                                     });
                                             }
@@ -20976,6 +20992,29 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 // console.log(originalMAss);
                                 // console.log(elMass);
                                 (function (modificationType, modificationAmino, originalModFromInput) {
+                                    var buildShorthandOntologyFallback = function () {
+                                        if (modificationType !== 'phospho') {
+                                            return null;
+                                        }
+
+                                        return {
+                                            mass: originalMAss,
+                                            input: el,
+                                            identifier: '',
+                                            diffavg: originalMAss,
+                                            description: 'phospho',
+                                            formula: '',
+                                            similar: []
+                                        };
+                                    };
+
+                                    var storeOntologyResult = function (result) {
+                                        if (result && self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                            self.ontologyMappingsUnique.push(el);
+                                            self.ontologyMappings.push(result);
+                                        }
+                                    };
+
                                     $http.get("api/proteinptmbydescription/" + modificationType)
                                         .success(function (res_data) {
                                             // console.log("api/proteinptmbydescription/" + modificationType);
@@ -21001,6 +21040,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             });
                                             ////console.log(sorted_data);
                                             if (!sorted_data.length) {
+                                                storeOntologyResult(buildShorthandOntologyFallback());
                                                 return;
                                             }
                                             var closest_sorted = sorted_data[0];
@@ -21033,12 +21073,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             result.similar = similarToPTM;
                                             ////console.log(result);
 
-                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                self.ontologyMappingsUnique.push(el);
-                                                self.ontologyMappings.push(result);
-                                                //console.log(result);
-
-                                            }
+                                            storeOntologyResult(result);
 
                                             //self.ontologyMappings.push(result);
 
@@ -21070,10 +21105,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             // result.description = "Error!";
                                             // result.similar = "";
                                             //self.ontologyMappings.push(result);
-                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                self.ontologyMappingsUnique.push(el);
-                                                self.ontologyMappings.push(result);
-                                            }
+                                            storeOntologyResult(buildShorthandOntologyFallback() || result);
 
                                         });
                                 }(modificationType, modificationAmino, originalModFromInput));
