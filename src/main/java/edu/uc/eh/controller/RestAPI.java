@@ -2419,7 +2419,7 @@ public class RestAPI implements ErrorController {
     @RequestMapping(value = "api/proteinptm/{mod}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONObject getPTMByID(@PathVariable String mod) throws Exception {
+    ResponseEntity<?> getPTMByID(@PathVariable String mod) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2428,14 +2428,18 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByID(mod);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByID(mod));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
 
     @RequestMapping(value = "api/proteinptmpride/{mod}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONObject getPTMByIDPride(@PathVariable String mod) throws Exception {
+    ResponseEntity<?> getPTMByIDPride(@PathVariable String mod) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2444,13 +2448,17 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByID(mod);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByID(mod));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbydescription/{description}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByDescription(@PathVariable String description) throws Exception {
+    ResponseEntity<?> getPTMByDescription(@PathVariable String description) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2460,13 +2468,17 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
-        return prideService.findPTMByDescription(description);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByDescription(description));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbydescriptionpride/{description}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByDescriptionPride(@PathVariable String description) throws Exception {
+    ResponseEntity<?> getPTMByDescriptionPride(@PathVariable String description) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2476,14 +2488,18 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
-        return prideService.findPTMByDescription(description);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByDescription(description));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
 
     @RequestMapping(value = "api/proteinptmbymass/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByMassAndDelta(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
+    ResponseEntity<?> getPTMByMassAndDelta(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2492,13 +2508,17 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByMassAndDelta(mass, delta);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByMassAndDelta(mass, delta));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbymasspride/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByMassAndDeltaPride(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
+    ResponseEntity<?> getPTMByMassAndDeltaPride(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2507,7 +2527,18 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByMassAndDelta(mass, delta);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByMassAndDelta(mass, delta));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
+    }
+
+    private ResponseEntity<JSONObject> ptmLookupError(Throwable e) {
+        JSONObject error = new JSONObject();
+        error.put("error", "PTM lookup failed");
+        error.put("message", e.getMessage() == null ? e.toString() : e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @RequestMapping(value = "api/prosite/{peptide}", method = RequestMethod.GET)

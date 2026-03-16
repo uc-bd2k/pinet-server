@@ -149,16 +149,8 @@ public class PrideService {
             ptmJson = toJSON(ptm);
         }
         catch (Throwable e){
-            System.out.println(e);
-            ptmJson.put("accession","");
-            ptmJson.put("name","");
-            ptmJson.put("monoDeltaMass","");
-            ptmJson.put("averageDeltaMass","");
-            ptmJson.put("description","");
-            ptmJson.put("formula","");
-            ptmJson.put("cvLabel","");
-            ptmJson.put("shortName","");
-            return ptmJson;
+            throw new IllegalStateException("ModReader failed for PTM id '" + mod + "': "
+                    + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
         }
         return ptmJson;
@@ -212,9 +204,8 @@ public class PrideService {
             }
         }
         catch (Throwable e){
-            System.out.println(e);
-
-            return new JSONArray();
+            throw new IllegalStateException("ModReader failed for PTM description '" + description + "': "
+                    + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
         }
 
@@ -240,9 +231,8 @@ public class PrideService {
             }
         }
         catch (Throwable e){
-            System.out.println(e);
-
-            return new JSONArray();
+            throw new IllegalStateException("ModReader failed for PTM mass '" + mass + "' delta '" + delta + "': "
+                    + e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
         }
 
