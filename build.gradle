@@ -1,14 +1,13 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.3.RELEASE'
+        springBootVersion = '2.7.18'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath('io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE')
-        //classpath('org.springframework.boot:spring-boot-devtools:2.0.0.RELEASE')
+        classpath('io.spring.gradle:dependency-management-plugin:1.1.4')
     }
 }
 
@@ -17,14 +16,13 @@ apply plugin: 'java'
 //apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-//apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.spring.dependency-management'
 
-jar {
-    baseName = 'pln'
-    version = '0.0.1'
-}
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+group = 'edu.uc.eh'
+archivesBaseName = 'pln'
+version = '0.0.1'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -34,65 +32,64 @@ repositories {
 
 dependencies {
     //local file
-    compile files('libs/spring-context-support-3.2.0.RELEASE.jar')
-    compile files('libs/mail-1.4.jar')
-    compile files('libs/commons-cli-1.2.jar')
-    compile files('libs/commons-io-2.4.jar')
-    compile files('libs/commons-codec-1.9.jar')
-    compile files('libs/commons-logging-1.2.jar')
-    compile files('libs/fluent-hc-4.5.3.jar')
-    compile files('libs/httpclient-4.5.3.jar')
-    compile files('libs/httpclient-cache-4.5.3.jar')
-    compile files('libs/httpclient-win-4.5.3.jar')
-    compile files('libs/httpcore-4.4.6.jar')
-    compile files('libs/httpcore-ab-4.4.6.jar')
-    compile files('libs/httpcore-nio-4.4.6.jar')
-    compile files('libs/httpmime-4.5.3.jar')
-    compile files('libs/jna-4.1.0.jar')
-    compile files('libs/jna-platform-4.1.0.jar')
-    compile files('libs/log4j-api-2.8.2.jar')
-    compile files('libs/log4j-core-2.8.2.jar')
-    compile files('libs/lucene-analyzers-common-4.6.0.jar')
-    compile files('libs/lucene-core-4.6.0.jar')
-    compile files('libs/lucene-queryparser-4.6.0.jar')
+    implementation files('libs/commons-cli-1.2.jar')
+    implementation files('libs/commons-io-2.4.jar')
+    implementation files('libs/commons-codec-1.9.jar')
+    implementation files('libs/fluent-hc-4.5.3.jar')
+    implementation files('libs/httpclient-4.5.3.jar')
+    implementation files('libs/httpclient-cache-4.5.3.jar')
+    implementation files('libs/httpclient-win-4.5.3.jar')
+    implementation files('libs/httpcore-4.4.6.jar')
+    implementation files('libs/httpcore-ab-4.4.6.jar')
+    implementation files('libs/httpcore-nio-4.4.6.jar')
+    implementation files('libs/httpmime-4.5.3.jar')
+    implementation files('libs/jna-4.1.0.jar')
+    implementation files('libs/jna-platform-4.1.0.jar')
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+    implementation files('libs/lucene-analyzers-common-4.6.0.jar')
+    implementation files('libs/lucene-core-4.6.0.jar')
+    implementation files('libs/lucene-queryparser-4.6.0.jar')
 
     //compile files('libs/spring-mock-2.0.6.jar')
 
 
-    compile files('libs/json-simple-1.1.1.jar')
+    implementation files('libs/json-simple-1.1.1.jar')
 //    compile files('libs/opencsv-4.0.jar')
-    compile files('libs/jna-platform-4.2.1.jar')
-    compile files('libs/jython-standalone-2.5.4-rc1.jar')
+    implementation files('libs/jna-platform-4.2.1.jar')
+    implementation files('libs/jython-standalone-2.5.4-rc1.jar')
     //compile files('libs/org.json-20130603-sources.jar')
 
 //These three are for uploading files
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.15'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
 
-    compile 'org.codehaus.jsr166-mirror:jsr166y:1.7.0',
+    implementation 'org.codehaus.jsr166-mirror:jsr166y:1.7.0',
             'org.apache.commons:commons-math3:3.3'
     //This is to access pride-mod for PTM
-    compile files('libs/pride-mod.jar')
+    implementation files('libs/pride-mod.jar')
 //    compile 'net.sourceforge.owlapi:owlapi-oboformat:3.5.0'
 ////    compile 'net.sourceforge.cpdetector:cpdetector:1.0.7'
     //compile group: 'uk.ac.ebi.pride.utilities', name: 'pride-mod', version:'2.1.9'
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.9'
-    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.8.9'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.5'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.13.5'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.8'
+    implementation 'com.sun.activation:javax.activation:1.2.0'
 
 
 
 
 
-    compile files("libs/javax.ws.rs-api-2.0.rev.A.jar")
+    implementation files("libs/javax.ws.rs-api-2.0.rev.A.jar")
 
     //This is for reading csv file
-    compile group: 'com.opencsv', name: 'opencsv', version: '4.1'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile('org.springframework.boot:spring-boot-starter-web')
-    //compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version:'2.0.0.RELEASE'
-    //runtime group: 'org.springframework.boot', name: 'spring-boot-devtools', version:'2.0.0.RELEASE'
-    compile('org.springframework.boot:spring-boot-devtools')
+    implementation group: 'com.opencsv', name: 'opencsv', version: '4.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     //runtime group: 'com.h2database', name: 'h2', version:'1.4.196'
     //runtime('com.h2database:h2')
@@ -103,12 +100,11 @@ dependencies {
     //compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // Use MySQL Connector-J
-    compile 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 
-    testCompile('junit:junit:4.12')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation('junit:junit:4.13.2')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 
 
@@ -122,13 +118,9 @@ idea {
 }
 
 configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
+    compileOnly {
+        extendsFrom annotationProcessor
     }
-}
-dependencies {
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 //compile 'org.python:jython-standalone:2.7.0'
@@ -140,8 +132,6 @@ dependencies {
 //    }
 //}
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
+wrapper {
+    gradleVersion = '7.6.4'
 }
-
-

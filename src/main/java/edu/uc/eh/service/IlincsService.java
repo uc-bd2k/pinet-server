@@ -77,10 +77,10 @@ public class IlincsService {
 
 //For getting url to ilincs
         String urlSignature = ilincsSignatureUrl;
-        //{"id":"S19ladHYz","fileName":"genes.txt","url":"http://www.ilincs.org/ilincs/uploadedSignature/S19ladHYz"}
+        //{"id":"S19ladHYz","fileName":"genes.txt","url":"https://www.ilincs.org/ilincs/uploadedSignature/S19ladHYz"}
         ilincsErrorJson.put("id",0);
         ilincsErrorJson.put("fileName","genesToIlincs.txt");
-        ilincsErrorJson.put("url","http://www.ilincs.org");
+        ilincsErrorJson.put("url","https://www.ilincs.org");
         //String url = "https://selfsolve.apple.com/wcResults.do";
         HttpClient clientSignature = HttpClientBuilder.create().build();
         String signatureUrl;
@@ -240,7 +240,7 @@ public class IlincsService {
 
             }
             catch (Exception e){
-                uploadResultJSON.put("url", "http://www.ilincs.org");
+                uploadResultJSON.put("url", "https://www.ilincs.org");
 
             }
 
@@ -449,10 +449,10 @@ public class IlincsService {
 
     public JSONObject getSignatureUrl(String[] geneList) throws Exception {
         String url = ilincsSignatureUrl;
-        //{"id":"S19ladHYz","fileName":"genes.txt","url":"http://www.ilincs.org/ilincs/uploadedSignature/S19ladHYz"}
+        //{"id":"S19ladHYz","fileName":"genes.txt","url":"https://www.ilincs.org/ilincs/uploadedSignature/S19ladHYz"}
         ilincsErrorJson.put("id",0);
         ilincsErrorJson.put("fileName","genesToIlincs.txt");
-        ilincsErrorJson.put("url","http://www.ilincs.org");
+        ilincsErrorJson.put("url","https://www.ilincs.org");
         //String url = "https://selfsolve.apple.com/wcResults.do";
         HttpClient client = HttpClientBuilder.create().build();
         String signatureUrl;

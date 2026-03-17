@@ -1,11 +1,12 @@
 package edu.uc.eh;
-
-
+import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 //import edu.uc.eh.uniprot.UniprotRepositoryH2;
 
 
@@ -38,21 +39,15 @@ public class Application {
 //
 //        logger.info("All users -> {}", repository.findAll());
 //    }
-    //Tomcat large file upload connection reset
-    //http://www.mkyong.com/spring/spring-file-upload-and-connection-reset-issue/
-//    @Bean
-//    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
-//
-//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-//
-//        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
-//            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-//                //-1 means unlimited
-//                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
-//            }
-//        });
-//
-//        return tomcat;
-//
-//    }
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatCustomizer() {
+        return factory -> factory.addConnectorCustomizers(connector -> {
+            // Legacy PiNET URLs include raw PTM delimiters like []{} in path segments.
+            connector.setProperty("relaxedPathChars", "[]{}");
+            connector.setProperty("relaxedQueryChars", "[]{}");
+            if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>) {
+                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
+            }
+        });
+    }
 }

@@ -6,6 +6,87 @@
 var app = angular.module('plnApplication', ['ngRoute','ngTagsInput','ngTable', 'plnModule', 'ui.bootstrap']);
 //var app = angular.module('plnApplication', ['plnModule','ngRoute']);
 
+app.config(['$provide', function($provide) {
+    function addLegacyHttpMethods(promise) {
+        if (!promise || promise.success) {
+            return promise;
+        }
+
+        promise.success = function(callback) {
+            promise.then(function(response) {
+                callback(response.data, response.status, response.headers, response.config, response.statusText);
+            });
+            return promise;
+        };
+
+        promise.error = function(callback) {
+            promise.catch(function(response) {
+                callback(response.data, response.status, response.headers, response.config, response.statusText);
+            });
+            return promise;
+        };
+
+        return promise;
+    }
+
+    $provide.decorator('$http', ['$delegate', function($delegate) {
+        function httpWrapper() {
+            return addLegacyHttpMethods($delegate.apply(null, arguments));
+        }
+
+        angular.forEach($delegate, function(value, key) {
+            if (angular.isFunction(value)) {
+                httpWrapper[key] = function() {
+                    return addLegacyHttpMethods(value.apply($delegate, arguments));
+                };
+                return;
+            }
+
+            httpWrapper[key] = value;
+        });
+
+        return httpWrapper;
+    }]);
+}]);
+
+app.run(['$rootScope', function($rootScope) {
+    function sanitizeListeners(scope, eventName, seen) {
+        if (!scope || !scope.$$listeners) {
+            return;
+        }
+
+        if (scope.$$listeners[eventName]) {
+            scope.$$listeners[eventName] = scope.$$listeners[eventName].filter(function(listener) {
+                return typeof listener === 'function';
+            });
+        }
+
+        if (seen) {
+            return;
+        }
+
+        for (var child = scope.$$childHead; child; child = child.$$nextSibling) {
+            sanitizeListeners(child, eventName, false);
+        }
+    }
+
+    var scopeProto = Object.getPrototypeOf($rootScope);
+    var originalBroadcast = scopeProto.$broadcast;
+    var originalEmit = scopeProto.$emit;
+
+    scopeProto.$broadcast = function(eventName) {
+        sanitizeListeners(this, eventName, false);
+        return originalBroadcast.apply(this, arguments);
+    };
+
+    scopeProto.$emit = function(eventName) {
+        for (var scope = this; scope; scope = scope.$parent) {
+            sanitizeListeners(scope, eventName, true);
+        }
+        return originalEmit.apply(this, arguments);
+    };
+}]);
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
     //when('/network-view', {templateUrl: 'partials/assay-view.html',   controller: 'MainCtrl' }).

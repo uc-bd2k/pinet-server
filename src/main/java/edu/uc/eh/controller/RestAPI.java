@@ -15,14 +15,14 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -140,6 +140,31 @@ public class RestAPI implements ErrorController {
 
     private final static String ERROR_PATH = "/error";
 
+    @RequestMapping(
+            value = {
+                    "/peptideToProtein",
+                    "/peptideToProtein/**",
+                    "/ptmToModifier",
+                    "/ptmToModifier/**",
+                    "/proteinToPathway",
+                    "/proteinToPathway/**",
+                    "/enrichment",
+                    "/help",
+                    "/kegg",
+                    "/upload",
+                    "/uploadStatus",
+                    "/modification",
+                    "/contact",
+                    "/ptm",
+                    "/splash"
+            },
+            method = RequestMethod.GET,
+            produces = "text/html"
+    )
+    public String spaForward() {
+        return "forward:/";
+    }
+
     /**
      * Controller for the Error Controller
      * @param errorAttributes
@@ -171,17 +196,6 @@ public class RestAPI implements ErrorController {
         return new ResponseEntity<Map<String, Object>>(body, status);
     }
 
-    /**
-     * Returns the path of the error page.
-     *
-     * @return the error path
-     */
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
-
-
     private boolean getTraceParameter(HttpServletRequest request) {
         String parameter = request.getParameter("trace");
         if (parameter == null) {
@@ -192,9 +206,10 @@ public class RestAPI implements ErrorController {
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request,
                                                    boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
-        return this.errorAttributes.getErrorAttributes(requestAttributes,
-                includeStackTrace);
+        ErrorAttributeOptions options = includeStackTrace
+                ? ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE)
+                : ErrorAttributeOptions.defaults();
+        return this.errorAttributes.getErrorAttributes(new ServletWebRequest(request), options);
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
@@ -2404,7 +2419,7 @@ public class RestAPI implements ErrorController {
     @RequestMapping(value = "api/proteinptm/{mod}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONObject getPTMByID(@PathVariable String mod) throws Exception {
+    ResponseEntity<?> getPTMByID(@PathVariable String mod) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2413,14 +2428,18 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByIDAPI(mod);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByID(mod));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
 
     @RequestMapping(value = "api/proteinptmpride/{mod}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONObject getPTMByIDPride(@PathVariable String mod) throws Exception {
+    ResponseEntity<?> getPTMByIDPride(@PathVariable String mod) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2429,13 +2448,17 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByID(mod);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByID(mod));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbydescription/{description}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByDescription(@PathVariable String description) throws Exception {
+    ResponseEntity<?> getPTMByDescription(@PathVariable String description) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2445,13 +2468,17 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
-        return prideService.findPTMByDescriptionAPI(description);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByDescription(description));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbydescriptionpride/{description}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByDescriptionPride(@PathVariable String description) throws Exception {
+    ResponseEntity<?> getPTMByDescriptionPride(@PathVariable String description) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2461,14 +2488,18 @@ public class RestAPI implements ErrorController {
 //            System.out.println(e);
 //        }
         System.out.println(description);
-        return prideService.findPTMByDescription(description);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByDescription(description));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
 
     @RequestMapping(value = "api/proteinptmbymass/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByMassAndDelta(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
+    ResponseEntity<?> getPTMByMassAndDelta(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2477,13 +2508,17 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByMassAndDeltaAPI(mass, delta);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByMassAndDelta(mass, delta));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
     }
 
     @RequestMapping(value = "api/proteinptmbymasspride/{mass:.+}/delta/{delta:.+}", method = RequestMethod.GET)
     public
     @ResponseBody
-    JSONArray getPTMByMassAndDeltaPride(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
+    ResponseEntity<?> getPTMByMassAndDeltaPride(@PathVariable Double mass, @PathVariable Double delta) throws Exception {
         //log.info(String.format("Run convertToPLN with argument: %s", peptide));
 
 //        try {
@@ -2492,7 +2527,18 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return prideService.findPTMByMassAndDelta(mass, delta);
+        try {
+            return ResponseEntity.ok(prideService.findPTMByMassAndDelta(mass, delta));
+        } catch (Throwable e) {
+            return ptmLookupError(e);
+        }
+    }
+
+    private ResponseEntity<JSONObject> ptmLookupError(Throwable e) {
+        JSONObject error = new JSONObject();
+        error.put("error", "PTM lookup failed");
+        error.put("message", e.getMessage() == null ? e.toString() : e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @RequestMapping(value = "api/prosite/{peptide}", method = RequestMethod.GET)
@@ -2757,6 +2803,13 @@ public class RestAPI implements ErrorController {
         return peptideWithValueService.getTable(organism, peptideswithvalues);
     }
 
+    @RequestMapping(value = {"api/peptidewithvalue/organism/{organism}/peptides", "api/peptidewithvalue/organism/{organism}/peptides/"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<JSONObject> searchForPeptidesAndValuesEmpty(@PathVariable String organism) {
+        return badRequest("No peptide/value pairs provided");
+    }
+
     @RequestMapping(value = "api/peptide/organism/{organism}/peptides/{peptides}", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -2768,7 +2821,26 @@ public class RestAPI implements ErrorController {
 //        {
 //            System.out.println(e);
 //        }
-        return peptideSearchService.getTable(organism, peptides);
+        try {
+            return peptideSearchService.getTable(organism, peptides);
+        } catch (IllegalStateException e) {
+            JSONObject error = new JSONObject();
+            error.put("error", e.getMessage());
+            return error;
+        }
+    }
+
+    @RequestMapping(value = {"api/peptide/organism/{organism}/peptides", "api/peptide/organism/{organism}/peptides/"}, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<JSONObject> searchForPeptidesEmpty(@PathVariable String organism) {
+        return badRequest("No peptides provided");
+    }
+
+    private ResponseEntity<JSONObject> badRequest(String message) {
+        JSONObject error = new JSONObject();
+        error.put("error", message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @RequestMapping(value = "api/pir/{peptideAndOrganism}", method = RequestMethod.GET)

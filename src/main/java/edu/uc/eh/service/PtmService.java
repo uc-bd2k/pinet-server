@@ -324,8 +324,10 @@ public class PtmService {
             ptmString = "";
 
             List<String> matchList = new ArrayList<String>();
-            Pattern regex = Pattern.compile("\\[(.*?)\\]");
-            geneString = protList[i].replaceAll("\\[.*?\\] ?", "");
+            Pattern regex = Pattern.compile("\\{(.*?)\\}");
+            geneString = protList[i]
+                    .replaceAll("\\{.*?\\}", "")
+                    .replaceAll("\\[.*?\\] ?", "");
 //            System.out.println("geneString");
 //            System.out.println(geneString);
             //Pattern siteRegex = Pattern.compile("\\d+");
@@ -339,7 +341,11 @@ public class PtmService {
             while (insideMatcher.find()) {
                 System.out.println("here1");
                 System.out.println(insideMatcher.group(1));
-                String[] splitted = insideMatcher.group(1).split("@");
+                String token = insideMatcher.group(1);
+                String[] splitted = token.split("@");
+                if (splitted.length < 2) {
+                    continue;
+                }
                 siteString = splitted[1];
 
 
@@ -347,7 +353,12 @@ public class PtmService {
 //                lowerResult = matcherLower.matches();
 //                System.out.println(lowerResult);
 
-                if (splitted[0].equals(splitted[0].toUpperCase())) {
+                if (splitted[0].contains("[") && splitted[0].contains("]")) {
+                    aminoString = splitted[0].substring(0, 1);
+                    ptmString = splitted[0]
+                            .substring(splitted[0].indexOf('[') + 1, splitted[0].indexOf(']'))
+                            .replace("+", "");
+                } else if (splitted[0].equals(splitted[0].toUpperCase())) {
                     //if(!lowerResult) {
                     //splitted[0].matches(".*\\d+.*");
                     Matcher matcher = numberRegex.matcher(splitted[0]);
@@ -1805,5 +1816,3 @@ public class PtmService {
 //    }
 
 }
-
-

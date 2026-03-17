@@ -3,6 +3,7 @@ package edu.uc.eh.service;
  * Created by shamsabz on 8/9/17.
  */
 import edu.uc.eh.utils.UtilsIO;
+import edu.uc.eh.peptideMatch.PeptideMatchCMD;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,8 +49,7 @@ public class IteratorIncrementService {
 
         try {
 
-            String fileName = "/opt/raid10/genomics/behrouz/PeptideMatchCMD_src_1.0/increment.json";
-            //String fileName = "/Users/shamsabz/Documents/uniprot+peptideMatch/PeptideMatchCMD_src_1.0/increment.json";
+            String fileName = PeptideMatchCMD.getIncrementFile().getPath();
 
             Object obj = parser.parse(new FileReader(fileName));
 
@@ -151,11 +151,7 @@ public class IteratorIncrementService {
 //    public JSONObject writeBack(JSONObject incrementJsonOut) {
 
         try (
-                //String fileName2 = "/opt/raid10/genomics/behrouz/PeptideMatchCMD_src_1.0/increment.json";
-                //String fileName2 = "/Users/shamsabz/Documents/uniprot+peptideMatch/PeptideMatchCMD_src_1.0/increment.json";
-                FileWriter file = new FileWriter("/opt/raid10/genomics/behrouz/PeptideMatchCMD_src_1.0/increment.json", false)) {
-
-                //FileWriter file = new FileWriter("/Users/shamsabz/Documents/uniprot+peptideMatch/PeptideMatchCMD_src_1.0/increment.json", false)) {
+                FileWriter file = new FileWriter(PeptideMatchCMD.getIncrementFile(), false)) {
 
             file.write(incrementJsonOut.toJSONString());
             file.flush();
@@ -181,4 +177,3 @@ public class IteratorIncrementService {
     }
 
 }
-

@@ -472,7 +472,7 @@ CCNL2	0.61115";
     vars.list_of_positive_negative_peps = [];
     vars.peptideToAbundance = {};
     vars.peptideToNumberOfProteins = {};
-    vars.ilincsSignatureUrl = "http://www.ilincs.org/ilincs/";
+    vars.ilincsSignatureUrl = "https://www.ilincs.org/ilincs/";
     //vars.showModal = true;
 
 
@@ -671,7 +671,7 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ebi.ac.uk/QuickGO/term/"+linkID);
                     break;
                 case "pinetIlincs":
-                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.ilincs.org/ilincs/signature/"+linkID);
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.ilincs.org/ilincs/signature/"+linkID);
                     break;
 
 
@@ -961,8 +961,10 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
             //console.log(self.geneAbundance);
         }
         console.log(self.parsedGenes);
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -998,9 +1000,8 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
         //SharedService.setVar('genes', self.genes);
     });
 
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -1012,10 +1013,10 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
-        $timeout(function () {
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -1033,7 +1034,7 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -1057,7 +1058,7 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -1091,8 +1092,6 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                         });
                 }
             }
-
-        }, 1100);
 
     });
 
@@ -1295,7 +1294,7 @@ SQ[pS]PHYFR 0.7690316\n\
 DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
 SPALK[pS]PLQSVVVR -0.33558\n\
 AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
-SF[pT]SQRPVDR 0.54329\n\
+SF[pS]SQRPVDR 0.54329\n\
 VY[pT]HEVVTLWYR 0.579294\n\
 SS[pT]PLPTISSSAENTR 1.024626\n\
 QI[pT]MEELVR -1.30946\n\
@@ -1780,7 +1779,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
     $scope.showColors = false;
     self.helpTab = SharedService.getVar("helpTab");
     //SharedService.setVar('showModal', false);
-    $('input[name=tabs][id=' + self.helpTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.helpTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.helpTab = this.id;
         SharedService.setVar("helpTab", self.helpTab);
@@ -7071,8 +7070,10 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
             //console.log(self.geneAbundance);
         }
         console.log(self.parsedGenes);
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -7108,9 +7109,8 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         //SharedService.setVar('genes', self.genes);
     });
 
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -7122,10 +7122,10 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
-        $timeout(function () {
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -7143,7 +7143,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -7167,7 +7167,7 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -7201,8 +7201,6 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                         });
                 }
             }
-
-        }, 1100);
 
     });
 
@@ -7405,7 +7403,7 @@ SQ[pS]PHYFR 0.7690316\n\
 DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
 SPALK[pS]PLQSVVVR -0.33558\n\
 AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
-SF[pT]SQRPVDR 0.54329\n\
+SF[pS]SQRPVDR 0.54329\n\
 VY[pT]HEVVTLWYR 0.579294\n\
 SS[pT]PLPTISSSAENTR 1.024626\n\
 QI[pT]MEELVR -1.30946\n\
@@ -7890,7 +7888,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
     $scope.showColors = false;
     self.helpTab = SharedService.getVar("helpTab");
     //SharedService.setVar('showModal', false);
-    $('input[name=tabs][id=' + self.helpTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.helpTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.helpTab = this.id;
         SharedService.setVar("helpTab", self.helpTab);
@@ -13160,7 +13158,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     });
 
 
-    $('input[name=tabset3][id=' + self.ex1orex2 + ']').prop('checked', true);
+    $('input[name="tabset3"][id="' + self.ex1orex2 + '"]').prop('checked', true);
     $("input[name='tabset3']").click(function () {
         self.ex1orex2 = this.id;
         console.log(self.ex1orex2);
@@ -13314,7 +13312,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     self.resultTab = SharedService.getVar("resultTab");
 
 
-    $('input[name=tabs][id=' + self.resultTab + ']').prop('checked', true);
+    $('input[name="tabs"][id="' + self.resultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.resultTab = this.id;
 
@@ -15794,6 +15792,17 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //console.log("in scope gene!---------------------------------------");
         //localStorage.setItem("genes", self.genes);
         //console.log("Setting genes -----");
+        var genesInput = "";
+        if (typeof self.genes === 'string') {
+            genesInput = self.genes;
+        } else if (Array.isArray(self.genes)) {
+            genesInput = self.genes.join("\n");
+        } else if (self.genes === undefined || self.genes === null) {
+            genesInput = "";
+        } else {
+            genesInput = self.genes.toString();
+        }
+        self.genes = genesInput;
         self.showGeneSubmit = false;
         // var localselfGenes = localStorage.getItem("genesForProtein2Pathways");
         // //console.log(localselfGenes);
@@ -15804,10 +15813,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         // SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
         // SharedService.setVar('showGeneNetworkProcessed', $scope.showGeneNetworkProcessed);
         // SharedService.setVar('showKinaseNetworkProcessed', $scope.showKinaseNetworkProcessed);
-        if (self.genes.length > 0) {
+        if (genesInput.length > 0) {
             //console.log(self.genes);
             self.geneToAbundanceMap = {};
-            self.parsedGenes = self.genes.split(self.rowSplitPattern)
+            self.parsedGenes = genesInput.split(self.rowSplitPattern)
                 .map(function (e) {
                     if (e) {
 
@@ -15836,7 +15845,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             // });
             self.parsedGenes.clean(undefined);
             //console.log(self.parsedGenes);
-            self.geneAbundance = self.genes
+            self.geneAbundance = genesInput
                 .split(self.rowSplitPattern)
                 .map(function (e) {
                     if (e) {
@@ -15868,8 +15877,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -15904,9 +15915,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //console.log(self.showGeneNetwork);
         SharedService.setVar('genes', self.genes);
     });
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -15918,10 +15928,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
-        $timeout(function () {
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -15939,7 +15949,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -15963,7 +15973,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -15997,8 +16007,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         });
                 }
             }
-
-        }, 1100);
 
     });
 
@@ -16378,9 +16386,33 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                         // console.log(originalMAss);
                                         // console.log(elMass);
                                         (function (modificationType, modificationAmino, originalModFromInput) {
+                                            var buildShorthandOntologyFallback = function () {
+                                                if (modificationType !== 'phospho') {
+                                                    return null;
+                                                }
+
+                                                return {
+                                                    mass: originalMAss,
+                                                    input: el,
+                                                    identifier: '',
+                                                    diffavg: originalMAss,
+                                                    description: 'phospho',
+                                                    formula: '',
+                                                    similar: []
+                                                };
+                                            };
+
+                                            var storeOntologyResult = function (result) {
+                                                if (result && self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                                    self.ontologyMappingsUnique.push(el);
+                                                    self.ontologyMappings.push(result);
+                                                }
+                                            };
+
                                             if (modificationType  === undefined) {
                                             }
                                             else {
+                                                storeOntologyResult(buildShorthandOntologyFallback());
                                                 $http.get("api/proteinptmbydescription/" + modificationType)
                                                     .success(function (res_data) {
                                                         if (res_data === undefined) {
@@ -16408,6 +16440,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                                 return Math.abs(b.averageDeltaMass - originalMAss) - Math.abs(a.averageDeltaMass - originalMAss);
                                                             });
                                                             ////console.log(sorted_data);
+                                                            if (!sorted_data.length) {
+                                                                storeOntologyResult(buildShorthandOntologyFallback());
+                                                                return;
+                                                            }
                                                             var closest_sorted = sorted_data[0];
                                                             ////console.log(closest_sorted);
                                                             var result = {};
@@ -16438,12 +16474,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                             result.similar = similarToPTM;
                                                             ////console.log(result);
 
-                                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                                self.ontologyMappingsUnique.push(el);
-                                                                self.ontologyMappings.push(result);
-                                                                //console.log(result);
-
-                                                            }
+                                                            storeOntologyResult(result);
                                                         }
                                                         //self.ontologyMappings.push(result);
 
@@ -16475,10 +16506,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                         // result.description = "Error!";
                                                         // result.similar = "";
                                                         //self.ontologyMappings.push(result);
-                                                        if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                            self.ontologyMappingsUnique.push(el);
-                                                            self.ontologyMappings.push(result);
-                                                        }
+                                                        storeOntologyResult(buildShorthandOntologyFallback() || result);
 
                                                     });
                                             }
@@ -17164,7 +17192,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     for (var geneIdIter = 0; geneIdIter < valueOfGeneId.length; geneIdIter++) {
                                                         if (self.geneIdList.indexOf(valueOfGeneId[geneIdIter]) === -1 && valueOfGeneId[geneIdIter] != 'NA') {
                                                             self.geneIdList.push(valueOfGeneId[geneIdIter]);
-                                                            self.genes = self.geneIdList;
                                                             // //console.log("self.genes ");
                                                             // //console.log(self.genes );
                                                         }
@@ -19972,13 +19999,19 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     }
     console.log(self.peptideModFormat);
     console.log(self.uploadFormat);
-    $('input[name=r1][value=' + self.organismForm + ']').prop('checked',true);
-    $('input[name=r2][value=' + self.proteinForm + ']').prop('checked',true);
-    $('input[name=r3][value=' + self.proteinDb + ']').prop('checked',true);
-    $('input[name=r4][value=' + self.peptideNormalizeFlag + ']').prop('checked',true);
-    $('input[name=r5][value=' + self.uploadFormat + ']').prop('checked',true);
-    $('input[name=r52][value=' + self.imputeFormat + ']').prop('checked',true);
-    $('input[name=r9][value=' + self.peptideModFormat + ']').prop('checked',true);
+    function setRadioChecked(name, value) {
+        $('input[name="' + name + '"]').filter(function () {
+            return $(this).val() === String(value);
+        }).prop('checked', true);
+    }
+
+    setRadioChecked('r1', self.organismForm);
+    setRadioChecked('r2', self.proteinForm);
+    setRadioChecked('r3', self.proteinDb);
+    setRadioChecked('r4', self.peptideNormalizeFlag);
+    setRadioChecked('r5', self.uploadFormat);
+    setRadioChecked('r52', self.imputeFormat);
+    setRadioChecked('r9', self.peptideModFormat);
 
 
     //This is for radio button for index.html
@@ -20941,6 +20974,30 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 // console.log(originalMAss);
                                 // console.log(elMass);
                                 (function (modificationType, modificationAmino, originalModFromInput) {
+                                    var buildShorthandOntologyFallback = function () {
+                                        if (modificationType !== 'phospho') {
+                                            return null;
+                                        }
+
+                                        return {
+                                            mass: originalMAss,
+                                            input: el,
+                                            identifier: '',
+                                            diffavg: originalMAss,
+                                            description: 'phospho',
+                                            formula: '',
+                                            similar: []
+                                        };
+                                    };
+
+                                    var storeOntologyResult = function (result) {
+                                        if (result && self.ontologyMappingsUnique.indexOf(el) === -1) {
+                                            self.ontologyMappingsUnique.push(el);
+                                            self.ontologyMappings.push(result);
+                                        }
+                                    };
+
+                                    storeOntologyResult(buildShorthandOntologyFallback());
                                     $http.get("api/proteinptmbydescription/" + modificationType)
                                         .success(function (res_data) {
                                             // console.log("api/proteinptmbydescription/" + modificationType);
@@ -20965,6 +21022,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                 return Math.abs(a.averageDeltaMass - originalMAss) - Math.abs(b.averageDeltaMass - originalMAss);
                                             });
                                             ////console.log(sorted_data);
+                                            if (!sorted_data.length) {
+                                                storeOntologyResult(buildShorthandOntologyFallback());
+                                                return;
+                                            }
                                             var closest_sorted = sorted_data[0];
                                             ////console.log(closest_sorted);
                                             var result = {};
@@ -20995,12 +21056,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             result.similar = similarToPTM;
                                             ////console.log(result);
 
-                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                self.ontologyMappingsUnique.push(el);
-                                                self.ontologyMappings.push(result);
-                                                //console.log(result);
-
-                                            }
+                                            storeOntologyResult(result);
 
                                             //self.ontologyMappings.push(result);
 
@@ -21032,10 +21088,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             // result.description = "Error!";
                                             // result.similar = "";
                                             //self.ontologyMappings.push(result);
-                                            if (self.ontologyMappingsUnique.indexOf(el) === -1) {
-                                                self.ontologyMappingsUnique.push(el);
-                                                self.ontologyMappings.push(result);
-                                            }
+                                            storeOntologyResult(buildShorthandOntologyFallback() || result);
 
                                         });
                                 }(modificationType, modificationAmino, originalModFromInput));
@@ -21707,7 +21760,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                 for (var geneIdIter = 0; geneIdIter < valueOfGeneId.length; geneIdIter++) {
                                                     if (self.geneIdList.indexOf(valueOfGeneId[geneIdIter]) === -1 && valueOfGeneId[geneIdIter] != 'NA') {
                                                         self.geneIdList.push(valueOfGeneId[geneIdIter]);
-                                                        self.genes = self.geneIdList;
                                                         // //console.log("self.genes ");
                                                         // //console.log(self.genes );
                                                     }
@@ -24195,6 +24247,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.inputPtmProteins = self.geneIdListMassCombined;
         self.progressPercent = 100;
         self.secondPageQuery = false;
+        self.genes = self.geneIdList.join('\n');
         // //console.log("!self.secondPageQuery");
         // //console.log(!self.secondPageQuery);
         $scope.waiting = false;
@@ -24881,7 +24934,7 @@ SQ[pS]PHYFR 0.7690316\n\
 DR[pS]SPPPGYIPDELHQVAR 0.240905\n\
 SPALK[pS]PLQSVVVR -0.33558\n\
 AFGSGIDIKPG[pT]PPIAGR 1.08159\n\
-SF[pT]SQRPVDR 0.54329\n\
+SF[pS]SQRPVDR 0.54329\n\
 VY[pT]HEVVTLWYR 0.579294\n\
 SS[pT]PLPTISSSAENTR 1.024626\n\
 QI[pT]MEELVR -1.30946\n\
@@ -25617,7 +25670,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         content: function () { return '<img src="' + $(this).data('img') + '" />'; }
     });
 
-    $('input[name=tabset2p][id=' + self.ex1orex2Protein + ']').prop('checked', true);
+    $('input[name="tabset2p"][id="' + self.ex1orex2Protein + '"]').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
         self.ex1orex2Protein = this.id;
         console.log(self.ex1orex2Protein);
@@ -25731,7 +25784,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
-    $('input[name=tabs][id=' + self.ptmResultTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.ptmResultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.ptmResultTab = this.id;
         SharedService.setVar("ptmResultTab", self.ptmResultTab);
@@ -25761,9 +25814,9 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
     //self.organismFormProteinToPathway = SharedService.getVar('organismFormProteinToPathway');
 
-    $('input[name=r3][value=' + self.organismForm + ']').prop('checked',true);
+    $('input[name="r3"][value="' + self.organismForm + '"]').prop('checked', true);
 
-    $('input[name=tabset][id=' + self.ptmToModifierPtmOrGene + ']').prop('checked',true);
+    $('input[name="tabset"][id="' + self.ptmToModifierPtmOrGene + '"]').prop('checked', true);
 
     if (!$("input[name='tabset']").is(":checked")) {
         //console.log("checked no");
@@ -26235,10 +26288,6 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
 
     });
-
-
-    var timeout;
-
     $scope.$watch(function () {
         return self.genes
     }, function (newValue, oldValue) {
@@ -26320,8 +26369,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -26359,7 +26410,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
 
     }, function (nV, oV) {
         //console.log("in scope parsed gene!+++++++++++++++++++++++++++++++++++++");
@@ -26373,10 +26424,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
-        $timeout(function () {
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -26394,7 +26445,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -26419,7 +26470,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -26456,8 +26507,6 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                 }
             }
-
-        }, 1100);
 
     });
 
@@ -37545,7 +37594,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
 
-    $('input[name=tabset2p][id=' + self.ex1orex2Pathway + ']').prop('checked', true);
+    $('input[name="tabset2p"][id="' + self.ex1orex2Pathway + '"]').prop('checked', true);
     $("input[name='tabset2p']").click(function () {
         self.ex1orex2Pathway = this.id;
         console.log(self.ex1orex2Pathway);
@@ -37555,7 +37604,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     });
 
-    $('input[name=tabsPP][id=' + self.signatureTab + ']').prop('checked',true);
+    $('input[name="tabsPP"][id="' + self.signatureTab + '"]').prop('checked', true);
     $("input[name='tabsPP']").click(function () {
         self.signatureTab = this.id;
         SharedService.setVar("signatureTab", self.signatureTab);
@@ -37566,7 +37615,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     self.proteinToPathwayResultTab = SharedService.getVar("proteinToPathwayResultTab");
     //self.resultTab = SharedService.getVar("resultTab");
 
-    $('input[name=tabs][id=' + self.proteinToPathwayResultTab + ']').prop('checked',true);
+    $('input[name="tabs"][id="' + self.proteinToPathwayResultTab + '"]').prop('checked', true);
     $("input[name='tabs']").click(function () {
         self.proteinToPathwayResultTab = this.id;
         SharedService.setVar("proteinToPathwayResultTab", self.proteinToPathwayResultTab);
@@ -37963,9 +38012,9 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
     //self.organismFormProteinToPathway = SharedService.getVar('organismFormProteinToPathway');
 
-    $('input[name=r3][value=' + self.organismForm + ']').prop('checked',true);
+    $('input[name="r3"][value="' + self.organismForm + '"]').prop('checked', true);
 
-    $('input[name=tabset][id=' + self.ptmToModifierPtmOrGene + ']').prop('checked',true);
+    $('input[name="tabset"][id="' + self.ptmToModifierPtmOrGene + '"]').prop('checked', true);
 
     if (!$("input[name='tabset']").is(":checked")) {
         //console.log("checked no");
@@ -38171,7 +38220,6 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
-    var timeout;
     console.log(self.genes);
     $scope.$watch(function () {
         return self.genes
@@ -38258,8 +38306,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -38297,7 +38347,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
 
     }, function (nV, oV) {
         //console.log("in scope parsed gene!+++++++++++++++++++++++++++++++++++++");
@@ -38311,10 +38361,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
-        $timeout(function () {
+        var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -38332,7 +38382,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                 }
 
                 return output;
-            }(self.parsedGenes, self.parsedGenes.length)
+            }(genesSnapshot, genesSnapshot.length)
 
             //console.log(genePartitioned);
             //console.log(genePartitioned.length);
@@ -38357,7 +38407,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                                 }
                                 else {
                                     self.flagFoundNPCG = true;
-                                    self.nonValidGenes.push(self.parsedGenes[geneIter]);
+                                    self.nonValidGenes.push(genesSnapshot[geneIter]);
                                     //console.log("self.nonValidGenes");
                                     //console.log(self.nonValidGenes);
                                 }
@@ -38400,8 +38450,6 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                 }
             }
-
-        }, 1100);
 
     });
 

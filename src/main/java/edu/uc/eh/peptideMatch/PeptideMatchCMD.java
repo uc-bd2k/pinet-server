@@ -54,6 +54,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class PeptideMatchCMD {
+    private static final String DEFAULT_DATA_BASE_DIR = "/opt/raid10/genomics/behrouz/PeptideMatchCMD_src_1.0";
+    private static final String DEFAULT_INDEX_SUBDIR = "jan-30-2019";
 
     private static PeptideMatchCMD instance;
 
@@ -62,6 +64,36 @@ public class PeptideMatchCMD {
 
     static {
         instance = new PeptideMatchCMD();
+    }
+
+    public static String getDataBaseDir() {
+        String configured = System.getProperty("peptide.data.base-dir");
+        if (configured == null || configured.trim().isEmpty()) {
+            configured = System.getenv("PEPTIDE_DATA_BASE_DIR");
+        }
+        if (configured == null || configured.trim().isEmpty()) {
+            configured = DEFAULT_DATA_BASE_DIR;
+        }
+        return configured;
+    }
+
+    public static String getIndexBaseDir() {
+        String configured = System.getProperty("peptide.index.base-dir");
+        if (configured == null || configured.trim().isEmpty()) {
+            configured = System.getenv("PEPTIDE_INDEX_BASE_DIR");
+        }
+        if (configured == null || configured.trim().isEmpty()) {
+            configured = new File(getDataBaseDir(), DEFAULT_INDEX_SUBDIR).getPath();
+        }
+        return configured;
+    }
+
+    public static File getIndexFile(String indexDir) {
+        return new File(getIndexBaseDir(), indexDir + "_index");
+    }
+
+    public static File getIncrementFile() {
+        return new File(getDataBaseDir(), "increment.json");
     }
 
 
@@ -489,7 +521,7 @@ public class PeptideMatchCMD {
         JSONObject peptideMatchJson = new JSONObject();
         JSONObject peptideMatchJsonArrayPlusMatch = new JSONObject();
         JSONArray peptideMatchJsonArray = new JSONArray();
-        String index_file = "/opt/raid10/genomics/behrouz/PeptideMatchCMD_src_1.0/jan-30-2019/" + indexDir + "_index";
+        String index_file = getIndexFile(indexDir).getPath();
         //String index_file = "/Users/shamsabz/Documents/uniprot+peptideMatch/PeptideMatchCMD_src_1.0/jan-30-2019/" + indexDir + "_index";
         try {
 
