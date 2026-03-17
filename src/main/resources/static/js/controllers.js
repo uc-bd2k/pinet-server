@@ -961,8 +961,10 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
             //console.log(self.geneAbundance);
         }
         console.log(self.parsedGenes);
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -998,9 +1000,8 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
         //SharedService.setVar('genes', self.genes);
     });
 
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -1012,15 +1013,10 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
         var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
-        var genesSnapshotKey = genesSnapshot.join(',');
-        $timeout(function () {
-            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
-                return;
-            }
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -1096,8 +1092,6 @@ appModule.controller("KEGGCtrl", ['$scope', '$http', '$location', '$window', '$t
                         });
                 }
             }
-
-        }, 3000);
 
     });
 
@@ -7076,8 +7070,10 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
             //console.log(self.geneAbundance);
         }
         console.log(self.parsedGenes);
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             //SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -7113,9 +7109,8 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
         //SharedService.setVar('genes', self.genes);
     });
 
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -7127,15 +7122,10 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
         var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
-        var genesSnapshotKey = genesSnapshot.join(',');
-        $timeout(function () {
-            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
-                return;
-            }
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -7211,8 +7201,6 @@ appModule.controller("AboutCtrl", ['$scope', '$http', '$location', '$window', '$
                         });
                 }
             }
-
-        }, 3000);
 
     });
 
@@ -15889,8 +15877,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -15925,9 +15915,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         //console.log(self.showGeneNetwork);
         SharedService.setVar('genes', self.genes);
     });
-    var timeout;
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
     }, function (nV, oV) {
         //self.showOutputPathway = false;
         self.flagFoundNPCG = false;
@@ -15939,15 +15928,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
         var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
-        var genesSnapshotKey = genesSnapshot.join(',');
-        $timeout(function () {
-            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
-                return;
-            }
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -16023,8 +16007,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                         });
                 }
             }
-
-        }, 3000);
 
     });
 
@@ -17210,7 +17192,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                     for (var geneIdIter = 0; geneIdIter < valueOfGeneId.length; geneIdIter++) {
                                                         if (self.geneIdList.indexOf(valueOfGeneId[geneIdIter]) === -1 && valueOfGeneId[geneIdIter] != 'NA') {
                                                             self.geneIdList.push(valueOfGeneId[geneIdIter]);
-                                                            self.genes = self.geneIdList;
                                                             // //console.log("self.genes ");
                                                             // //console.log(self.genes );
                                                         }
@@ -21779,7 +21760,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                                 for (var geneIdIter = 0; geneIdIter < valueOfGeneId.length; geneIdIter++) {
                                                     if (self.geneIdList.indexOf(valueOfGeneId[geneIdIter]) === -1 && valueOfGeneId[geneIdIter] != 'NA') {
                                                         self.geneIdList.push(valueOfGeneId[geneIdIter]);
-                                                        self.genes = self.geneIdList;
                                                         // //console.log("self.genes ");
                                                         // //console.log(self.genes );
                                                     }
@@ -24267,6 +24247,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         self.inputPtmProteins = self.geneIdListMassCombined;
         self.progressPercent = 100;
         self.secondPageQuery = false;
+        self.genes = self.geneIdList.join('\n');
         // //console.log("!self.secondPageQuery");
         // //console.log(!self.secondPageQuery);
         $scope.waiting = false;
@@ -26307,10 +26288,6 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         SharedService.setVar('inputMassPtmProteins',self.inputMassPtmProteins);
 
     });
-
-
-    var timeout;
-
     $scope.$watch(function () {
         return self.genes
     }, function (newValue, oldValue) {
@@ -26392,8 +26369,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -26431,7 +26410,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
 
     }, function (nV, oV) {
         //console.log("in scope parsed gene!+++++++++++++++++++++++++++++++++++++");
@@ -26445,15 +26424,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
         var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
-        var genesSnapshotKey = genesSnapshot.join(',');
-        $timeout(function () {
-            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
-                return;
-            }
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -26533,8 +26507,6 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                 }
             }
-
-        }, 3000);
 
     });
 
@@ -38248,7 +38220,6 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
     });
 
 
-    var timeout;
     console.log(self.genes);
     $scope.$watch(function () {
         return self.genes
@@ -38335,8 +38306,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
             //console.log(self.geneAbundance);
         }
 
+        self.parsedGenesReadyKey = self.parsedGenes.join(',');
         if (self.parsedGenes.length == 0) {
             self.showGeneNetwork = false;
+            self.parsedGenesReadyKey = '';
             SharedService.setVar('showGeneNetwork', self.showGeneNetwork);
             //console.log("self.showGeneNetwork = false;");
         }
@@ -38374,7 +38347,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.$watch(function () {
-        return self.parsedGenes
+        return self.parsedGenesReadyKey
 
     }, function (nV, oV) {
         //console.log("in scope parsed gene!+++++++++++++++++++++++++++++++++++++");
@@ -38388,15 +38361,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
         // This is for slicing the input genes because it makes problems if we have long list of genes in the http.get
 
-        if (timeout) {
-            $timeout.cancel(timeout);
-        };
         var genesSnapshot = angular.isArray(self.parsedGenes) ? self.parsedGenes.slice() : [];
-        var genesSnapshotKey = genesSnapshot.join(',');
-        $timeout(function () {
-            if (!genesSnapshot.length || self.parsedGenes.join(',') !== genesSnapshotKey) {
-                return;
-            }
+        if (!genesSnapshot.length || nV !== genesSnapshot.join(',')) {
+            return;
+        }
             self.genePlaces = [];
             self.inputGeneInfo = [];
             self.nonValidGenes = [];
@@ -38482,8 +38450,6 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         });
                 }
             }
-
-        }, 3000);
 
     });
 
