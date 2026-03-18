@@ -11,7 +11,7 @@
     "angular-ui-bootstrap": "2.5.0",
     "angularjs-slider": "7.1.0",
     "bootstrap": "3.3.5",
-    "jquery": "2.1.4",
+    "jquery": "3.7.1",
     "ng-tags-input": "3.0.0"
   }
 }
