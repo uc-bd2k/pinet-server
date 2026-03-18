@@ -13735,59 +13735,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     // }
 
 
-    function BrowserDetection() {
-        // Opera 8.0+
-        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
-// Firefox 1.0+
-        var isFirefox = typeof InstallTrigger !== 'undefined';
-
-// Safari 3.0+ "[object HTMLElementConstructor]"
-        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-
-// Internet Explorer 6-11
-        var isIE = /*@cc_on!@*/false || !!document.documentMode;
-
-// Edge 20+
-        var isEdge = !isIE && !!window.StyleMedia;
-
-// Chrome 1 - 71
-        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-// Edge (based on chromium) detection
-        var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
-
-// Blink engine detection
-        var isBlink = (isChrome || isOpera) && !!window.CSS;
-
-        //Check if browser is IE
-
-        //Check if browser is Chrome
-        if(isSafari || isOpera || isIE || isEdge || isEdgeChromium || isChrome){
-            console.log("showing modal");
-            console.log(isSafari);
-            console.log(isOpera);
-            console.log(isIE);
-            console.log(isEdge);
-            console.log(isEdgeChromium);
-            //console.log(isBlink);
-            console.log("End of showing modal");
-            $('#firstModal').modal('show');
-        }
-
-        var output = 'Detecting browsers by ducktyping:<hr>';
-        output += 'isFirefox: ' + isFirefox + '<br>';
-        output += 'isChrome: ' + isChrome + '<br>';
-        output += 'isSafari: ' + isSafari + '<br>';
-        output += 'isOpera: ' + isOpera + '<br>';
-        output += 'isIE: ' + isIE + '<br>';
-        output += 'isEdge: ' + isEdge + '<br>';
-        output += 'isEdgeChromium: ' + isEdgeChromium + '<br>';
-        output += 'isBlink: ' + isBlink + '<br>';
-        console.log(output);
-    };
-    BrowserDetection();
-
     // $(window).load(function(){
     //     console.log(self.showModal);
     //     console.log("showing modal 0");
@@ -16795,7 +16742,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             ////console.log(key + " -> " + dataForAll[key]);
                                             var n_matchModified = 0;
                                             var matchsetModified = [];
-                                            dataForAll[key].matchset.map(function (e2) {
+                                            var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                            currentMatchset.map(function (e2) {
                                                 if (e2.sequence_db == 'sp') {
                                                     matchsetModified.push(e2);
                                                     n_matchModified = n_matchModified + 1;
@@ -16818,7 +16766,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             ////console.log(key + " -> " + dataForAll[key]);
                                             var n_matchModified = 0;
                                             var matchsetModified = [];
-                                            dataForAll[key].matchset.map(function (e2) {
+                                            var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                            currentMatchset.map(function (e2) {
                                                 if (e2.sequence_db == 'tr') {
                                                     matchsetModified.push(e2);
                                                     n_matchModified = n_matchModified + 1;
@@ -16844,7 +16793,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 // //console.log(localPeptideIterator);
                                 // //console.log(localMotif);
                                 // //console.log(dataForAll[localMotif]);
-                                self.uniprotResponseIteratorTotalForPercentage += dataForAll[localMotif].n_match;
+                                var localMotifData = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
+                                self.uniprotResponseIteratorTotalForPercentage += localMotifData.n_match;
                                 //self.uniprotResponseIteratorTotal += dataForAll[localMotif].n_match;
                             }
                             //console.log("self.uniprotResponseIteratorTotalForPercentage");
@@ -16855,10 +16805,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 var localMotif = self.parsedMotifs[localPeptideIterator];
                                 var localPeptide = self.parsedPeptides[localPeptideIterator];
                                 ////console.log(localMotif);
-                                var data = dataForAll[localMotif];
+                                var data = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
                                 ////console.log(data);
 
-                                var matchset = data.matchset;
+                                var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                                 ////console.log(matchset);
 
                                 var nMatch = data.n_match;
@@ -21375,7 +21325,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                     ////console.log(key + " -> " + dataForAll[key]);
                                     var n_matchModified = 0;
                                     var matchsetModified = [];
-                                    dataForAll[key].matchset.map(function (e2) {
+                                    var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                    currentMatchset.map(function (e2) {
                                         if (e2.sequence_db == 'sp') {
                                             matchsetModified.push(e2);
                                             n_matchModified = n_matchModified + 1;
@@ -21398,7 +21349,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                     ////console.log(key + " -> " + dataForAll[key]);
                                     var n_matchModified = 0;
                                     var matchsetModified = [];
-                                    dataForAll[key].matchset.map(function (e2) {
+                                    var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                    currentMatchset.map(function (e2) {
                                         if (e2.sequence_db == 'tr') {
                                             matchsetModified.push(e2);
                                             n_matchModified = n_matchModified + 1;
@@ -21422,7 +21374,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             // //console.log(localPeptideIterator);
                             // //console.log(localMotif);
                             // //console.log(dataForAll[localMotif]);
-                            self.uniprotResponseIteratorTotalForPercentage += dataForAll[localMotif].n_match;
+                            var localMotifData = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
+                            self.uniprotResponseIteratorTotalForPercentage += localMotifData.n_match;
                             //self.uniprotResponseIteratorTotal += dataForAll[localMotif].n_match;
                         }
                         // //console.log("self.uniprotResponseIteratorTotalForPercentage");
@@ -21433,10 +21386,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             var localMotif = self.parsedMotifs[localPeptideIterator];
                             var localPeptide = self.parsedPeptides[localPeptideIterator];
                             ////console.log(localMotif);
-                            var data = dataForAll[localMotif];
+                            var data = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
                             ////console.log(data);
 
-                            var matchset = data.matchset;
+                            var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                             ////console.log(matchset);
 
                             var nMatch = data.n_match;
@@ -22062,7 +22015,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             // //console.log(data);
 
 
-                            var matchset = data.matchset;
+                            var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                             ////console.log(matchset);
                             var nMatch = data.n_match;
 
@@ -22077,7 +22030,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             //     self.prositeFound = localPeptide;
                             //     self.showOutput = true;
                             // }
-                            data.matchset.map(function (e) {
+                            matchset.map(function (e) {
                                 e.motif = localMotif;
                                 e.peptide = localPeptide;
                                 return e;
