@@ -48,6 +48,14 @@ public class PhosphoServiceV2 {
 
     private static final Logger log = LoggerFactory.getLogger(PhosphoServiceV2.class);
 
+    private long elapsedMs(long startNs) {
+        return (System.nanoTime() - startNs) / 1_000_000;
+    }
+
+    private void timing(String template, Object... args) {
+        System.out.println(String.format(template, args));
+    }
+
 
     @Value("${resources.phosphoGenes2Kinase}")
     String phosphoGenes2KinaseInfo;
@@ -67,7 +75,48 @@ public class PhosphoServiceV2 {
     @Autowired
     UniprotService uniprotService;
 
+    private volatile JSONObject cachedPhosphoGene2PrJson;
+    private volatile JSONObject cachedPhosphoGene2KinaseJson;
+    private volatile JSONObject cachedPhosphoAmino2KinaseSequenceJson;
+    private volatile JSONObject cachedBlosum50Json;
+
+    private JSONObject loadRequiredJson(String path, String label) {
+        try {
+            return UtilsIO.getInstance().readJsonFile(path);
+        } catch (Exception e) {
+            String msg = String.format("Error in obtaining %s", label);
+            log.warn(msg);
+            throw new RuntimeException(msg);
+        }
+    }
+
+    private void ensureResourceCachesLoaded() {
+        if (cachedPhosphoGene2PrJson != null
+                && cachedPhosphoGene2KinaseJson != null
+                && cachedPhosphoAmino2KinaseSequenceJson != null
+                && cachedBlosum50Json != null) {
+            return;
+        }
+
+        synchronized (this) {
+            if (cachedPhosphoGene2PrJson == null) {
+                cachedPhosphoGene2PrJson = loadRequiredJson(phosphoGeneProbabilityInfo, "phosphoGeneProbabilityInfo");
+            }
+            if (cachedPhosphoGene2KinaseJson == null) {
+                cachedPhosphoGene2KinaseJson = loadRequiredJson(phosphoGenes2KinaseInfo, "phosphoGenes2KinaseInfo");
+            }
+            if (cachedPhosphoAmino2KinaseSequenceJson == null) {
+                cachedPhosphoAmino2KinaseSequenceJson = loadRequiredJson(phosphoAmino2KinaseSequenceInfo, "phosphoAmino2KinaseSequenceInfo");
+            }
+            if (cachedBlosum50Json == null) {
+                cachedBlosum50Json = loadRequiredJson(blosum50Info, "blosum50Info");
+            }
+        }
+    }
+
     public JSONObject computePhosphoNetwork(String organism, String[] protList) throws Exception {
+        long requestStartNs = System.nanoTime();
+        long phaseStartNs = requestStartNs;
 
         int didx = 0; //definite idx
         int dbdx = 0; //definite blosum idx
@@ -184,56 +233,20 @@ public class PhosphoServiceV2 {
         Pattern ifHasLowerCase = Pattern.compile(lowerCase);
 
 
-        long startReadTime = System.nanoTime();
-//        Pattern lowerCase = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-//        Pattern UpperCase = Pattern.compile("(.*?)(\\d+)(.*)");
-        try {
-            phosphoGene2PrJson = UtilsIO.getInstance().readJsonFile(phosphoGeneProbabilityInfo);
-            //log.info(kinase2GeneJson.toString());
-
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoGeneProbabilityInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            phosphoGene2KinaseJson = UtilsIO.getInstance().readJsonFile(phosphoGenes2KinaseInfo);
-            //log.info(phosphoGene2KinaseJson.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoGenes2KinaseInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            phosphoAmino2KinaseSequenceJson = UtilsIO.getInstance().readJsonFile(phosphoAmino2KinaseSequenceInfo);
-            //log.info(phosphoAmino2KinaseSequenceJson.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoAmino2KinaseSequenceInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            blosum50Json = UtilsIO.getInstance().readJsonFile(blosum50Info);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining blosum50Info");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-
-        long endReadTime   = System.nanoTime();
-        long totareadlTime = endReadTime - startReadTime;
+        ensureResourceCachesLoaded();
+        timing("timing service=PhosphoServiceV2 phase=resource-cache-loaded inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+        phaseStartNs = System.nanoTime();
+        phosphoGene2PrJson = cachedPhosphoGene2PrJson;
+        phosphoGene2KinaseJson = cachedPhosphoGene2KinaseJson;
+        phosphoAmino2KinaseSequenceJson = cachedPhosphoAmino2KinaseSequenceJson;
+        blosum50Json = cachedBlosum50Json;
 
 
         //The last item is the organism
         String organismForQueryUniprot = organism;
 //        System.out.println("======== organism");
 //        System.out.println(organismForQueryUniprot);
-        for (int i = 0; i < protList.length; i++) {
+            for (int i = 0; i < protList.length; i++) {
 
             inutArray.add(protList[i]);
 
@@ -360,7 +373,10 @@ public class PhosphoServiceV2 {
 
         long startFirstTime   = System.nanoTime();
 
-        for (int i = 0; i < protList.length; i++) {
+            timing("timing service=PhosphoServiceV2 phase=input-parsed inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
+
+            for (int i = 0; i < protList.length; i++) {
 
             JSONArray proteinToPhosphoAminoArray = (JSONArray) proteinToPhosphoAminoJson.get(protList[i]);
 //            JSONArray uniprotId = (JSONArray)((JSONObject) geneProteinInfo.get(i)).get("uniprot_ids");
@@ -533,7 +549,10 @@ public class PhosphoServiceV2 {
         System.out.println("phosphoGeneSequenceArray ========================");
         log.info("phosphoGeneSequenceArray ========================");
         System.out.println(phosphoGeneSequenceArray.toString());
-        //First only add the input genes
+            timing("timing service=PhosphoServiceV2 phase=uniprot-enriched uniqueProteins=%d elapsedMs=%d", proteinToUniprot.size(), elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
+
+            //First only add the input genes
         for (int i = 0; i < protList.length; i++) {
 
 
@@ -923,12 +942,13 @@ public class PhosphoServiceV2 {
         network.put("Known+PredictedbyBlosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
         System.out.println("phosphoNetwork");
         System.out.println(network);
-        System.out.println("totareadlTime");
-        System.out.println(totareadlTime/1000000000);
         System.out.println("totalFirstTime");
         System.out.println(totalFirstTime/1000000000);
         System.out.println("totalSecondTime");
         System.out.println(totalSecondTime/1000000000);
+        timing("timing service=PhosphoServiceV2 phase=network-built definiteNodes=%d blosumRows=%d ptmRows=%d elapsedMs=%d",
+                definite_Kinase_Gene_NetworkNodes.size(), geneBlosumArray.size(), ptmTableArray.size(), elapsedMs(phaseStartNs));
+        timing("timing service=PhosphoServiceV2 phase=total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
         return network;
     }
 

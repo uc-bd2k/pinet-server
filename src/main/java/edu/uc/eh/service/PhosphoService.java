@@ -30,6 +30,14 @@ public class PhosphoService {
 
     private static final Logger log = LoggerFactory.getLogger(PhosphoService.class);
 
+    private long elapsedMs(long startNs) {
+        return (System.nanoTime() - startNs) / 1_000_000;
+    }
+
+    private void timing(String template, Object... args) {
+        System.out.println(String.format(template, args));
+    }
+
 
     @Value("${resources.phosphoGenes2Kinase}")
     String phosphoGenes2KinaseInfo;
@@ -118,30 +126,499 @@ public class PhosphoService {
 
     @Autowired
     DeepPhosService deepPhosService;
+
+    private volatile JSONObject cachedPhosphoGene2PrJson;
+    private volatile JSONObject cachedPhosphoGene2KinaseJson;
+    private volatile JSONObject cachedPhosphoAmino2KinaseSequenceJson;
+    private volatile JSONObject cachedBlosum50Json;
+    private volatile JSONObject cachedPtmAcJson;
+    private volatile JSONObject cachedPtmPhJson;
+    private volatile JSONObject cachedPtmMeJson;
+    private volatile JSONObject cachedPtmCgJson;
+    private volatile JSONObject cachedPtmMyJson;
+    private volatile JSONObject cachedPtmNgJson;
+    private volatile JSONObject cachedPtmOgJson;
+    private volatile JSONObject cachedPtmSgJson;
+    private volatile JSONObject cachedPtmSnJson;
+    private volatile JSONObject cachedPtmSuJson;
+    private volatile JSONObject cachedPtmUbJson;
+    private volatile JSONObject cachedModToPTMJson;
+    private volatile JSONObject cachedSignorProteinToProteinJson;
+    private volatile JSONObject cachedSignorPtmToProteinJson;
+
+    private JSONObject loadRequiredJson(String path, String label) {
+        try {
+            return UtilsIO.getInstance().readJsonFile(path);
+        } catch (Exception e) {
+            String msg = String.format("Error in obtaining %s", label);
+            log.warn(msg);
+            throw new RuntimeException(msg);
+        }
+    }
+
+    private void ensureResourceCachesLoaded() {
+        if (cachedPhosphoGene2PrJson != null
+                && cachedPhosphoGene2KinaseJson != null
+                && cachedPhosphoAmino2KinaseSequenceJson != null
+                && cachedBlosum50Json != null
+                && cachedPtmAcJson != null
+                && cachedPtmPhJson != null
+                && cachedPtmMeJson != null
+                && cachedPtmCgJson != null
+                && cachedPtmMyJson != null
+                && cachedPtmNgJson != null
+                && cachedPtmOgJson != null
+                && cachedPtmSgJson != null
+                && cachedPtmSnJson != null
+                && cachedPtmSuJson != null
+                && cachedPtmUbJson != null
+                && cachedModToPTMJson != null
+                && cachedSignorProteinToProteinJson != null
+                && cachedSignorPtmToProteinJson != null) {
+            return;
+        }
+
+        synchronized (this) {
+            if (cachedPhosphoGene2PrJson == null) {
+                cachedPhosphoGene2PrJson = loadRequiredJson(phosphoGeneProbabilityInfo, "phosphoGeneProbabilityInfo");
+            }
+            if (cachedPhosphoGene2KinaseJson == null) {
+                cachedPhosphoGene2KinaseJson = loadRequiredJson(phosphoGenes2KinaseInfo, "phosphoGenes2KinaseInfo");
+            }
+            if (cachedPhosphoAmino2KinaseSequenceJson == null) {
+                cachedPhosphoAmino2KinaseSequenceJson = loadRequiredJson(phosphoAmino2KinaseSequenceInfo, "phosphoAmino2KinaseSequenceInfo");
+            }
+            if (cachedBlosum50Json == null) {
+                cachedBlosum50Json = loadRequiredJson(blosum50Info, "blosum50Info");
+            }
+            if (cachedPtmAcJson == null) {
+                cachedPtmAcJson = loadRequiredJson(ptmAcInfo, "ptmAcInfo");
+            }
+            if (cachedPtmPhJson == null) {
+                cachedPtmPhJson = loadRequiredJson(ptmPhInfo, "ptmPhInfo");
+            }
+            if (cachedPtmMeJson == null) {
+                cachedPtmMeJson = loadRequiredJson(ptmMeInfo, "ptmMeInfo");
+            }
+            if (cachedPtmCgJson == null) {
+                cachedPtmCgJson = loadRequiredJson(ptmCgInfo, "ptmCgInfo");
+            }
+            if (cachedPtmMyJson == null) {
+                cachedPtmMyJson = loadRequiredJson(ptmMyInfo, "ptmMyInfo");
+            }
+            if (cachedPtmNgJson == null) {
+                cachedPtmNgJson = loadRequiredJson(ptmNgInfo, "ptmNgInfo");
+            }
+            if (cachedPtmOgJson == null) {
+                cachedPtmOgJson = loadRequiredJson(ptmOgInfo, "ptmOgInfo");
+            }
+            if (cachedPtmSgJson == null) {
+                cachedPtmSgJson = loadRequiredJson(ptmSgInfo, "ptmSgInfo");
+            }
+            if (cachedPtmSnJson == null) {
+                cachedPtmSnJson = loadRequiredJson(ptmSnInfo, "ptmSnInfo");
+            }
+            if (cachedPtmSuJson == null) {
+                cachedPtmSuJson = loadRequiredJson(ptmSuInfo, "ptmSuInfo");
+            }
+            if (cachedPtmUbJson == null) {
+                cachedPtmUbJson = loadRequiredJson(ptmUbInfo, "ptmUbInfo");
+            }
+            if (cachedModToPTMJson == null) {
+                cachedModToPTMJson = loadRequiredJson(modToPTM, "modToPTM");
+            }
+            if (cachedSignorPtmToProteinJson == null) {
+                cachedSignorPtmToProteinJson = loadRequiredJson(signorPtmToProtein, "signorPtmToProtein");
+            }
+            if (cachedSignorProteinToProteinJson == null) {
+                cachedSignorProteinToProteinJson = loadRequiredJson(signorProteinToProtein, "signorProteinToProtein");
+            }
+        }
+    }
+
+    private static class ParsedPtmInput {
+        JSONObject protListToProtein = new JSONObject();
+        JSONObject protListAndGeneName = new JSONObject();
+        JSONArray ptmPhArray = new JSONArray();
+        JSONArray ptmAcArray = new JSONArray();
+        JSONArray ptmMeArray = new JSONArray();
+        JSONArray ptmCgArray = new JSONArray();
+        JSONArray ptmMyArray = new JSONArray();
+        JSONArray ptmNgArray = new JSONArray();
+        JSONArray ptmOgArray = new JSONArray();
+        JSONArray ptmSgArray = new JSONArray();
+        JSONArray ptmSnArray = new JSONArray();
+        JSONArray ptmSuArray = new JSONArray();
+        JSONArray ptmUbArray = new JSONArray();
+    }
+
+    private void addParsedPtmItem(JSONArray targetArray, String prefix, String shorthandPrefix,
+                                  String uniprotId, String prot, JSONObject proteinToPhosphoAminoItem) {
+        JSONObject ptmItemJson = new JSONObject();
+        ptmItemJson.put("phosphoSite", uniprotId + "[" + prefix + proteinToPhosphoAminoItem.get("amino") + "@" + proteinToPhosphoAminoItem.get("site") + "]");
+        ptmItemJson.put("shorthand", uniprotId + "[" + shorthandPrefix + proteinToPhosphoAminoItem.get("amino") + "@" + proteinToPhosphoAminoItem.get("site") + "]");
+        ptmItemJson.put("phosphoProtein", prot);
+        ptmItemJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
+        ptmItemJson.put("site", proteinToPhosphoAminoItem.get("site"));
+        targetArray.add(ptmItemJson);
+    }
+
+    private ParsedPtmInput parsePtmInput(String organism, String[] protList) throws Exception {
+        ParsedPtmInput parsed = new ParsedPtmInput();
+        JSONObject proteinToPhosphoAminoJson = new JSONObject();
+        JSONObject proteinToUniprot = new JSONObject();
+        Pattern numberRegex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+        Pattern characterRegex = Pattern.compile("(.*?)(\\d+)(.*)");
+        Pattern ifHasLowerCase = Pattern.compile("[a-z]+");
+        Pattern insideRegex = Pattern.compile("\\{(.*?)\\}");
+
+        ensureResourceCachesLoaded();
+
+        for (String prot : protList) {
+            String aminoString = "";
+            String siteString = "";
+            String ptmString = "";
+            String geneString = prot.replaceAll("\\{.*?\\} ?", "");
+            Matcher insideMatcher = insideRegex.matcher(prot);
+            JSONArray aminoSiteArray = new JSONArray();
+
+            parsed.protListToProtein.put(prot, geneString);
+
+            while (insideMatcher.find()) {
+                String insideMatcherString = insideMatcher.group(1).replace("[", "").replace("]", "");
+                String[] splitted = insideMatcherString.split("@");
+                if (splitted.length < 2) {
+                    continue;
+                }
+                siteString = splitted[1];
+                ptmString = "";
+                aminoString = "";
+
+                if (splitted[0].indexOf("(") != -1) {
+                    Matcher match = Pattern.compile("\\((.*?)\\)").matcher(splitted[0]);
+                    while (match.find()) {
+                        ptmString = match.group(1);
+                        aminoString = splitted[0].replace(match.group(0), "");
+                    }
+                } else {
+                    Matcher matcherLower = ifHasLowerCase.matcher(splitted[1]);
+                    if (splitted[0].equals(splitted[0].toUpperCase())) {
+                        Matcher matcher = numberRegex.matcher(splitted[0]);
+                        while (matcher.find()) {
+                            ptmString = matcher.group(1);
+                        }
+                        Matcher matcher2 = characterRegex.matcher(splitted[0]);
+                        while (matcher2.find()) {
+                            aminoString = matcher2.group(1);
+                            aminoString = aminoString.substring(0, 1);
+                        }
+                    } else {
+                        aminoString = splitted[0].substring(splitted[0].length() - 1);
+                        ptmString = splitted[0].substring(0, splitted[0].length() - 1);
+                    }
+                }
+
+                JSONObject aminoSiteJson = new JSONObject();
+                aminoSiteJson.put("amino", aminoString);
+                aminoSiteJson.put("ptm", ptmString);
+                aminoSiteJson.put("site", siteString);
+                aminoSiteArray.add(aminoSiteJson);
+            }
+
+            proteinToPhosphoAminoJson.put(prot, aminoSiteArray);
+        }
+
+        for (String prot : protList) {
+            JSONArray proteinToPhosphoAminoArray = (JSONArray) proteinToPhosphoAminoJson.get(prot);
+            String uniprotId = (String) parsed.protListToProtein.get(prot);
+
+            if (!proteinToUniprot.containsKey(uniprotId)) {
+                proteinToUniprot.put(uniprotId, uniprotService.findByAccessionApi(uniprotId));
+            }
+
+            ArrayList<String> geneName = (ArrayList<String>) ((JSONObject) proteinToUniprot.get(uniprotId)).get("primary_gene_name");
+            if (geneName.size() > 0) {
+                parsed.protListAndGeneName.put(prot, prot + "(" + geneName.get(0) + ")");
+            } else {
+                parsed.protListAndGeneName.put(prot, prot);
+            }
+
+            for (int j = 0; j < proteinToPhosphoAminoArray.size(); j++) {
+                JSONObject proteinToPhosphoAminoItem = (JSONObject) proteinToPhosphoAminoArray.get(j);
+                String ptm = proteinToPhosphoAminoItem.get("ptm").toString();
+
+                if (ptm.equals("p") || ptm.equals("ph")) {
+                    addParsedPtmItem(parsed.ptmPhArray, "ph", "p", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("a")) {
+                    addParsedPtmItem(parsed.ptmAcArray, "ac", "a", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("me") || ptm.equals("me2") || ptm.equals("me3")) {
+                    addParsedPtmItem(parsed.ptmMeArray, ptm, ptm, uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("cg")) {
+                    addParsedPtmItem(parsed.ptmCgArray, "cg", "cg", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("my")) {
+                    addParsedPtmItem(parsed.ptmMyArray, "my", "my", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("ng")) {
+                    addParsedPtmItem(parsed.ptmNgArray, "ng", "ng", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("og")) {
+                    addParsedPtmItem(parsed.ptmOgArray, "og", "og", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("sg")) {
+                    addParsedPtmItem(parsed.ptmSgArray, "sg", "sg", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("sn")) {
+                    addParsedPtmItem(parsed.ptmSnArray, "sn", "sn", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("su")) {
+                    addParsedPtmItem(parsed.ptmSuArray, "su", "su", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.equals("ub")) {
+                    addParsedPtmItem(parsed.ptmUbArray, "ub", "ub", uniprotId, prot, proteinToPhosphoAminoItem);
+                } else if (ptm.toUpperCase().contains("MOD")) {
+                    String mod = ptm.toUpperCase().replace("_", ":");
+                    if (cachedModToPTMJson.containsKey(mod)) {
+                        String modPTM = (String) cachedModToPTMJson.get(mod);
+                        if (modPTM.equals("ph")) {
+                            addParsedPtmItem(parsed.ptmPhArray, "ph", "p", uniprotId, prot, proteinToPhosphoAminoItem);
+                        } else if (modPTM.equals("ac")) {
+                            addParsedPtmItem(parsed.ptmAcArray, "ac", "a", uniprotId, prot, proteinToPhosphoAminoItem);
+                        } else if (modPTM.equals("me") || modPTM.equals("me2") || modPTM.equals("me3")) {
+                            addParsedPtmItem(parsed.ptmMeArray, modPTM, modPTM, uniprotId, prot, proteinToPhosphoAminoItem);
+                        } else if (modPTM.equals("su")) {
+                            addParsedPtmItem(parsed.ptmSuArray, "su", "su", uniprotId, prot, proteinToPhosphoAminoItem);
+                        } else if (modPTM.equals("ub")) {
+                            addParsedPtmItem(parsed.ptmUbArray, "ub", "ub", uniprotId, prot, proteinToPhosphoAminoItem);
+                        }
+                    }
+                } else {
+                    try {
+                        double ptmValue = Double.parseDouble(ptm);
+                        if ((ptmValue < 79.981 && ptmValue > 79.96) || ptmValue == 80.00) {
+                            addParsedPtmItem(parsed.ptmPhArray, "ph", "p", uniprotId, prot, proteinToPhosphoAminoItem);
+                        }
+                        if (ptmValue < 42.04 && ptmValue > 42.03) {
+                            addParsedPtmItem(parsed.ptmAcArray, "ac", "a", uniprotId, prot, proteinToPhosphoAminoItem);
+                        }
+                        if (ptmValue < 14.03 && ptmValue > 14.01) {
+                            addParsedPtmItem(parsed.ptmMeArray, "me", "me", uniprotId, prot, proteinToPhosphoAminoItem);
+                        }
+                    } catch (NumberFormatException e) {
+                        // ignore non-numeric PTM strings
+                    }
+                }
+            }
+        }
+
+        return parsed;
+    }
+
+    private void markNodeConnected(JSONObject node) {
+        if ("No".equals(node.get("connected"))) {
+            node.remove("connected");
+            node.put("connected", "Yes");
+        }
+    }
+
+    private int appendSignorProteinInteractions(String[] protList, ParsedPtmInput parsed,
+                                                JSONObject signorProteinToProteinJson,
+                                                JSONObject signorNodeUnique,
+                                                JSONArray signorNetworkNodes,
+                                                JSONArray signorNetworkEdges,
+                                                JSONArray signorTableArray,
+                                                int sidx) {
+        JSONObject newNode;
+        JSONObject newEdgeNode;
+
+        for (String prot : protList) {
+            String inputGeneUpper = prot.toUpperCase();
+            String inputGeneProtein = (String) parsed.protListToProtein.get(prot);
+            JSONArray gene2SignorList = new JSONArray();
+
+            if (signorProteinToProteinJson.containsKey(inputGeneProtein)) {
+                gene2SignorList = (JSONArray) signorProteinToProteinJson.get(inputGeneProtein);
+            }
+
+            for (int j = 0; j < gene2SignorList.size(); j++) {
+                JSONObject ptmAndScore = (JSONObject) gene2SignorList.get(j);
+                String enzyme = (String) ptmAndScore.get("enzyme_AC");
+                int tag = 0;
+                String upOrDown = (String) ptmAndScore.get("upordown");
+                String effect = (String) ptmAndScore.get("effect");
+                String mechanism = (String) ptmAndScore.get("mechanism");
+                String id = (String) ptmAndScore.get("id");
+
+                if ("up".equals(upOrDown)) {
+                    tag = 2;
+                }
+                if ("down".equals(upOrDown)) {
+                    tag = 1;
+                }
+
+                if ("unknown".equals(enzyme)) {
+                    markNodeConnected((JSONObject) signorNodeUnique.get(inputGeneUpper));
+                } else {
+                    if (!signorNodeUnique.containsKey(enzyme)) {
+                        newNode = generateNode(enzyme, enzyme, "", sidx, 12, 0.0);
+                        sidx = sidx + 1;
+                        signorNodeUnique.put(enzyme, newNode);
+                        signorNetworkNodes.add(newNode);
+                    }
+                    newEdgeNode = generateEdgeNode((int) ((JSONObject) signorNodeUnique.get(enzyme)).get("idx"),
+                            (int) ((JSONObject) signorNodeUnique.get(inputGeneUpper)).get("idx"), 1, tag);
+                    signorNetworkEdges.add(newEdgeNode);
+                    markNodeConnected((JSONObject) signorNodeUnique.get(inputGeneUpper));
+                }
+
+                JSONObject signorTableJson = new JSONObject();
+                signorTableJson.put("PTMProtein", prot);
+                signorTableJson.put("effect", effect);
+                signorTableJson.put("mechanism", mechanism);
+                signorTableJson.put("id", id);
+                signorTableJson.put("enzyme", enzyme);
+                signorTableJson.put("target", inputGeneProtein);
+                signorTableArray.add(signorTableJson);
+            }
+        }
+
+        return sidx;
+    }
+
+    private int appendSignorPtmInteractions(JSONArray ptmArray, JSONObject signorPtmToProteinJson,
+                                            JSONObject signorNodeUnique, JSONArray signorNetworkNodes,
+                                            JSONArray signorNetworkEdges, JSONArray signorTableArray,
+                                            int sidx, int nodeTag) {
+        JSONObject newNode;
+        JSONObject newEdgeNode;
+
+        for (int i = 0; i < ptmArray.size(); i++) {
+            JSONObject phosphoGeneSequenceJson2 = (JSONObject) ptmArray.get(i);
+            String inputGene = phosphoGeneSequenceJson2.get("phosphoSite").toString();
+            String inputPhosphoProteinUpper = phosphoGeneSequenceJson2.get("phosphoProtein").toString().toUpperCase();
+            JSONArray ptm2SignorList = new JSONArray();
+
+            if (signorPtmToProteinJson.containsKey(inputGene)) {
+                ptm2SignorList = (JSONArray) signorPtmToProteinJson.get(inputGene);
+            }
+
+            for (int j = 0; j < ptm2SignorList.size(); j++) {
+                JSONObject signorAndEffect = (JSONObject) ptm2SignorList.get(j);
+                String enzyme = (String) signorAndEffect.get("enzyme_AC");
+                int tag = 0;
+                String upOrDown = (String) signorAndEffect.get("upordown");
+                String effect = (String) signorAndEffect.get("effect");
+                String mechanism = (String) signorAndEffect.get("mechanism");
+                String id = (String) signorAndEffect.get("id");
+
+                if ("up".equals(upOrDown)) {
+                    tag = 2;
+                }
+                if ("down".equals(upOrDown)) {
+                    tag = 1;
+                }
+
+                if ("unknown".equals(enzyme)) {
+                    markNodeConnected((JSONObject) signorNodeUnique.get(inputPhosphoProteinUpper));
+                } else {
+                    if (!signorNodeUnique.containsKey(enzyme)) {
+                        newNode = generateNode(enzyme, enzyme, "", sidx, nodeTag, 0.0);
+                        sidx = sidx + 1;
+                        signorNodeUnique.put(enzyme, newNode);
+                        signorNetworkNodes.add(newNode);
+                    }
+                    newEdgeNode = generateEdgeNode((int) ((JSONObject) signorNodeUnique.get(enzyme)).get("idx"),
+                            (int) ((JSONObject) signorNodeUnique.get(inputPhosphoProteinUpper)).get("idx"), 1, tag);
+                    signorNetworkEdges.add(newEdgeNode);
+                    markNodeConnected((JSONObject) signorNodeUnique.get(inputPhosphoProteinUpper));
+                }
+
+                JSONObject signorTableJson = new JSONObject();
+                signorTableJson.put("PTMProtein", inputPhosphoProteinUpper);
+                signorTableJson.put("effect", effect);
+                signorTableJson.put("mechanism", mechanism);
+                signorTableJson.put("id", id);
+                signorTableJson.put("enzyme", enzyme);
+                signorTableJson.put("target", inputGene);
+                signorTableArray.add(signorTableJson);
+            }
+        }
+
+        return sidx;
+    }
 //    @Autowired
 //    UniprotRepository uniprotRepository = new UniprotRepository();
 
     public JSONObject computeSignorOnlyNetwork(String organism, String[] protList) throws Exception {
-        JSONObject combinedNetwork = computePtmNetwork(organism, protList);
+        long requestStartNs = System.nanoTime();
+        long phaseStartNs = requestStartNs;
+        ensureResourceCachesLoaded();
+        timing("timing service=PhosphoService phase=signor-resource-cache-loaded inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+        phaseStartNs = System.nanoTime();
+
+        ParsedPtmInput parsed = parsePtmInput(organism, protList);
+        timing("timing service=PhosphoService phase=signor-input-parsed inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+        phaseStartNs = System.nanoTime();
         JSONObject signorNetwork = new JSONObject();
+        JSONObject signorNetworkJson = new JSONObject();
+        JSONArray signorNetworkEdges = new JSONArray();
+        JSONArray signorNetworkNodes = new JSONArray();
+        JSONArray signorTableArray = new JSONArray();
+        JSONObject signorNodeUnique = new JSONObject();
+        int sidx = 0;
 
-        signorNetwork.put("signor_Network", combinedNetwork.containsKey("signor_Network") ? combinedNetwork.get("signor_Network") : new JSONObject());
-        signorNetwork.put("signor_table", combinedNetwork.containsKey("signor_table") ? combinedNetwork.get("signor_table") : new JSONArray());
+        for (String prot : protList) {
+            String inputGeneUpper = prot.toUpperCase();
+            if (!signorNodeUnique.containsKey(inputGeneUpper)) {
+                JSONObject newNode = generateNode(prot, (String) parsed.protListAndGeneName.get(prot), "No", sidx, 0, 0.0);
+                sidx = sidx + 1;
+                signorNetworkNodes.add(newNode);
+                signorNodeUnique.put(inputGeneUpper, newNode);
+            }
+        }
 
+        sidx = appendSignorProteinInteractions(protList, parsed, cachedSignorProteinToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx);
+        sidx = appendSignorPtmInteractions(parsed.ptmPhArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 1);
+        sidx = appendSignorPtmInteractions(parsed.ptmAcArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 2);
+        sidx = appendSignorPtmInteractions(parsed.ptmMeArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 3);
+        sidx = appendSignorPtmInteractions(parsed.ptmCgArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 4);
+        sidx = appendSignorPtmInteractions(parsed.ptmMyArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 5);
+        sidx = appendSignorPtmInteractions(parsed.ptmNgArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 6);
+        sidx = appendSignorPtmInteractions(parsed.ptmOgArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 7);
+        sidx = appendSignorPtmInteractions(parsed.ptmSgArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 8);
+        sidx = appendSignorPtmInteractions(parsed.ptmSnArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 9);
+        sidx = appendSignorPtmInteractions(parsed.ptmSuArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 10);
+        appendSignorPtmInteractions(parsed.ptmUbArray, cachedSignorPtmToProteinJson,
+                signorNodeUnique, signorNetworkNodes, signorNetworkEdges, signorTableArray, sidx, 11);
+
+        signorNetworkJson.put("nodes", signorNetworkNodes);
+        signorNetworkJson.put("edges", signorNetworkEdges);
+        signorNetwork.put("signor_Network", signorNetworkJson);
+        signorNetwork.put("signor_table", signorTableArray);
+        timing("timing service=PhosphoService phase=signor-network-built nodes=%d edges=%d rows=%d elapsedMs=%d",
+                signorNetworkNodes.size(), signorNetworkEdges.size(), signorTableArray.size(), elapsedMs(phaseStartNs));
+        timing("timing service=PhosphoService phase=signor-total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
         return signorNetwork;
     }
 
     public JSONObject computeDeepPhosOnlyNetwork(String organism, String[] protList) throws Exception {
+        long requestStartNs = System.nanoTime();
         JSONObject combinedNetwork = computePtmNetwork(organism, protList);
         JSONObject deepPhosNetwork = new JSONObject();
 
         deepPhosNetwork.put("deepPhosNetwork", combinedNetwork.containsKey("deepPhosNetwork") ? combinedNetwork.get("deepPhosNetwork") : new JSONObject());
         deepPhosNetwork.put("deepPhosTable", combinedNetwork.containsKey("deepPhosTable") ? combinedNetwork.get("deepPhosTable") : new JSONArray());
-
+        timing("timing service=PhosphoService phase=deepphos-wrapper-total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
         return deepPhosNetwork;
     }
 
     public JSONObject computePtmNetwork(String organism, String[] protList) throws Exception {
+        long requestStartNs = System.nanoTime();
+        long phaseStartNs = requestStartNs;
 
         int didx = 0; //definite idx
         int dbdx = 0; //definite blosum idx
@@ -277,162 +754,27 @@ public class PhosphoService {
 
 //        Pattern lowerCase = Pattern.compile("(\\d+(?:\\.\\d+)?)");
 //        Pattern UpperCase = Pattern.compile("(.*?)(\\d+)(.*)");
-        try {
-            phosphoGene2PrJson = UtilsIO.getInstance().readJsonFile(phosphoGeneProbabilityInfo);
-            //log.info(kinase2GeneJson.toString());
-
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoGeneProbabilityInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            phosphoGene2KinaseJson = UtilsIO.getInstance().readJsonFile(phosphoGenes2KinaseInfo);
-            //log.info(phosphoGene2KinaseJson.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoGenes2KinaseInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            phosphoAmino2KinaseSequenceJson = UtilsIO.getInstance().readJsonFile(phosphoAmino2KinaseSequenceInfo);
-            //log.info(phosphoAmino2KinaseSequenceJson.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining phosphoAmino2KinaseSequenceInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            blosum50Json = UtilsIO.getInstance().readJsonFile(blosum50Info);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining blosum50Info");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            ptmAcJson = UtilsIO.getInstance().readJsonFile(ptmAcInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmAcInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            ptmMeJson = UtilsIO.getInstance().readJsonFile(ptmMeInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmMeInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            ptmPhJson = UtilsIO.getInstance().readJsonFile(ptmPhInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmPhInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmCgJson = UtilsIO.getInstance().readJsonFile(ptmCgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmCgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmCg: /PTM/ptm_cg.json
-
-        try {
-            ptmMyJson = UtilsIO.getInstance().readJsonFile(ptmMyInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmMyInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmMy: /PTM/ptm_my.json
-        try {
-            ptmNgJson = UtilsIO.getInstance().readJsonFile(ptmNgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmNgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmNg: /PTM/ptm_ng.json
-        try {
-            ptmOgJson = UtilsIO.getInstance().readJsonFile(ptmOgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmOgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmOg: /PTM/ptm_og.json
-        try {
-            ptmSgJson = UtilsIO.getInstance().readJsonFile(ptmSgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmSnJson = UtilsIO.getInstance().readJsonFile(ptmSnInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSnInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmSuJson = UtilsIO.getInstance().readJsonFile(ptmSuInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSuInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmUbJson = UtilsIO.getInstance().readJsonFile(ptmUbInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmUbInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            modToPTMJson = UtilsIO.getInstance().readJsonFile(modToPTM);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining modToPTM");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            signorPtmToProteinJson = UtilsIO.getInstance().readJsonFile(signorPtmToProtein);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining signorPtmToProtein");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            signorProteinToProteinJson = UtilsIO.getInstance().readJsonFile(signorProteinToProtein);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining signorProteinToProtein");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
+        ensureResourceCachesLoaded();
+        timing("timing service=PhosphoService phase=resource-cache-loaded inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+        phaseStartNs = System.nanoTime();
+        phosphoGene2PrJson = cachedPhosphoGene2PrJson;
+        phosphoGene2KinaseJson = cachedPhosphoGene2KinaseJson;
+        phosphoAmino2KinaseSequenceJson = cachedPhosphoAmino2KinaseSequenceJson;
+        blosum50Json = cachedBlosum50Json;
+        ptmAcJson = cachedPtmAcJson;
+        ptmMeJson = cachedPtmMeJson;
+        ptmPhJson = cachedPtmPhJson;
+        ptmCgJson = cachedPtmCgJson;
+        ptmMyJson = cachedPtmMyJson;
+        ptmNgJson = cachedPtmNgJson;
+        ptmOgJson = cachedPtmOgJson;
+        ptmSgJson = cachedPtmSgJson;
+        ptmSnJson = cachedPtmSnJson;
+        ptmSuJson = cachedPtmSuJson;
+        ptmUbJson = cachedPtmUbJson;
+        modToPTMJson = cachedModToPTMJson;
+        signorPtmToProteinJson = cachedSignorPtmToProteinJson;
+        signorProteinToProteinJson = cachedSignorProteinToProteinJson;
 //        ptmSg: /PTM/ptm_sg.json
 //        ptmSn: /PTM/ptm_sn.json
 //        ptmSu: /PTM/ptm_su.json
@@ -529,6 +871,9 @@ public class PhosphoService {
 
 
             }
+
+            timing("timing service=PhosphoService phase=input-parsed inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
 
             //Get info about the genes
             //String[] stringProteinArray = (String[]) inputGeneArray.toArray(new String[0]);
@@ -1136,6 +1481,9 @@ public class PhosphoService {
             //System.out.println("phosphoGeneSequenceArray ========================");
             //log.info("phosphoGeneSequenceArray ========================");
             //System.out.println(phosphoGeneSequenceArray.toString());
+            timing("timing service=PhosphoService phase=uniprot-enriched uniqueProteins=%d elapsedMs=%d", proteinToUniprot.size(), elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
+
             //First only add the input genes
             //System.out.println("//Adding to nodelists for all the networks");
             for (int i = 0; i < protList.length; i++) {
@@ -3460,7 +3808,10 @@ public class PhosphoService {
                 //System.out.println("deepPhosurlString=");
                 //System.out.println(urlString);
                 //System.out.println("deepPhosResults=");
+            long deepPhosPhaseStartNs = System.nanoTime();
             deepPhosResults = deepPhosService.getPhosphoPrediction(organism, urlString);
+            timing("timing service=PhosphoService phase=deepphos-prediction requestItems=%d elapsedMs=%d",
+                    ptmPhArray.size(), elapsedMs(deepPhosPhaseStartNs));
             ////System.out.println(deepPhosResults);
 
 
@@ -3598,6 +3949,9 @@ public class PhosphoService {
 
             //System.out.println("network without error");
             //System.out.println(network.toString());
+            timing("timing service=PhosphoService phase=network-built signorRows=%d ptmRows=%d deepPhosRows=%d elapsedMs=%d",
+                    signorTableArray.size(), ptmTableArray.size(), deepPhosTableArray.size(), elapsedMs(phaseStartNs));
+            timing("timing service=PhosphoService phase=total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
             return network;
         }catch (Exception e){
             String msg = String.format("Error in obtaining network");
@@ -3631,6 +3985,9 @@ public class PhosphoService {
             network.put("Predicted_Blosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
             //System.out.println("network with error");
             //System.out.println(network.toString());
+            timing("timing service=PhosphoService phase=network-built-error-path signorRows=%d ptmRows=%d deepPhosRows=%d elapsedMs=%d",
+                    signorTableArray.size(), ptmTableArray.size(), deepPhosTableArray.size(), elapsedMs(phaseStartNs));
+            timing("timing service=PhosphoService phase=total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
             return network;
         }
     }
