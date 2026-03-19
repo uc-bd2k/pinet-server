@@ -65,7 +65,7 @@ public class PhosphoServiceV2 {
 
 
     @Autowired
-    UniprotService2 uniprotService = new UniprotService2();
+    UniprotService uniprotService;
 
     public JSONObject computePhosphoNetwork(String organism, String[] protList) throws Exception {
 
@@ -247,8 +247,10 @@ public class PhosphoServiceV2 {
             ptmString = "";
 
             List<String> matchList = new ArrayList<String>();
-            Pattern regex = Pattern.compile("\\[(.*?)\\]");
-            geneString = protList[i].replaceAll("\\[.*?\\] ?", "");
+            Pattern regex = Pattern.compile("\\{(.*?)\\}");
+            geneString = protList[i]
+                    .replaceAll("\\{.*?\\}", "")
+                    .replaceAll("\\[.*?\\] ?", "");
 //            System.out.println("geneString");
 //            System.out.println(geneString);
             //Pattern siteRegex = Pattern.compile("\\d+");
@@ -261,8 +263,13 @@ public class PhosphoServiceV2 {
             aminoSiteArray = new JSONArray();
             while (insideMatcher.find()) {
                 System.out.println("here1");
-                System.out.println(insideMatcher.group(1));
-                String[] splitted = insideMatcher.group(1).split("@");
+                String token = insideMatcher.group(1);
+                System.out.println(token);
+                String normalizedToken = token.replace("[", "").replace("]", "");
+                String[] splitted = normalizedToken.split("@");
+                if (splitted.length < 2) {
+                    continue;
+                }
                 siteString = splitted[1];
 
 
@@ -270,7 +277,13 @@ public class PhosphoServiceV2 {
 //                lowerResult = matcherLower.matches();
 //                System.out.println(lowerResult);
 
-                if (splitted[0].equals(splitted[0].toUpperCase())) {
+                if (splitted[0].indexOf("(") != -1) {
+                    Matcher match = Pattern.compile("\\((.*?)\\)").matcher(splitted[0]);
+                    while (match.find()) {
+                        ptmString = match.group(1);
+                        aminoString = splitted[0].replace(match.group(0), "");
+                    }
+                } else if (splitted[0].equals(splitted[0].toUpperCase())) {
                     //if(!lowerResult) {
                     //splitted[0].matches(".*\\d+.*");
                     Matcher matcher = numberRegex.matcher(splitted[0]);
@@ -361,21 +374,24 @@ public class PhosphoServiceV2 {
             System.out.println(uniprot_id);
 
 
-            if (!proteinToUniprot.containsKey(protList[i])) {
-
-                geneSequenceInfo = uniprotService.getTable(organismForQueryUniprot, uniprot_id);
+            if (!proteinToUniprot.containsKey(uniprot_id)) {
+                geneSequenceInfo = uniprotService.findByAccessionApi(uniprot_id);
                 proteinToUniprot.put(uniprot_id, geneSequenceInfo);
-
-                ArrayList<String> geneName = (ArrayList<String>) geneSequenceInfo.get("gene_id");
-
-                protListAndGeneName.put(protList[i], protList[i] + "(" + geneName.get(0).toString() + ")");
-                System.out.println("protListAndGeneName////////////////////");
-                System.out.println(protList[i]);
-                System.out.println(geneName.toString());
-                System.out.println(protList[i] + "(" + geneName.get(0).toString() + ")");
-                System.out.println(protListAndGeneName.get(protList[i]));
-                System.out.println("////////////////////////////");
+            } else {
+                geneSequenceInfo = (JSONObject) proteinToUniprot.get(uniprot_id);
             }
+
+            ArrayList<String> geneName = (ArrayList<String>) geneSequenceInfo.get("primary_gene_name");
+            if (geneName != null && geneName.size() > 0) {
+                protListAndGeneName.put(protList[i], protList[i] + "(" + geneName.get(0).toString() + ")");
+            } else {
+                protListAndGeneName.put(protList[i], protList[i]);
+            }
+            System.out.println("protListAndGeneName////////////////////");
+            System.out.println(protList[i]);
+            System.out.println(geneName);
+            System.out.println(protListAndGeneName.get(protList[i]));
+            System.out.println("////////////////////////////");
 
             System.out.println(protList[i]);
             System.out.println(proteinToPhosphoAminoArray.toString());
@@ -421,7 +437,7 @@ public class PhosphoServiceV2 {
 //                    System.out.println("protListAndGeneName ++++++++++++++++++++++");
 //                    System.out.println(protListAndGeneName.get(protList[i]));
 
-                    phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "[" + proteinToPhosphoAminoItem.get("amino") + "+180" + "@" + proteinToPhosphoAminoItem.get("site") + "]");
+                    phosphoGeneSequenceJson.put("phosphoSite", uniprot_id + "{[p" + proteinToPhosphoAminoItem.get("amino") + "]@" + proteinToPhosphoAminoItem.get("site") + "}");
                     phosphoGeneSequenceJson.put("phosphoProtein", protList[i]);
                     phosphoGeneSequenceJson.put("amino", proteinToPhosphoAminoItem.get("amino"));
                     phosphoGeneSequenceJson.put("site", proteinToPhosphoAminoItem.get("site"));
@@ -639,7 +655,6 @@ public class PhosphoServiceV2 {
                         geneBlosumJson.put("amino", phosphoAmino);
                         geneBlosumJson.put("geneSequence", phosphoSequence);
                         geneBlosumJson.put("kinase", keyStr);
-                        geneBlosumJson.put("kinaseOrganism", blosumOrganism);
                         geneBlosumJson.put("kinasePeptide", blosumString);
                         geneBlosumJson.put("blosum50ScorePercent", blosumScoreHigh);
                         //geneBlosumJson.put("blosum50ScorePercent", Math.round(((double)blosumScoreHigh*100.0/(double)blosumScoreMax)));
@@ -662,10 +677,10 @@ public class PhosphoServiceV2 {
                         blosumOrganism = organism;
                         geneBlosumJson = new JSONObject();
                         geneBlosumJson.put("phosphoGene", phosphoGene);
+                        geneBlosumJson.put("ptm", ptm);
                         geneBlosumJson.put("amino", phosphoAmino);
                         geneBlosumJson.put("geneSequence", phosphoSequence);
                         geneBlosumJson.put("kinase", keyStr);
-                        geneBlosumJson.put("kinaseOrganism", blosumOrganism);
                         geneBlosumJson.put("kinasePeptide", blosumString);
                         geneBlosumJson.put("blosum50ScorePercent", blosumScoreHigh);
                         geneBlosumJson.put("blosum50MaxScore", blosumScoreMax);
@@ -900,6 +915,9 @@ public class PhosphoServiceV2 {
         network.put("Definite_table", geneDefJsonArray);
         network.put("Indefinite_table", geneProbJsonArray);
         network.put("Known_Kinase_TargetGene", definite_Kinase_Gene_Network);
+        network.put("Blosum50_Exact_Match_Kinase_TargetGene", definite_blosum_Kinase_Gene_Network);
+        network.put("Predicted_Probability_Kinase_TargetGene", indefinite_Kinase_Gene_Network);
+        network.put("Predicted_Blosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
         network.put("Known+Blosum50_Exact_Match_Kinase_TargetGene", definite_blosum_Kinase_Gene_Network);
         network.put("Known+PredictedbyPWM_Kinase_TargetGene", indefinite_Kinase_Gene_Network);
         network.put("Known+PredictedbyBlosum50_Kinase_TargetGene", blosum_Kinase_Gene_Network);
@@ -1107,5 +1125,3 @@ public class PhosphoServiceV2 {
 //    }
 
 }
-
-

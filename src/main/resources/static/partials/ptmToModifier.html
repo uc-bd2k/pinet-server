@@ -1507,7 +1507,7 @@ if __name__ == '__main__':
                         <!--<a href="https://research.bioinformatics.udel.edu/iptmnet/"-->
                            <!--target="_blank" style="color: #b5cde1">iPTMnet</a> Network of Targeted PTMs-->
                         iPTMnet
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="!ctrl.showPtmGeneNetworkProcessed && !ctrl.ptmError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw">
 
                             </span>
@@ -1535,13 +1535,13 @@ if __name__ == '__main__':
                                 </p>
                             </div>
 
-                            <div ng-show="ctrl.phosphoError" style="color: red">
+                            <div ng-show="ctrl.ptmError" style="color: red">
                                 <p>
                                     Error in obtaining the iPTMnet network, please try again later!
                                 </p>
                             </div>
 
-                            <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                            <div ng-show="ctrl.showPtmGeneNetworkProcessed">
                                 <button class="btn btn-primary "
                                         ng-click="ctrl.makePtmGraph(graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
                                     Network of Targeted PTM/Proteins via iPTMnet
@@ -1852,7 +1852,7 @@ if __name__ == '__main__':
                         <!--PTM/Proteins-->
 
                         SIGNOR
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="ctrl.signorWaiting && !ctrl.signorError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
                         </span>
 
@@ -1877,7 +1877,7 @@ if __name__ == '__main__':
                                 </p>
                             </div>
 
-                            <div ng-show="enrichmentError">
+                            <div ng-show="ctrl.signorError">
                                 <p style="color: steelblue"> Error in obtaining the SIGNOR network, please try again
                                     later!
                                 </p>
@@ -1889,10 +1889,12 @@ if __name__ == '__main__':
                             </div>
 
 
-                            <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                            <div ng-show="ctrl.showSignorGeneNetworkProcessed">
                                 <button class="btn btn-primary "
+                                        ng-disabled="ctrl.signorWaiting"
                                         ng-click="ctrl.makeSignorGraph(graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
-                                    Show
+                                    <span ng-show="!ctrl.signorWaiting">Show</span>
+                                    <span ng-show="ctrl.signorWaiting">Loading...</span>
                                     Network of Targeted PTM/Proteins via SIGNOR
                                 </button>
                                 <!--<button class="btn btn-primary "-->
@@ -2605,7 +2607,7 @@ if __name__ == '__main__':
                         <!--Targeted Phosphosites-->
 
                         DeepPhos
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="ctrl.phosphoDeepWaiting && !ctrl.deepPhosError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
                     </span>
                     </h2>
@@ -2644,7 +2646,7 @@ if __name__ == '__main__':
                                 </div>
 
 
-                                <div ng-show="geneDeepPhosError">
+                                <div ng-show="ctrl.deepPhosError">
                                     <p style="color: steelblue"> Error in obtaining the Kinase-ptmProtein network from DeepPhos, please
                                         try again later.
                                     </p>
@@ -2655,19 +2657,22 @@ if __name__ == '__main__':
                                     <!--</button>-->
                                 </div>
 
-                                <div ng-show="ctrl.phosphoError" style="color: red">
+                                <div ng-show="ctrl.deepPhosError" style="color: red">
                                     <p>
                                         Error in obtaining the Kinase-Gene networkfrom DeepPhos, please try again later!
                                     </p>
                                 </div>
-                                <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                                <div ng-show="ctrl.showPhosphoDeepGeneNetworkProcessed">
                                     <div class=" well container-fluid" style="background-color: #c9c9c9">
 
 
                                         <div style="float:left; width:60%;">
                                             <button class="btn btn-primary "
+                                                    ng-disabled="ctrl.phosphoDeepWaiting"
                                                     ng-click="ctrl.makeDeepPhosGraph(graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep, thresholdSlider4deep)">
-                                                Show DeepPhos network for
+                                                <span ng-show="!ctrl.phosphoDeepWaiting">Show</span>
+                                                <span ng-show="ctrl.phosphoDeepWaiting">Loading...</span>
+                                                DeepPhos network for
                                                 phosphorylation site prediction
                                             </button>
                                         </div>
@@ -3759,8 +3764,4 @@ if __name__ == '__main__':
 
 </div>
 <!--</div>-->
-
-
-
-
 

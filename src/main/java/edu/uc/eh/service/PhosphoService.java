@@ -121,6 +121,26 @@ public class PhosphoService {
 //    @Autowired
 //    UniprotRepository uniprotRepository = new UniprotRepository();
 
+    public JSONObject computeSignorOnlyNetwork(String organism, String[] protList) throws Exception {
+        JSONObject combinedNetwork = computePtmNetwork(organism, protList);
+        JSONObject signorNetwork = new JSONObject();
+
+        signorNetwork.put("signor_Network", combinedNetwork.containsKey("signor_Network") ? combinedNetwork.get("signor_Network") : new JSONObject());
+        signorNetwork.put("signor_table", combinedNetwork.containsKey("signor_table") ? combinedNetwork.get("signor_table") : new JSONArray());
+
+        return signorNetwork;
+    }
+
+    public JSONObject computeDeepPhosOnlyNetwork(String organism, String[] protList) throws Exception {
+        JSONObject combinedNetwork = computePtmNetwork(organism, protList);
+        JSONObject deepPhosNetwork = new JSONObject();
+
+        deepPhosNetwork.put("deepPhosNetwork", combinedNetwork.containsKey("deepPhosNetwork") ? combinedNetwork.get("deepPhosNetwork") : new JSONObject());
+        deepPhosNetwork.put("deepPhosTable", combinedNetwork.containsKey("deepPhosTable") ? combinedNetwork.get("deepPhosTable") : new JSONArray());
+
+        return deepPhosNetwork;
+    }
+
     public JSONObject computePtmNetwork(String organism, String[] protList) throws Exception {
 
         int didx = 0; //definite idx
@@ -3815,4 +3835,3 @@ public class PhosphoService {
 //    }
 
 }
-

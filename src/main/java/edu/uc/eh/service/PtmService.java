@@ -87,7 +87,7 @@ public class PtmService {
 
 
     @Autowired
-    UniprotService2 uniprotService = new UniprotService2();
+    UniprotService uniprotService;
 
     public JSONObject computePtmNetwork(String organism, String[] protList) throws Exception {
 
@@ -342,7 +342,8 @@ public class PtmService {
                 System.out.println("here1");
                 System.out.println(insideMatcher.group(1));
                 String token = insideMatcher.group(1);
-                String[] splitted = token.split("@");
+                String normalizedToken = token.replace("[", "").replace("]", "");
+                String[] splitted = normalizedToken.split("@");
                 if (splitted.length < 2) {
                     continue;
                 }
@@ -353,11 +354,12 @@ public class PtmService {
 //                lowerResult = matcherLower.matches();
 //                System.out.println(lowerResult);
 
-                if (splitted[0].contains("[") && splitted[0].contains("]")) {
-                    aminoString = splitted[0].substring(0, 1);
-                    ptmString = splitted[0]
-                            .substring(splitted[0].indexOf('[') + 1, splitted[0].indexOf(']'))
-                            .replace("+", "");
+                if (splitted[0].indexOf("(") != -1) {
+                    Matcher match = Pattern.compile("\\((.*?)\\)").matcher(splitted[0]);
+                    while (match.find()) {
+                        ptmString = match.group(1);
+                        aminoString = splitted[0].replace(match.group(0), "");
+                    }
                 } else if (splitted[0].equals(splitted[0].toUpperCase())) {
                     //if(!lowerResult) {
                     //splitted[0].matches(".*\\d+.*");
@@ -432,6 +434,19 @@ public class PtmService {
         JSONArray ptmUbArray = new JSONArray();
         JSONArray ptmMe2Array = new JSONArray();
         JSONArray ptmMe3Array = new JSONArray();
+        for (int i = 0; i < protList.length; i++) {
+            String uniprot_id = stringProteinArray[i];
+            if (!proteinToUniprot.containsKey(uniprot_id)) {
+                geneSequenceInfo = uniprotService.findByAccessionApi(uniprot_id);
+                proteinToUniprot.put(uniprot_id, geneSequenceInfo);
+            }
+            ArrayList<String> geneName = (ArrayList<String>) ((JSONObject) proteinToUniprot.get(uniprot_id)).get("primary_gene_name");
+            if (geneName != null && geneName.size() > 0) {
+                protListAndGeneName.put(protList[i], protList[i] + "(" + geneName.get(0).toString() + ")");
+            } else {
+                protListAndGeneName.put(protList[i], protList[i]);
+            }
+        }
         for (int i = 0; i < protList.length; i++) {
 
             JSONArray proteinToPhosphoAminoArray = (JSONArray) proteinToPhosphoAminoJson.get(protList[i]);
@@ -789,7 +804,7 @@ public class PtmService {
             System.out.println((String) protListAndGeneName.get(protList[i]));
             if (!ptm_nodeUnique.containsKey(inputGeneUpper)) {
 
-                newNode = generateNode(inputGene, inputGene, "No", pidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
+                newNode = generateNode(inputGene, (String) protListAndGeneName.get(protList[i]), "No", pidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
                 //uniprot is connected to an enzyme or not
                 pidx = pidx + 1;
                 ptm_NetworkNodes.add(newNode);
@@ -839,7 +854,7 @@ public class PtmService {
                 if (score < 1) {
                     score = 1;
                 }
-                if (enzyme.equals("Unknown_Ph")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ph")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -918,7 +933,7 @@ public class PtmService {
                 if (score < 1) {
                     score = 1;
                 }
-                if (enzyme.equals("Unknown_Ac")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ac")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -999,7 +1014,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Me")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Me")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1080,7 +1095,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Cg")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Cg")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1162,7 +1177,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_My")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_My")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1245,7 +1260,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Ng")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ng")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1330,7 +1345,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Og")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Og")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1415,7 +1430,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Sg")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Sg")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1499,7 +1514,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Sn")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Sn")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1583,7 +1598,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Su")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Su")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1667,7 +1682,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Ub")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ub")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1727,6 +1742,12 @@ public class PtmService {
         return network;
     }
 
+
+    private boolean isUnknownEnzyme(String enzyme, String legacyPlaceholder) {
+        return enzyme == null
+            || "unknown".equalsIgnoreCase(enzyme)
+            || legacyPlaceholder.equals(enzyme);
+    }
 
     JSONObject generateEdgeNode(int sourceTag, int targetTag, double value, int tag) {
 //        log.info("&&&&&& Generating Edges &&&&&&&&&&");

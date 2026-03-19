@@ -3098,6 +3098,28 @@ public class RestAPI implements ErrorController {
 
     }
 
+    @RequestMapping(value = "api/signor/organism/{organism}/ptmprotein/{geneList:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject computeSignorNetworkForPtmGenes(@PathVariable String organism, @PathVariable String[] geneList) throws Exception {
+        JSONObject signorNetwork = new JSONObject();
+        signorNetwork = phosphoService.computeSignorOnlyNetwork(organism, geneList);
+
+        return signorNetwork;
+
+    }
+
+    @RequestMapping(value = "api/deepphos/organism/{organism}/ptmprotein/{geneList:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject computeDeepPhosNetworkForPtmGenes(@PathVariable String organism, @PathVariable String[] geneList) throws Exception {
+        JSONObject deepPhosNetwork = new JSONObject();
+        deepPhosNetwork = phosphoService.computeDeepPhosOnlyNetwork(organism, geneList);
+
+        return deepPhosNetwork;
+
+    }
+
     //    @RequestMapping(value = "api/uniprotaccession/{accession}", method = RequestMethod.GET)
 //    @ResponseBody
 //    public String getFromUniprotAccession(@PathVariable String accession) {
