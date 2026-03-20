@@ -2372,18 +2372,33 @@ public class RestAPI implements ErrorController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    } // method uploadFile
 
+    private File createTempUploadFile(String originalFilename) throws IOException {
+        String suffix = ".upload";
+        if (originalFilename != null) {
+            int dotIndex = originalFilename.lastIndexOf('.');
+            if (dotIndex >= 0 && dotIndex < originalFilename.length() - 1) {
+                String candidate = originalFilename.substring(dotIndex);
+                if (candidate.matches("\\.[A-Za-z0-9]{1,10}")) {
+                    suffix = candidate;
+                }
+            }
+        }
+        File tempFile = Files.createTempFile("pinet-upload-", suffix).toFile();
+        tempFile.deleteOnExit();
+        return tempFile;
+    }
+
     public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
-        File convFile = new File(multipart.getOriginalFilename());
+        File convFile = createTempUploadFile(multipart.getOriginalFilename());
         multipart.transferTo(convFile);
         return convFile;
     }
 
     public File convertMultipartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+        File convFile = createTempUploadFile(file.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(convFile)) {
+            fos.write(file.getBytes());
+        }
         return convFile;
     }
 
