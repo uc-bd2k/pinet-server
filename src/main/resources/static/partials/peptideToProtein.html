@@ -1513,7 +1513,7 @@ https://github.com/uc-bd2k/pinet-server
 
                     <blockquote><pre><code>
 import requests
-PINET_URL_BASE = 'http://www.pinet-server.org/pinet/api/'
+PINET_URL_BASE = '__PINET_API_BASE__/'
 PINET_URL_LINEAGE = '9606'
 PEPTIDE_API_EXTENSION_1 = 'peptide/organism/'
 PEPTIDE_API_EXTENSION_2 = '/peptides/'
@@ -1539,7 +1539,7 @@ def _request(url, params=None):
 
 if __name__ == '__main__':
     # Example
-    # http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR
+    # __PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR
     print(map_peptides("KSAPATGGVKKPHR,IYQYIQSR"))
 
 
@@ -1556,50 +1556,50 @@ if __name__ == '__main__':
                     </h4>
                     Search Peptides by Sequence in Canonical Protein  http://pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides separated by commas}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR" target="_blank">
-                        http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
+                    <a href="__PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR" target="_blank">
+                        __PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
                     <br/>
                     Search Peptides by Sequence in Canonical+Isoforms Protein http://pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides separated by commas}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR" target="_blank">
-                        http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
+                    <a href="__PINET_API_BASE__/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR" target="_blank">
+                        __PINET_API_BASE__/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
                     <br/>
                     To see how peptides with values are mapped to (ptm)proteins and proteins http://pinet-server.org/pinet/api/peptidewithvalue/organism/{organism}_iso/peptides/{peptides with values separated by commas}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
+                    <a href="__PINET_API_BASE__/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
 " target="_blank">
-                        http://www.pinet-server.org/pinet/api/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
+                        __PINET_API_BASE__/peptidewithvalue/organism/9606/peptides/[meK]STGG[aK]APR{-0.0649},[aK]STGG[aK]APR{-0.0215},[meK][pS]TGGKAPR{-0.2427},[meK]SAPATGGV[meK]KPHR{0.2786},EIAQDF[meK]TDLR{0.1569},IYQ[pY]IQSR[+42.010]{1.3012},[aK]AYSFCGTVEY(UNIMOD:21)MAP{-2.1456},KA[pY]SF[myC]GTVE[pY]MAPEVVNR{-0.5987},SVDLIKTYKHINEVYYAKKKRRHQ{-0.3312},PHSHQY[pS]DRR{1.3267}
                     </a>
 
                     <hr/>
                     <h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;
                         For Protein Modification Query
                     </h4>
-                    Search by Mass and Delta, http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
+                    Search by Mass and Delta, __PINET_API_BASE__/proteinptmbymass/{mass}/delta/{delta}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">
-                        http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>
+                    <a href="__PINET_API_BASE__/proteinptmbymass/80/delta/0.5" target="_blank">
+                        __PINET_API_BASE__/proteinptmbymass/80/delta/0.5</a>
                     <br/>
                     Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/proteinptm/UNIMOD:1255" target="_blank">
-                        http://www.pinet-server.org/pinet/api/proteinptm/UNIMOD:1255</a>
+                    <a href="__PINET_API_BASE__/proteinptm/UNIMOD:1255" target="_blank">
+                        __PINET_API_BASE__/proteinptm/UNIMOD:1255</a>
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">
-                        http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912</a>
+                    <a href="__PINET_API_BASE__/proteinptm/MOD:00912" target="_blank">
+                        __PINET_API_BASE__/proteinptm/MOD:00912</a>
                     <br/>
                     Search by specifications, http://pinet-server.org/pinet/api/proteinptmbydescription/{description}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">
-                        http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>
+                    <a href="__PINET_API_BASE__/proteinptmbydescription/phospho" target="_blank">
+                        __PINET_API_BASE__/proteinptmbydescription/phospho</a>
                     <br/>
                     For regular expression to capture the peptide and acceptable modification formats: http://pinet-server.org/pinet/api/regex/{ptmPeptide}
                     <br/>
-                    <a href="http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]" target="_blank">
-                        http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
+                    <a href="__PINET_API_BASE__/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]" target="_blank">
+                        __PINET_API_BASE__/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
                     <br/>
                     <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
-                        <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
+                        <!--__PINET_API_BASE__/proteinptmbydescription/serine</a>-->
 
                 </div>
             </div>

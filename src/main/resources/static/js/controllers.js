@@ -2981,7 +2981,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -4081,7 +4081,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -4902,7 +4902,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
                     })
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
                 if(1 == 0) {
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -6111,7 +6111,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 if(1 == 0) {
@@ -9090,7 +9090,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -10190,7 +10190,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -11011,7 +11011,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
                     })
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
                 if(1 == 0) {
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -12220,7 +12220,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 if(1 == 0) {
@@ -27267,7 +27267,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -27701,7 +27701,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -28144,7 +28144,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -28819,7 +28819,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -30397,7 +30397,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -30801,7 +30801,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -31493,7 +31493,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -32110,7 +32110,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -32820,7 +32820,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -33211,7 +33211,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -33565,7 +33565,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -34176,7 +34176,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -35834,7 +35834,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36143,7 +36143,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36450,7 +36450,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36783,7 +36783,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -39406,7 +39406,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs1.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -40120,7 +40120,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs2.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -40838,7 +40838,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -41692,7 +41692,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -42033,7 +42033,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -42299,7 +42299,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -42623,7 +42623,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -43766,7 +43766,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44064,7 +44064,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44364,7 +44364,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44685,7 +44685,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -46591,7 +46591,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -46985,7 +46985,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -47359,7 +47359,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -47806,7 +47806,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
