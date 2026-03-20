@@ -17,6 +17,7 @@ pinet:
   domain: ${PINET_DOMAIN:www.pinet-server.org}
   webBaseUrl: ${PINET_WEB_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet}
   apiBaseUrl: ${PINET_API_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet/api}
+  includeErrorTrace: ${PINET_INCLUDE_ERROR_TRACE:false}
 
 
 

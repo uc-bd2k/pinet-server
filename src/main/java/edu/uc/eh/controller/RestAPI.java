@@ -95,6 +95,7 @@ public class RestAPI implements ErrorController {
     private final String pinetDomain;
     private final String pinetWebBaseUrl;
     private final String pinetApiBaseUrl;
+    private final boolean pinetIncludeErrorTrace;
 
 //    private final HarmonizomeProteinService harmonizomeProteinService;
 //    private final HarmonizomeGeneService harmonizomeGeneService;
@@ -109,7 +110,8 @@ public class RestAPI implements ErrorController {
                    @Value("${pinet.domain:www.pinet-server.org}") String pinetDomain,
                    @Value("${pinet.protocol:https}") String pinetProtocol,
                    @Value("${pinet.webBaseUrl:https://www.pinet-server.org/pinet}") String pinetWebBaseUrl,
-                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl) {
+                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl,
+                   @Value("${pinet.includeErrorTrace:false}") boolean pinetIncludeErrorTrace) {
         this.peptideSearchService = peptideSearchService;
         this.peptideWithValueService = peptideWithValueService;
 
@@ -145,6 +147,7 @@ public class RestAPI implements ErrorController {
         this.pinetDomain = pinetDomain;
         this.pinetWebBaseUrl = pinetWebBaseUrl;
         this.pinetApiBaseUrl = pinetApiBaseUrl;
+        this.pinetIncludeErrorTrace = pinetIncludeErrorTrace;
 
     }
 
@@ -225,6 +228,9 @@ public class RestAPI implements ErrorController {
     }
 
     private boolean getTraceParameter(HttpServletRequest request) {
+        if (!pinetIncludeErrorTrace) {
+            return false;
+        }
         String parameter = request.getParameter("trace");
         if (parameter == null) {
             return false;
