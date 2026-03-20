@@ -32,6 +32,7 @@ build/
 dependency-check-report/
 .idea/
 src/main/resources/static/node_modules/
+deepPhosAPI/env/
 
 # Irrelevant
 pyhton/
