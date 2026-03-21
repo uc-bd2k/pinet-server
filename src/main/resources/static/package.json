@@ -6,6 +6,7 @@
   },
   "overrides": {
     "biojs-vis-keggviewer": {
+      "jquery": "3.7.1",
       "nets": "file:vendor/nets-browser"
     }
   },
