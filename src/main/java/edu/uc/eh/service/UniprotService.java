@@ -39,15 +39,26 @@ public class UniprotService {
         this.uniprotRepository = uniprotRepository;
     }
 
+    private long elapsedMs(long startNs) {
+        return (System.nanoTime() - startNs) / 1_000_000;
+    }
+
+    private void timing(String template, Object... args) {
+        System.out.println(String.format(template, args));
+    }
+
 //    @Autowired
 //    UniprotRepository uniprotRepository = new UniprotRepository();
 
     public JSONObject findByAccessionApi(String inputAccession)
     {
+        long requestStartNs = System.nanoTime();
         Uniprot response = new Uniprot();
         JSONObject responseUniprot = new JSONObject();
         String[] canonicalAccessionList = inputAccession.split("-");
         String organism = "";
+        String source = "local-db";
+        boolean fastaOverride = false;
 //        JSONObject responseUniprot = new JSONObject();
 //
 //        String[] canonicalAccessionList = accession.split("-");
@@ -69,12 +80,13 @@ public class UniprotService {
             //throw new RuntimeException(msg);
             try {
                 responseUniprot = getTable(canonicalAccession);
-
+                source = "remote-uniprot";
 
             }
             catch(Exception e2){
                 String msg2 =  String.format("Uniprot %s not found  in uniprot database", canonicalAccession);
                 System.out.println(msg2);
+                source = "not-found";
 
             }
 //        response = new Uniprot();
@@ -91,6 +103,7 @@ public class UniprotService {
                 responseUniprot.put("sequence", fastaSeq);
                 responseUniprot.remove("length");
                 responseUniprot.put("length", fastaSeq.length());
+                fastaOverride = true;
 
             }
             catch (Exception e2)
@@ -99,6 +112,8 @@ public class UniprotService {
                 System.out.println(msg);
             }
         }
+        timing("timing service=UniprotService accession=%s source=%s fastaOverride=%s elapsedMs=%d",
+                inputAccession, source, fastaOverride, elapsedMs(requestStartNs));
         return responseUniprot;
 
 

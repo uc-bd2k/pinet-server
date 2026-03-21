@@ -29,8 +29,10 @@
 build/
 .gradle
 .DS_Store
+dependency-check-report/
 .idea/
 src/main/resources/static/node_modules/
+deepPhosAPI/env/
 
 # Irrelevant
 pyhton/

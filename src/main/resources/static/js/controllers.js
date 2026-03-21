@@ -2981,7 +2981,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -4081,7 +4081,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -4902,7 +4902,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
                     })
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
                 if(1 == 0) {
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -6111,7 +6111,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 if(1 == 0) {
@@ -9090,7 +9090,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -10190,7 +10190,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 max_data = 1000;
@@ -11011,7 +11011,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
                     })
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
                 if(1 == 0) {
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -12220,7 +12220,7 @@ Q15149{M+16@4031}{[pT]@4030} -0.30907";
 
 
                 var svgText = svgGE.append("text");
-                svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                 //Added from here for coloring the legend
                 if(1 == 0) {
@@ -13734,59 +13734,6 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
     //
     // }
 
-
-    function BrowserDetection() {
-        // Opera 8.0+
-        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
-// Firefox 1.0+
-        var isFirefox = typeof InstallTrigger !== 'undefined';
-
-// Safari 3.0+ "[object HTMLElementConstructor]"
-        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-
-// Internet Explorer 6-11
-        var isIE = /*@cc_on!@*/false || !!document.documentMode;
-
-// Edge 20+
-        var isEdge = !isIE && !!window.StyleMedia;
-
-// Chrome 1 - 71
-        var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-// Edge (based on chromium) detection
-        var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
-
-// Blink engine detection
-        var isBlink = (isChrome || isOpera) && !!window.CSS;
-
-        //Check if browser is IE
-
-        //Check if browser is Chrome
-        if(isSafari || isOpera || isIE || isEdge || isEdgeChromium || isChrome){
-            console.log("showing modal");
-            console.log(isSafari);
-            console.log(isOpera);
-            console.log(isIE);
-            console.log(isEdge);
-            console.log(isEdgeChromium);
-            //console.log(isBlink);
-            console.log("End of showing modal");
-            $('#firstModal').modal('show');
-        }
-
-        var output = 'Detecting browsers by ducktyping:<hr>';
-        output += 'isFirefox: ' + isFirefox + '<br>';
-        output += 'isChrome: ' + isChrome + '<br>';
-        output += 'isSafari: ' + isSafari + '<br>';
-        output += 'isOpera: ' + isOpera + '<br>';
-        output += 'isIE: ' + isIE + '<br>';
-        output += 'isEdge: ' + isEdge + '<br>';
-        output += 'isEdgeChromium: ' + isEdgeChromium + '<br>';
-        output += 'isBlink: ' + isBlink + '<br>';
-        console.log(output);
-    };
-    BrowserDetection();
 
     // $(window).load(function(){
     //     console.log(self.showModal);
@@ -16795,7 +16742,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             ////console.log(key + " -> " + dataForAll[key]);
                                             var n_matchModified = 0;
                                             var matchsetModified = [];
-                                            dataForAll[key].matchset.map(function (e2) {
+                                            var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                            currentMatchset.map(function (e2) {
                                                 if (e2.sequence_db == 'sp') {
                                                     matchsetModified.push(e2);
                                                     n_matchModified = n_matchModified + 1;
@@ -16818,7 +16766,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                             ////console.log(key + " -> " + dataForAll[key]);
                                             var n_matchModified = 0;
                                             var matchsetModified = [];
-                                            dataForAll[key].matchset.map(function (e2) {
+                                            var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                            currentMatchset.map(function (e2) {
                                                 if (e2.sequence_db == 'tr') {
                                                     matchsetModified.push(e2);
                                                     n_matchModified = n_matchModified + 1;
@@ -16844,7 +16793,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 // //console.log(localPeptideIterator);
                                 // //console.log(localMotif);
                                 // //console.log(dataForAll[localMotif]);
-                                self.uniprotResponseIteratorTotalForPercentage += dataForAll[localMotif].n_match;
+                                var localMotifData = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
+                                self.uniprotResponseIteratorTotalForPercentage += localMotifData.n_match;
                                 //self.uniprotResponseIteratorTotal += dataForAll[localMotif].n_match;
                             }
                             //console.log("self.uniprotResponseIteratorTotalForPercentage");
@@ -16855,10 +16805,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                 var localMotif = self.parsedMotifs[localPeptideIterator];
                                 var localPeptide = self.parsedPeptides[localPeptideIterator];
                                 ////console.log(localMotif);
-                                var data = dataForAll[localMotif];
+                                var data = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
                                 ////console.log(data);
 
-                                var matchset = data.matchset;
+                                var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                                 ////console.log(matchset);
 
                                 var nMatch = data.n_match;
@@ -21375,7 +21325,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                     ////console.log(key + " -> " + dataForAll[key]);
                                     var n_matchModified = 0;
                                     var matchsetModified = [];
-                                    dataForAll[key].matchset.map(function (e2) {
+                                    var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                    currentMatchset.map(function (e2) {
                                         if (e2.sequence_db == 'sp') {
                                             matchsetModified.push(e2);
                                             n_matchModified = n_matchModified + 1;
@@ -21398,7 +21349,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                                     ////console.log(key + " -> " + dataForAll[key]);
                                     var n_matchModified = 0;
                                     var matchsetModified = [];
-                                    dataForAll[key].matchset.map(function (e2) {
+                                    var currentMatchset = Array.isArray(dataForAll[key] && dataForAll[key].matchset) ? dataForAll[key].matchset : [];
+                                    currentMatchset.map(function (e2) {
                                         if (e2.sequence_db == 'tr') {
                                             matchsetModified.push(e2);
                                             n_matchModified = n_matchModified + 1;
@@ -21422,7 +21374,8 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             // //console.log(localPeptideIterator);
                             // //console.log(localMotif);
                             // //console.log(dataForAll[localMotif]);
-                            self.uniprotResponseIteratorTotalForPercentage += dataForAll[localMotif].n_match;
+                            var localMotifData = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
+                            self.uniprotResponseIteratorTotalForPercentage += localMotifData.n_match;
                             //self.uniprotResponseIteratorTotal += dataForAll[localMotif].n_match;
                         }
                         // //console.log("self.uniprotResponseIteratorTotalForPercentage");
@@ -21433,10 +21386,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             var localMotif = self.parsedMotifs[localPeptideIterator];
                             var localPeptide = self.parsedPeptides[localPeptideIterator];
                             ////console.log(localMotif);
-                            var data = dataForAll[localMotif];
+                            var data = dataForAll[localMotif] || {"n_match": 0, "matchset": []};
                             ////console.log(data);
 
-                            var matchset = data.matchset;
+                            var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                             ////console.log(matchset);
 
                             var nMatch = data.n_match;
@@ -22062,7 +22015,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             // //console.log(data);
 
 
-                            var matchset = data.matchset;
+                            var matchset = Array.isArray(data.matchset) ? data.matchset : [];
                             ////console.log(matchset);
                             var nMatch = data.n_match;
 
@@ -22077,7 +22030,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
                             //     self.prositeFound = localPeptide;
                             //     self.showOutput = true;
                             // }
-                            data.matchset.map(function (e) {
+                            matchset.map(function (e) {
                                 e.motif = localMotif;
                                 e.peptide = localPeptide;
                                 return e;
@@ -26537,6 +26490,8 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         //computeWeightForupdatePtm
         self.incrementWithTime = 0;
         self.progressPtmPercent = 0;
+        self.signorNetworkCallbacks = [];
+        self.deepPhosNetworkCallbacks = [];
 
         self.computeWeightForUpdatePtm = true;
         self.computeWeightForUpdateDeepPhos = true;
@@ -26632,146 +26587,130 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
             //console.log("self.inputMassPtmProteinsModifiedForQuery");
             //console.log(self.inputMassPtmProteinsModifiedForQuery);
             self.progressPtmPercent += 5;
-            if (2>1) {
-                $http.get("api/phosphoandptm/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
-                    .success(function (apiPhosphoNetwork) {
-                        self.progressPtmPercent += Math.max(0, 65 - self.incrementWithTime / 2);
-                        self.phosphoWaiting = false;
-                        self.showPhosphoGeneNetworkProcessed = true;
-                        console.log("self.inputMassPtmProteinsModifiedForQuery");
-                        console.log(self.inputMassPtmProteinsModifiedForQuery);
-                        console.log(apiPhosphoNetwork);
-                        //console.log(self.showPhosphoGeneNetworkProcessed);
+            self.progressPtmPercent += 15;
 
-                        SharedService.setVar('showPhosphoGeneNetworkProcessed', self.showPhosphoGeneNetworkProcessed);
-                        //spinner3.stop();
-                        self.phosphoNetwork = apiPhosphoNetwork;
-                        SharedService.setVar('phosphoNetwork', self.phosphoNetwork);
-                        //console.log(self.phosphoNetwork);
+            function requestDeepPhosNetwork() {
+                $http.get("api/deepphos/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
+                    .success(function (apiDeepPhosNetwork) {
+                        self.progressPtmPercent += Math.max(0, 15 - self.incrementWithTime / 5);
+                        self.phosphoDeepWaiting = false;
+                        self.showPhosphoDeepGeneNetworkProcessed = true;
+                        SharedService.setVar('showPhosphoDeepGeneNetworkProcessed', self.showPhosphoDeepGeneNetworkProcessed);
 
-                        self.deepPhosNetwork = self.phosphoNetwork.deepPhosNetwork;
-                        console.log(self.deepPhosNetwork);
+                        self.deepPhosNetwork = apiDeepPhosNetwork.deepPhosNetwork;
                         SharedService.setVar('deepPhosNetwork', self.deepPhosNetwork);
 
-                        self.deepPhosTable = self.phosphoNetwork.deepPhosTable;
+                        self.deepPhosTable = apiDeepPhosNetwork.deepPhosTable;
                         SharedService.setVar('deepPhosTable', self.deepPhosTable);
+
+                        angular.forEach(self.deepPhosNetworkCallbacks, function (callback) {
+                            callback();
+                        });
+                        self.deepPhosNetworkCallbacks = [];
+                    })
+                    .error(function () {
+                        self.progressPtmPercent += Math.max(0, 15 - self.incrementWithTime / 5);
+                        self.phosphoDeepWaiting = false;
+                        self.deepPhosError = true;
+                        self.deepPhosNetworkCallbacks = [];
+                    });
+            }
+
+            function requestPhosphoNetwork() {
+                $http.get("api/phospho2/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
+                    .success(function (apiPhosphoNetwork) {
+                        angular.forEach(apiPhosphoNetwork, function (networkSection) {
+                            if (networkSection && angular.isArray(networkSection.nodes)) {
+                                angular.forEach(networkSection.nodes, function (node) {
+                                    if (!node.full_name) {
+                                        node.full_name = node.name;
+                                    }
+                                });
+                            }
+                        });
+
+                        self.progressPtmPercent += Math.max(0, 20 - self.incrementWithTime / 4);
+                        self.phosphoWaiting = false;
+                        self.showPhosphoGeneNetworkProcessed = true;
+                        SharedService.setVar('showPhosphoGeneNetworkProcessed', self.showPhosphoGeneNetworkProcessed);
+
+                        self.phosphoNetwork = apiPhosphoNetwork;
+                        SharedService.setVar('phosphoNetwork', self.phosphoNetwork);
 
                         self.blosum50Table = self.phosphoNetwork.Blosum50_table;
                         SharedService.setVar('blosum50Table', self.blosum50Table);
 
-                        self.signor_table = self.phosphoNetwork.signor_table;
-                        SharedService.setVar('signor_table', self.signor_table);
+                        self.showOutputPhospho = true;
+                        SharedService.setVar('showOutputPhospho', self.showOutputPhospho);
+                        requestDeepPhosNetwork();
+                    })
+                    .error(function () {
+                        self.progressPtmPercent += Math.max(0, 20 - self.incrementWithTime / 4);
+                        self.phosphoWaiting = false;
+                        self.phosphoError = true;
+                        requestDeepPhosNetwork();
+                    });
+            }
 
-                        self.signor_Network = self.phosphoNetwork.signor_Network;
-                        SharedService.setVar('signor_Network', self.signor_Network);
-
+            function requestSignorNetwork() {
+                $http.get("api/signor/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
+                    .success(function (apiSignorNetwork) {
+                        self.progressPtmPercent += Math.max(0, 15 - self.incrementWithTime / 5);
                         self.signorWaiting = false;
                         self.showSignorGeneNetworkProcessed = true;
                         SharedService.setVar('showSignorGeneNetworkProcessed', self.showSignorGeneNetworkProcessed);
 
-                        //console.log("signor_Network");
-                        //console.log(self.signor_Network);
+                        self.signor_table = apiSignorNetwork.signor_table;
+                        SharedService.setVar('signor_table', self.signor_table);
 
-                        //console.log("phosphoNetwork");
-                        //console.log(self.phosphoNetwork);
-                        self.showOutputPhospho = true;
-                        SharedService.setVar('showOutputPhospho', self.showOutputPhospho);
-
-
-                        self.ptmWaiting = false;
-                        self.showPtmGeneNetworkProcessed = true;
-                        SharedService.setVar('showPtmGeneNetworkProcessed', self.showPtmGeneNetworkProcessed);
-                        self.PTM_table = self.phosphoNetwork.PTM_table;
-                        SharedService.setVar('PTM_table', self.PTM_table);
-
-                        self.ptmNetwork = self.phosphoNetwork.ptm_Network;
-                        SharedService.setVar('ptmNetwork', self.ptmNetwork);
+                        self.signor_Network = apiSignorNetwork.signor_Network;
+                        SharedService.setVar('signor_Network', self.signor_Network);
 
                         self.showOutputSignor = true;
                         SharedService.setVar('showOutputSignor', self.showOutputSignor);
-                        self.showOutputPtm = true;
-                        SharedService.setVar('showOutputPtm', self.showOutputPtm);
 
+                        angular.forEach(self.signorNetworkCallbacks, function (callback) {
+                            callback();
+                        });
+                        self.signorNetworkCallbacks = [];
+                        requestPhosphoNetwork();
                     })
                     .error(function () {
-                        self.progressPtmPercent += Math.max(0, 65 - self.incrementWithTime / 2);
-                        self.phosphoError = true;
-                        self.ptmError = true;
+                        self.progressPtmPercent += Math.max(0, 15 - self.incrementWithTime / 5);
+                        self.signorWaiting = false;
                         self.signorError = true;
-                        self.deepPhosError = true;
-                        //console.log("Error in obtaining network from api/phospho/");
+                        self.signorNetworkCallbacks = [];
+                        requestPhosphoNetwork();
                     });
-
             }
-            //This is for having different ptm and phosphonetwork
-            if (1>2) {
-                //console.log(self.inputMassPtmProteins)
-                //var spinner3 = new Spinner(opts).spin(target3);
-                //console.log("api/phospho2/uniprot/ + self.inputMassPtmProteins");
-                //console.log(self.inputMassPtmProteins);
-                self.progressPtmPercent += 5;
-                $http.get("api/phospho2/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
-                    .success(function (apiPhosphoNetwork) {
-                        self.progressPtmPercent += Math.max(0, 65 - self.incrementWithTime / 2);
-                        self.phosphoWaiting = false;
-                        self.showPhosphoGeneNetworkProcessed = true;
-                        //console.log("self.showPhosphoGeneNetworkProcessed");
-                        //console.log(self.showPhosphoGeneNetworkProcessed);
 
-                        SharedService.setVar('showPhosphoGeneNetworkProcessed', self.showPhosphoGeneNetworkProcessed);
-                        //spinner3.stop();
-                        self.phosphoNetwork = apiPhosphoNetwork;
-                        SharedService.setVar('phosphoNetwork', self.phosphoNetwork);
-                        //console.log(self.phosphoNetwork);
-
-                        self.blosum50Table = self.phosphoNetwork.Blosum50_table;
-                        SharedService.setVar('blosum50Table', self.blosum50Table);
-
-
-                        //console.log("phosphoNetwork");
-                        //console.log(self.phosphoNetwork);
-                        self.showOutputPhospho = true;
-                        SharedService.setVar('showOutputPhospho', self.showOutputPhospho);
-
-                    })
-                    .error(function () {
-                        self.progressPtmPercent += Math.max(0, 65 - self.incrementWithTime / 2);
-                        self.phosphoError = true;
-                        //console.log("Error in obtaining network from api/phospho/");
-                    });
-
-
-                self.progressPtmPercent += 5;
+            function requestPtmNetwork() {
                 $http.get("api/ptm/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
                     .success(function (apiPtmNetwork) {
-                        self.progressPtmPercent += Math.max(0, 25 - self.incrementWithTime / 2);
+                        self.progressPtmPercent += Math.max(0, 20 - self.incrementWithTime / 4);
                         self.ptmWaiting = false;
                         self.showPtmGeneNetworkProcessed = true;
-                        //console.log("self.showPtmGeneNetworkProcessed");
-                        //console.log(self.showPtmGeneNetworkProcessed);
                         SharedService.setVar('showPtmGeneNetworkProcessed', self.showPtmGeneNetworkProcessed);
-                        //spinner3.stop();
-                        self.ptmNetwork = apiPtmNetwork;
-                        //console.log("self.ptmNetwork");
-                        //console.log(self.ptmNetwork);
 
-                        self.PTM_table = self.ptmNetwork.PTM_table;
+                        self.PTM_table = apiPtmNetwork.PTM_table;
                         SharedService.setVar('PTM_table', self.PTM_table);
 
-                        self.ptmNetwork = self.ptmNetwork.ptm_Network;
+                        self.ptmNetwork = apiPtmNetwork.ptm_Network;
                         SharedService.setVar('ptmNetwork', self.ptmNetwork);
-
 
                         self.showOutputPtm = true;
                         SharedService.setVar('showOutputPtm', self.showOutputPtm);
-
+                        requestSignorNetwork();
                     })
                     .error(function () {
-                        self.progressPtmPercent += Math.max(0, 25 - self.incrementWithTime / 2);
+                        self.progressPtmPercent += Math.max(0, 20 - self.incrementWithTime / 4);
+                        self.ptmWaiting = false;
                         self.ptmError = true;
-                        //console.log("Error in obtaining network from api/ptm/");
+                        requestSignorNetwork();
                     });
             }
+
+            requestPtmNetwork();
         }
 
 
@@ -26846,8 +26785,65 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showSignorGraphTmp = true;
         self.showSignorGraph = false;
     }
+    self.loadSignorNetwork = function (onSuccess) {
+        if (self.showSignorGeneNetworkProcessed) {
+            if (onSuccess) {
+                onSuccess();
+            }
+            return;
+        }
+        if (self.signorWaiting) {
+            if (onSuccess) {
+                self.signorNetworkCallbacks = self.signorNetworkCallbacks || [];
+                self.signorNetworkCallbacks.push(onSuccess);
+            }
+            return;
+        }
+
+        self.signorWaiting = true;
+        self.signorError = false;
+        self.signorNetworkCallbacks = self.signorNetworkCallbacks || [];
+        if (onSuccess) {
+            self.signorNetworkCallbacks.push(onSuccess);
+        }
+
+        $http.get("api/signor/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
+            .success(function (apiSignorNetwork) {
+                self.progressPtmPercent += Math.max(0, 10 - self.incrementWithTime / 6);
+                self.signorWaiting = false;
+                self.showSignorGeneNetworkProcessed = true;
+                SharedService.setVar('showSignorGeneNetworkProcessed', self.showSignorGeneNetworkProcessed);
+
+                self.signor_table = apiSignorNetwork.signor_table;
+                SharedService.setVar('signor_table', self.signor_table);
+
+                self.signor_Network = apiSignorNetwork.signor_Network;
+                SharedService.setVar('signor_Network', self.signor_Network);
+
+                self.showOutputSignor = true;
+                SharedService.setVar('showOutputSignor', self.showOutputSignor);
+
+                angular.forEach(self.signorNetworkCallbacks, function (callback) {
+                    callback();
+                });
+                self.signorNetworkCallbacks = [];
+            })
+            .error(function () {
+                self.progressPtmPercent += Math.max(0, 10 - self.incrementWithTime / 6);
+                self.signorWaiting = false;
+                self.signorError = true;
+                self.signorNetworkCallbacks = [];
+            });
+    }
     self.makeSignorGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue) {
         //console.log(self.computeWeightForUpdateSignor);
+
+        if (!self.showSignorGeneNetworkProcessed) {
+            self.loadSignorNetwork(function () {
+                self.makeSignorGraph(graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue);
+            });
+            return;
+        }
 
 //
 //         if(self.showDeepPhosGraphTmp)
@@ -27271,7 +27267,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -27705,7 +27701,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -28148,7 +28144,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -28823,7 +28819,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg6.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -30029,9 +30025,62 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
         self.showDeepPhosGraphTmp = true;
         self.showDeepPhosGraph = false;
     }
+    self.loadDeepPhosNetwork = function (onSuccess) {
+        if (self.showPhosphoDeepGeneNetworkProcessed) {
+            if (onSuccess) {
+                onSuccess();
+            }
+            return;
+        }
+        if (self.phosphoDeepWaiting) {
+            if (onSuccess) {
+                self.deepPhosNetworkCallbacks = self.deepPhosNetworkCallbacks || [];
+                self.deepPhosNetworkCallbacks.push(onSuccess);
+            }
+            return;
+        }
+
+        self.phosphoDeepWaiting = true;
+        self.deepPhosError = false;
+        self.deepPhosNetworkCallbacks = self.deepPhosNetworkCallbacks || [];
+        if (onSuccess) {
+            self.deepPhosNetworkCallbacks.push(onSuccess);
+        }
+
+        $http.get("api/deepphos/organism/" + self.organismForm + "/ptmprotein/" + self.inputMassPtmProteinsModifiedForQuery)
+            .success(function (apiDeepPhosNetwork) {
+                self.progressPtmPercent += Math.max(0, 10 - self.incrementWithTime / 6);
+                self.phosphoDeepWaiting = false;
+                self.showPhosphoDeepGeneNetworkProcessed = true;
+                SharedService.setVar('showPhosphoDeepGeneNetworkProcessed', self.showPhosphoDeepGeneNetworkProcessed);
+
+                self.deepPhosNetwork = apiDeepPhosNetwork.deepPhosNetwork;
+                SharedService.setVar('deepPhosNetwork', self.deepPhosNetwork);
+
+                self.deepPhosTable = apiDeepPhosNetwork.deepPhosTable;
+                SharedService.setVar('deepPhosTable', self.deepPhosTable);
+
+                angular.forEach(self.deepPhosNetworkCallbacks, function (callback) {
+                    callback();
+                });
+                self.deepPhosNetworkCallbacks = [];
+            })
+            .error(function () {
+                self.progressPtmPercent += Math.max(0, 10 - self.incrementWithTime / 6);
+                self.phosphoDeepWaiting = false;
+                self.deepPhosError = true;
+                self.deepPhosNetworkCallbacks = [];
+            });
+    }
     self.makeDeepPhosGraph = function (graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, thresholdSliderValue) {
         // console.log("inside makeDeepPhosGraph");
         // console.log(graphType);
+        if (!self.showPhosphoDeepGeneNetworkProcessed) {
+            self.loadDeepPhosNetwork(function () {
+                self.makeDeepPhosGraph(graphType, circleSliderValue, nodeSliderValue, fontSliderValue, widthSliderValue, thresholdSliderValue);
+            });
+            return;
+        }
         var network = self.deepPhosNetwork;
         console.log(network);
         var ptmToAbundance = self.ptmProteinToAbundanceMap;
@@ -30348,7 +30397,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -30752,7 +30801,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -31444,7 +31493,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -32061,7 +32110,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4deep.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -32771,7 +32820,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -33162,7 +33211,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -33516,7 +33565,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -34127,7 +34176,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg4.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -35785,7 +35834,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36094,7 +36143,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36401,7 +36450,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -36734,7 +36783,7 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -39357,7 +39406,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs1.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -40071,7 +40120,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs2.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -40789,7 +40838,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svgIlincs3.append("text");
-                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x", 10).attr("y", globalHPlus50 - 50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -41643,7 +41692,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -41984,7 +42033,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -42250,7 +42299,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -42574,7 +42623,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg5.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -43717,7 +43766,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44015,7 +44064,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44315,7 +44364,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -44636,7 +44685,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                         })
 
                     var svgText = svg.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -46542,7 +46591,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -46936,7 +46985,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -47310,7 +47359,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
                     }
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;
@@ -47757,7 +47806,7 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
                     var svgText = svg2.append("text");
-                    svgText.attr("x",10).attr("y",globalHPlus50-50).text("PiNET-server @ www.pinet-server.org").style("font", "14px Times New Roman");
+                    svgText.attr("x",10).attr("y",globalHPlus50-50).text(window.pinetReplaceDomain("PiNET-server @ __PINET_DOMAIN__")).style("font", "14px Times New Roman");
 
                     //Added from here for coloring the legend
                     max_data = 1000;

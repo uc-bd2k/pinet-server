@@ -89,7 +89,7 @@
             <h3> About</h3>
             <hr/>
             <div class="bs-callout bs-callout-primary">
-                <p>PiNET network analysis has been designed as an extension of <a href="http://new.pinet-server.org/pinet" target="_blank">PiNET</a> project
+                <p>PiNET network analysis has been designed as an extension of <a href="__PINET_WEB_BASE__" target="_blank">PiNET</a> project
                     to reflect the network of genes and post translational modification of the gene products.</p>
             </div>
 
@@ -580,6 +580,9 @@
         <div class="container">
             <p class="text-muted" style="padding-top:5px; text-align: right;">Developed within NIH funded <a
                     href="http://lincsproject.org" target="_blank">LINCS Project</a>
+                <span ng-if="runtimeHeap">
+                    | JVM Heap {{runtimeHeap.usedMiB | number:0}} / {{runtimeHeap.committedMiB | number:0}} / {{runtimeHeap.maxMiB | number:0}} MiB
+                </span>
             </p>
         </div>
 
@@ -599,7 +602,7 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
         <!-- dirPagination JS -->
-        <script src="bower_components/bootstrap/dist/js/dirPagination.js"></script>
+        <script src="js/dirPagination.js"></script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
@@ -622,11 +625,8 @@
         <script src="parallel-layout/d3.divgrid.js"></script>
 
         <!--For translating SVG to canvas-->
-        <script type="text/javascript" src="bower_components/canvg/rgbcolor.js"></script>
-        <script type="text/javascript" src="bower_components/canvg/StackBlur.js"></script>
-        <script type="text/javascript" src="bower_components/canvg/canvg.js"></script>
-        <script src="bower_components/canvg/canvas-toBlob.js"></script>
-        <script src="bower_components/canvg/FileSaver.min.js"></script>
+        <script src="node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
+        <script src="node_modules/file-saver/dist/FileSaver.min.js"></script>
 
         <!--For cola.js-->
         <script type="text/javascript" src="cola/cola.min.js"></script>

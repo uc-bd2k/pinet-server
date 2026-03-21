@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -90,6 +91,11 @@ public class RestAPI implements ErrorController {
     private final FastaService fastaService;
     private final PeptideRegexServive peptideRegexServive;
     private final DeepPhosService deepPhosService;
+    private final String pinetProtocol;
+    private final String pinetDomain;
+    private final String pinetWebBaseUrl;
+    private final String pinetApiBaseUrl;
+    private final boolean pinetIncludeErrorTrace;
 
 //    private final HarmonizomeProteinService harmonizomeProteinService;
 //    private final HarmonizomeGeneService harmonizomeGeneService;
@@ -100,7 +106,12 @@ public class RestAPI implements ErrorController {
 
     @Autowired
     //public RestAPI(HarmonizomeGeneService harmonizomeGeneService, HarmonizomeProteinService harmonizomeProteinService, PrositeService prositeService, PsiModService psiModService, UniprotService uniprotService, EnrichrService enrichrService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoService phosphoService, HarmonizomeGeneService harmonizomeGeneServics1) {
-    public RestAPI(ErrorAttributes errorAttributes, PeptideSearchService peptideSearchService, PeptideWithValueService peptideWithValueService, PrositeService prositeService, PrositeService2 prositeService2, PsiModService psiModService, UniprotService uniprotService, UniprotService2 uniprotService2, EnrichrService enrichrService, IlincsService ilincsService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoServiceV2 phosphoServiceV2, PhosphoService phosphoService, PirService pirService, EnrichrServiceV2 enrichrServiceV2, IteratorIncrementService iteratorIncrementService, NetworkFromCSVService networkFromCSV, PsiModExtensionService psiModExtensionService, PtmService ptmService, UniprotRepository uniprotRepository, PrideService prideService, FastaService fastaService, PeptideRegexServive peptideRegexServive, DeepPhosService deepPhosService) {
+    public RestAPI(ErrorAttributes errorAttributes, PeptideSearchService peptideSearchService, PeptideWithValueService peptideWithValueService, PrositeService prositeService, PrositeService2 prositeService2, PsiModService psiModService, UniprotService uniprotService, UniprotService2 uniprotService2, EnrichrService enrichrService, IlincsService ilincsService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoServiceV2 phosphoServiceV2, PhosphoService phosphoService, PirService pirService, EnrichrServiceV2 enrichrServiceV2, IteratorIncrementService iteratorIncrementService, NetworkFromCSVService networkFromCSV, PsiModExtensionService psiModExtensionService, PtmService ptmService, UniprotRepository uniprotRepository, PrideService prideService, FastaService fastaService, PeptideRegexServive peptideRegexServive, DeepPhosService deepPhosService,
+                   @Value("${pinet.domain:www.pinet-server.org}") String pinetDomain,
+                   @Value("${pinet.protocol:https}") String pinetProtocol,
+                   @Value("${pinet.webBaseUrl:https://www.pinet-server.org/pinet}") String pinetWebBaseUrl,
+                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl,
+                   @Value("${pinet.includeErrorTrace:false}") boolean pinetIncludeErrorTrace) {
         this.peptideSearchService = peptideSearchService;
         this.peptideWithValueService = peptideWithValueService;
 
@@ -132,6 +143,11 @@ public class RestAPI implements ErrorController {
         this.fastaService = fastaService;
         this.peptideRegexServive = peptideRegexServive;
         this.deepPhosService = deepPhosService;
+        this.pinetProtocol = pinetProtocol;
+        this.pinetDomain = pinetDomain;
+        this.pinetWebBaseUrl = pinetWebBaseUrl;
+        this.pinetApiBaseUrl = pinetApiBaseUrl;
+        this.pinetIncludeErrorTrace = pinetIncludeErrorTrace;
 
     }
 
@@ -163,6 +179,41 @@ public class RestAPI implements ErrorController {
     )
     public String spaForward() {
         return "forward:/";
+    }
+
+    @RequestMapping(value = "runtime-config.js", method = RequestMethod.GET, produces = "application/javascript")
+    @ResponseBody
+    public String runtimeConfigJs() {
+        return "window.PINET_CONFIG = {" +
+                "protocol: " + toJsString(pinetProtocol) + "," +
+                "domain: " + toJsString(pinetDomain) + "," +
+                "webBaseUrl: " + toJsString(pinetWebBaseUrl) + "," +
+                "apiBaseUrl: " + toJsString(pinetApiBaseUrl) +
+                "};";
+    }
+
+    @RequestMapping(value = "api/runtime/heap", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject runtimeHeapStats() {
+        Runtime runtime = Runtime.getRuntime();
+        long committedBytes = runtime.totalMemory();
+        long freeBytes = runtime.freeMemory();
+        long usedBytes = committedBytes - freeBytes;
+        long maxBytes = runtime.maxMemory();
+        long mib = 1024L * 1024L;
+
+        JSONObject heap = new JSONObject();
+        heap.put("usedBytes", usedBytes);
+        heap.put("committedBytes", committedBytes);
+        heap.put("maxBytes", maxBytes);
+        heap.put("usedMiB", usedBytes / mib);
+        heap.put("committedMiB", committedBytes / mib);
+        heap.put("maxMiB", maxBytes / mib);
+        return heap;
+    }
+
+    private String toJsString(String value) {
+        return "'" + value.replace("\\", "\\\\").replace("'", "\\'") + "'";
     }
 
     /**
@@ -197,6 +248,9 @@ public class RestAPI implements ErrorController {
     }
 
     private boolean getTraceParameter(HttpServletRequest request) {
+        if (!pinetIncludeErrorTrace) {
+            return false;
+        }
         String parameter = request.getParameter("trace");
         if (parameter == null) {
             return false;
@@ -2344,18 +2398,33 @@ public class RestAPI implements ErrorController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    } // method uploadFile
 
+    private File createTempUploadFile(String originalFilename) throws IOException {
+        String suffix = ".upload";
+        if (originalFilename != null) {
+            int dotIndex = originalFilename.lastIndexOf('.');
+            if (dotIndex >= 0 && dotIndex < originalFilename.length() - 1) {
+                String candidate = originalFilename.substring(dotIndex);
+                if (candidate.matches("\\.[A-Za-z0-9]{1,10}")) {
+                    suffix = candidate;
+                }
+            }
+        }
+        File tempFile = Files.createTempFile("pinet-upload-", suffix).toFile();
+        tempFile.deleteOnExit();
+        return tempFile;
+    }
+
     public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
-        File convFile = new File(multipart.getOriginalFilename());
+        File convFile = createTempUploadFile(multipart.getOriginalFilename());
         multipart.transferTo(convFile);
         return convFile;
     }
 
     public File convertMultipartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+        File convFile = createTempUploadFile(file.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(convFile)) {
+            fos.write(file.getBytes());
+        }
         return convFile;
     }
 
@@ -3095,6 +3164,28 @@ public class RestAPI implements ErrorController {
         //phosphoNetwork = phosphoService.computePtmNetwork(organism,geneList);
 
         return ptmNetwork;
+
+    }
+
+    @RequestMapping(value = "api/signor/organism/{organism}/ptmprotein/{geneList:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject computeSignorNetworkForPtmGenes(@PathVariable String organism, @PathVariable String[] geneList) throws Exception {
+        JSONObject signorNetwork = new JSONObject();
+        signorNetwork = phosphoService.computeSignorOnlyNetwork(organism, geneList);
+
+        return signorNetwork;
+
+    }
+
+    @RequestMapping(value = "api/deepphos/organism/{organism}/ptmprotein/{geneList:.+}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    JSONObject computeDeepPhosNetworkForPtmGenes(@PathVariable String organism, @PathVariable String[] geneList) throws Exception {
+        JSONObject deepPhosNetwork = new JSONObject();
+        deepPhosNetwork = phosphoService.computeDeepPhosOnlyNetwork(organism, geneList);
+
+        return deepPhosNetwork;
 
     }
 

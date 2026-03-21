@@ -1,6 +1,15 @@
 {
   "name": "pinet-static-assets",
   "private": true,
+  "scripts": {
+    "build:keggviewer": "browserify js/biojskeggviewerexport.js -o js/biojsviskeggviewer.js"
+  },
+  "overrides": {
+    "biojs-vis-keggviewer": {
+      "jquery": "3.7.1",
+      "nets": "file:vendor/nets-browser"
+    }
+  },
   "dependencies": {
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
@@ -10,8 +19,15 @@
     "angular-touch": "1.8.3",
     "angular-ui-bootstrap": "2.5.0",
     "angularjs-slider": "7.1.0",
-    "bootstrap": "3.3.5",
-    "jquery": "2.1.4",
+    "biojs-vis-keggviewer": "^1.1.2",
+    "blueimp-canvas-to-blob": "^3.29.0",
+    "bootstrap": "^3.4.1",
+    "bootstrap-slider": "^11.0.2",
+    "browserify": "^17.0.1",
+    "ddslick": "^1.0.3",
+    "file-saver": "^2.0.5",
+    "jquery": "3.7.1",
+    "nets": "file:vendor/nets-browser",
     "ng-tags-input": "3.0.0"
   }
 }

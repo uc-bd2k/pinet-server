@@ -873,7 +873,11 @@
 
     <div class="container">
         <p class="text-muted" style="padding-top:5px; text-align: right;">Developed within NIH funded <a
-                href="http://lincsproject.org" target="_blank">LINCS Project</a></p>
+                href="http://lincsproject.org" target="_blank">LINCS Project</a>
+            <span ng-if="runtimeHeap">
+                | JVM Heap {{runtimeHeap.usedMiB | number:0}} / {{runtimeHeap.committedMiB | number:0}} / {{runtimeHeap.maxMiB | number:0}} MiB
+            </span>
+        </p>
     </div>
 
     <!-- jQuery required by Bootstrap -->
@@ -892,7 +896,7 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- dirPagination JS -->
-    <script src="bower_components/bootstrap/dist/js/dirPagination.js"></script>
+    <script src="js/dirPagination.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
@@ -902,8 +906,7 @@
     <!--This is for downloading the table data-->
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <!--This is for showing figures in the select-->
-    <!--<script src="bower_components/ddslick/jquery.ddslick.min.js"></script>-->
-    <script src="http://cdn.rawgit.com/prashantchaudhary/ddslick/master/jquery.ddslick.min.js"></script>
+    <script src="node_modules/ddslick/dist/jquery.ddslick.min.js"></script>
 
     <!-- PLN Angular -->
     <script src="js/app.js"></script>

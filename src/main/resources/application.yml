@@ -12,6 +12,14 @@ server:
   tomcat:
     max-http-header-size: 50000000
 
+pinet:
+  protocol: ${PINET_PROTOCOL:https}
+  domain: ${PINET_DOMAIN:www.pinet-server.org}
+  webBaseUrl: ${PINET_WEB_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet}
+  apiBaseUrl: ${PINET_API_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet/api}
+  includeErrorTrace: ${PINET_INCLUDE_ERROR_TRACE:false}
+  enableIncrementWrite: ${PINET_ENABLE_INCREMENT_WRITE:false}
+
 
 
 urls:
@@ -39,10 +47,10 @@ urls:
   ilincsGetSignatureUrl: https://www.ilincs.org/api/ilincsR/findConcordances
   deepPhosUrl: http://localhost:5000/api/predict/organism/%s/%s
 
-  findPTMByIDAPIUrl: http://new.pinet-server.org/pinet/api/proteinptm/%s
-  findPTMByDescriptionAPIUrl: http://new.pinet-server.org/pinet/api/proteinptmbydescription/%s
-  findPTMByMassAndDeltaAPIUrl: http://new.pinet-server.org/pinet/api/proteinptmbymass/%s/delta/%s
-  NetworkInAPIUrl: http://new.pinet-server.org/pinet/api/networkinPredict/organism/%s/ptms/%s
+  findPTMByIDAPIUrl: ${pinet.apiBaseUrl}/proteinptm/%s
+  findPTMByDescriptionAPIUrl: ${pinet.apiBaseUrl}/proteinptmbydescription/%s
+  findPTMByMassAndDeltaAPIUrl: ${pinet.apiBaseUrl}/proteinptmbymass/%s/delta/%s
+  NetworkInAPIUrl: ${pinet.apiBaseUrl}/networkinPredict/organism/%s/ptms/%s
 
 
 #  findPTMByIDAPIUrl: http://eh3.uc.edu/pinet/api/proteinptm/%s

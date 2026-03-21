@@ -2,6 +2,38 @@
 
  * Created by Behrouz on 8/22/16.
  */
+(function(window) {
+    var config = window.PINET_CONFIG || {};
+    var protocol = config.protocol || 'https';
+    var domain = config.domain || 'www.pinet-server.org';
+    var hostBaseUrl = protocol + '://' + domain;
+    var webBaseUrl = config.webBaseUrl || (hostBaseUrl + '/pinet');
+    var apiBaseUrl = config.apiBaseUrl || (webBaseUrl + '/api');
+
+    window.PINET_CONFIG = {
+        protocol: protocol,
+        domain: domain,
+        webBaseUrl: webBaseUrl,
+        apiBaseUrl: apiBaseUrl
+    };
+
+    window.pinetReplaceDomain = function(value) {
+        if (typeof value !== 'string') {
+            return value;
+        }
+
+        return value
+            .replace(/https?:\/\/(?:(?:www|dev|new)\.)?pinet-server\.org\/pinet\/api/gi, apiBaseUrl)
+            .replace(/https?:\/\/(?:(?:www|dev|new)\.)?pinet-server\.org\/pinet/gi, webBaseUrl)
+            .replace(/https?:\/\/(?:(?:www|dev|new)\.)?pinet-server\.org/gi, hostBaseUrl)
+            .replace(/(?:(?:www|dev|new)\.)?pinet-server\.org/gi, domain)
+            .replace(/__PINET_PROTOCOL__/g, protocol)
+            .replace(/__PINET_API_BASE__/g, apiBaseUrl)
+            .replace(/__PINET_WEB_BASE__/g, webBaseUrl)
+            .replace(/__PINET_DOMAIN__/g, domain);
+    };
+})(window);
+
 //var app = angular.module('plnApplication', ['ngRoute','ngTagsInput','plnModule']);
 var app = angular.module('plnApplication', ['ngRoute','ngTagsInput','ngTable', 'plnModule', 'ui.bootstrap']);
 //var app = angular.module('plnApplication', ['plnModule','ngRoute']);
@@ -49,7 +81,32 @@ app.config(['$provide', function($provide) {
     }]);
 }]);
 
-app.run(['$rootScope', function($rootScope) {
+app.run(['$rootScope', '$timeout', '$http', '$interval', function($rootScope, $timeout, $http, $interval) {
+    function replaceDomainsInDocument(root) {
+        if (!root || !window.pinetReplaceDomain) {
+            return;
+        }
+
+        Array.prototype.forEach.call(root.querySelectorAll('[href],[src]'), function(element) {
+            ['href', 'src'].forEach(function(attribute) {
+                var value = element.getAttribute(attribute);
+                var replaced = window.pinetReplaceDomain(value);
+                if (value && replaced !== value) {
+                    element.setAttribute(attribute, replaced);
+                }
+            });
+        });
+
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        var textNode;
+        while ((textNode = walker.nextNode())) {
+            var replacedText = window.pinetReplaceDomain(textNode.nodeValue);
+            if (replacedText !== textNode.nodeValue) {
+                textNode.nodeValue = replacedText;
+            }
+        }
+    }
+
     function sanitizeListeners(scope, eventName, seen) {
         if (!scope || !scope.$$listeners) {
             return;
@@ -85,6 +142,30 @@ app.run(['$rootScope', function($rootScope) {
         }
         return originalEmit.apply(this, arguments);
     };
+
+    $rootScope.PINET_PROTOCOL = window.PINET_CONFIG.protocol;
+    $rootScope.PINET_DOMAIN = window.PINET_CONFIG.domain;
+    $rootScope.PINET_WEB_BASE = window.PINET_CONFIG.webBaseUrl;
+    $rootScope.PINET_API_BASE = window.PINET_CONFIG.apiBaseUrl;
+    $rootScope.runtimeHeap = null;
+
+    function loadRuntimeHeap() {
+        $http.get('api/runtime/heap')
+            .success(function(heap) {
+                $rootScope.runtimeHeap = heap;
+            });
+    }
+
+    function scheduleDomainRewrite() {
+        $timeout(function() {
+            replaceDomainsInDocument(document.body);
+        }, 0, false);
+    }
+
+    $rootScope.$on('$routeChangeSuccess', scheduleDomainRewrite);
+    scheduleDomainRewrite();
+    loadRuntimeHeap();
+    $interval(loadRuntimeHeap, 10000, 0, false);
 }]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

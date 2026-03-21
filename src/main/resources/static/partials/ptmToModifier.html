@@ -1393,7 +1393,7 @@ vertical-align: middle;" class="onerow">or</p>&nbsp;
 
                             <blockquote><pre><code>
 import requests
-PINET_URL_BASE = 'http://www.pinet-server.org/pinet/api/'
+PINET_URL_BASE = '__PINET_API_BASE__/'
 PINET_URL_LINEAGE = '9606'
 API_EXTENSION_1 = 'phosphoandptm/organism/'
 API_EXTENSION_2 = '/ptmprotein/'
@@ -1420,7 +1420,7 @@ def _request(url, params=None):
 
 if __name__ == '__main__':
     # Example
-    # http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}
+    # __PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}
     results = map_ptms("Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}")
 
     for item in results:
@@ -1444,7 +1444,7 @@ if __name__ == '__main__':
                                 For PTMProtein Query:
                             </h4>
 
-                            http://www.pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for
+                            __PINET_API_BASE__/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for
                             the
                             query in the URL, e.g.
                             , please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate
@@ -1452,22 +1452,15 @@ if __name__ == '__main__':
                             <br/>
                             <p>Example with shorthand notation</p>
 
-                            <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
+                            <a href="__PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
                                target="_blank">
-                                http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
+                                __PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
 
                             <br/>
                             <p>Example with mass difference notation</p>
-                            <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
+                            <a href="__PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
                                target="_blank">
-                                http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
-
-                            <p>To get unfiltered kinase-phosphosite predictions based on NetworKIN method for homo sapiens:</p>
-                            <a href="http://new.pinet-server.org/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]"
-                               target="_blank">
-                                http://new.pinet-server.org/pinet/api/networkinPredict/organism/9606/ptms/O00151[pT@2],O00151[pT@3],O00151[pS@31],O00151[pT@34],O00151[pT@51],O00151[pS@59],O00418[pS@18],O00418[pS@27],P55196[pS@2],P55196[pT@34]
-                                </a>
-
+                                __PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
 
                         </div>
                     </div>
@@ -1507,7 +1500,7 @@ if __name__ == '__main__':
                         <!--<a href="https://research.bioinformatics.udel.edu/iptmnet/"-->
                            <!--target="_blank" style="color: #b5cde1">iPTMnet</a> Network of Targeted PTMs-->
                         iPTMnet
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="!ctrl.showPtmGeneNetworkProcessed && !ctrl.ptmError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw">
 
                             </span>
@@ -1535,13 +1528,13 @@ if __name__ == '__main__':
                                 </p>
                             </div>
 
-                            <div ng-show="ctrl.phosphoError" style="color: red">
+                            <div ng-show="ctrl.ptmError" style="color: red">
                                 <p>
                                     Error in obtaining the iPTMnet network, please try again later!
                                 </p>
                             </div>
 
-                            <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                            <div ng-show="ctrl.showPtmGeneNetworkProcessed">
                                 <button class="btn btn-primary "
                                         ng-click="ctrl.makePtmGraph(graphType4ptm, circleSliderValue4ptm, nodeSliderValue4ptm, fontSliderValue4ptm, widthSliderValue4ptm)">Show
                                     Network of Targeted PTM/Proteins via iPTMnet
@@ -1852,7 +1845,7 @@ if __name__ == '__main__':
                         <!--PTM/Proteins-->
 
                         SIGNOR
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="ctrl.signorWaiting && !ctrl.signorError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
                         </span>
 
@@ -1877,7 +1870,7 @@ if __name__ == '__main__':
                                 </p>
                             </div>
 
-                            <div ng-show="enrichmentError">
+                            <div ng-show="ctrl.signorError">
                                 <p style="color: steelblue"> Error in obtaining the SIGNOR network, please try again
                                     later!
                                 </p>
@@ -1889,10 +1882,12 @@ if __name__ == '__main__':
                             </div>
 
 
-                            <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                            <div ng-show="ctrl.showSignorGeneNetworkProcessed">
                                 <button class="btn btn-primary "
+                                        ng-disabled="ctrl.signorWaiting"
                                         ng-click="ctrl.makeSignorGraph(graphType4signor, circleSliderValue4signor, nodeSliderValue4signor, fontSliderValue4signor, widthSliderValue4signor)">
-                                    Show
+                                    <span ng-show="!ctrl.signorWaiting">Show</span>
+                                    <span ng-show="ctrl.signorWaiting">Loading...</span>
                                     Network of Targeted PTM/Proteins via SIGNOR
                                 </button>
                                 <!--<button class="btn btn-primary "-->
@@ -2204,8 +2199,8 @@ if __name__ == '__main__':
                                 <!--</div>-->
                             </div>
                             <!--<div id="chart3"></div>-->
-                        </div>
-                        <!--</div>-->
+</div>
+<!--</div>-->
 
 
                         <!--</div>-->
@@ -2605,7 +2600,7 @@ if __name__ == '__main__':
                         <!--Targeted Phosphosites-->
 
                         DeepPhos
-                        <span ng-show="!ctrl.showPhosphoGeneNetworkProcessed && !ctrl.phosphoError">
+                        <span ng-show="ctrl.phosphoDeepWaiting && !ctrl.deepPhosError">
                             <span class="fa fa-spinner fa-pulse fa-1x fa-fw"></span>
                     </span>
                     </h2>
@@ -2644,7 +2639,7 @@ if __name__ == '__main__':
                                 </div>
 
 
-                                <div ng-show="geneDeepPhosError">
+                                <div ng-show="ctrl.deepPhosError">
                                     <p style="color: steelblue"> Error in obtaining the Kinase-ptmProtein network from DeepPhos, please
                                         try again later.
                                     </p>
@@ -2655,19 +2650,22 @@ if __name__ == '__main__':
                                     <!--</button>-->
                                 </div>
 
-                                <div ng-show="ctrl.phosphoError" style="color: red">
+                                <div ng-show="ctrl.deepPhosError" style="color: red">
                                     <p>
                                         Error in obtaining the Kinase-Gene networkfrom DeepPhos, please try again later!
                                     </p>
                                 </div>
-                                <div ng-show="ctrl.showPhosphoGeneNetworkProcessed">
+                                <div ng-show="ctrl.showPhosphoDeepGeneNetworkProcessed">
                                     <div class=" well container-fluid" style="background-color: #c9c9c9">
 
 
                                         <div style="float:left; width:60%;">
                                             <button class="btn btn-primary "
+                                                    ng-disabled="ctrl.phosphoDeepWaiting"
                                                     ng-click="ctrl.makeDeepPhosGraph(graphType4deep, circleSliderValue4deep,nodeSliderValue4deep, fontSliderValue4deep, widthSliderValue4deep, thresholdSlider4deep)">
-                                                Show DeepPhos network for
+                                                <span ng-show="!ctrl.phosphoDeepWaiting">Show</span>
+                                                <span ng-show="ctrl.phosphoDeepWaiting">Loading...</span>
+                                                DeepPhos network for
                                                 phosphorylation site prediction
                                             </button>
                                         </div>
@@ -3759,8 +3757,3 @@ if __name__ == '__main__':
 
 </div>
 <!--</div>-->
-
-
-
-
-

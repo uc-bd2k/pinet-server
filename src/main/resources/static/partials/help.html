@@ -137,13 +137,9 @@
                         Forum</a>.
                     </div>
 
-                    <div class="well " style="border-color: black ">
-                        piNET is compatible by Mozilla Firefox v.74 and is tested for Mozilla Firefox v.74 and Google
-                        Chrome v.80 browsers.
-
-                        Google Chrome v.80 can not handle large number of API calls, thus generating errors
-                        occasionally. Some functionalities like downloading files or figures or uploading files may not
-                        work properly in other browsers.
+                    <div class="well " style="border-color: black " ng-if="runtimeHeap">
+                        JVM heap usage: {{runtimeHeap.usedMiB | number:0}} / {{runtimeHeap.committedMiB | number:0}} /
+                        {{runtimeHeap.maxMiB | number:0}} MiB
                     </div>
 
 
@@ -403,9 +399,9 @@
                                     </h4>
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/peptideToProtein" target="_blank"
+                                    <a href="__PINET_WEB_BASE__/peptideToProtein" target="_blank"
                                        class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/peptideToProtein</a>
+                                        __PINET_WEB_BASE__/peptideToProtein</a>
                                     <br/>
                                     <br/>
                                     <!--<h4>-->
@@ -422,9 +418,9 @@
                                     <!--</h4>-->
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/peptideToProtein?list=IYQ%5BpY%5DIQSR%5B%2B42%5D 1.3,%5BaK%5DAYSFCGTVEY(UNIMOD:21)MAP -2.14"
+                                    <a href="__PINET_WEB_BASE__/peptideToProtein?list=IYQ%5BpY%5DIQSR%5B%2B42%5D 1.3,%5BaK%5DAYSFCGTVEY(UNIMOD:21)MAP -2.14"
                                        target="_blank" class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/peptideToProtein?list=IYQ[pY]IQSR[+42]
+                                        __PINET_WEB_BASE__/peptideToProtein?list=IYQ[pY]IQSR[+42]
                                         1.3,[aK]AYSFCGTVEY(UNIMOD:21)MAP -2.14</a>
                                     <!--</h2>-->
 
@@ -597,9 +593,9 @@
                                     </h4>
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/ptmToModifier" target="_blank"
+                                    <a href="__PINET_WEB_BASE__/ptmToModifier" target="_blank"
                                        class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/ptmToModifier</a>
+                                        __PINET_WEB_BASE__/ptmToModifier</a>
                                     <br/>
                                     <br/>
                                     <!--<h4>-->
@@ -618,9 +614,9 @@
                                     <!--</h4>-->
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92"
+                                    <a href="__PINET_WEB_BASE__/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92"
                                        target="_blank" class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D
+                                        __PINET_WEB_BASE__/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D
                                         2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92</a>
                                     <!--</h2>-->
 
@@ -774,9 +770,9 @@
 
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/proteinToPathway" target="_blank"
+                                    <a href="__PINET_WEB_BASE__/proteinToPathway" target="_blank"
                                        class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/proteinToPathway</a>
+                                        __PINET_WEB_BASE__/proteinToPathway</a>
                                     <br/>
                                     <br/>
                                     <!--<h4>-->
@@ -799,10 +795,10 @@
                                     <!--</h4>-->
 
                                     <!--<h2 >-->
-                                    <a href="http://www.pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
+                                    <a href="__PINET_WEB_BASE__/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3
                     0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank"
                                        class="splash-title7 ">
-                                        http://www.pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2
+                                        __PINET_WEB_BASE__/proteinToPathway?list=OCIAD1 0.11,NCOR2
                                         -1.2,ZC3HC1 3.122,RPS6KA3
                                         0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>
                                     <!--</h2>-->
@@ -819,7 +815,7 @@
 
 
                     <!--<iframe scrolling="yes"-->
-                            <!--src="http://new.pinet-server.org/pinet/splash" frameborder="0" name="splash"-->
+                            <!--src="__PINET_WEB_BASE__/splash" frameborder="0" name="splash"-->
                             <!--class="frame-area"></iframe>-->
 
 
@@ -849,7 +845,7 @@
 
                         <blockquote><pre><code>
 import requests
-PINET_URL_BASE = 'http://www.pinet-server.org/pinet/api/'
+PINET_URL_BASE = '__PINET_API_BASE__/'
 PINET_URL_LINEAGE = '9606'
 PEPTIDE_API_EXTENSION_1 = 'peptide/organism/'
 PEPTIDE_API_EXTENSION_2 = '/peptides/'
@@ -875,7 +871,7 @@ def _request(url, params=None):
 
 if __name__ == '__main__':
     # Example
-    # http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR
+    # __PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR
     print(map_peptides("KSAPATGGVKKPHR,IYQYIQSR"))
 
 
@@ -898,22 +894,22 @@ if __name__ == '__main__':
                             For Search for a List of Peptides:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent
+                        __PINET_API_BASE__/peptide/organism/{organism}/peptides/{peptides} is sent
                         for the query in the
                         the canonivcal protein forms, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"
+                        <a href="__PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
+                            __PINET_API_BASE__/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
 
                         <br/>
-                        http://www.pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is
+                        __PINET_API_BASE__/peptide/organism/{organism}_iso/peptides/{peptides} is
                         sent for the query in
                         the canonivcal+iso protein form, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"
+                        <a href="__PINET_API_BASE__/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
+                            __PINET_API_BASE__/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>
 
                     </div>
 
@@ -922,7 +918,7 @@ if __name__ == '__main__':
                             For PTMProtein Query:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList}
+                        __PINET_API_BASE__/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList}
                         is sent for
                         the
                         query in the URL, e.g.
@@ -932,15 +928,15 @@ if __name__ == '__main__':
                         <br/>
                         <p>Example with shorthand notation</p>
 
-                        <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
+                        <a href="__PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
+                            __PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[pY]@273}{[aR]@277},Q13627{[pY]@321}{[aR]@325},Q5TA31{[meR]@109}</a>
 
                         <br/>
                         <p>Example with mass difference notation</p>
-                        <a href="http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
+                        <a href="__PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
+                            __PINET_API_BASE__/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+79.966]@273}{[R+42.037]@277},Q13627{[Y+79.966]@321}{[R+42.037]@325},Q5TA31{[R+14.027]@109}</a>
 
                     </div>
 
@@ -949,34 +945,34 @@ if __name__ == '__main__':
                             For Protein Modification Query
                         </h4>
                         Search by Mass and Delta,
-                        http://www.pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}
+                        __PINET_API_BASE__/proteinptmbymass/{mass}/delta/{delta}
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">
-                            http://www.pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>
+                        <a href="__PINET_API_BASE__/proteinptmbymass/80/delta/0.5" target="_blank">
+                            __PINET_API_BASE__/proteinptmbymass/80/delta/0.5</a>
                         <br/>
                         Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/proteinptm/UNIMOD:1255" target="_blank">
-                            http://www.pinet-server.org/pinet/api/proteinptm/UNIMOD:1255</a>
+                        <a href="__PINET_API_BASE__/proteinptm/UNIMOD:1255" target="_blank">
+                            __PINET_API_BASE__/proteinptm/UNIMOD:1255</a>
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">
-                            http://www.pinet-server.org/pinet/api/proteinptm/MOD:00912</a>
+                        <a href="__PINET_API_BASE__/proteinptm/MOD:00912" target="_blank">
+                            __PINET_API_BASE__/proteinptm/MOD:00912</a>
                         <br/>
                         Search by specifications,
-                        http://www.pinet-server.org/pinet/api/proteinptmbydescription/{description}
+                        __PINET_API_BASE__/proteinptmbydescription/{description}
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">
-                            http://www.pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>
+                        <a href="__PINET_API_BASE__/proteinptmbydescription/phospho" target="_blank">
+                            __PINET_API_BASE__/proteinptmbydescription/phospho</a>
                         <br/>
                         For regular expression to capture the peptide and acceptable modification formats:
                         http://pinet-server.org/pinet/api/regex/{ptmPeptide}
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]"
+                        <a href="__PINET_API_BASE__/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
+                            __PINET_API_BASE__/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]</a>
                         <br/>
-                        <!--<a href="http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
-                        <!--http://www.pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
+                        <!--<a href="__PINET_API_BASE__/proteinptmbydescription/serine" target="_blank">-->
+                        <!--__PINET_API_BASE__/proteinptmbydescription/serine</a>-->
 
                     </div>
 
@@ -986,12 +982,12 @@ if __name__ == '__main__':
                             For Kinase Network:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/kinase/genes/{geneList} is sent for the query in the
+                        __PINET_API_BASE__/kinase/genes/{geneList} is sent for the query in the
                         URL, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/kinase/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
+                        <a href="__PINET_API_BASE__/kinase/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/kinase/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
+                            __PINET_API_BASE__/kinase/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
 
                     </div>
 
@@ -1019,13 +1015,13 @@ if __name__ == '__main__':
                                     </span>
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for
+                        __PINET_API_BASE__/enrichment/target/{pathway}/genes/{geneList} is sent for
                         the query in the
                         URL, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
+                        <a href="__PINET_API_BASE__/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
+                            __PINET_API_BASE__/enrichment/target/KEGG_2019_Human/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
 
                     </div>
 
@@ -1039,12 +1035,12 @@ if __name__ == '__main__':
                                     </span>
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the
+                        __PINET_API_BASE__/network/genes/{geneList} is sent for the query in the
                         URL, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
+                        <a href="__PINET_API_BASE__/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
+                            __PINET_API_BASE__/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>
 
                     </div>
 
@@ -1053,14 +1049,14 @@ if __name__ == '__main__':
                             For Protein Accession Id Query:
                         </h4>
 
-                        http://www.pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is
+                        __PINET_API_BASE__/api/uniprotdb/organism/{organism}/accession/{protein} is
                         sent for the query
                         in
                         the URL, e.g.
                         <br/>
-                        <a href="http://www.pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/O15393"
+                        <a href="__PINET_API_BASE__/uniprotdb/organism/9606/accession/O15393"
                            target="_blank">
-                            http://www.pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/O15393</a>
+                            __PINET_API_BASE__/uniprotdb/organism/9606/accession/O15393</a>
 
 
                     </div>
@@ -2639,4 +2635,3 @@ if __name__ == '__main__':
 
 <!--</div>-->
 <!--<br/>-->
-

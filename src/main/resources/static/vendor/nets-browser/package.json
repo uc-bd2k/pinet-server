@@ -1,0 +1,8 @@
+{
+  "name": "nets",
+  "version": "3.2.0",
+  "main": "index.js",
+  "dependencies": {
+    "xhr": "^2.6.0"
+  }
+}

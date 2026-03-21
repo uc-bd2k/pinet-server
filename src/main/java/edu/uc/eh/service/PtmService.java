@@ -48,6 +48,14 @@ public class PtmService {
 
     private static final Logger log = LoggerFactory.getLogger(PtmService.class);
 
+    private long elapsedMs(long startNs) {
+        return (System.nanoTime() - startNs) / 1_000_000;
+    }
+
+    private void timing(String template, Object... args) {
+        System.out.println(String.format(template, args));
+    }
+
 
 
     @Value("${resources.ptmAc}")
@@ -87,9 +95,85 @@ public class PtmService {
 
 
     @Autowired
-    UniprotService2 uniprotService = new UniprotService2();
+    UniprotService uniprotService;
+
+    private volatile JSONObject cachedPtmAcJson;
+    private volatile JSONObject cachedPtmPhJson;
+    private volatile JSONObject cachedPtmMeJson;
+    private volatile JSONObject cachedPtmCgJson;
+    private volatile JSONObject cachedPtmMyJson;
+    private volatile JSONObject cachedPtmNgJson;
+    private volatile JSONObject cachedPtmOgJson;
+    private volatile JSONObject cachedPtmSgJson;
+    private volatile JSONObject cachedPtmSnJson;
+    private volatile JSONObject cachedPtmSuJson;
+    private volatile JSONObject cachedPtmUbJson;
+
+    private JSONObject loadRequiredJson(String path, String label) {
+        try {
+            return UtilsIO.getInstance().readJsonFile(path);
+        } catch (Exception e) {
+            String msg = String.format("Error in obtaining %s", label);
+            log.warn(msg);
+            throw new RuntimeException(msg);
+        }
+    }
+
+    private void ensureResourceCachesLoaded() {
+        if (cachedPtmAcJson != null
+                && cachedPtmPhJson != null
+                && cachedPtmMeJson != null
+                && cachedPtmCgJson != null
+                && cachedPtmMyJson != null
+                && cachedPtmNgJson != null
+                && cachedPtmOgJson != null
+                && cachedPtmSgJson != null
+                && cachedPtmSnJson != null
+                && cachedPtmSuJson != null
+                && cachedPtmUbJson != null) {
+            return;
+        }
+
+        synchronized (this) {
+            if (cachedPtmAcJson == null) {
+                cachedPtmAcJson = loadRequiredJson(ptmAcInfo, "ptmAcInfo");
+            }
+            if (cachedPtmPhJson == null) {
+                cachedPtmPhJson = loadRequiredJson(ptmPhInfo, "ptmPhInfo");
+            }
+            if (cachedPtmMeJson == null) {
+                cachedPtmMeJson = loadRequiredJson(ptmMeInfo, "ptmMeInfo");
+            }
+            if (cachedPtmCgJson == null) {
+                cachedPtmCgJson = loadRequiredJson(ptmCgInfo, "ptmCgInfo");
+            }
+            if (cachedPtmMyJson == null) {
+                cachedPtmMyJson = loadRequiredJson(ptmMyInfo, "ptmMyInfo");
+            }
+            if (cachedPtmNgJson == null) {
+                cachedPtmNgJson = loadRequiredJson(ptmNgInfo, "ptmNgInfo");
+            }
+            if (cachedPtmOgJson == null) {
+                cachedPtmOgJson = loadRequiredJson(ptmOgInfo, "ptmOgInfo");
+            }
+            if (cachedPtmSgJson == null) {
+                cachedPtmSgJson = loadRequiredJson(ptmSgInfo, "ptmSgInfo");
+            }
+            if (cachedPtmSnJson == null) {
+                cachedPtmSnJson = loadRequiredJson(ptmSnInfo, "ptmSnInfo");
+            }
+            if (cachedPtmSuJson == null) {
+                cachedPtmSuJson = loadRequiredJson(ptmSuInfo, "ptmSuInfo");
+            }
+            if (cachedPtmUbJson == null) {
+                cachedPtmUbJson = loadRequiredJson(ptmUbInfo, "ptmUbInfo");
+            }
+        }
+    }
 
     public JSONObject computePtmNetwork(String organism, String[] protList) throws Exception {
+        long requestStartNs = System.nanoTime();
+        long phaseStartNs = requestStartNs;
 
         int didx = 0; //definite idx
         int dbdx = 0; //definite blosum idx
@@ -204,102 +288,20 @@ public class PtmService {
 //        Pattern lowerCase = Pattern.compile("(\\d+(?:\\.\\d+)?)");
 //        Pattern UpperCase = Pattern.compile("(.*?)(\\d+)(.*)");
 
-
-        try {
-            ptmAcJson = UtilsIO.getInstance().readJsonFile(ptmAcInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmAcInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            ptmMeJson = UtilsIO.getInstance().readJsonFile(ptmMeInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-
-        try {
-            ptmPhJson = UtilsIO.getInstance().readJsonFile(ptmPhInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmPhInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmCgJson = UtilsIO.getInstance().readJsonFile(ptmCgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmCgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmCg: /PTM/ptm_cg.json
-
-        try {
-            ptmMyJson = UtilsIO.getInstance().readJsonFile(ptmMyInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmMyInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmMy: /PTM/ptm_my.json
-        try {
-            ptmNgJson = UtilsIO.getInstance().readJsonFile(ptmNgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmNgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmNg: /PTM/ptm_ng.json
-        try {
-            ptmOgJson = UtilsIO.getInstance().readJsonFile(ptmOgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmOgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-//        ptmOg: /PTM/ptm_og.json
-        try {
-            ptmSgJson = UtilsIO.getInstance().readJsonFile(ptmSgInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSgInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmSnJson = UtilsIO.getInstance().readJsonFile(ptmSnInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSnInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmSuJson = UtilsIO.getInstance().readJsonFile(ptmSuInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmSuInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
-        try {
-            ptmUbJson = UtilsIO.getInstance().readJsonFile(ptmUbInfo);
-            //log.info(blosum50Json.toString());
-        } catch (Exception e) {
-            String msg = String.format("Error in obtaining ptmUbInfo");
-            log.warn(msg);
-            throw new RuntimeException(msg);
-        }
+        ensureResourceCachesLoaded();
+        timing("timing service=PtmService phase=resource-cache-loaded inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+        phaseStartNs = System.nanoTime();
+        ptmAcJson = cachedPtmAcJson;
+        ptmMeJson = cachedPtmMeJson;
+        ptmPhJson = cachedPtmPhJson;
+        ptmCgJson = cachedPtmCgJson;
+        ptmMyJson = cachedPtmMyJson;
+        ptmNgJson = cachedPtmNgJson;
+        ptmOgJson = cachedPtmOgJson;
+        ptmSgJson = cachedPtmSgJson;
+        ptmSnJson = cachedPtmSnJson;
+        ptmSuJson = cachedPtmSuJson;
+        ptmUbJson = cachedPtmUbJson;
 //        ptmSg: /PTM/ptm_sg.json
 //        ptmSn: /PTM/ptm_sn.json
 //        ptmSu: /PTM/ptm_su.json
@@ -310,7 +312,7 @@ public class PtmService {
         String organismForQueryUniprot = organism;
 //        System.out.println("======== organism");
 //        System.out.println(organismForQueryUniprot);
-        for (int i = 0; i < protList.length; i++) {
+            for (int i = 0; i < protList.length; i++) {
 
             inutArray.add(protList[i]);
 
@@ -342,7 +344,8 @@ public class PtmService {
                 System.out.println("here1");
                 System.out.println(insideMatcher.group(1));
                 String token = insideMatcher.group(1);
-                String[] splitted = token.split("@");
+                String normalizedToken = token.replace("[", "").replace("]", "");
+                String[] splitted = normalizedToken.split("@");
                 if (splitted.length < 2) {
                     continue;
                 }
@@ -353,11 +356,12 @@ public class PtmService {
 //                lowerResult = matcherLower.matches();
 //                System.out.println(lowerResult);
 
-                if (splitted[0].contains("[") && splitted[0].contains("]")) {
-                    aminoString = splitted[0].substring(0, 1);
-                    ptmString = splitted[0]
-                            .substring(splitted[0].indexOf('[') + 1, splitted[0].indexOf(']'))
-                            .replace("+", "");
+                if (splitted[0].indexOf("(") != -1) {
+                    Matcher match = Pattern.compile("\\((.*?)\\)").matcher(splitted[0]);
+                    while (match.find()) {
+                        ptmString = match.group(1);
+                        aminoString = splitted[0].replace(match.group(0), "");
+                    }
                 } else if (splitted[0].equals(splitted[0].toUpperCase())) {
                     //if(!lowerResult) {
                     //splitted[0].matches(".*\\d+.*");
@@ -432,6 +436,22 @@ public class PtmService {
         JSONArray ptmUbArray = new JSONArray();
         JSONArray ptmMe2Array = new JSONArray();
         JSONArray ptmMe3Array = new JSONArray();
+            timing("timing service=PtmService phase=input-parsed inputs=%d elapsedMs=%d", protList.length, elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
+
+            for (int i = 0; i < protList.length; i++) {
+            String uniprot_id = stringProteinArray[i];
+            if (!proteinToUniprot.containsKey(uniprot_id)) {
+                geneSequenceInfo = uniprotService.findByAccessionApi(uniprot_id);
+                proteinToUniprot.put(uniprot_id, geneSequenceInfo);
+            }
+            ArrayList<String> geneName = (ArrayList<String>) ((JSONObject) proteinToUniprot.get(uniprot_id)).get("primary_gene_name");
+            if (geneName != null && geneName.size() > 0) {
+                protListAndGeneName.put(protList[i], protList[i] + "(" + geneName.get(0).toString() + ")");
+            } else {
+                protListAndGeneName.put(protList[i], protList[i]);
+            }
+        }
         for (int i = 0; i < protList.length; i++) {
 
             JSONArray proteinToPhosphoAminoArray = (JSONArray) proteinToPhosphoAminoJson.get(protList[i]);
@@ -775,7 +795,10 @@ public class PtmService {
         System.out.println("phosphoGeneSequenceArray ========================");
         log.info("phosphoGeneSequenceArray ========================");
         System.out.println(phosphoGeneSequenceArray.toString());
-        //First only add the input genes
+            timing("timing service=PtmService phase=uniprot-enriched uniqueProteins=%d elapsedMs=%d", proteinToUniprot.size(), elapsedMs(phaseStartNs));
+            phaseStartNs = System.nanoTime();
+
+            //First only add the input genes
         for (int i = 0; i < protList.length; i++) {
 
 
@@ -789,7 +812,7 @@ public class PtmService {
             System.out.println((String) protListAndGeneName.get(protList[i]));
             if (!ptm_nodeUnique.containsKey(inputGeneUpper)) {
 
-                newNode = generateNode(inputGene, inputGene, "No", pidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
+                newNode = generateNode(inputGene, (String) protListAndGeneName.get(protList[i]), "No", pidx, 0, 0.0);//tag 0 is for grey, connected is for verifying if the
                 //uniprot is connected to an enzyme or not
                 pidx = pidx + 1;
                 ptm_NetworkNodes.add(newNode);
@@ -839,7 +862,7 @@ public class PtmService {
                 if (score < 1) {
                     score = 1;
                 }
-                if (enzyme.equals("Unknown_Ph")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ph")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -918,7 +941,7 @@ public class PtmService {
                 if (score < 1) {
                     score = 1;
                 }
-                if (enzyme.equals("Unknown_Ac")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ac")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -999,7 +1022,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Me")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Me")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1080,7 +1103,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Cg")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Cg")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1162,7 +1185,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_My")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_My")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1245,7 +1268,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Ng")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ng")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1330,7 +1353,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Og")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Og")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1415,7 +1438,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Sg")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Sg")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1499,7 +1522,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Sn")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Sn")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1583,7 +1606,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Su")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Su")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1667,7 +1690,7 @@ public class PtmService {
                 }
 
 
-                if (enzyme.equals("Unknown_Ub")) {
+                if (isUnknownEnzyme(enzyme, "Unknown_Ub")) {
                     if (((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).get("connected") == "No") {
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).remove("connected");
                         ((JSONObject) ptm_nodeUnique.get(inputphosphoProteinUpper)).put("connected", "Yes");
@@ -1724,9 +1747,18 @@ public class PtmService {
 
         System.out.println("ptm network");
         System.out.println(ptm_Network.toString());
+        timing("timing service=PtmService phase=network-built nodes=%d edges=%d tableRows=%d elapsedMs=%d",
+                ptm_NetworkNodes.size(), ptm_NetworkEdges.size(), ptmTableArray.size(), elapsedMs(phaseStartNs));
+        timing("timing service=PtmService phase=total inputs=%d elapsedMs=%d", protList.length, elapsedMs(requestStartNs));
         return network;
     }
 
+
+    private boolean isUnknownEnzyme(String enzyme, String legacyPlaceholder) {
+        return enzyme == null
+            || "unknown".equalsIgnoreCase(enzyme)
+            || legacyPlaceholder.equals(enzyme);
+    }
 
     JSONObject generateEdgeNode(int sourceTag, int targetTag, double value, int tag) {
 //        log.info("&&&&&& Generating Edges &&&&&&&&&&");
