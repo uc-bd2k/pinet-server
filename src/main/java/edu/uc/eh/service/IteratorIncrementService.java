@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -27,6 +28,9 @@ public class IteratorIncrementService {
 //    }
 
     private static final Logger log = LoggerFactory.getLogger(IteratorIncrementService.class);
+
+    @Value("${pinet.enableIncrementWrite:false}")
+    private boolean enableIncrementWrite;
 
 
     public JSONObject changeIterator(Integer param) {
@@ -149,6 +153,11 @@ public class IteratorIncrementService {
 //
 //
 //    public JSONObject writeBack(JSONObject incrementJsonOut) {
+
+        if (!enableIncrementWrite) {
+            log.info("Increment counter write skipped because pinet.enableIncrementWrite is disabled");
+            return incrementJsonOut;
+        }
 
         try (
                 FileWriter file = new FileWriter(PeptideMatchCMD.getIncrementFile(), false)) {
