@@ -4,6 +4,11 @@
   "scripts": {
     "build:keggviewer": "browserify js/biojskeggviewerexport.js -o js/biojsviskeggviewer.js"
   },
+  "overrides": {
+    "biojs-vis-keggviewer": {
+      "nets": "file:vendor/nets-browser"
+    }
+  },
   "dependencies": {
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
@@ -21,6 +26,7 @@
     "ddslick": "^1.0.3",
     "file-saver": "^2.0.5",
     "jquery": "3.7.1",
+    "nets": "file:vendor/nets-browser",
     "ng-tags-input": "3.0.0"
   }
 }

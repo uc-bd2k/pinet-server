@@ -404,7 +404,7 @@ app.init = function(){
 };
 
 module.exports = app;
-},{"./pathwayrender.js":5,"bootstrap-slider":6,"nets":120}],5:[function(require,module,exports){
+},{"./pathwayrender.js":5,"bootstrap-slider":6,"nets":127}],5:[function(require,module,exports){
 //Libraries
 var cytoscape = require('cytoscape');
 
@@ -34708,7 +34708,7 @@ define.eventAliasesOn( fabfn );
 
 module.exports = Fabric;
 
-},{"./define":53,"./is":92,"./promise":95,"./thread":107,"./util":109,"os":121}],90:[function(require,module,exports){
+},{"./define":53,"./is":92,"./promise":95,"./thread":107,"./util":109,"os":120}],90:[function(require,module,exports){
 /*!
 Ported by Xueqiao Xu <xueqiaoxu@gmail.com>;
 
@@ -36633,7 +36633,7 @@ api.reject = function( val ){
 module.exports = typeof Promise !== 'undefined' ? Promise : api; // eslint-disable-line no-undef
 
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":125}],96:[function(require,module,exports){
+},{"timers":124}],96:[function(require,module,exports){
 'use strict';
 
 var is = require( './is' );
@@ -40363,7 +40363,7 @@ define.eventAliasesOn( thdfn );
 module.exports = Thread;
 
 }).call(this)}).call(this,"/node_modules/cytoscape/src")
-},{"./define":53,"./event":54,"./is":92,"./promise":95,"./util":109,"./window":116,"child_process":8,"path":123}],108:[function(require,module,exports){
+},{"./define":53,"./event":54,"./is":92,"./promise":95,"./util":109,"./window":116,"child_process":8,"path":122}],108:[function(require,module,exports){
 'use strict';
 
 var is = require( '../is' );
@@ -41336,34 +41336,6 @@ function isFunction (fn) {
 };
 
 },{}],120:[function(require,module,exports){
-(function (process,Buffer){(function (){
-var req = require('request')
-
-module.exports = Nets
-
-function Nets (opts, cb) {
-  if (typeof opts === 'string') opts = { uri: opts }
-
-  // in node, if encoding === null then response will be a Buffer. we want this to be the default
-  if (!opts.hasOwnProperty('encoding')) opts.encoding = null
-
-  // in browser, we should by default convert the arraybuffer into a Buffer
-  if (process.browser && !opts.hasOwnProperty('json') && opts.encoding === null) {
-    opts.responseType = 'arraybuffer'
-    var originalCb = cb
-    cb = bufferify
-  }
-
-  function bufferify (err, resp, body) {
-    if (body) body = new Buffer(new Uint8Array(body))
-    originalCb(err, resp, body)
-  }
-
-  return req(opts, cb)
-}
-
-}).call(this)}).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":124,"buffer":9,"request":126}],121:[function(require,module,exports){
 exports.endianness = function () { return 'LE' };
 
 exports.hostname = function () {
@@ -41414,7 +41386,7 @@ exports.homedir = function () {
 	return '/'
 };
 
-},{}],122:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var trim = function(string) {
   return string.replace(/^\s+|\s+$/g, '');
 }
@@ -41448,7 +41420,7 @@ module.exports = function (headers) {
   return result
 }
 
-},{}],123:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 (function (process){(function (){
 // 'path' module extracted from Node.js v8.11.1 (only the posix part)
 // transplited with Babel
@@ -41981,7 +41953,7 @@ posix.posix = posix;
 module.exports = posix;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":124}],124:[function(require,module,exports){
+},{"_process":123}],123:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -42167,7 +42139,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],125:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -42246,7 +42218,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":124,"timers":125}],126:[function(require,module,exports){
+},{"process/browser.js":123,"timers":124}],125:[function(require,module,exports){
 "use strict";
 var window = require("global/window")
 var isFunction = require("is-function")
@@ -42495,7 +42467,7 @@ function getXml(xhr) {
 
 function noop() {}
 
-},{"global/window":117,"is-function":119,"parse-headers":122,"xtend":127}],127:[function(require,module,exports){
+},{"global/window":117,"is-function":119,"parse-headers":121,"xtend":126}],126:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -42516,4 +42488,30 @@ function extend() {
     return target
 }
 
-},{}]},{},[1]);
+},{}],127:[function(require,module,exports){
+(function (Buffer){(function (){
+var req = require("xhr");
+
+module.exports = Nets;
+
+function Nets(opts, cb) {
+  if (typeof opts === "string") opts = { uri: opts };
+
+  if (!opts.hasOwnProperty("encoding")) opts.encoding = null;
+
+  if (!opts.hasOwnProperty("json") && opts.encoding === null) {
+    opts.responseType = "arraybuffer";
+    var originalCb = cb;
+    cb = bufferify;
+  }
+
+  function bufferify(err, resp, body) {
+    if (body) body = Buffer.from(new Uint8Array(body));
+    originalCb(err, resp, body);
+  }
+
+  return req(opts, cb);
+}
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":9,"xhr":125}]},{},[1]);
