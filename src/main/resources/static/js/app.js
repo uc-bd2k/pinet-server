@@ -81,7 +81,7 @@ app.config(['$provide', function($provide) {
     }]);
 }]);
 
-app.run(['$rootScope', '$timeout', function($rootScope, $timeout) {
+app.run(['$rootScope', '$timeout', '$http', '$interval', function($rootScope, $timeout, $http, $interval) {
     function replaceDomainsInDocument(root) {
         if (!root || !window.pinetReplaceDomain) {
             return;
@@ -147,6 +147,14 @@ app.run(['$rootScope', '$timeout', function($rootScope, $timeout) {
     $rootScope.PINET_DOMAIN = window.PINET_CONFIG.domain;
     $rootScope.PINET_WEB_BASE = window.PINET_CONFIG.webBaseUrl;
     $rootScope.PINET_API_BASE = window.PINET_CONFIG.apiBaseUrl;
+    $rootScope.runtimeHeap = null;
+
+    function loadRuntimeHeap() {
+        $http.get('api/runtime/heap')
+            .success(function(heap) {
+                $rootScope.runtimeHeap = heap;
+            });
+    }
 
     function scheduleDomainRewrite() {
         $timeout(function() {
@@ -156,6 +164,8 @@ app.run(['$rootScope', '$timeout', function($rootScope, $timeout) {
 
     $rootScope.$on('$routeChangeSuccess', scheduleDomainRewrite);
     scheduleDomainRewrite();
+    loadRuntimeHeap();
+    $interval(loadRuntimeHeap, 10000, 0, false);
 }]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

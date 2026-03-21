@@ -137,13 +137,9 @@
                         Forum</a>.
                     </div>
 
-                    <div class="well " style="border-color: black ">
-                        piNET is compatible by Mozilla Firefox v.74 and is tested for Mozilla Firefox v.74 and Google
-                        Chrome v.80 browsers.
-
-                        Google Chrome v.80 can not handle large number of API calls, thus generating errors
-                        occasionally. Some functionalities like downloading files or figures or uploading files may not
-                        work properly in other browsers.
+                    <div class="well " style="border-color: black " ng-if="runtimeHeap">
+                        JVM heap usage: {{runtimeHeap.usedMiB | number:0}} / {{runtimeHeap.committedMiB | number:0}} /
+                        {{runtimeHeap.maxMiB | number:0}} MiB
                     </div>
 
 

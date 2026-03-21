@@ -580,6 +580,9 @@
         <div class="container">
             <p class="text-muted" style="padding-top:5px; text-align: right;">Developed within NIH funded <a
                     href="http://lincsproject.org" target="_blank">LINCS Project</a>
+                <span ng-if="runtimeHeap">
+                    | JVM Heap {{runtimeHeap.usedMiB | number:0}} / {{runtimeHeap.committedMiB | number:0}} / {{runtimeHeap.maxMiB | number:0}} MiB
+                </span>
             </p>
         </div>
 

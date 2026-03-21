@@ -192,6 +192,26 @@ public class RestAPI implements ErrorController {
                 "};";
     }
 
+    @RequestMapping(value = "api/runtime/heap", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONObject runtimeHeapStats() {
+        Runtime runtime = Runtime.getRuntime();
+        long committedBytes = runtime.totalMemory();
+        long freeBytes = runtime.freeMemory();
+        long usedBytes = committedBytes - freeBytes;
+        long maxBytes = runtime.maxMemory();
+        long mib = 1024L * 1024L;
+
+        JSONObject heap = new JSONObject();
+        heap.put("usedBytes", usedBytes);
+        heap.put("committedBytes", committedBytes);
+        heap.put("maxBytes", maxBytes);
+        heap.put("usedMiB", usedBytes / mib);
+        heap.put("committedMiB", committedBytes / mib);
+        heap.put("maxMiB", maxBytes / mib);
+        return heap;
+    }
+
     private String toJsString(String value) {
         return "'" + value.replace("\\", "\\\\").replace("'", "\\'") + "'";
     }
