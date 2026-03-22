@@ -94,7 +94,7 @@ public class McpController {
             }
 
             if ("notifications/initialized".equals(method)) {
-                return withCorsHeaders(ResponseEntity.noContent()).build();
+                return withCorsHeadersNoBody(ResponseEntity.noContent()).build();
             }
 
             if ("tools/list".equals(method)) {
@@ -133,6 +133,14 @@ public class McpController {
     }
 
     private <T> ResponseEntity.BodyBuilder withCorsHeaders(ResponseEntity.BodyBuilder builder) {
+        return builder
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS")
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*")
+                .header(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
+    }
+
+    private <T> ResponseEntity.HeadersBuilder<T> withCorsHeadersNoBody(ResponseEntity.HeadersBuilder<T> builder) {
         return builder
                 .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
                 .header(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS")
