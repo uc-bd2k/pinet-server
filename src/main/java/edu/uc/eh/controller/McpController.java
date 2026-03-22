@@ -1,5 +1,6 @@
 package edu.uc.eh.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.uc.eh.service.*;
 import edu.uc.eh.uniprot.Uniprot;
 import edu.uc.eh.uniprot.UniprotRepository;
@@ -29,6 +30,7 @@ public class McpController {
     private final PhosphoServiceV2 phosphoServiceV2;
     private final FastaService fastaService;
     private final String pinetApiBaseUrl;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public McpController(PeptideSearchService peptideSearchService,
                          PeptideWithValueService peptideWithValueService,
@@ -52,8 +54,8 @@ public class McpController {
         this.pinetApiBaseUrl = pinetApiBaseUrl;
     }
 
-    @GetMapping(value = "api/mcp", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> mcpInfo() {
+    @GetMapping(value = "api/mcp")
+    public ResponseEntity<String> mcpInfo(@RequestHeader(value = "Accept", required = false) String acceptHeader) throws Exception {
         Map<String, Object> info = new LinkedHashMap<>();
         info.put("name", SERVER_NAME);
         info.put("version", SERVER_VERSION);
@@ -61,11 +63,12 @@ public class McpController {
         info.put("transport", "json-rpc over HTTP POST");
         info.put("toolsEndpoint", pinetApiBaseUrl + "/mcp");
         info.put("tools", buildTools());
-        return info;
+        return mcpResponse(info, acceptHeader);
     }
 
-    @PostMapping(value = "api/mcp", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> handleMcp(@RequestBody Map<String, Object> request) {
+    @PostMapping(value = "api/mcp")
+    public ResponseEntity<?> handleMcp(@RequestBody Map<String, Object> request,
+                                       @RequestHeader(value = "Accept", required = false) String acceptHeader) {
         Object id = request.get("id");
         String method = asString(request.get("method"));
         Map<String, Object> params = asMap(request.get("params"));
@@ -76,7 +79,7 @@ public class McpController {
                 result.put("protocolVersion", PROTOCOL_VERSION);
                 result.put("serverInfo", mapOf("name", SERVER_NAME, "version", SERVER_VERSION));
                 result.put("capabilities", mapOf("tools", Collections.emptyMap()));
-                return ResponseEntity.ok(success(id, result));
+                return mcpResponse(success(id, result), acceptHeader);
             }
 
             if ("notifications/initialized".equals(method)) {
@@ -84,19 +87,49 @@ public class McpController {
             }
 
             if ("tools/list".equals(method)) {
-                return ResponseEntity.ok(success(id, mapOf("tools", buildTools())));
+                return mcpResponse(success(id, mapOf("tools", buildTools())), acceptHeader);
             }
 
             if ("tools/call".equals(method)) {
                 String name = asString(params.get("name"));
                 Map<String, Object> arguments = asMap(params.get("arguments"));
-                return ResponseEntity.ok(success(id, callTool(name, arguments)));
+                return mcpResponse(success(id, callTool(name, arguments)), acceptHeader);
             }
 
-            return ResponseEntity.ok(error(id, -32601, "Method not found: " + method));
+            return mcpResponse(error(id, -32601, "Method not found: " + method), acceptHeader);
         } catch (Exception e) {
-            return ResponseEntity.ok(error(id, -32000, e.getMessage()));
+            try {
+                return mcpResponse(error(id, -32000, e.getMessage()), acceptHeader);
+            } catch (Exception serializationError) {
+                return ResponseEntity.internalServerError()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("{\"jsonrpc\":\"2.0\",\"id\":" + String.valueOf(id) + ",\"error\":{\"code\":-32000,\"message\":\"" +
+                                escapeJson(e.getMessage()) + "\"}}");
+            }
         }
+    }
+
+    private ResponseEntity<String> mcpResponse(Object payload, String acceptHeader) throws Exception {
+        String json = objectMapper.writeValueAsString(payload);
+        if (wantsEventStream(acceptHeader)) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_EVENT_STREAM)
+                    .body("data: " + json + "\n\n");
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(json);
+    }
+
+    private boolean wantsEventStream(String acceptHeader) {
+        return acceptHeader != null && acceptHeader.contains(MediaType.TEXT_EVENT_STREAM_VALUE);
+    }
+
+    private String escapeJson(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     private Map<String, Object> callTool(String name, Map<String, Object> arguments) throws Exception {
