@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,11 @@ public class McpController {
         return mcpResponse(info, acceptHeader);
     }
 
+    @RequestMapping(value = "api/mcp", method = RequestMethod.OPTIONS)
+    public ResponseEntity<String> mcpOptions() {
+        return withCorsHeaders(ResponseEntity.ok()).body("");
+    }
+
     @PostMapping(value = "api/mcp")
     public ResponseEntity<?> handleMcp(@RequestBody Map<String, Object> request,
                                        @RequestHeader(value = "Accept", required = false) String acceptHeader) {
@@ -88,7 +94,7 @@ public class McpController {
             }
 
             if ("notifications/initialized".equals(method)) {
-                return ResponseEntity.noContent().build();
+                return withCorsHeaders(ResponseEntity.noContent()).build();
             }
 
             if ("tools/list".equals(method)) {
@@ -106,7 +112,7 @@ public class McpController {
             try {
                 return mcpResponse(error(id, -32000, e.getMessage()), acceptHeader);
             } catch (Exception serializationError) {
-                return ResponseEntity.internalServerError()
+                return withCorsHeaders(ResponseEntity.internalServerError())
                         .contentType(MediaType.APPLICATION_JSON)
                         .body("{\"jsonrpc\":\"2.0\",\"id\":" + String.valueOf(id) + ",\"error\":{\"code\":-32000,\"message\":\"" +
                                 escapeJson(e.getMessage()) + "\"}}");
@@ -117,13 +123,21 @@ public class McpController {
     private ResponseEntity<String> mcpResponse(Object payload, String acceptHeader) throws Exception {
         String json = objectMapper.writeValueAsString(payload);
         if (wantsEventStream(acceptHeader)) {
-            return ResponseEntity.ok()
+            return withCorsHeaders(ResponseEntity.ok())
                     .contentType(MediaType.TEXT_EVENT_STREAM)
                     .body("data: " + json + "\n\n");
         }
-        return ResponseEntity.ok()
+        return withCorsHeaders(ResponseEntity.ok())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(json);
+    }
+
+    private <T> ResponseEntity.BodyBuilder withCorsHeaders(ResponseEntity.BodyBuilder builder) {
+        return builder
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, POST, OPTIONS")
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*")
+                .header(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
     }
 
     private boolean wantsEventStream(String acceptHeader) {
