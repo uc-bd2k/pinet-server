@@ -17827,7 +17827,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "/pln/api/upload/multi",
+            url: "/api/upload/multi",
             data: data,
             //http://api.jquery.com/jQuery.ajax/
             //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
@@ -19267,7 +19267,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
     //function($scope, $window) {
     $scope.customNavigateApi = function (msg) {
-        $window.open("/pln/api/pathway/genes/" + msg, '_blank');
+        $window.open("/api/pathway/genes/" + msg, '_blank');
     };
 
     $scope.customNavigateGraphics = function (msg) {

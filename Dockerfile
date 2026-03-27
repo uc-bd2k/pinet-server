@@ -39,9 +39,8 @@ RUN python3 -m venv /opt/deepphos-env \
 COPY deepPhosAPI /app/deepPhosAPI
 COPY --from=java-build /workspace/build/libs/pln-0.0.1.jar /app/pln.jar
 COPY docker/run-local.sh /usr/local/bin/run-pinet
-COPY docker/frontend_proxy.py /usr/local/bin/frontend-proxy.py
 
-RUN chmod +x /usr/local/bin/run-pinet /usr/local/bin/frontend-proxy.py
+RUN chmod +x /usr/local/bin/run-pinet
 
 EXPOSE 5000 8090
 
