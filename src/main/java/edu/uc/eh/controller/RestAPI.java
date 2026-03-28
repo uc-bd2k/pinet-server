@@ -110,7 +110,7 @@ public class RestAPI implements ErrorController {
                    @Value("${pinet.domain:www.pinet-server.org}") String pinetDomain,
                    @Value("${pinet.protocol:https}") String pinetProtocol,
                    @Value("${pinet.webBaseUrl:https://www.pinet-server.org/pinet}") String pinetWebBaseUrl,
-                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl,
+                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/api}") String pinetApiBaseUrl,
                    @Value("${pinet.includeErrorTrace:false}") boolean pinetIncludeErrorTrace) {
         this.peptideSearchService = peptideSearchService;
         this.peptideWithValueService = peptideWithValueService;

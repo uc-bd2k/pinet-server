@@ -25,7 +25,7 @@ ENV PIP_DEFAULT_TIMEOUT=300
 ENV PATH="/opt/deepphos-env/bin:${PATH}"
 
 RUN apt-get update \
-    && apt-get install -y python3 python3-venv \
+    && apt-get install -y python3 python3-venv lsof \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

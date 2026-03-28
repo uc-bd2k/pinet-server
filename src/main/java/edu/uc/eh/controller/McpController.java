@@ -47,7 +47,7 @@ public class McpController {
                          PhosphoService phosphoService,
                          PhosphoServiceV2 phosphoServiceV2,
                          FastaService fastaService,
-                         @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl) {
+                         @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/api}") String pinetApiBaseUrl) {
         this.peptideSearchService = peptideSearchService;
         this.peptideWithValueService = peptideWithValueService;
         this.uniprotRepository = uniprotRepository;

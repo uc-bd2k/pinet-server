@@ -580,17 +580,17 @@ CCNL2	0.61115";
     //vars.organismFormProteinToPathway = "9606";
     vars.tabs = [
         {
-            link: '/pinet/ptm',
+            link: '/ptm',
             label: 'Post Translational Modification',
             info: 'Network analysis of Post translational modification of proteins'
         },
         {
-            link: '/pinet/enrichment',
+            link: '/enrichment',
             label: 'Enrichment Analysis',
             info: 'Network Analysis of associated genes with the peptides or user defined genes'
         },
-        {link: '/pinet/help', label: 'About PiNET', info: 'What is PiNET about?'},
-        {link: '/pinet/contact', label: 'Contact US', info: 'Give us your feed-back about PiNET / Ask questions'}
+        {link: '/help', label: 'About PiNET', info: 'What is PiNET about?'},
+        {link: '/contact', label: 'Contact US', info: 'Give us your feed-back about PiNET / Ask questions'}
     ];
 
     var deferred = $q.defer();

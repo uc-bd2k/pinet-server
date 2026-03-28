@@ -14,7 +14,7 @@ pinet:
   protocol: ${PINET_PROTOCOL:https}
   domain: ${PINET_DOMAIN:www.pinet-server.org}
   webBaseUrl: ${PINET_WEB_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet}
-  apiBaseUrl: ${PINET_API_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/pinet/api}
+  apiBaseUrl: ${PINET_API_BASE_URL:${pinet.protocol}://${PINET_DOMAIN:www.pinet-server.org}/api}
   includeErrorTrace: ${PINET_INCLUDE_ERROR_TRACE:false}
   enableIncrementWrite: ${PINET_ENABLE_INCREMENT_WRITE:false}
 
