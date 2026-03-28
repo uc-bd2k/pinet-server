@@ -23,6 +23,7 @@ FROM --platform=linux/amd64 gradle:7.6.4-jdk11 AS runtime
 
 ENV PIP_DEFAULT_TIMEOUT=300
 ENV PATH="/opt/deepphos-env/bin:${PATH}"
+ENV PINET_DOMAIN="http://localhost:8090"
 
 RUN apt-get update \
     && apt-get install -y python3 python3-venv lsof \
