@@ -580,17 +580,17 @@ CCNL2	0.61115";
     //vars.organismFormProteinToPathway = "9606";
     vars.tabs = [
         {
-            link: '/pinet/ptm',
+            link: '/ptm',
             label: 'Post Translational Modification',
             info: 'Network analysis of Post translational modification of proteins'
         },
         {
-            link: '/pinet/enrichment',
+            link: '/enrichment',
             label: 'Enrichment Analysis',
             info: 'Network Analysis of associated genes with the peptides or user defined genes'
         },
-        {link: '/pinet/help', label: 'About PiNET', info: 'What is PiNET about?'},
-        {link: '/pinet/contact', label: 'Contact US', info: 'Give us your feed-back about PiNET / Ask questions'}
+        {link: '/help', label: 'About PiNET', info: 'What is PiNET about?'},
+        {link: '/contact', label: 'Contact US', info: 'Give us your feed-back about PiNET / Ask questions'}
     ];
 
     var deferred = $q.defer();
@@ -662,7 +662,7 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
                     break;
 
                 case "pinetUniprot":
-                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.rcsb.org/pdb/protein/"+linkID);
+                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://www.uniprot.org/uniprotkb/"+linkID);
                     break;
                 case "pinetReactome":
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://reactome.org/content/detail/"+linkID);
@@ -676,8 +676,9 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
 
 
                 case "pinetGeneCards":
-                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
-                    break;
+                    $window.open("https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + linkID, '_blank');
+                    $uibModalInstance.dismiss('cancel');
+                    return;
 
                 case "GPP":
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://portals.broadinstitute.org/gpp/public/clone/details?cloneId="+linkID);
@@ -715,8 +716,9 @@ appModule.controller('iFrameModalInstanceCtrl', ['$scope','$sce','$window','$uib
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://amp.pharm.mssm.edu/Harmonizome/gene/"+linkID);
                     break;
                 case "geneCards":
-                    $scope.currentSiteUrl = $sce.trustAsResourceUrl("http://www.genecards.org/cgi-bin/carddisp.pl?gene="+linkID);
-                    break;
+                    $window.open("https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + linkID, '_blank');
+                    $uibModalInstance.dismiss('cancel');
+                    return;
                 case "NCBOdisease":
                     $scope.currentSiteUrl = $sce.trustAsResourceUrl("https://bioportal.bioontology.org/ontologies/DOID/?p=classes&conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F"+linkID);
                     break;
@@ -13382,6 +13384,10 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
 
     $scope.openIframeModal = function (linkID, type) {
+        if (type === "pinetGeneCards" || type === "geneCards") {
+            $window.open("https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + linkID, '_blank');
+            return;
+        }
 
 
         var modalInstance = $uibModal.open({
@@ -17827,7 +17833,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "/pln/api/upload/multi",
+            url: "/api/upload/multi",
             data: data,
             //http://api.jquery.com/jQuery.ajax/
             //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
@@ -19267,7 +19273,7 @@ appModule.controller("MainCtrl", ['$scope', '$http', '$location', '$window', '$t
 
     //function($scope, $window) {
     $scope.customNavigateApi = function (msg) {
-        $window.open("/pln/api/pathway/genes/" + msg, '_blank');
+        $window.open("/api/pathway/genes/" + msg, '_blank');
     };
 
     $scope.customNavigateGraphics = function (msg) {
@@ -25272,6 +25278,10 @@ appModule.controller("ProteinCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.openIframeModal = function (linkID, type) {
+        if (type === "pinetGeneCards" || type === "geneCards") {
+            $window.open("https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + linkID, '_blank');
+            return;
+        }
 
 
         var modalInstance = $uibModal.open({
@@ -37848,6 +37858,10 @@ appModule.controller("PathwayCtrl", ['$scope', '$http', '$location', '$window', 
 
 
     $scope.openIframeModal = function (linkID, type) {
+        if (type === "pinetGeneCards" || type === "geneCards") {
+            $window.open("https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + linkID, '_blank');
+            return;
+        }
 
 
         var modalInstance = $uibModal.open({

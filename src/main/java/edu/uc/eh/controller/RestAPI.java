@@ -32,6 +32,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.net.URI;
 import java.util.*;
 
 import static org.apache.commons.math3.stat.inference.TestUtils.t;
@@ -91,7 +92,6 @@ public class RestAPI implements ErrorController {
     private final FastaService fastaService;
     private final PeptideRegexServive peptideRegexServive;
     private final DeepPhosService deepPhosService;
-    private final String pinetProtocol;
     private final String pinetDomain;
     private final String pinetWebBaseUrl;
     private final String pinetApiBaseUrl;
@@ -107,10 +107,9 @@ public class RestAPI implements ErrorController {
     @Autowired
     //public RestAPI(HarmonizomeGeneService harmonizomeGeneService, HarmonizomeProteinService harmonizomeProteinService, PrositeService prositeService, PsiModService psiModService, UniprotService uniprotService, EnrichrService enrichrService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoService phosphoService, HarmonizomeGeneService harmonizomeGeneServics1) {
     public RestAPI(ErrorAttributes errorAttributes, PeptideSearchService peptideSearchService, PeptideWithValueService peptideWithValueService, PrositeService prositeService, PrositeService2 prositeService2, PsiModService psiModService, UniprotService uniprotService, UniprotService2 uniprotService2, EnrichrService enrichrService, IlincsService ilincsService, PCGService pcgService, KinaseService kinaseService, ShorthandService shorthandService, PhosphoServiceV2 phosphoServiceV2, PhosphoService phosphoService, PirService pirService, EnrichrServiceV2 enrichrServiceV2, IteratorIncrementService iteratorIncrementService, NetworkFromCSVService networkFromCSV, PsiModExtensionService psiModExtensionService, PtmService ptmService, UniprotRepository uniprotRepository, PrideService prideService, FastaService fastaService, PeptideRegexServive peptideRegexServive, DeepPhosService deepPhosService,
-                   @Value("${pinet.domain:www.pinet-server.org}") String pinetDomain,
-                   @Value("${pinet.protocol:https}") String pinetProtocol,
-                   @Value("${pinet.webBaseUrl:https://www.pinet-server.org/pinet}") String pinetWebBaseUrl,
-                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/pinet/api}") String pinetApiBaseUrl,
+                   @Value("${pinet.domain:https://www.pinet-server.org}") String pinetDomain,
+                   @Value("${pinet.webBaseUrl:https://www.pinet-server.org}") String pinetWebBaseUrl,
+                   @Value("${pinet.apiBaseUrl:https://www.pinet-server.org/api}") String pinetApiBaseUrl,
                    @Value("${pinet.includeErrorTrace:false}") boolean pinetIncludeErrorTrace) {
         this.peptideSearchService = peptideSearchService;
         this.peptideWithValueService = peptideWithValueService;
@@ -143,7 +142,6 @@ public class RestAPI implements ErrorController {
         this.fastaService = fastaService;
         this.peptideRegexServive = peptideRegexServive;
         this.deepPhosService = deepPhosService;
-        this.pinetProtocol = pinetProtocol;
         this.pinetDomain = pinetDomain;
         this.pinetWebBaseUrl = pinetWebBaseUrl;
         this.pinetApiBaseUrl = pinetApiBaseUrl;
@@ -185,8 +183,7 @@ public class RestAPI implements ErrorController {
     @ResponseBody
     public String runtimeConfigJs() {
         return "window.PINET_CONFIG = {" +
-                "protocol: " + toJsString(pinetProtocol) + "," +
-                "domain: " + toJsString(pinetDomain) + "," +
+                "domain: " + toJsString(displayDomain(pinetDomain)) + "," +
                 "webBaseUrl: " + toJsString(pinetWebBaseUrl) + "," +
                 "apiBaseUrl: " + toJsString(pinetApiBaseUrl) +
                 "};";
@@ -214,6 +211,15 @@ public class RestAPI implements ErrorController {
 
     private String toJsString(String value) {
         return "'" + value.replace("\\", "\\\\").replace("'", "\\'") + "'";
+    }
+
+    private String displayDomain(String value) {
+        try {
+            URI uri = URI.create(value);
+            return uri.getHost() != null ? uri.getHost() : value;
+        } catch (IllegalArgumentException ignored) {
+            return value;
+        }
     }
 
     /**

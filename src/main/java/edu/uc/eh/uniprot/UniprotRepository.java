@@ -1,14 +1,6 @@
 package edu.uc.eh.uniprot;
 
-import edu.uc.eh.controller.RestAPI;
-import edu.uc.eh.service.PrideService;
-import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import edu.uc.eh.service.UniprotService;
-import edu.uc.eh.service.FastaService;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called ProteinCRUDRepository
 // CRUD refers Create, Read, Update, Delete
@@ -29,10 +21,6 @@ public interface UniprotRepository extends CrudRepository<Uniprot, Integer> {
 
 //    @Autowired
 //    UniprotService uniprotService = new UniprotService();
-
-    @Autowired
-    FastaService fastaService = new FastaService();
-
 //    private final FastaService fastaService;
 //    @Autowired
 //    public UniprotRepository(FastaService fastaService)

@@ -4,14 +4,19 @@
  */
 (function(window) {
     var config = window.PINET_CONFIG || {};
-    var protocol = config.protocol || 'https';
-    var domain = config.domain || 'www.pinet-server.org';
-    var hostBaseUrl = protocol + '://' + domain;
-    var webBaseUrl = config.webBaseUrl || (hostBaseUrl + '/pinet');
-    var apiBaseUrl = config.apiBaseUrl || (webBaseUrl + '/api');
+    var webBaseUrl = config.webBaseUrl || config.domain || 'https://www.pinet-server.org';
+    var hostBaseUrl = webBaseUrl.replace(/\/+$/, '');
+    var parsedUrl;
+    try {
+        parsedUrl = new URL(hostBaseUrl);
+    } catch (error) {
+        parsedUrl = new URL('https://www.pinet-server.org');
+        hostBaseUrl = parsedUrl.origin;
+    }
+    var domain = config.domain || parsedUrl.host;
+    var apiBaseUrl = config.apiBaseUrl || (hostBaseUrl + '/api');
 
     window.PINET_CONFIG = {
-        protocol: protocol,
         domain: domain,
         webBaseUrl: webBaseUrl,
         apiBaseUrl: apiBaseUrl
@@ -27,7 +32,6 @@
             .replace(/https?:\/\/(?:(?:www|dev|new)\.)?pinet-server\.org\/pinet/gi, webBaseUrl)
             .replace(/https?:\/\/(?:(?:www|dev|new)\.)?pinet-server\.org/gi, hostBaseUrl)
             .replace(/(?:(?:www|dev|new)\.)?pinet-server\.org/gi, domain)
-            .replace(/__PINET_PROTOCOL__/g, protocol)
             .replace(/__PINET_API_BASE__/g, apiBaseUrl)
             .replace(/__PINET_WEB_BASE__/g, webBaseUrl)
             .replace(/__PINET_DOMAIN__/g, domain);
@@ -143,7 +147,6 @@ app.run(['$rootScope', '$timeout', '$http', '$interval', function($rootScope, $t
         return originalEmit.apply(this, arguments);
     };
 
-    $rootScope.PINET_PROTOCOL = window.PINET_CONFIG.protocol;
     $rootScope.PINET_DOMAIN = window.PINET_CONFIG.domain;
     $rootScope.PINET_WEB_BASE = window.PINET_CONFIG.webBaseUrl;
     $rootScope.PINET_API_BASE = window.PINET_CONFIG.apiBaseUrl;

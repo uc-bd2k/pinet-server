@@ -133,7 +133,7 @@
 
                     <div class="well " style="border-color: black ">
                         To get help, raise question or report a bug pleas use <a
-                            href="https://groups.google.com/forum/#!forum/pinet-server" target="_blank">piNET Google
+                            href="https://github.com/uc-bd2k/pinet-server/issues" target="_blank">piNET Google
                         Forum</a>.
                     </div>
 
@@ -950,7 +950,7 @@ if __name__ == '__main__':
                         <a href="__PINET_API_BASE__/proteinptmbymass/80/delta/0.5" target="_blank">
                             __PINET_API_BASE__/proteinptmbymass/80/delta/0.5</a>
                         <br/>
-                        Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}
+                        Search by UNIMOD of MOD ids, http://pinet-server.org/api/proteinptm/{mod}
                         <br/>
                         <a href="__PINET_API_BASE__/proteinptm/UNIMOD:1255" target="_blank">
                             __PINET_API_BASE__/proteinptm/UNIMOD:1255</a>
@@ -965,7 +965,7 @@ if __name__ == '__main__':
                             __PINET_API_BASE__/proteinptmbydescription/phospho</a>
                         <br/>
                         For regular expression to capture the peptide and acceptable modification formats:
-                        http://pinet-server.org/pinet/api/regex/{ptmPeptide}
+                        http://pinet-server.org/api/regex/{ptmPeptide}
                         <br/>
                         <a href="__PINET_API_BASE__/regex/SV[aD]LIKTY(MOD:00259)K(MOD:00723)HINEVYYAKKKRRHQIYQ[pY]IQSR[+42.010]"
                            target="_blank">
@@ -996,12 +996,12 @@ if __name__ == '__main__':
                     <!--For Enrichment Analysis via Enrichr:-->
                     <!--</h4>-->
 
-                    <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
+                    <!--http://pinet-server.org/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
                     <!--URL, e.g.-->
                     <!--<br/>-->
-                    <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+                    <!--<a href="http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
                     <!--target="_blank">-->
-                    <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+                    <!--http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
 
                     <!--</div>-->
 
@@ -1718,8 +1718,8 @@ if __name__ == '__main__':
     <!--&lt;!&ndash;For Annotation of a List of PTM/Proteins:&ndash;&gt;-->
     <!--&lt;!&ndash;</h4>&ndash;&gt;-->
     <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
-    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/proteinToPathway" target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/ptmToModifier</a>&ndash;&gt;-->
 
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
@@ -1729,8 +1729,8 @@ if __name__ == '__main__':
     <!--&lt;!&ndash;For Annotation of a List of Genes:&ndash;&gt;-->
     <!--&lt;!&ndash;</h4>&ndash;&gt;-->
     <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway" target="_blank">&ndash;&gt;-->
-    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/proteinToPathway" target="_blank">&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/proteinToPathway</a>&ndash;&gt;-->
 
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
@@ -1742,10 +1742,10 @@ if __name__ == '__main__':
     <!--&lt;!&ndash;3.122,P51812{[S+80]@369} -1.92 is' sent for the&ndash;&gt;-->
     <!--&lt;!&ndash;query in the URL. Please note the URL encodes as {:%7B, }:%7D, +:%2B, [:%5B, ]:%5D&ndash;&gt;-->
     <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D 2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
     <!--&lt;!&ndash;"&ndash;&gt;-->
     <!--&lt;!&ndash;target="_blank">&ndash;&gt;-->
-    <!--&lt;!&ndash;http://pinet-server.org/pinet/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/ptmToModifier?list=Q9Y463%7B%5BY%2B80%5D@273%7D&ndash;&gt;-->
     <!--&lt;!&ndash;2.11,Q13627%7B%5BY%2B80%5D@321%7D 3.122,P51812%7B%5BS%2B80%5D@369%7D -1.92&ndash;&gt;-->
 
     <!--&lt;!&ndash;</a>&ndash;&gt;-->
@@ -1759,9 +1759,9 @@ if __name__ == '__main__':
     <!--&lt;!&ndash;In the following example the list of OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53 is sent for&ndash;&gt;-->
     <!--&lt;!&ndash;the query in the URL.&ndash;&gt;-->
     <!--&lt;!&ndash;<br/>&ndash;&gt;-->
-    <!--&lt;!&ndash;<a href="http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
+    <!--&lt;!&ndash;<a href="http://pinet-server.org/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
     <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542" target="_blank">&ndash;&gt;-->
-    <!--&lt;!&ndash;http://pinet-server.org/pinet/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
+    <!--&lt;!&ndash;http://pinet-server.org/proteinToPathway?list=OCIAD1 0.11,NCOR2 -1.2,ZC3HC1 3.122,RPS6KA3&ndash;&gt;-->
     <!--&lt;!&ndash;0.01,PDPK1 1.09,PDPK2P -0.92,HN1 1.76,BRAF -1.922,TP53 -2.542</a>&ndash;&gt;-->
 
     <!--&lt;!&ndash;</div>&ndash;&gt;-->
@@ -1790,7 +1790,7 @@ if __name__ == '__main__':
 
     <!--<blockquote><pre><code>-->
     <!--import requests-->
-    <!--PINET_URL_BASE = 'http://pinet-server.org/pinet/api/'-->
+    <!--PINET_URL_BASE = 'http://pinet-server.org/api/'-->
     <!--PINET_URL_LINEAGE = '9606'-->
     <!--PEPTIDE_API_EXTENSION_1 = 'peptide/organism/'-->
     <!--PEPTIDE_API_EXTENSION_2 = '/peptides/'-->
@@ -1816,7 +1816,7 @@ if __name__ == '__main__':
 
     <!--if __name__ == '__main__':-->
     <!--# Example-->
-    <!--# http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
+    <!--# http://pinet-server.org/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
     <!--print map_peptides("KSAPATGGVKKPHR,IYQYIQSR")-->
 
 
@@ -1839,20 +1839,20 @@ if __name__ == '__main__':
     <!--For Search for a List of Peptides:-->
     <!--</h4>-->
 
-    <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the-->
+    <!--http://pinet-server.org/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the-->
     <!--the canonivcal protein forms, e.g.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
+    <!--<a href="http://pinet-server.org/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
     <!--target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
+    <!--http://pinet-server.org/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
 
     <!--<br/>-->
-    <!--http://pinet-server.org/pinet/api/peptide/organism/{organism}_iso/peptides/{peptides} is sent for the query in-->
+    <!--http://pinet-server.org/api/peptide/organism/{organism}_iso/peptides/{peptides} is sent for the query in-->
     <!--the canonivcal+iso protein form, e.g.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
+    <!--<a href="http://pinet-server.org/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR"-->
     <!--target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
+    <!--http://pinet-server.org/api/peptide/organism/9606_iso/peptides/KSAPATGGVKKPHR,IYQYIQSR</a>-->
 
     <!--</div>-->
 
@@ -1861,15 +1861,15 @@ if __name__ == '__main__':
     <!--For PTMProtein Query:-->
     <!--</h4>-->
 
-    <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for-->
+    <!--http://pinet-server.org/api/phosphoandptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for-->
     <!--the-->
     <!--query in the URL, e.g.-->
     <!--, please note that + is encoded to %2B in the URL. This returns the phosphorylation kinase-substrate-->
     <!--analysis, results of iPTMnet and SIGNOR analysis.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}"-->
+    <!--<a href="http://pinet-server.org/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}"-->
     <!--target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}</a>-->
+    <!--http://pinet-server.org/api/phosphoandptm/organism/9606/ptmprotein/Q9Y463{[Y+80]@273}{[R+42]@277},Q13627{[Y+80]@321}{[R+42]@325},Q71DI3{[K+112.1]@28}{[K+42]@37}{[K+56]@38},Q16695{[K+112.1]@28}{[K+42]@37}{[K+56]@38},P68431{[K+112.1]@28}{[K+42]@37}{[K+56]@38}</a>-->
 
     <!--</div>-->
 
@@ -1877,26 +1877,26 @@ if __name__ == '__main__':
     <!--<h4><span style="color:steelblue;" class="glyphicon glyphicon-cog">  </span> &nbsp;-->
     <!--For Preotein Modification Query-->
     <!--</h4>-->
-    <!--Search by Mass and Delta, http://pinet-server.org/pinet/api/proteinptmbymass/{mass}/delta/{delta}-->
+    <!--Search by Mass and Delta, http://pinet-server.org/api/proteinptmbymass/{mass}/delta/{delta}-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/proteinptmbymass/80/delta/0.5</a>-->
+    <!--<a href="http://pinet-server.org/api/proteinptmbymass/80/delta/0.5" target="_blank">-->
+    <!--http://pinet-server.org/api/proteinptmbymass/80/delta/0.5</a>-->
     <!--<br/>-->
-    <!--Search by UNIMOD of MOD ids, http://pinet-server.org/pinet/api/proteinptm/{mod}-->
+    <!--Search by UNIMOD of MOD ids, http://pinet-server.org/api/proteinptm/{mod}-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/proteinptm/UNIMOD:1255</a>-->
+    <!--<a href="http://pinet-server.org/api/proteinptm/UNIMOD:1255" target="_blank">-->
+    <!--http://pinet-server.org/api/proteinptm/UNIMOD:1255</a>-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/proteinptm/MOD:00912" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/proteinptm/MOD:00912</a>-->
+    <!--<a href="http://pinet-server.org/api/proteinptm/MOD:00912" target="_blank">-->
+    <!--http://pinet-server.org/api/proteinptm/MOD:00912</a>-->
     <!--<br/>-->
-    <!--Search by specifications, http://pinet-server.org/pinet/api/proteinptmbydescription/{description}-->
+    <!--Search by specifications, http://pinet-server.org/api/proteinptmbydescription/{description}-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/phospho" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/phospho</a>-->
+    <!--<a href="http://pinet-server.org/api/proteinptmbydescription/phospho" target="_blank">-->
+    <!--http://pinet-server.org/api/proteinptmbydescription/phospho</a>-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/proteinptmbydescription/serine" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/proteinptmbydescription/serine</a>-->
+    <!--<a href="http://pinet-server.org/api/proteinptmbydescription/serine" target="_blank">-->
+    <!--http://pinet-server.org/api/proteinptmbydescription/serine</a>-->
 
     <!--</div>-->
 
@@ -1905,12 +1905,12 @@ if __name__ == '__main__':
     <!--For Enrichment Analysis via Enrichr:-->
     <!--</h4>-->
 
-    <!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
+    <!--http://pinet-server.org/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the-->
     <!--URL, e.g.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+    <!--<a href="http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
     <!--target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+    <!--http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
 
     <!--</div>-->
 
@@ -1919,12 +1919,12 @@ if __name__ == '__main__':
     <!--For Gene-Pathway Associasion:-->
     <!--</h4>-->
 
-    <!--http://pinet-server.org/pinet/api/network/genes/{geneList} is sent for the query in the-->
+    <!--http://pinet-server.org/api/network/genes/{geneList} is sent for the query in the-->
     <!--URL, e.g.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
+    <!--<a href="http://pinet-server.org/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53"-->
     <!--target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
+    <!--http://pinet-server.org/api/network/genes/OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53</a>-->
 
     <!--</div>-->
 
@@ -1933,12 +1933,12 @@ if __name__ == '__main__':
     <!--For Protein Accession Id Query:-->
     <!--</h4>-->
 
-    <!--http://pinet-server.org/pinet/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent for the query-->
+    <!--http://pinet-server.org/api/api/uniprotdb/organism/{organism}/accession/{protein} is sent for the query-->
     <!--in-->
     <!--the URL, e.g.-->
     <!--<br/>-->
-    <!--<a href="http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627" target="_blank">-->
-    <!--http://pinet-server.org/pinet/api/uniprotdb/organism/9606/accession/Q13627</a>-->
+    <!--<a href="http://pinet-server.org/api/uniprotdb/organism/9606/accession/Q13627" target="_blank">-->
+    <!--http://pinet-server.org/api/uniprotdb/organism/9606/accession/Q13627</a>-->
 
 
     <!--</div>-->
@@ -2489,14 +2489,14 @@ if __name__ == '__main__':
 <!--For Search for a List of Peptides:-->
 <!--</h4>-->
 
-<!--http://pinet-server.org/pinet/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the the canonivuniprottein forms, e.g.-->
+<!--http://pinet-server.org/api/peptide/organism/{organism}/peptides/{peptides} is sent for the query in the the canonivuniprottein forms, e.g.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
+<!--http://pinet-server.org/api/peptide/organism/9606/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
 <!--</p>-->
 <!--<br/>-->
-<!--http://pinet-server.org/pinet/api/peptide/organism/{organism}+iso/peptides/{peptides} is sent for the query in the canonivcal+uniprottein form, e.g.-->
+<!--http://pinet-server.org/api/peptide/organism/{organism}+iso/peptides/{peptides} is sent for the query in the canonivcal+uniprottein form, e.g.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/peptide/organism/9606+iso/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
+<!--http://pinet-server.org/api/peptide/organism/9606+iso/peptides/KSAPATGGVKKPHR,IYQYIQSR-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2506,9 +2506,9 @@ if __name__ == '__main__':
 <!--For Enrichment Analysis via Enrichr:-->
 <!--</h4>-->
 
-<!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the URL, e.g.-->
+<!--http://pinet-server.org/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the URL, e.g.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
+<!--http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2517,9 +2517,9 @@ if __name__ == '__main__':
 <!--For Gene-Pathway Associasion via Enrichr:-->
 <!--</h4>-->
 
-<!--http://pinet-server.org/pinet/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the URL, e.g.-->
+<!--http://pinet-server.org/api/enrichment/target/{pathway}/genes/{geneList} is sent for the query in the URL, e.g.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/enrichment/target/KEGG_2016/genes/geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
+<!--http://pinet-server.org/api/enrichment/target/KEGG_2016/genes/geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2528,9 +2528,9 @@ if __name__ == '__main__':
 <!--For Preotein Query Form Uniprot:-->
 <!--</h4>-->
 
-<!--http://pinet-server.org/pinet/api/api/uniprot/organism/{organiuniprotteuniprottein} is sent for the query in the URL, e.g.-->
+<!--http://pinet-server.org/api/api/uniprot/organism/{organiuniprotteuniprottein} is sent for the query in the URL, e.g.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/uniprot/organism/9606/protein/Q13627-->
+<!--http://pinet-server.org/api/uniprot/organism/9606/protein/Q13627-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2539,11 +2539,11 @@ if __name__ == '__main__':
 <!--For PTMPreotein Query Form iPTMnet data base:-->
 <!--</h4>-->
 
-<!--http://pinet-server.org/pinet/api/api/ptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for the query in the URL, e.g.-->
+<!--http://pinet-server.org/api/api/ptm/organism/{organism}/ptmprotein/{PTMProteinList} is sent for the query in the URL, e.g.-->
 <!--, please note that + is encoded to %2B in the URL.-->
 
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/api/ptm/organism/9606/ptmprotein/Q9Y463[Y+80@273][R+42@277],Q13627[Y+80@321][R+42@325],Q71DI3[K+112.1@28][K+42@37][K+56@38],Q16695[K+112.1@28][K+42@37][K+56@38],P68431[K+112.1@28][K+42@37][K+56@38]-->
+<!--http://pinet-server.org/api/ptm/organism/9606/ptmprotein/Q9Y463[Y+80@273][R+42@277],Q13627[Y+80@321][R+42@325],Q71DI3[K+112.1@28][K+42@37][K+56@38],Q16695[K+112.1@28][K+42@37][K+56@38],P68431[K+112.1@28][K+42@37][K+56@38]-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2568,7 +2568,7 @@ if __name__ == '__main__':
 <!--</h4>-->
 
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/peptideToProtein-->
+<!--http://pinet-server.org/peptideToProtein-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2578,7 +2578,7 @@ if __name__ == '__main__':
 <!--</h4>-->
 
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/proteinToPathway?tab=ptmProteinList-->
+<!--http://pinet-server.org/proteinToPathway?tab=ptmProteinList-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2589,7 +2589,7 @@ if __name__ == '__main__':
 <!--</h4>-->
 
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/proteinToPathway?tab=geneList-->
+<!--http://pinet-server.org/proteinToPathway?tab=geneList-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2599,7 +2599,7 @@ if __name__ == '__main__':
 <!--</h4>-->
 <!--In the following example the list of Q9Y463[Y+80@273],Q13627[Y+80@321],P51812[S+80@369] is sent for the query in the URL, please note that + is encoded to %2B in the URL.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/proteinToPathway?tab=ptmProteinList&list=Q9Y463%5BY%2B80@273%5D,Q13627%5BY%2B80@321%5D,P51812%5BS%2B80@369%5D-->
+<!--http://pinet-server.org/proteinToPathway?tab=ptmProteinList&list=Q9Y463%5BY%2B80@273%5D,Q13627%5BY%2B80@321%5D,P51812%5BS%2B80@369%5D-->
 <!--</p>-->
 <!--</div>-->
 
@@ -2609,7 +2609,7 @@ if __name__ == '__main__':
 <!--</h4>-->
 <!--In the following example the list of OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53 is sent for the query in the URL.-->
 <!--<p style="color: blue">-->
-<!--http://pinet-server.org/pinet/proteinToPathway?tab=geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
+<!--http://pinet-server.org/proteinToPathway?tab=geneList&list=OCIAD1,NCOR2,ZC3HC1,RPS6KA3,PDPK1,PDPK2P,HN1,BRAF,TP53-->
 <!--</p>-->
 <!--</div>-->
 <!--</div>-->
@@ -2623,7 +2623,7 @@ if __name__ == '__main__':
 <!--border-radius: 5px;">-->
 
 <!--<div class="well col-sm-12" style="border-color: black ">-->
-<!--For now please cite PiNET via pinet-server.org (http://pinet-server.org/pinet/).-->
+<!--For now please cite PiNET via pinet-server.org (http://pinet-server.org/).-->
 
 <!--</div>-->
 <!--</div>-->

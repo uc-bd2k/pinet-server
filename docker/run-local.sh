@@ -2,11 +2,11 @@
 set -e
 
 cd /app/deepPhosAPI
-/opt/deepphos-env/bin/python predict.py &
+DEEPPHOS_UNIPROT_API_BASE="${DEEPPHOS_UNIPROT_API_BASE:-http://127.0.0.1:8090/api/uniprotdb/organism}" \
+  /opt/deepphos-env/bin/python predict.py &
 
 cd /app
 JAVA_HEAP_OPTS="${JAVA_HEAP_OPTS:--Xms2g -Xmx16g}"
+PINET_DOMAIN="${PINET_DOMAIN:-http://localhost:8090}" \
 JAVA_TOOL_OPTIONS="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED" \
-  java ${JAVA_HEAP_OPTS} -jar /app/pln.jar --server.port=8091 &
-
-exec python /usr/local/bin/frontend-proxy.py
+  exec java ${JAVA_HEAP_OPTS} -jar /app/pln.jar --server.port=8090
