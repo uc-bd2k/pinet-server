@@ -337,7 +337,7 @@ public class PhosphoService {
             }
 
             ArrayList<String> geneName = (ArrayList<String>) ((JSONObject) proteinToUniprot.get(uniprotId)).get("primary_gene_name");
-            if (geneName.size() > 0) {
+            if (geneName != null && geneName.size() > 0) {
                 parsed.protListAndGeneName.put(prot, prot + "(" + geneName.get(0) + ")");
             } else {
                 parsed.protListAndGeneName.put(prot, prot);

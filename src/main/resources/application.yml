@@ -21,12 +21,12 @@ pinet:
 
 urls:
   prosite: https://prosite.expasy.org/cgi-bin/prosite/PSScan.cgi?sig=%s&lineage=%s&db=sp&output=json
-  uniprotFasta: https://www.uniprot.org/uniprot/%s.fasta
-  uniprot: https://www.uniprot.org/uniprot/%s.xml?query=reviewed:yes+AND+organism:9606
+  uniprotFasta: https://rest.uniprot.org/uniprotkb/%s.fasta
+  uniprot: https://rest.uniprot.org/uniprotkb/%s.xml
   pir: https://research.bioinformatics.udel.edu/peptidematch/webservices/peptidematch_rest?query=%s&format=xml&organism=%s
 
   prosite2: https://prosite.expasy.org/cgi-bin/prosite/PSScan.cgi?sig=%s&lineage=%s&db=sp&output=json
-  uniprot2: https://www.uniprot.org/uniprot/%s.xml?query=reviewed:yes+AND+organism:%s
+  uniprot2: https://rest.uniprot.org/uniprotkb/%s.xml
   pir2: http://research.bioinformatics.udel.edu/peptidematch/webservices/peptidematch_rest?query=%s&format=xml&organism=%s
 
   harmonizomeGene: http://amp.pharm.mssm.edu/Harmonizome//api/1.0/gene/%s
