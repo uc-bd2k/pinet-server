@@ -1,4 +1,5 @@
-FROM --platform=linux/amd64 node:20-bookworm AS frontend-build
+# --platform=linux/amd64 
+FROM node:20-bookworm AS frontend-build
 
 WORKDIR /frontend
 
@@ -7,7 +8,8 @@ COPY src/main/resources/static/package-lock.json /frontend/package-lock.json
 
 RUN npm ci
 
-FROM --platform=linux/amd64 gradle:7.6.4-jdk11 AS java-build
+# --platform=linux/amd64 
+FROM gradle:7.6.4-jdk11 AS java-build
 
 WORKDIR /workspace
 
@@ -19,7 +21,8 @@ COPY --from=frontend-build /frontend/node_modules /workspace/src/main/resources/
 
 RUN gradle clean build -x test --no-daemon
 
-FROM --platform=linux/amd64 gradle:7.6.4-jdk11 AS runtime
+# --platform=linux/amd64 
+FROM gradle:7.6.4-jdk11 AS runtime
 
 ENV PIP_DEFAULT_TIMEOUT=300
 ENV PATH="/opt/deepphos-env/bin:${PATH}"
