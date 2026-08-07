@@ -134,3 +134,32 @@ configurations {
 wrapper {
     gradleVersion = '7.6.4'
 }
+
+// Resolve the commit for build-info. The Docker build does not copy .git, so it
+// passes the sha in via GIT_SHA; falls back to the local repo, then to 'unknown'.
+def resolveGitSha() {
+    def supplied = System.getenv('GIT_SHA') ?: project.findProperty('gitSha')
+    if (supplied) {
+        return supplied.toString().trim()
+    }
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short=12', 'HEAD'
+            standardOutput = stdout
+            errorOutput = new ByteArrayOutputStream()
+        }
+        return stdout.toString().trim()
+    } catch (Exception ignored) {
+        return 'unknown'
+    }
+}
+
+// Generates META-INF/build-info.properties, exposed by GET /api/version.
+springBoot {
+    buildInfo {
+        properties {
+            additional = ['commit': resolveGitSha()]
+        }
+    }
+}

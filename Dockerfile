@@ -19,7 +19,10 @@ COPY src /workspace/src
 COPY libs /workspace/libs
 COPY --from=frontend-build /frontend/node_modules /workspace/src/main/resources/static/node_modules
 
-RUN gradle clean build -x test --no-daemon
+# .git is not copied into the build context, so the commit is passed in and
+# baked into build-info.properties for GET /api/version.
+ARG GIT_SHA=unknown
+RUN GIT_SHA=${GIT_SHA} gradle clean build -x test --no-daemon
 
 # --platform=linux/amd64 
 FROM gradle:7.6.4-jdk11 AS runtime

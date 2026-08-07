@@ -59,6 +59,8 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
+          build-args: |
+            GIT_SHA=${{ github.sha }}
           # Pull requests build to verify the Dockerfile, but never publish.
           push: ${{ env.PUBLISH == 'true' && github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
