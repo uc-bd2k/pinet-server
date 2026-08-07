@@ -14,9 +14,8 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  # Set to 'true' to start publishing to GHCR. While 'false' the workflow only
-  # verifies that the image builds, and publishes nothing.
-  PUBLISH: 'false'
+  # Set to 'false' to verify the build without publishing anything.
+  PUBLISH: 'true'
 
 jobs:
   build:
